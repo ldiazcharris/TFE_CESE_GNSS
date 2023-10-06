@@ -14,9 +14,9 @@ void uart_init(  uart_port_t     uart_num,
                         QueueHandle_t   *uart_queue, 
                         int             intr_alloc_flags
                      );
-void uart_transmit(uart_port_t uart_num, const void *src);
+void uart_transmit(uart_port_t uart_num, const void *src, size_t size);
 
-void uart_receive(uart_port_t uart_num, void *buf);
+void uart_receive(uart_port_t uart_num, void *buf, uint32_t length);
 
 void delay(const TickType_t delay_ms);
 

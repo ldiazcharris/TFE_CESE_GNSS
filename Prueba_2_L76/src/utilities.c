@@ -32,15 +32,15 @@ void uart_init(  uart_port_t     uart_num,
 
 
 
-void uart_transmit(uart_port_t uart_num, const void *src)
+void uart_transmit(uart_port_t uart_num, const void *src, size_t size)
 {
-    uart_write_bytes(uart_num, src, strlen((const char *)src));
+    uart_write_bytes(uart_num, src, size);
 }
 
 
-void uart_receive(uart_port_t uart_num, void *buf)
+void uart_receive(uart_port_t uart_num, void *buf, uint32_t length)
 {
-    uart_read_bytes(uart_num, buf, strlen((const char *)buf), portMAX_DELAY);
+    uart_read_bytes(uart_num, buf, length, portMAX_DELAY);
 }
 
 

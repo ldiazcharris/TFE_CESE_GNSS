@@ -42,25 +42,18 @@ void app_main()
     uart_set_pin(UART0,     1, 3,  22,  19);
 
 
-    uart_init(UART1, 9600, BUF_SIZE*2, BUF_SIZE, BUF_SIZE, uart1_queue, ESP_INTR_FLAG_LEVEL1); // ESP_INTR_FLAG_IRAM
+    uart_init(UART1, 9600, BUF_SIZE*2, BUF_SIZE*2, 50, &uart1_queue, ESP_INTR_FLAG_LEVEL1); //   ESP_INTR_FLAG_IRAM
             //  (UART_NUM, TX, RX, RTS, CTS) 
     uart_set_pin(UART1,    33, 26,  14, 12);
 
-    char receive_data[100];
-    memset(receive_data, 0, sizeof(receive_data));
-    char print_data[150];
-/*
-     while(1)
-     {
-        
+    xTaskCreate(uart_interrupt_task, "uart_interrupt_task", BUF_SIZE*4, NULL, 12, NULL);
 
-        uart_receive(UART1, (void *) data);
-        sprintf(print_data, "%s", receive_data);
-        uart_transmit(UART0,  data);
-        
+    uart_transmit(UART1, (const void *)RMC, strlen(RMC));
 
-     }
-*/
+
+
+//uart_interrupt_task();
+
 }
 
 
@@ -70,27 +63,34 @@ void app_main()
 static void uart_interrupt_task(void *params)
 {
     uart_event_t uart_event;
-    size_t buffered_size;
     uint8_t *data = (uint8_t *)malloc(BUF_SIZE);
+    uint8_t *print_data = (uint8_t *)malloc(BUF_SIZE+100);
     while(1)
     {
+        uart_transmit(UART1, (const void *)RMC, strlen(RMC));
         if(xQueueReceive(uart1_queue, (void *)&uart_event, (TickType_t)portMAX_DELAY))
         {
             bzero(data, BUF_SIZE);
+            bzero(print_data, BUF_SIZE+100);
 
             switch (uart_event.type)
             {
             case UART_DATA:
-                uart_receive(UART1, (void *) data);
-                //sprintf(print_data, "%s", receive_data);
-                uart_transmit(UART0,  data);
+                uart_receive(UART1, (void *) data, (uint32_t)uart_event.size);
+                sprintf((char *)print_data, "%s", data);
+                uart_transmit(UART0,  print_data, uart_event.size);
+                
                 break;
             
             default:
                 break;
             }
+            
 
         }
     }
+
+    free(data);
+    free(print_data);
 
 }
