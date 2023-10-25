@@ -20,6 +20,17 @@ void uart_receive(uart_port_t uart_num, void *buf, uint32_t length);
 
 void delay(const TickType_t delay_ms);
 
+static const char *TAG = "NMEA_PARSER";
+
+typedef struct
+{
+    float latitude;
+    float longitude;
+    char time[10];
+} GNSSData_t;
+
+void nmea_parser(const char *nmeaString, GNSSData_t *gnssData);
+
 /*
 UART EVENTS TYPES
 
