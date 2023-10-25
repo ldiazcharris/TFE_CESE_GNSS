@@ -1,5 +1,7 @@
 #include "utilities.h"
 
+static const char *TAG = "NMEA_PARSER";
+
 void uart_init(  uart_port_t     uart_num, 
                         int             baud_rate, 
                         int             rx_buffer_size, 

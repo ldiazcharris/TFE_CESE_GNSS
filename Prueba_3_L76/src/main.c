@@ -9,7 +9,7 @@
 #include "freertos/task.h"
 #include "freertos/queue.h"
 #include "utilities.h"
-#include "esp_log.h"
+
 
 /************************MACROS***********************************/
 
@@ -33,12 +33,12 @@ static void uart_interrupt_task(void *params);
 void app_main()
 {
     uart_init(UART0, 115200, BUF_SIZE * 2, 0, 0, NULL, ESP_INTR_FLAG_LEVEL1);
-    //  (UART_NUM, TX, RX, RTS, CTS)
-    uart_set_pin(UART0, 1, 3, 22, 19);
+    //          (UART_NUM, TX, RX, RTS, CTS)
+    uart_set_pin(UART0,     1,  3,  22,  19);
 
     uart_init(UART1, 9600, BUF_SIZE * 2, BUF_SIZE * 2, 50, &uart1_queue, ESP_INTR_FLAG_LEVEL1); //   ESP_INTR_FLAG_IRAM
-                                                                                                //  (UART_NUM, TX, RX, RTS, CTS)
-    uart_set_pin(UART1, 33, 26, 14, 12);
+    //          (UART_NUM, TX, RX, RTS, CTS)
+    uart_set_pin(UART1,    33, 26,  14,  12);
 
     xTaskCreate(uart_interrupt_task,
                 "uart_interrupt_task",
@@ -75,7 +75,7 @@ static void uart_interrupt_task(void *params)
                 nmea_parser((const char *)nmea_string, &quectel_l76);
                 sprintf((char *)proof_print, "Lat: %.6f , Long: %.6f", 
                         quectel_l76.latitude, quectel_l76.longitude);
-                uart_transmit(UART0, proof_print, strlen(proof_print));
+                uart_transmit(UART0, proof_print, strlen((const char*)proof_print));
 
                 break;
 

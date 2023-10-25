@@ -5,6 +5,7 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "freertos/queue.h"
+#include "esp_log.h"
 
 void uart_init(  uart_port_t     uart_num, 
                         int             baud_rate, 
@@ -19,8 +20,6 @@ void uart_transmit(uart_port_t uart_num, const void *src, size_t size);
 void uart_receive(uart_port_t uart_num, void *buf, uint32_t length);
 
 void delay(const TickType_t delay_ms);
-
-static const char *TAG = "NMEA_PARSER";
 
 typedef struct
 {
