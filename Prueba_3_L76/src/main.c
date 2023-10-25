@@ -55,6 +55,7 @@ static void uart_interrupt_task(void *params)
     uart_event_t uart_event;
     uint8_t *uart_recv_data = (uint8_t *)malloc(BUF_SIZE);
     uint8_t *nmea_string = (uint8_t *)malloc(BUF_SIZE + 100);
+    uint8_t *proof_print = (uint8_t *)malloc(BUF_SIZE + 100);
     while (1)
     {
         uart_transmit(UART1, (const void *)RMC, strlen(RMC));
@@ -62,6 +63,7 @@ static void uart_interrupt_task(void *params)
         {
             bzero(uart_recv_data, BUF_SIZE);
             bzero(nmea_string, BUF_SIZE + 100);
+            bzero(proof_print, BUF_SIZE + 100);
 
             switch (uart_event.type)
             {
@@ -71,6 +73,9 @@ static void uart_interrupt_task(void *params)
                 // uart_transmit(UART0,  "---", 3);
                 //uart_transmit(UART0, nmea_string, uart_event.size);
                 nmea_parser((const char *)nmea_string, &quectel_l76);
+                sprintf((char *)proof_print, "Lat: %.6f , Long: %.6f", 
+                        quectel_l76.latitude, quectel_l76.longitude);
+                uart_transmit(UART0, proof_print, strlen(proof_print));
 
                 break;
 
