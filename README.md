@@ -1,0 +1,1 @@
+Este repositorio contiene el desarrollo de firmware y pruebas para el proyecto denominado: **Prototipo de dispositivo de geolocalización basado en tecnología GNSS**, para la obtencion del título de especialista de la Carrera de Especialización en Sistemas Embebidos de la Universidad de Buenos Aires.
