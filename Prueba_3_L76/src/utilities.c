@@ -88,7 +88,7 @@ void nmea_parser(const char *nmeaString, GNSSData_t *gnssData)
         }
         else if (i == 3)
         {
-            // Obtener la latitud en formato DDMM.MMMM
+            // Obtener la latitude en formato DDMM.MMMM
             float lat_degrees = atof(token) / 100;
             int lat_minutes = (int)lat_degrees;
             float lat_seconds = (lat_degrees - lat_minutes) * 60;
@@ -96,7 +96,7 @@ void nmea_parser(const char *nmeaString, GNSSData_t *gnssData)
         }
         else if (i == 5)
         {
-            // Obtener la longitud en formato DDDMM.MMMM
+            // Obtener la longitude en formato DDDMM.MMMM
             float lon_degrees = atof(token) / 100;
             int lon_minutes = (int)lon_degrees;
             float lon_seconds = (lon_degrees - lon_minutes) * 60;
