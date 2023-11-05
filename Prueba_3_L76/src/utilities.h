@@ -7,6 +7,15 @@
 #include "freertos/queue.h"
 #include "esp_log.h"
 
+/**
+ * @brief explican que hace la función
+ * 
+ * @param baud_rate: 
+ * @param 
+ * 
+ * @return 
+*/
+
 void uart_init(  uart_port_t     uart_num, 
                         int             baud_rate, 
                         int             rx_buffer_size, 
@@ -29,6 +38,8 @@ typedef struct
 } GNSSData_t;
 
 void nmea_parser(const char *nmeaString, GNSSData_t *gnssData);
+
+void nmea_rmc_parser_r(const char *nmeaString, GNSSData_t *gnssData);
 
 /*
 UART EVENTS TYPES

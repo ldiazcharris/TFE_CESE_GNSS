@@ -70,8 +70,17 @@ static void uart_interrupt_task(void *params)
             case UART_DATA:
                 uart_receive(UART1, (void *)uart_recv_data, (uint32_t)uart_event.size);
                 sprintf((char *)nmea_string, "%s", uart_recv_data);
+
+                uart_transmit(UART0, nmea_string, strlen((const char*)nmea_string));
+                
+
                 nmea_parser((const char *)nmea_string, &quectel_l76);
-                sprintf((char *)proof_print, "Lat: %.6f , Long: %.6f", 
+                sprintf((char *)proof_print, "Lat: %.6f, Long: %.6f \n", 
+                        quectel_l76.latitude, quectel_l76.longitude);
+                uart_transmit(UART0, proof_print, strlen((const char*)proof_print));
+
+                nmea_rmc_parser_r((const char *)nmea_string, &quectel_l76);
+                sprintf((char *)proof_print, "Lat: %.6f, Long: %.6f \n", 
                         quectel_l76.latitude, quectel_l76.longitude);
                 uart_transmit(UART0, proof_print, strlen((const char*)proof_print));
 
