@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        "task.h": "c",
+        "esp_intr_alloc.h": "c",
+        "utilities.h": "c",
+        "uart.h": "c",
+        "queue.h": "c"
+    }
+}
