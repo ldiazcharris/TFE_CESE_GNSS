@@ -29,19 +29,19 @@
 static QueueHandle_t uart0_celular_queue;
 static QueueHandle_t uart1_gnss_queue;
 static QueueHandle_t position_queue;
-static QueueHandle_t ocupancy_queue;
+static QueueHandle_t occupancy_queue;
 static SemaphoreHandle_t uart_sem;
 static GNSSData_t quectel_l76;
 static GNSSData_t receive_pos_4g;
 static bool occupancy_state;
-static gpio_config_t occupancy_pin_config;
+
 
 /****************DECLARACIÓN DE FUNCIONES*************************/
 
 static void uart_inter_gnss_task(void *params);
 static void transmit_to_server_task(void *params);
-static void ocupancy_detect_task(void *params);
-void IRAM_ATTR ocupancy_isr_handler(void* arg);
+static void occupancy_detect_task(void *params);
+void IRAM_ATTR occupancy_isr_handler(void* arg);
 
 /**********************FUNCIÓN PRINCIPAL**************************/
 
@@ -57,17 +57,20 @@ void app_main()
     //          (UART_NUM, TX, RX, RTS, CTS)
     uart_set_pin(UART1,    33, 26,  14,  12);
 
-        // Se configruran los pines donde se conectarán los pilotos de ocupado o desocupado. 
+    // Se configruran los pines donde se conectarán los pilotos de ocupado o desocupado. 
     init_pilots();
 
-   // lcd_init(); 
-   // lcd_clear(); 
-   // lcd_set_RGB(255, 255, 255);
+    // Secuencia de inicialización del LCD
+    lcd_init(); 
+    lcd_clear(); 
+    lcd_set_RGB(255, 255, 255);
 
-   uart_sem = xSemaphoreCreateBinary();
+    // Semáforo para arbitrar el uso del puerto UART
+    uart_sem = xSemaphoreCreateBinary();
 
-   position_queue = xQueueCreate(10, sizeof(GNSSData_t));
-   ocupancy_queue = xQueueCreate(10, sizeof(bool));
+    // Creación de colas que servirán para la comunicación entre tareas. 
+    position_queue = xQueueCreate(10, sizeof(GNSSData_t));
+    occupancy_queue = xQueueCreate(10, sizeof(bool));
 
     xTaskCreate(uart_inter_gnss_task,
                 "uart_inter_gnss_task",
@@ -83,8 +86,8 @@ void app_main()
                 12,
                 NULL);
 
-    xTaskCreate(ocupancy_detect_task,
-                "ocupancy_detect_task",
+    xTaskCreate(occupancy_detect_task,
+                "occupancy_detect_task",
                 BUF_SIZE * 4,
                 NULL,
                 12,
@@ -92,7 +95,7 @@ void app_main()
 
 
     gpio_install_isr_service(ESP_INTR_FLAG_LEVEL1);
-    gpio_isr_handler_add(OCCUPANCY_PIN, ocupancy_isr_handler, (void*) OCCUPANCY_PIN);
+    gpio_isr_handler_add(OCCUPANCY_PIN, occupancy_isr_handler, (void*) OCCUPANCY_PIN);
 
 }
 
@@ -107,8 +110,8 @@ static void uart_inter_gnss_task(void *params)
     uart_event_t uart_event;
     uint8_t *uart1_gnss_recv_data = (uint8_t *)malloc(BUF_SIZE*5);
     uint8_t *nmea_string = (uint8_t *)malloc(BUF_SIZE + 100);
-    uint8_t *lat_string = (uint8_t *)malloc(100);
-    uint8_t *lon_string = (uint8_t *)malloc(100);
+    char *lat_string = (char *)malloc(100);
+    char *lon_string = (char *)malloc(100);
     
 
     while (1)
@@ -118,8 +121,8 @@ static void uart_inter_gnss_task(void *params)
         {
             bzero(uart1_gnss_recv_data, BUF_SIZE*5);
             bzero(nmea_string, BUF_SIZE + 100);
-            bzero(lat_string, BUF_SIZE);
-            bzero(lon_string, BUF_SIZE);
+            bzero(lat_string, 100);
+            bzero(lon_string, 100);
 
             switch (uart_event.type)
             {
@@ -193,7 +196,7 @@ static void transmit_to_server_task(void *params)
             */
         }
 
-        if(xQueueReceive(ocupancy_queue, &occupancy_state, portMAX_DELAY))
+        if(xQueueReceive(occupancy_queue, &occupancy_state, portMAX_DELAY))
         {
             /*Código para transmitir por MQTT la ocupación
             */
@@ -205,18 +208,20 @@ static void transmit_to_server_task(void *params)
 
 }
 
-static void ocupancy_detect_task(void *params)
+static void occupancy_detect_task(void *params)
 {
     
-    if (xQueueReceive(ocupancy_queue, &occupancy_state, portMAX_DELAY)) {
+    if (xQueueReceive(occupancy_queue, &occupancy_state, portMAX_DELAY)) {
 
             write_occupancy(occupancy_state);
             
         }
 }
 
-void IRAM_ATTR ocupancy_isr_handler(void* arg)
+// https://github.com/espressif/esp-idf/blob/v5.2.1/examples/peripherals/gpio/generic_gpio/main/gpio_example_main.c
+
+void IRAM_ATTR occupancy_isr_handler(void* arg)
 {
     uint32_t gpio_num = (uint32_t) arg;
-    xQueueSendFromISR(ocupancy_queue, &gpio_num, NULL);
+    xQueueSendFromISR(occupancy_queue, &gpio_num, NULL);
 }
