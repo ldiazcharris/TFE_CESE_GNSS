@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <stdbool.h>
 #include "driver/gpio.h"
 #include "driver/uart.h"
 #include "freertos/FreeRTOS.h"
@@ -20,21 +21,27 @@
 #define JUMP " \n"
 #define UART0 UART_NUM_0
 #define UART1 UART_NUM_1
+#define OCCUPANCY_PIN 4 
+
 
 /**************DECLARACIÓN DE VARIABLES GLOBALES*******************/
 
 static QueueHandle_t uart0_celular_queue;
 static QueueHandle_t uart1_gnss_queue;
 static QueueHandle_t position_queue;
+static QueueHandle_t ocupancy_queue;
 static SemaphoreHandle_t uart_sem;
 static GNSSData_t quectel_l76;
 static GNSSData_t receive_pos_4g;
+static bool occupancy_state;
+static gpio_config_t occupancy_pin_config;
 
 /****************DECLARACIÓN DE FUNCIONES*************************/
 
 static void uart_inter_gnss_task(void *params);
 static void transmit_to_server_task(void *params);
 static void ocupancy_detect_task(void *params);
+void IRAM_ATTR ocupancy_isr_handler(void* arg);
 
 /**********************FUNCIÓN PRINCIPAL**************************/
 
@@ -50,6 +57,9 @@ void app_main()
     //          (UART_NUM, TX, RX, RTS, CTS)
     uart_set_pin(UART1,    33, 26,  14,  12);
 
+        // Se configruran los pines donde se conectarán los pilotos de ocupado o desocupado. 
+    init_pilots();
+
    // lcd_init(); 
    // lcd_clear(); 
    // lcd_set_RGB(255, 255, 255);
@@ -57,6 +67,7 @@ void app_main()
    uart_sem = xSemaphoreCreateBinary();
 
    position_queue = xQueueCreate(10, sizeof(GNSSData_t));
+   ocupancy_queue = xQueueCreate(10, sizeof(bool));
 
     xTaskCreate(uart_inter_gnss_task,
                 "uart_inter_gnss_task",
@@ -73,14 +84,19 @@ void app_main()
                 NULL);
 
     xTaskCreate(ocupancy_detect_task,
-                "transmit_to_server_task",
+                "ocupancy_detect_task",
                 BUF_SIZE * 4,
                 NULL,
                 12,
                 NULL);
 
 
+    gpio_install_isr_service(ESP_INTR_FLAG_LEVEL1);
+    gpio_isr_handler_add(OCCUPANCY_PIN, ocupancy_isr_handler, (void*) OCCUPANCY_PIN);
+
 }
+
+    
 
 
 
@@ -108,31 +124,21 @@ static void uart_inter_gnss_task(void *params)
             switch (uart_event.type)
             {
             case UART_DATA:
-                
-
                     uart_receive(UART1, (void *)uart1_gnss_recv_data, (uint32_t)uart_event.size);
                     sprintf((char *)nmea_string, "%s\n\r", uart1_gnss_recv_data);
-
                     nmea_parser((const char *)nmea_string, &quectel_l76);
 
-                    /* https://www.freertos.org/a00117.html
-                    
-                    */
-
-                    if(xQueueSend(position_queue, &quectel_l76, 0) != pdPASS)
+                    // https://www.freertos.org/a00117.html
+                    if(xQueueSend(position_queue, &quectel_l76, (TickType_t)10) != pdPASS)
                     {
                         lcd_cursor(0, 0);
-                        lcd_write_string("ErrTransmPosici");
+                        lcd_write_string("ErrTransmPos");
                     }
 
                     // Imprimir por el LCD la posición: 
-                    sprintf((char *)lat_string, "Lat: %.6f",  quectel_l76.latitude);
-
-                    sprintf((char *)lon_string, "Lon: %.6f", quectel_l76.longitude);
-                    lcd_cursor(0, 0);
-                    lcd_write_string(lat_string);
-                    lcd_cursor(1, 0);
-                    lcd_write_string(lon_string);
+                    sprintf((char *)lat_string, "Lat:%.2f",  quectel_l76.latitude);
+                    sprintf((char *)lon_string, "Lon:%.3f", quectel_l76.longitude);
+                    write_position(lat_string, lon_string);
 
                 break; 
 
@@ -158,7 +164,7 @@ static void transmit_to_server_task(void *params)
 
     while(1){
 
-        if (xQueueReceive(uart0_celular_queue, (void *)&uart_event, (TickType_t)portMAX_DELAY))
+        if (xQueueReceive(uart0_celular_queue, (void *)&uart_event, (TickType_t)100))
         {
             bzero(uart_recv_data, BUF_SIZE*5);
             bzero(at_command, BUF_SIZE);
@@ -183,7 +189,13 @@ static void transmit_to_server_task(void *params)
 
         if(xQueueReceive(position_queue, &receive_pos_4g, portMAX_DELAY))
         {
-            /*Código para transmitir por MQTT
+            /*Código para transmitir por MQTT la posición
+            */
+        }
+
+        if(xQueueReceive(ocupancy_queue, &occupancy_state, portMAX_DELAY))
+        {
+            /*Código para transmitir por MQTT la ocupación
             */
         }
 
@@ -196,4 +208,15 @@ static void transmit_to_server_task(void *params)
 static void ocupancy_detect_task(void *params)
 {
     
+    if (xQueueReceive(ocupancy_queue, &occupancy_state, portMAX_DELAY)) {
+
+            write_occupancy(occupancy_state);
+            
+        }
+}
+
+void IRAM_ATTR ocupancy_isr_handler(void* arg)
+{
+    uint32_t gpio_num = (uint32_t) arg;
+    xQueueSendFromISR(ocupancy_queue, &gpio_num, NULL);
 }

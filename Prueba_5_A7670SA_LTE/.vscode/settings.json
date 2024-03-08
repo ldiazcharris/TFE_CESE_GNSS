@@ -4,6 +4,7 @@
         "esp_intr_alloc.h": "c",
         "utilities.h": "c",
         "uart.h": "c",
-        "queue.h": "c"
+        "queue.h": "c",
+        "stdbool.h": "c"
     }
 }

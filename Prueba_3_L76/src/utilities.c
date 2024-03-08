@@ -52,7 +52,13 @@ void delay(const TickType_t delay_ms)
 }
 
 /**
- * @brief Función que permite parsear las instrucicones recibidad por el módulo Quectel L76
+ * @brief Función que permite parsear las instrucicones recibidad por el módulo Quectel L76.
+ * Guarda en el parámetro gnssData el valor de la latitud y longitud obtenido de la cadena
+ * RMC que se debe proporcionar a través del parámetro nmeaString.
+ * 
+ * @param nmeaString: Puntero a char de la cadena recibida por UART dek módulo L76
+ * @param gnssData: puntero estructura del tipo GNSSData_t que almacena la latitud
+ *                  y longitud de la posición que reporta el módulo L76. 
  * 
 */
 
@@ -111,8 +117,12 @@ void nmea_parser(const char *nmeaString, GNSSData_t *gnssData)
 
 /**
  * @brief Función que permite parsear las cadenas tipo RMC recibidad por el módulo Quectel L76
- *        Es la versión de tipo "reentrant"
+ *        Es la versión de tipo "reentrant". Guarda en el parámetro gnssData el valor de la latitud
+ *        y longitud obtenido de la cadena RMC que se debe proporcionar a través del parámetro nmeaString.
  * 
+ * @param nmeaString: Puntero a char de la cadena recibida por UART dek módulo L76
+ * @param gnssData: puntero estructura del tipo GNSSData_t que almacena la latitud
+ *                  y longitud de la posición que reporta el módulo L76. 
 */
 
 void nmea_rmc_parser_r(const char *nmeaString, GNSSData_t *gnssData)

@@ -61,11 +61,6 @@ void delay(const TickType_t delay_ms)
     vTaskDelay( delay_ms / portTICK_PERIOD_MS);
 }
 
-/**
- * @brief Función que permite parsear las instrucicones recibidad por el módulo Quectel L76
- * 
-*/
-
 void nmea_parser(const char *nmeaString, GNSSData_t *gnssData)
 {
     // Verificar que la cadena comience con '$'
@@ -128,11 +123,7 @@ void nmea_parser(const char *nmeaString, GNSSData_t *gnssData)
     }
 }
 
-/**
- * @brief Función que permite parsear las cadenas tipo RMC recibidad por el módulo Quectel L76
- *        Es la versión de tipo "reentrant"
- * 
-*/
+
 
 void nmea_rmc_parser_r(const char *nmeaString, GNSSData_t *gnssData)
 {
@@ -196,3 +187,60 @@ void nmea_rmc_parser_r(const char *nmeaString, GNSSData_t *gnssData)
         }
     }
 }
+
+
+void ocupancy_pin_init(gpio_config_t* occupancy_pin_config, uint64_t occupancy_pin)
+{
+    occupancy_pin_config->intr_type = GPIO_INTR_ANYEDGE;
+    occupancy_pin_config->pin_bit_mask = (1ULL << occupancy_pin);
+    occupancy_pin_config->mode = GPIO_MODE_INPUT;
+    occupancy_pin_config->pull_up_en = GPIO_PULLUP_DISABLE;
+    occupancy_pin_config->pull_down_en = GPIO_PULLDOWN_ENABLE;
+    gpio_config(occupancy_pin_config);
+}
+
+void init_pilots()
+{    
+    gpio_set_direction(BUSY_PILOT, GPIO_MODE_OUTPUT);
+    gpio_reset_pin(BUSY_PILOT);
+    gpio_set_direction(FREE_PILOT, GPIO_MODE_OUTPUT);
+    gpio_reset_pin(FREE_PILOT);
+}
+
+void write_position(const char * lat, const char * lon)
+{
+    //lcd_clear();
+    lcd_cursor(0, 0);
+    lcd_write_string(lat);
+    lcd_cursor(1, 0);
+    lcd_write_string(lon);
+}
+
+void write_occupancy(bool occupancy_state)
+{
+                //lcd_clear();
+            if(occupancy_state)
+            {
+                gpio_set_level(FREE_PILOT, 0);
+                gpio_set_level(BUSY_PILOT, 1);
+                lcd_cursor(0, 11);
+                lcd_write_string("occ:SI");
+                
+            }
+            else if(!occupancy_state)
+            {
+                gpio_set_level(FREE_PILOT, 1);
+                gpio_set_level(BUSY_PILOT, 0);
+                lcd_cursor(0, 11);
+                lcd_write_string("occ:NO");
+                
+            }
+            else
+            {
+                gpio_set_level(FREE_PILOT, 1);
+                gpio_set_level(BUSY_PILOT, 1);
+                lcd_cursor(0, 11);
+                lcd_write_string("occ:--");
+            }
+}
+
