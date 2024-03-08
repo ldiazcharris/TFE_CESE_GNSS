@@ -25,13 +25,16 @@
 
 static QueueHandle_t uart0_celular_queue;
 static QueueHandle_t uart1_gnss_queue;
+static QueueHandle_t position_queue;
 static SemaphoreHandle_t uart_sem;
 static GNSSData_t quectel_l76;
+static GNSSData_t receive_pos_4g;
 
 /****************DECLARACIÓN DE FUNCIONES*************************/
 
-static void uart_interrupt_task(void *params);
+static void uart_inter_gnss_task(void *params);
 static void transmit_to_server_task(void *params);
+static void ocupancy_detect_task(void *params);
 
 /**********************FUNCIÓN PRINCIPAL**************************/
 
@@ -53,8 +56,10 @@ void app_main()
 
    uart_sem = xSemaphoreCreateBinary();
 
-    xTaskCreate(uart_interrupt_task,
-                "uart_interrupt_task",
+   position_queue = xQueueCreate(10, sizeof(GNSSData_t));
+
+    xTaskCreate(uart_inter_gnss_task,
+                "uart_inter_gnss_task",
                 BUF_SIZE * 4,
                 NULL,
                 12,
@@ -67,6 +72,12 @@ void app_main()
                 12,
                 NULL);
 
+    xTaskCreate(ocupancy_detect_task,
+                "transmit_to_server_task",
+                BUF_SIZE * 4,
+                NULL,
+                12,
+                NULL);
 
 
 }
@@ -75,22 +86,83 @@ void app_main()
 
 /****************DEFINICIÓN DE FUNCIONES**************************/
 
-static void uart_interrupt_task(void *params)
+static void uart_inter_gnss_task(void *params)
+{
+    uart_event_t uart_event;
+    uint8_t *uart1_gnss_recv_data = (uint8_t *)malloc(BUF_SIZE*5);
+    uint8_t *nmea_string = (uint8_t *)malloc(BUF_SIZE + 100);
+    uint8_t *lat_string = (uint8_t *)malloc(100);
+    uint8_t *lon_string = (uint8_t *)malloc(100);
+    
+
+    while (1)
+    {
+        
+        if (xQueueReceive(uart1_gnss_queue, (void *)&uart_event, (TickType_t)portMAX_DELAY))
+        {
+            bzero(uart1_gnss_recv_data, BUF_SIZE*5);
+            bzero(nmea_string, BUF_SIZE + 100);
+            bzero(lat_string, BUF_SIZE);
+            bzero(lon_string, BUF_SIZE);
+
+            switch (uart_event.type)
+            {
+            case UART_DATA:
+                
+
+                    uart_receive(UART1, (void *)uart1_gnss_recv_data, (uint32_t)uart_event.size);
+                    sprintf((char *)nmea_string, "%s\n\r", uart1_gnss_recv_data);
+
+                    nmea_parser((const char *)nmea_string, &quectel_l76);
+
+                    /* https://www.freertos.org/a00117.html
+                    
+                    */
+
+                    if(xQueueSend(position_queue, &quectel_l76, 0) != pdPASS)
+                    {
+                        lcd_cursor(0, 0);
+                        lcd_write_string("ErrTransmPosici");
+                    }
+
+                    // Imprimir por el LCD la posición: 
+                    sprintf((char *)lat_string, "Lat: %.6f",  quectel_l76.latitude);
+
+                    sprintf((char *)lon_string, "Lon: %.6f", quectel_l76.longitude);
+                    lcd_cursor(0, 0);
+                    lcd_write_string(lat_string);
+                    lcd_cursor(1, 0);
+                    lcd_write_string(lon_string);
+
+                break; 
+
+            default:
+                break;
+            }
+        }
+    }
+
+    free(uart1_gnss_recv_data);
+    free(nmea_string);
+    free(lat_string);
+    free(lon_string);
+
+}
+
+static void transmit_to_server_task(void *params)
 {
     uart_event_t uart_event;
     uint8_t *uart_recv_data = (uint8_t *)malloc(BUF_SIZE*5);
     uint8_t *at_command = (uint8_t *)malloc(BUF_SIZE);
     uint8_t *at_response = (uint8_t *)malloc(BUF_SIZE*5);
-    
 
-    while (1)
-    {
+    while(1){
+
         if (xQueueReceive(uart0_celular_queue, (void *)&uart_event, (TickType_t)portMAX_DELAY))
         {
             bzero(uart_recv_data, BUF_SIZE*5);
             bzero(at_command, BUF_SIZE);
             
-
             switch (uart_event.type)
             {
             case UART_DATA:
@@ -101,9 +173,6 @@ static void uart_interrupt_task(void *params)
 
                     uart_transmit(UART1, at_command, strlen((const char*)at_command));
 
-                 
-                
-
                 break; 
 
             default:
@@ -111,38 +180,20 @@ static void uart_interrupt_task(void *params)
             }
 
         }
-        
-        
-        if (xQueueReceive(uart1_gnss_queue, (void *)&uart_event, (TickType_t)portMAX_DELAY))
+
+        if(xQueueReceive(position_queue, &receive_pos_4g, portMAX_DELAY))
         {
-            bzero(uart_recv_data, BUF_SIZE*5);
-            bzero(at_response, BUF_SIZE*5);
-
-            switch (uart_event.type)
-            {
-            case UART_DATA:
-                
-
-                    uart_receive(UART1, (void *)uart_recv_data, (uint32_t)uart_event.size);
-                    sprintf((char *)at_response, "%s\n\r", uart_recv_data);
-
-                    uart_transmit(UART0, at_response, strlen((const char*)at_response));
-
-                
-                
-                break; 
-
-            default:
-                break;
-            }
+            /*Código para transmitir por MQTT
+            */
         }
-    }
 
+    }
     free(uart_recv_data);
     free(at_command);
+
 }
 
-static void transmit_to_server_task(void *params)
+static void ocupancy_detect_task(void *params)
 {
-
+    
 }

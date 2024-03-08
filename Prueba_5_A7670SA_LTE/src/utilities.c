@@ -1,6 +1,16 @@
 #include "utilities.h"
+#include "lcd_i2c_grove.h"
 
-static const char *TAG = "NMEA_PARSER";
+// Uncomment for debugging with UART_0
+//static const char *TAG = "NMEA_PARSER";
+
+static void error_message_gnss_data(const char *message){
+    lcd_clear();
+    lcd_cursor(0,0);
+    lcd_write_string((char *)"ERR posicion:");
+    lcd_cursor(1,0);
+    lcd_write_string((char *)*message);
+}
 
 void uart_init(  uart_port_t     uart_num, 
                         int             baud_rate, 
@@ -61,7 +71,10 @@ void nmea_parser(const char *nmeaString, GNSSData_t *gnssData)
     // Verificar que la cadena comience con '$'
     if (nmeaString[0] != '$')
     {
-        ESP_LOGW(TAG, "Cadena NMEA no válida, no comienza con '$'");
+        // Uncomment for debugging with UART_0
+        //ESP_LOGW(TAG, "Cadena NMEA no válida, no comienza con '$'");
+        char message[] = "falta $";
+        error_message_gnss_data(message);
         return;
     }
 
@@ -72,7 +85,10 @@ void nmea_parser(const char *nmeaString, GNSSData_t *gnssData)
     // Comprobar si el primer token es "$GPRMC"
     if (strcmp(token, "$GPRMC") != 0)
     {
-        ESP_LOGW(TAG, "Cadena NMEA no válida, no es un mensaje GPRMC");
+        // Uncomment for debugging with UART_0
+        //ESP_LOGW(TAG, "Cadena NMEA no válida, no es un mensaje GPRMC");
+        char message[] = "falta $GPRMC";
+        error_message_gnss_data(message);
         return;
     }
 
@@ -82,7 +98,10 @@ void nmea_parser(const char *nmeaString, GNSSData_t *gnssData)
         token = strtok(NULL, ",");
         if (token == NULL)
         {
-            ESP_LOGW(TAG, "Cadena NMEA no válida, falta un campo");
+            // Uncomment for debugging with UART_0
+            //ESP_LOGW(TAG, "Cadena NMEA no válida, falta un campo");
+            char message[] = "falta un campo";
+            error_message_gnss_data(message);
             return;
         }
         if (i == 1)
@@ -120,7 +139,10 @@ void nmea_rmc_parser_r(const char *nmeaString, GNSSData_t *gnssData)
     // Verificar que la cadena comience con '$'
     if (nmeaString[0] != '$')
     {
+        // Uncomment for debugging with UART_0
         //ESP_LOGW(TAG, "Cadena NMEA no válida, no comienza con '$'");
+        char message[] = "falta $";
+        error_message_gnss_data(message);
         return;
     }
 
@@ -132,7 +154,10 @@ void nmea_rmc_parser_r(const char *nmeaString, GNSSData_t *gnssData)
     // Comprobar si el primer token es "$GPRMC"
     if (strcmp(token, "$GPRMC") != 0)
     {
-        ESP_LOGW(TAG, "Cadena NMEA no válida, no es un mensaje GPRMC");
+        // Uncomment for debugging with UART_0
+        //ESP_LOGW(TAG, "Cadena NMEA no válida, no es un mensaje GPRMC");
+        char message[] = "falta $GPRMC";
+        error_message_gnss_data(message);
         return;
     }
 
@@ -142,7 +167,10 @@ void nmea_rmc_parser_r(const char *nmeaString, GNSSData_t *gnssData)
         token = strtok_r(NULL, ",", &rest);
         if (token == NULL)
         {
-            ESP_LOGW(TAG, "Cadena NMEA no válida, falta un campo");
+            // Uncomment for debugging with UART_0
+            //ESP_LOGW(TAG, "Cadena NMEA no válida, falta un campo");
+            char message[] = "falta un campo";
+            error_message_gnss_data(message);
             return;
         }
         if (i == 1)
