@@ -12,7 +12,7 @@
 #include "freertos/queue.h"
 #include "utilities.h"
 #include "lcd_i2c_grove.h"
-
+#include "driver/adc.h"
 
 /************************MACROS***********************************/
 
@@ -34,6 +34,7 @@ static SemaphoreHandle_t uart_sem;
 static GNSSData_t quectel_l76;
 static GNSSData_t receive_pos_4g;
 static bool occupancy_state;
+
 
 
 /****************DECLARACIÓN DE FUNCIONES*************************/
