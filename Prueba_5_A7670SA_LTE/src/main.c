@@ -211,12 +211,15 @@ static void transmit_to_server_task(void *params)
 
 static void occupancy_detect_task(void *params)
 {
-    
-    if (xQueueReceive(occupancy_queue, &occupancy_state, portMAX_DELAY)) {
+    while (1)
+    {
+        if (xQueueReceive(occupancy_queue, &occupancy_state, portMAX_DELAY)) {
 
-            write_occupancy(occupancy_state);
-            
-        }
+                write_occupancy(occupancy_state);
+                
+            }
+
+    }
 }
 
 // https://github.com/espressif/esp-idf/blob/v5.2.1/examples/peripherals/gpio/generic_gpio/main/gpio_example_main.c

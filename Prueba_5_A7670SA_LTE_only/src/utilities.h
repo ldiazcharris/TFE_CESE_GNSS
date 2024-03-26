@@ -8,8 +8,8 @@
 #include "esp_log.h"
 
 
-#define BUSY_PILOT 15
-#define FREE_PILOT 3
+#define BUSY_PILOT 4
+#define FREE_PILOT 2
 
 /**
  * @brief explican que hace la función
