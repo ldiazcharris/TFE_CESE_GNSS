@@ -14,13 +14,37 @@
 #define UART0 UART_NUM_0
 #define UART1 UART_NUM_1
 
+#define TOPIC "proyectoLuis/cava001/datos"
+
+
+
+
 const char * cmqtt_start = "AT+CMQTTSTART\r\n";
 const char * cmqtt_client = "AT+CMQTTACCQ=0,\"gnss_cavas\",0";
+// Incluir en el manual como una configuración
 const char * cmqtt_conect = "AT+CMQTTCONNECT=0,\"tcp://18.212.130.131:1883\",300,0,\"test\",\"CloudTech*\"";
 const char * cmqtt_topic = "AT+CMQTTTOPIC=0,23";
 const char * mqtt_topic = "proyectoLuis/cava/datos";
 const char * cmqtt_payload = "AT+CMQTTPAYLOAD=0,48";
 const char * mqtt_payload_format = "{\"latitud\":\"%.6f\", \"longitud\":\"%.6f\"}";
+
+
+typedef struct
+{
+    float lat;
+    float lon;
+    char time[10];
+} GNSSData_t;
+
+
+// Analizar Si la posición GNSSData_t puede ser un arreglo de 10 valores. 
+typedef struct
+{
+    bool occupacion;
+    GNSSData_t posicion;
+} CAVA_DATA_t;
+
+
 
 /**
  * @brief explican que hace la función
@@ -45,12 +69,6 @@ void uart_receive(uart_port_t uart_num, void *buf, uint32_t length);
 
 void delay(const TickType_t delay_ms);
 
-typedef struct
-{
-    float latitude;
-    float longitude;
-    char time[10];
-} GNSSData_t;
 
 /**
  * @brief Función que permite parsear las cadenas tipo RMC recibidad por el módulo Quectel L76.
@@ -81,6 +99,8 @@ void write_position(const char * lat, const char * lon);
 void write_occupancy(bool occupancy_state);
 
 void init_pilots();
+
+bool mqtt_service_init();
 
 bool fmqtt_send_payload(const char * mqtt_payload_to_send);
 

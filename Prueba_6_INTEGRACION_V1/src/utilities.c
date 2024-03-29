@@ -110,7 +110,7 @@ void nmea_parser(const char *nmeaString, GNSSData_t *gnssData)
             float lat_degrees = atof(token) / 100;
             int lat_minutes = (int)lat_degrees;
             float lat_seconds = (lat_degrees - lat_minutes) * 60;
-            gnssData->latitude = lat_minutes + lat_seconds;
+            gnssData->lat = lat_minutes + lat_seconds;
         }
         else if (i == 5)
         {
@@ -118,7 +118,7 @@ void nmea_parser(const char *nmeaString, GNSSData_t *gnssData)
             float lon_degrees = atof(token) / 100;
             int lon_minutes = (int)lon_degrees;
             float lon_seconds = (lon_degrees - lon_minutes) * 60;
-            gnssData->longitude = lon_minutes + lon_seconds;
+            gnssData->lon = lon_minutes + lon_seconds;
         }
     }
 }
@@ -184,7 +184,7 @@ bool nmea_rmc_parser_r(const char *nmeaString, GNSSData_t *gnssData)
             float lat_degrees = atof(token) / 100;
             int lat_minutes = (int)lat_degrees;
             float lat_seconds = (lat_degrees - lat_minutes) * 60;
-            gnssData->latitude = lat_minutes + lat_seconds;
+            gnssData->lat = lat_minutes + lat_seconds;
             data_count++;
         }
         else if (i == 5)
@@ -193,7 +193,7 @@ bool nmea_rmc_parser_r(const char *nmeaString, GNSSData_t *gnssData)
             float lon_degrees = atof(token) / 100;
             int lon_minutes = (int)lon_degrees;
             float lon_seconds = (lon_degrees - lon_minutes) * 60;
-            gnssData->longitude = lon_minutes + lon_seconds;
+            gnssData->lon = lon_minutes + lon_seconds;
             data_count++;
         }
     }
@@ -255,6 +255,9 @@ void write_occupancy(bool occupancy_state)
             }
 }
 
+// Esta debería ser la tarea que en el while(1) va a esperar la queue de las otras tareas
+
+// cuando la reciba va a ajecutatr esto:
 bool fmqtt_send_payload(const char * mqtt_payload_to_send)
 {
     uart_transmit(UART1, cmqtt_topic, strlen(cmqtt_topic));
@@ -265,4 +268,9 @@ bool fmqtt_send_payload(const char * mqtt_payload_to_send)
     delay(50);
     uart_transmit(UART1, mqtt_payload_to_send, strlen(mqtt_payload_to_send));
 
+}
+
+bool mqtt_service_init()
+{
+    
 }
