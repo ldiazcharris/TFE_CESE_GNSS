@@ -110,7 +110,7 @@ void nmea_parser(const char *nmeaString, GNSSData_t *gnssData)
             float lat_degrees = atof(token) / 100;
             int lat_minutes = (int)lat_degrees;
             float lat_seconds = (lat_degrees - lat_minutes) * 60;
-            gnssData->latitude = lat_minutes + lat_seconds;
+            gnssData->lat = lat_minutes + lat_seconds;
         }
         else if (i == 5)
         {
@@ -118,56 +118,65 @@ void nmea_parser(const char *nmeaString, GNSSData_t *gnssData)
             float lon_degrees = atof(token) / 100;
             int lon_minutes = (int)lon_degrees;
             float lon_seconds = (lon_degrees - lon_minutes) * 60;
-            gnssData->longitude = lon_minutes + lon_seconds;
+            gnssData->lon = lon_minutes + lon_seconds;
         }
     }
 }
 
 
 
-void nmea_rmc_parser_r(const char *nmeaString, GNSSData_t *gnssData)
+bool nmea_rmc_parser_r(const char *nmeaString, GNSSData_t *gnssData)
 {
+    bool result_parser = false;
     // Verificar que la cadena comience con '$'
     if (nmeaString[0] != '$')
     {
         // Uncomment for debugging with UART_0
         //ESP_LOGW(TAG, "Cadena NMEA no válida, no comienza con '$'");
-        char message[] = "falta $";
-        error_message_gnss_data(message);
-        return;
+        //char message[] = "falta $";
+        //error_message_gnss_data(message);
+        return result_parser;
     }
 
     // Se utiliza strtok para dividir la cadena en tokens usando "," como divisor
     char *token;
     char* rest = (char *)nmeaString;
     token = strtok_r((char *)nmeaString, ",", &rest);
+    uint8_t data_count = 0;
 
     // Comprobar si el primer token es "$GPRMC"
     if (strcmp(token, "$GPRMC") != 0)
     {
         // Uncomment for debugging with UART_0
         //ESP_LOGW(TAG, "Cadena NMEA no válida, no es un mensaje GPRMC");
-        char message[] = "falta $GPRMC";
-        error_message_gnss_data(message);
-        return;
+        //char message[] = "falta $GPRMC";
+        //error_message_gnss_data(message);
+        return result_parser;
     }
 
     // Si todo sale bien se itera a través de los tokens
     for (int i = 1; i < 12; i++)
     {
         token = strtok_r(NULL, ",", &rest);
-        if (token == NULL)
+        if ((token == NULL)&&(data_count == 3))
         {
             // Uncomment for debugging with UART_0
             //ESP_LOGW(TAG, "Cadena NMEA no válida, falta un campo");
-            char message[] = "falta un campo";
-            error_message_gnss_data(message);
-            return;
+            //char message[] = "falta un campo";
+            //error_message_gnss_data(message);
+            result_parser = true;
+            return result_parser;
         }
+        else if((token == NULL))
+        {
+            return result_parser;
+        }
+
         if (i == 1)
         {
             // Obtener la hora en formato HHMMSS
             strncpy(gnssData->time, token, 10);
+            data_count++;
         }
         else if (i == 3)
         {
@@ -175,7 +184,8 @@ void nmea_rmc_parser_r(const char *nmeaString, GNSSData_t *gnssData)
             float lat_degrees = atof(token) / 100;
             int lat_minutes = (int)lat_degrees;
             float lat_seconds = (lat_degrees - lat_minutes) * 60;
-            gnssData->latitude = lat_minutes + lat_seconds;
+            gnssData->lat = lat_minutes + lat_seconds;
+            data_count++;
         }
         else if (i == 5)
         {
@@ -183,9 +193,11 @@ void nmea_rmc_parser_r(const char *nmeaString, GNSSData_t *gnssData)
             float lon_degrees = atof(token) / 100;
             int lon_minutes = (int)lon_degrees;
             float lon_seconds = (lon_degrees - lon_minutes) * 60;
-            gnssData->longitude = lon_minutes + lon_seconds;
+            gnssData->lon = lon_minutes + lon_seconds;
+            data_count++;
         }
     }
+    return result_parser;
 }
 
 
@@ -207,7 +219,7 @@ void init_pilots()
     gpio_reset_pin(FREE_PILOT);
 }
 
-void write_position(const char * lat, const char * lon)
+void write_position(char * lat, char * lon)
 {
     //lcd_clear();
     lcd_cursor(0, 0);
@@ -244,3 +256,22 @@ void write_occupancy(bool occupancy_state)
             }
 }
 
+// Esta debería ser la tarea que en el while(1) va a esperar la queue de las otras tareas
+
+// cuando la reciba va a ajecutatr esto:
+bool fmqtt_send_payload(const char * mqtt_payload_to_send)
+{
+    uart_transmit(UART1, CMQTT_TOPIC, strlen(CMQTT_TOPIC));
+    delay(50);
+    uart_transmit(UART1, MQTT_TOPIC, strlen(MQTT_TOPIC));
+    delay(50);
+    uart_transmit(UART1, CMQTT_PAYLOAD, strlen(CMQTT_PAYLOAD));
+    delay(50);
+    uart_transmit(UART1, mqtt_payload_to_send, strlen(mqtt_payload_to_send));
+    return true;
+}
+
+bool mqtt_service_init()
+{
+    return true;
+}

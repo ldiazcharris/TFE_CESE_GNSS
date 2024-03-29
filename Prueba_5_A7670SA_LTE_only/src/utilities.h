@@ -8,8 +8,40 @@
 #include "esp_log.h"
 
 
-#define BUSY_PILOT 4
-#define FREE_PILOT 2
+#define BUSY_PILOT 15
+#define FREE_PILOT 3
+
+#define UART0 UART_NUM_0
+#define UART1 UART_NUM_1
+
+//#define TOPIC "proyectoLuis/cava001/datos"
+
+#define CMQTT_START         "AT+CMQTTSTART\r\n"
+#define CMQTT_CLIENT        "AT+CMQTTACCQ=0,\"gnss_cavas\",0"
+// Incluir en el manual como una configuración
+#define CMQTT_CONNECT        "AT+CMQTTCONNECT=0,\"tcp://18.212.130.131:1883\",300,0,\"test\",\"CloudTech*\""
+#define CMQTT_TOPIC          "AT+CMQTTTOPIC=0,23"
+#define MQTT_TOPIC           "proyectoLuis/cava/datos"
+#define CMQTT_PAYLOAD        "AT+CMQTTPAYLOAD=0,48"
+#define MQTT_PAYLOAD_FORMAT  "{\"latitud\":\"%.6f\", \"longitud\":\"%.6f\"}"
+
+
+typedef struct
+{
+    float lat;
+    float lon;
+    char time[10];
+} GNSSData_t;
+
+
+// Analizar Si la posición GNSSData_t puede ser un arreglo de 10 valores. 
+typedef struct
+{
+    bool occupacion;
+    GNSSData_t posicion;
+} CAVA_DATA_t;
+
+
 
 /**
  * @brief explican que hace la función
@@ -34,12 +66,6 @@ void uart_receive(uart_port_t uart_num, void *buf, uint32_t length);
 
 void delay(const TickType_t delay_ms);
 
-typedef struct
-{
-    float latitude;
-    float longitude;
-    char time[10];
-} GNSSData_t;
 
 /**
  * @brief Función que permite parsear las cadenas tipo RMC recibidad por el módulo Quectel L76.
@@ -56,7 +82,7 @@ void nmea_parser(const char *nmeaString, GNSSData_t *gnssData);
  * @param gnssData: estructura de datos del tipo GNSSData_t, que permite almacenar la latitud y la longitud
  * 
 */
-void nmea_rmc_parser_r(const char *nmeaString, GNSSData_t *gnssData);
+bool nmea_rmc_parser_r(const char *nmeaString, GNSSData_t *gnssData);
 
 /**
  * @brief Esta función permite inicializar un pin GPIO de la ESP32 para usarlo como interrupición
@@ -65,12 +91,15 @@ void nmea_rmc_parser_r(const char *nmeaString, GNSSData_t *gnssData);
 */
 void ocupancy_pin_init(gpio_config_t* occupancy_pin_config, uint64_t occupancy_pin);
 
-void write_position(const char * lat, const char * lon);
+void write_position(char * lat, char * lon);
 
 void write_occupancy(bool occupancy_state);
 
 void init_pilots();
 
+bool mqtt_service_init();
+
+bool fmqtt_send_payload(const char * mqtt_payload_to_send);
 
 
 /*
