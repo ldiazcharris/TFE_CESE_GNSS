@@ -8,8 +8,8 @@
 #include "esp_log.h"
 
 
-#define BUSY_PILOT 15
-#define FREE_PILOT 3
+#define BUSY_PILOT 16
+#define FREE_PILOT 17
 
 #define UART0 UART_NUM_0
 #define UART1 UART_NUM_1
@@ -95,7 +95,7 @@ void write_position(char * lat, char * lon);
 
 void write_occupancy(bool occupancy_state);
 
-void init_pilots();
+void pilots_init();
 
 bool mqtt_service_init();
 

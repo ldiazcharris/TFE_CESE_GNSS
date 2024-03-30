@@ -9,7 +9,7 @@ static void error_message_gnss_data(const char *message){
     lcd_cursor(0,0);
     lcd_write_string((char *)"ERR posicion:");
     lcd_cursor(1,0);
-    lcd_write_string((char *)*message);
+    lcd_write_string((char *) message);
 }
 
 void uart_init(  uart_port_t     uart_num, 
@@ -211,12 +211,13 @@ void ocupancy_pin_init(gpio_config_t* occupancy_pin_config, uint64_t occupancy_p
     gpio_config(occupancy_pin_config);
 }
 
-void init_pilots()
+void pilots_init()
 {    
-    gpio_set_direction(BUSY_PILOT, GPIO_MODE_OUTPUT);
     gpio_reset_pin(BUSY_PILOT);
-    gpio_set_direction(FREE_PILOT, GPIO_MODE_OUTPUT);
     gpio_reset_pin(FREE_PILOT);
+    gpio_set_direction(BUSY_PILOT, GPIO_MODE_OUTPUT);
+    gpio_set_direction(FREE_PILOT, GPIO_MODE_OUTPUT);
+    
 }
 
 void write_position(char * lat, char * lon)

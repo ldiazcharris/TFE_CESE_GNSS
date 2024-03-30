@@ -12,7 +12,6 @@
 #include "freertos/queue.h"
 #include "utilities.h"
 #include "lcd_i2c_grove.h"
-#include "driver/adc.h"
 
 /************************MACROS***********************************/
 
@@ -56,12 +55,12 @@ void app_main()
     uart_set_pin(UART0,     1,  3,  23,  19);
 
     // UART_1 conectar con modulo 4g A7670SA
-    uart_init(UART1, 115200, BUF_SIZE * 2, 0, 0, NULL, ESP_INTR_FLAG_LEVEL1); //   ESP_INTR_FLAG_IRAM
+    uart_init(UART1, 115200, BUF_SIZE * 2, 0, 50, &uart1_queue_4g, ESP_INTR_FLAG_LEVEL1); //   ESP_INTR_FLAG_IRAM
     //          (UART_NUM, TX, RX, RTS, CTS)
     uart_set_pin(UART1,    33, 26,  14,  12);
 
     // Se configruran los pines donde se conectarán los pilotos de ocupado o desocupado. 
-    init_pilots();
+    pilots_init();
 
     // Secuencia de inicialización del LCD
     /*
@@ -82,14 +81,14 @@ void app_main()
                 "transmit_to_server_task",
                 BUF_SIZE * 6,
                 NULL,
-                8,
+                12,
                 NULL);
 
     xTaskCreate(transmit_to_server_task_1,
                 "transmit_to_server_task",
                 BUF_SIZE * 6,
                 NULL,
-                9,
+                12,
                 NULL);
 /*
     xTaskCreate(mqtt_activate_server,
@@ -190,57 +189,57 @@ static void transmit_to_server_task(void *params)
 
     gpio_reset_pin(2);
     gpio_set_direction(2, GPIO_MODE_OUTPUT);
-    //mqtt_activate_server();
+    // mqtt_activate_server();
 
-    while(1){
-
-        if (xQueueReceive(uart0_queue_gnss, (void *)&uart0_event, (TickType_t)portMAX_DELAY))
+    while (1)
+    {
+        if (xQueueReceive(uart0_queue_gnss, (void *)&uart0_event, portMAX_DELAY/portTICK_PERIOD_MS))
         {
-            
             bzero(uart_recv_data, BUF_SIZE);
             bzero(at_command, BUF_SIZE);
-            
+
             switch (uart0_event.type)
             {
             case UART_DATA:
 
-                    if (cont == 0){
-                        gpio_set_level(2, 1);
-                        cont++;
-                    }else{
-                        gpio_set_level(2, 0);
-                        cont = 0;
-                    }
-                   
-                    uart_receive(UART0, (void *)uart_recv_data, (uint32_t)uart0_event.size);
-                                    
-                    sprintf((char *)at_command, "%s", uart_recv_data);
+                if (cont == 0)
+                {
+                    gpio_set_level(2, 1);
+                    cont++;
+                }
+                else
+                {
+                    gpio_set_level(2, 0);
+                    cont = 0;
+                }
+                uart_receive(UART0, (void *)uart_recv_data, (uint32_t)uart0_event.size);
 
-                    uart_transmit(UART1, at_command, strlen((const char*)at_command));
+                sprintf((char *)at_command, "%s", uart_recv_data);
 
-                break; 
+                uart_transmit(UART1, at_command, strlen((const char *)at_command));
+
+                break;
 
             default:
                 break;
             }
-
         }
-
     }
-    
+
     free(uart_recv_data);
     free(at_command);
 }
 
 static void transmit_to_server_task_1(void *params)
 {
-    //uart_event_t uart1_event;
-    delay(15000);
+    uart_event_t uart1_event;
+    delay(30000);
+    xSemaphoreGive(uart_sem);
 
     char *uart_recv_data = (char *)malloc(BUF_SIZE);
     char *at_response = (char *)malloc(BUF_SIZE);
     char * comparacion = (char *)malloc(BUF_SIZE);
-    int length = 0;
+
     bzero(uart_recv_data, BUF_SIZE);
     bzero(at_response, BUF_SIZE);
     bzero(comparacion, BUF_SIZE);
@@ -250,12 +249,12 @@ static void transmit_to_server_task_1(void *params)
     // Iniciar servicio MQTT en el módulo SIM A7670SA
     uart_transmit(UART1, CMQTT_START, strlen(CMQTT_START));
     uart_wait_tx_done(UART1, 200);
-    //delay(10);
-    uart_get_buffered_data_len(UART1, (size_t*)&length);
-    uart_transmit(UART0, at_response, strlen(at_response));
-    uart_wait_tx_done(UART0, 200);
-    uart_receive(UART1, at_response, length);
-    //uart_flush(UART1);
+
+    if (xQueueReceive(uart1_queue_4g, (void *)&uart1_event, portMAX_DELAY/portTICK_PERIOD_MS))
+    {
+        uart_receive(UART1, at_response, uart1_event.size);
+    }
+
     if(NULL == strstr(at_response, "OK"))
     {
         uart_transmit(UART0, "Fail to Start MQTT Service\n", strlen("Fail to Start MQTT Service\n"));
@@ -264,14 +263,36 @@ static void transmit_to_server_task_1(void *params)
     }
     else
     {
-        bzero(at_response, BUF_SIZE);
-        uart_transmit(UART1, CMQTT_CLIENT, strlen(CMQTT_CLIENT));
-        uart_wait_tx_done(UART1, 200);
-        uart_get_buffered_data_len(UART1, (size_t*)&length);
-        uart_receive(UART1, at_response, length);
         uart_transmit(UART0, at_response, strlen(at_response));
-        uart_wait_tx_done(UART0, 200);
-        //uart_flush(UART1);
+        
+        uart_transmit(UART0, "Adquiring MQTT Client...\n", strlen("Adquiring MQTT Client...\n"));
+        
+        bzero(at_response, BUF_SIZE);
+        
+        uart_transmit(UART1, CMQTT_CLIENT, strlen(CMQTT_CLIENT));
+        
+        uart_wait_tx_done(UART1, 200);
+        
+        if (xQueueReceive(uart1_queue_4g, (void *)&uart1_event, portMAX_DELAY/portTICK_PERIOD_MS))
+        {
+            uart_transmit(UART0, "Tomando el semaforo...\n", strlen("Tomando el semaforo...\n"));
+            xSemaphoreTake(uart_sem, portMAX_DELAY);
+
+            uart_receive(UART1, at_response, uart1_event.size);
+            
+            xSemaphoreGive(uart_sem);
+            
+            if(!strcmp(CMQTT_CLIENT, at_response))
+            {
+                uart_transmit(UART0, at_response, strlen(at_response));
+                uart_transmit(UART0, "AT Client incompleto\n", strlen("AT Client incompleto\n"));
+                bzero(at_response, BUF_SIZE);
+                
+            }
+            uart_transmit(UART0, at_response, strlen(at_response));
+            uart_wait_tx_done(UART0, 200);
+        }
+
         if(NULL == strstr(at_response, "OK"))
         {
             uart_transmit(UART0, "Fail to get MQTT client\n", strlen("Fail to get MQTT client\n"));
@@ -283,11 +304,14 @@ static void transmit_to_server_task_1(void *params)
             bzero(at_response, BUF_SIZE);
             uart_transmit(UART1, CMQTT_CONNECT, strlen(CMQTT_CONNECT));
             uart_wait_tx_done(UART1, 200);
-            uart_get_buffered_data_len(UART1, (size_t*)&length);
-            uart_receive(UART1, at_response, length);
-            uart_transmit(UART0, at_response, strlen(at_response));
-            uart_wait_tx_done(UART0, 200);
-            //uart_flush(UART1);
+            
+            if (xQueueReceive(uart1_queue_4g, (void *)&uart1_event, portMAX_DELAY/portTICK_PERIOD_MS))
+            {
+                uart_receive(UART1, at_response, uart1_event.size);
+                uart_transmit(UART0, at_response, strlen(at_response));
+                uart_wait_tx_done(UART0, 200);
+            }
+            
             if(NULL == strstr(at_response, "OK"))
             {
                 uart_transmit(UART0, "Fail to connect MQTT Server\n", strlen("Fail to connect MQTT Server\n"));
@@ -312,85 +336,29 @@ static void transmit_to_server_task_1(void *params)
         uart_transmit(UART0, comparacion, strlen(comparacion));
         delay(1000);
 
-
-
-
-
-
-
-
-        delay(15000);
-
-    char *uart_recv_data = (char *)malloc(BUF_SIZE);
-    char *at_response = (char *)malloc(BUF_SIZE);
-    char * comparacion = (char *)malloc(BUF_SIZE);
-    int length = 0;
-    bzero(uart_recv_data, BUF_SIZE);
-    bzero(at_response, BUF_SIZE);
-    bzero(comparacion, BUF_SIZE);
-    char * mqtt_server_state = (char *)malloc(25); 
-    bzero(comparacion, 25);
-
-    // Iniciar servicio MQTT en el módulo SIM A7670SA
-    uart_transmit(UART1, CMQTT_START, strlen(CMQTT_START));
-    uart_wait_tx_done(UART1, 200);
-    delay(10);
-    uart_get_buffered_data_len(UART1, (size_t*)&length);
-    uart_receive(UART1, at_response, length);
-    uart_transmit(UART0, at_response, strlen(at_response));
-    uart_wait_tx_done(UART0, 200);
-    //uart_flush(UART1);
-    if(NULL == strstr(at_response, "OK"))
-    {
-        uart_transmit(UART0, "Fail to Start MQTT Service\n", strlen("Fail to Start MQTT Service\n"));
-        mqtt_server_state = "FAIL MQTT Service";
-        bzero(at_response, BUF_SIZE);
-    }
-    else
-    {
-        bzero(at_response, BUF_SIZE);
-        uart_transmit(UART1, CMQTT_CLIENT, strlen(CMQTT_CLIENT));
-        uart_wait_tx_done(UART1, 200);
-        uart_get_buffered_data_len(UART1, (size_t*)&length);
-        uart_receive(UART1, at_response, length);
-        delay(10);
-        uart_transmit(UART0, at_response, strlen(at_response));
-        uart_wait_tx_done(UART0, 200);
-        //uart_flush(UART1);
-        if(NULL == strstr(at_response, "OK"))
+        if (xQueueReceive(uart1_queue_4g, (void *)&uart1_event, portMAX_DELAY/portTICK_PERIOD_MS))
         {
-            uart_transmit(UART0, "Fail to get MQTT client\n", strlen("Fail to get MQTT client\n"));
+
+            bzero(uart_recv_data, BUF_SIZE);
             bzero(at_response, BUF_SIZE);
-            mqtt_server_state = "FAIL MQTT Client";
-        }
-        else
-        {
-            bzero(at_response, BUF_SIZE);
-            uart_transmit(UART1, CMQTT_CONNECT, strlen(CMQTT_CONNECT));
-            uart_wait_tx_done(UART1, 200);
-            uart_get_buffered_data_len(UART1, (size_t*)&length);
-            uart_receive(UART1, at_response, length);
-            delay(10);
-            uart_transmit(UART0, at_response, strlen(at_response));
-            uart_wait_tx_done(UART0, 200);
-            //uart_flush(UART1);
-            if(NULL == strstr(at_response, "OK"))
+
+            switch (uart1_event.type)
             {
-                uart_transmit(UART0, "Fail to connect MQTT Server\n", strlen("Fail to connect MQTT Server\n"));
-                bzero(at_response, BUF_SIZE);
-                mqtt_server_state = "FAIL MQTT Server";
-            }
-            else
-            {
-                uart_transmit(UART0, "Success Connection to MQTT Server!\n", strlen("Success Connection to MQTT Server!\n"));
-                bzero(at_response, BUF_SIZE);
-                mqtt_server_state = "OK";
-            }
+            case UART_DATA:
 
+                uart_receive(UART1, (void *)uart_recv_data, (uint32_t)uart1_event.size);
+
+                sprintf((char *)at_response, "%s", uart_recv_data);
+
+                uart_transmit(UART0, at_response, strlen((const char *)at_response));
+
+                break;
+
+            default:
+                break;
+            }
         }
-
-    }
-
+    
 
     }
     free(uart_recv_data);
@@ -398,6 +366,10 @@ static void transmit_to_server_task_1(void *params)
     free(comparacion);
     free(mqtt_server_state);
 }
+
+
+
+
 
 static void occupancy_detect_task(void *params)
 {
