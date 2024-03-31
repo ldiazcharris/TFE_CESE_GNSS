@@ -17,13 +17,13 @@
 //#define TOPIC "proyectoLuis/cava001/datos"
 
 #define CMQTT_START         "AT+CMQTTSTART\r\n"
-#define CMQTT_CLIENT        "AT+CMQTTACCQ=0,\"gnss_cavas\",0"
+#define CMQTT_CLIENT        "AT+CMQTTACCQ=0,\"gnss_cavas\",0\r\n"
 // Incluir en el manual como una configuración
-#define CMQTT_CONNECT        "AT+CMQTTCONNECT=0,\"tcp://18.212.130.131:1883\",300,0,\"test\",\"CloudTech*\""
-#define CMQTT_TOPIC          "AT+CMQTTTOPIC=0,23"
-#define MQTT_TOPIC           "proyectoLuis/cava/datos"
-#define CMQTT_PAYLOAD        "AT+CMQTTPAYLOAD=0,48"
-#define MQTT_PAYLOAD_FORMAT  "{\"latitud\":\"%.6f\", \"longitud\":\"%.6f\"}"
+#define CMQTT_CONNECT        "AT+CMQTTCONNECT=0,\"tcp://18.212.130.131:1883\",300,0,\"test\",\"CloudTech*\"\r\n"
+#define CMQTT_TOPIC          "AT+CMQTTTOPIC=0,23\r\n"
+#define MQTT_TOPIC           "proyectoLuis/cava/datos\r\n"
+#define CMQTT_PAYLOAD        "AT+CMQTTPAYLOAD=0,48\r\n"
+#define MQTT_PAYLOAD_FORMAT  "{\"latitud\":\"%.6f\", \"longitud\":\"%.6f\"}\r\n"
 
 
 typedef struct

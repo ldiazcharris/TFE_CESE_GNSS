@@ -5,6 +5,7 @@
         "utilities.h": "c",
         "uart.h": "c",
         "queue.h": "c",
-        "stdbool.h": "c"
+        "stdbool.h": "c",
+        "string_view": "c"
     }
 }
