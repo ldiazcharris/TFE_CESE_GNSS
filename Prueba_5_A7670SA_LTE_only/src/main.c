@@ -203,9 +203,7 @@ static void transmit_to_server_task(void *params)
     while (1)
     {
 
-        sprintf(comparacion, "State conection to MQTT Server: %s\n", mqtt_server_state);
-        uart_transmit(UART0, comparacion, strlen(comparacion));
-        delay(1000);
+        
 
         if (xQueueReceive(uart0_queue_gnss, (void *)&uart0_event, portMAX_DELAY/portTICK_PERIOD_MS))
         {
@@ -323,7 +321,7 @@ xSemaphoreTake(uart_sem, portMAX_DELAY);
             if (xQueueReceive(uart1_queue_4g, (void *)&uart1_event, portMAX_DELAY / portTICK_PERIOD_MS))
             {
                 uart_receive(UART1, at_response, uart1_event.size);
-                
+
                 if (xQueueReceive(uart1_queue_4g, (void *)&uart1_event, portMAX_DELAY / portTICK_PERIOD_MS))
                 {
                     uart_receive(UART1, at_response, uart1_event.size);
@@ -355,7 +353,9 @@ xSemaphoreGive(uart_sem);
 
     while (1)
     {
-        
+        sprintf(comparacion, "State conection to MQTT Server: %s\n", mqtt_server_state);
+        uart_transmit(UART0, comparacion, strlen(comparacion));
+        delay(1000);
         if (xQueueReceive(uart1_queue_4g, (void *)&uart1_event, portMAX_DELAY / portTICK_PERIOD_MS))
         {
             bzero(uart_recv_data, BUF_SIZE);
@@ -451,6 +451,11 @@ xSemaphoreTake(uart_sem, portMAX_DELAY);
             if (xQueueReceive(uart1_queue_4g, (void *)&uart1_event, portMAX_DELAY / portTICK_PERIOD_MS))
             {
                 uart_receive(UART1, at_response, uart1_event.size);
+                
+                if (xQueueReceive(uart1_queue_4g, (void *)&uart1_event, portMAX_DELAY / portTICK_PERIOD_MS))
+                {
+                    uart_receive(UART1, at_response, uart1_event.size);
+                }
             }
 
             uart_transmit(UART0, at_response, strlen(at_response));
