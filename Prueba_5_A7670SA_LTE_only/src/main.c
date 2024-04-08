@@ -203,7 +203,7 @@ static void transmit_to_server_task(void *params)
     while (1)
     {
 
-        
+       
 
         if (xQueueReceive(uart0_queue_gnss, (void *)&uart0_event, portMAX_DELAY/portTICK_PERIOD_MS))
         {
@@ -245,6 +245,7 @@ static void transmit_to_server_task(void *params)
                 break;
             }
         }
+        
     }
 
     free(uart_recv_data);
@@ -265,7 +266,24 @@ static void transmit_to_server_task_1(void *params)
     char *mqtt_server_state = (char *)malloc(25);
     bzero(mqtt_server_state, 25);
 
-    delay(10000);
+    ///delay(10000);
+
+
+    while(1)
+    {
+        
+        if (xQueueReceive(uart1_queue_4g, (void *)&uart1_event, portMAX_DELAY / portTICK_PERIOD_MS))
+        {
+            uart_receive(UART1, at_response, uart1_event.size);
+            if (NULL != strstr(at_response,"PB DONE"))
+            {
+                bzero(at_response, BUF_SIZE);
+                break;
+            }
+        }
+    }
+
+
 
 xSemaphoreTake(uart_sem, portMAX_DELAY);
     // Iniciar servicio MQTT en el módulo SIM A7670SA

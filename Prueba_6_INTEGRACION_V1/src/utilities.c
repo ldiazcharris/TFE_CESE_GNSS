@@ -9,7 +9,7 @@ static void error_message_gnss_data(const char *message){
     lcd_cursor(0,0);
     lcd_write_string((char *)"ERR posicion:");
     lcd_cursor(1,0);
-    lcd_write_string((char *)*message);
+    lcd_write_string((char *) message);
 }
 
 void uart_init(  uart_port_t     uart_num, 
@@ -197,6 +197,7 @@ bool nmea_rmc_parser_r(const char *nmeaString, GNSSData_t *gnssData)
             data_count++;
         }
     }
+    return result_parser;
 }
 
 
@@ -210,15 +211,16 @@ void ocupancy_pin_init(gpio_config_t* occupancy_pin_config, uint64_t occupancy_p
     gpio_config(occupancy_pin_config);
 }
 
-void init_pilots()
+void pilots_init()
 {    
-    gpio_set_direction(BUSY_PILOT, GPIO_MODE_OUTPUT);
     gpio_reset_pin(BUSY_PILOT);
-    gpio_set_direction(FREE_PILOT, GPIO_MODE_OUTPUT);
     gpio_reset_pin(FREE_PILOT);
+    gpio_set_direction(BUSY_PILOT, GPIO_MODE_OUTPUT);
+    gpio_set_direction(FREE_PILOT, GPIO_MODE_OUTPUT);
+    
 }
 
-void write_position(const char * lat, const char * lon)
+void write_position(char * lat, char * lon)
 {
     //lcd_clear();
     lcd_cursor(0, 0);
@@ -260,17 +262,17 @@ void write_occupancy(bool occupancy_state)
 // cuando la reciba va a ajecutatr esto:
 bool fmqtt_send_payload(const char * mqtt_payload_to_send)
 {
-    uart_transmit(UART1, cmqtt_topic, strlen(cmqtt_topic));
+    uart_transmit(UART1, CMQTT_TOPIC, strlen(CMQTT_TOPIC));
     delay(50);
-    uart_transmit(UART1, mqtt_topic, strlen(mqtt_topic));
-    dalay(50);
-    uart_transmit(UART1, cmqtt_payload, strlen(cmqtt_payload));
+    uart_transmit(UART1, MQTT_TOPIC, strlen(MQTT_TOPIC));
+    delay(50);
+    uart_transmit(UART1, CMQTT_PAYLOAD, strlen(CMQTT_PAYLOAD));
     delay(50);
     uart_transmit(UART1, mqtt_payload_to_send, strlen(mqtt_payload_to_send));
-
+    return true;
 }
 
 bool mqtt_service_init()
 {
-    
+    return true;
 }

@@ -8,25 +8,22 @@
 #include "esp_log.h"
 
 
-#define BUSY_PILOT 15
-#define FREE_PILOT 3
+#define BUSY_PILOT 16
+#define FREE_PILOT 17
 
 #define UART0 UART_NUM_0
 #define UART1 UART_NUM_1
 
-#define TOPIC "proyectoLuis/cava001/datos"
+//#define TOPIC "proyectoLuis/cava001/datos"
 
-
-
-
-const char * cmqtt_start = "AT+CMQTTSTART\r\n";
-const char * cmqtt_client = "AT+CMQTTACCQ=0,\"gnss_cavas\",0";
+#define CMQTT_START         "AT+CMQTTSTART\r\n"
+#define CMQTT_CLIENT        "AT+CMQTTACCQ=0,\"gnss_cavas\",0\r\n"
 // Incluir en el manual como una configuración
-const char * cmqtt_conect = "AT+CMQTTCONNECT=0,\"tcp://18.212.130.131:1883\",300,0,\"test\",\"CloudTech*\"";
-const char * cmqtt_topic = "AT+CMQTTTOPIC=0,23";
-const char * mqtt_topic = "proyectoLuis/cava/datos";
-const char * cmqtt_payload = "AT+CMQTTPAYLOAD=0,48";
-const char * mqtt_payload_format = "{\"latitud\":\"%.6f\", \"longitud\":\"%.6f\"}";
+#define CMQTT_CONNECT        "AT+CMQTTCONNECT=0,\"tcp://18.212.130.131:1883\",300,0,\"test\",\"CloudTech*\"\r\n"
+#define CMQTT_TOPIC          "AT+CMQTTTOPIC=0,23\r\n"
+#define MQTT_TOPIC           "proyectoLuis/cava/datos\r\n"
+#define CMQTT_PAYLOAD        "AT+CMQTTPAYLOAD=0,48\r\n"
+#define MQTT_PAYLOAD_FORMAT  "{\"latitud\":\"%.6f\", \"longitud\":\"%.6f\"}\r\n"
 
 
 typedef struct
@@ -94,11 +91,11 @@ bool nmea_rmc_parser_r(const char *nmeaString, GNSSData_t *gnssData);
 */
 void ocupancy_pin_init(gpio_config_t* occupancy_pin_config, uint64_t occupancy_pin);
 
-void write_position(const char * lat, const char * lon);
+void write_position(char * lat, char * lon);
 
 void write_occupancy(bool occupancy_state);
 
-void init_pilots();
+void pilots_init();
 
 bool mqtt_service_init();
 

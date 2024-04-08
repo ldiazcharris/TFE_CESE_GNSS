@@ -26,7 +26,7 @@
 /**************DECLARACIÓN DE VARIABLES GLOBALES*******************/
 
 static QueueHandle_t uart0_queue_gnss;
-//static QueueHandle_t uart1_queue_4g; // Descomentar si se quiere usar las interrupciones de UART1
+static QueueHandle_t uart1_queue_4g; // Descomentar si se quiere usar las interrupciones de UART1
 static QueueHandle_t position_queue;
 static QueueHandle_t occupancy_queue;
 static SemaphoreHandle_t uart_sem;
@@ -38,11 +38,13 @@ static bool occupancy_state;
 
 /****************DECLARACIÓN DE FUNCIONES*************************/
 
-static void position_gnss_task(void *params);
+static void gnss_task(void *params);
 static void transmit_to_server_task(void *params);
 static void collect_data_task(void *params);
-static void occupancy_detect_task(void *params);
+static void occupancy_task(void *params);
 void IRAM_ATTR occupancy_isr_handler(void* arg);
+static void lcd_task(void *params);
+static void init_mqtt_server_task(void *params);
 
 /**********************FUNCIÓN PRINCIPAL**************************/
 
@@ -54,7 +56,7 @@ void app_main()
     uart_set_pin(UART0,     1,  3,  23,  19);
 
     // UART_1 conectar con modulo 4g A7670SA
-    uart_init(UART1, 115200, BUF_SIZE * 2, BUF_SIZE * 2, 0, NULL, ESP_INTR_FLAG_LEVEL1); //   ESP_INTR_FLAG_IRAM
+    uart_init(UART1, 115200, BUF_SIZE * 2, 0, 50, &uart1_queue_4g, ESP_INTR_FLAG_LEVEL1); //   ESP_INTR_FLAG_IRAM
     //          (UART_NUM, TX, RX, RTS, CTS)
     uart_set_pin(UART1,    33, 26,  14,  12);
     //ESP_ERROR_CHECK(uart_driver_install(UART_NUM_1, BUF_SIZE * 2, 0, 0, NULL, ESP_INTR_FLAG_IRAM));
@@ -77,47 +79,187 @@ void app_main()
 /// Crear una tarea que se dedique unicamente a escribir por el LCD. Leer Queues de estado y actualizar la data.
 // Estado comunicación GNSS y 4G y reportar el estado de Ocupación y posición.
 // crear una variable global que se actualice en el LCD. 
-    xTaskCreate(position_gnss_task,
-                "position_gnss_task",
+
+    xTaskCreate(init_mqtt_server_task,
+                "init_mqtt_server_task",
                 BUF_SIZE * 4,
                 NULL,
                 12,
                 NULL);
-
-    xTaskCreate(collect_data_task,
-                "transmit_to_server_task",
-                BUF_SIZE * 4,
-                NULL,
-                12,
-                NULL);
-
-    xTaskCreate(transmit_to_server_task,
-                "transmit_to_server_task",
-                BUF_SIZE * 4,
-                NULL,
-                12,
-                NULL);
-
-    xTaskCreate(occupancy_detect_task,
-                "occupancy_detect_task",
-                BUF_SIZE * 4,
-                NULL,
-                12,
-                NULL);
-
-
-    gpio_install_isr_service(ESP_INTR_FLAG_LEVEL1);
-    gpio_isr_handler_add(OCCUPANCY_PIN, occupancy_isr_handler, (void*) OCCUPANCY_PIN);
-
 }
 
     
 
 
 
-/****************DEFINICIÓN DE FUNCIONES**************************/
+/****************DEFINICIÓN DE FUNCIONES Y TAREAS**************************/
 
-static void position_gnss_task(void *params)
+
+static void init_mqtt_server_task(void *params)
+{
+    xSemaphoreGive(uart_sem);
+    uart_event_t uart1_event;
+    char *at_response = (char *)malloc(BUF_SIZE);
+    bzero(at_response, BUF_SIZE);
+    char *mqtt_server_state = (char *)malloc(25);
+    bzero(mqtt_server_state, 25);
+
+    //char *uart_recv_data = (char *)malloc(BUF_SIZE);
+    //bzero(uart_recv_data, BUF_SIZE);
+    //char *comparacion = (char *)malloc(BUF_SIZE);
+    //bzero(comparacion, BUF_SIZE);
+
+    
+    // Espera a recibir "PB DONE" del modulo 4g que indica que está conectado a la red celular
+    while(1)
+    {
+        if (xQueueReceive(uart1_queue_4g, (void *)&uart1_event, portMAX_DELAY / portTICK_PERIOD_MS))
+        {
+            uart_receive(UART1, at_response, uart1_event.size);
+            if (NULL != strstr(at_response,"PB DONE"))
+            {
+                bzero(at_response, BUF_SIZE);
+                break;
+            }
+        }
+    }
+
+    // Iniciar servicio MQTT en el módulo SIM A7670SA
+    uart_transmit(UART1, CMQTT_START, strlen(CMQTT_START));
+    uart_wait_tx_done(UART1, 200);
+
+    if (xQueueReceive(uart1_queue_4g, (void *)&uart1_event, pdMS_TO_TICKS(12050)))
+    {
+        uart_receive(UART1, at_response, uart1_event.size);
+    }
+
+    if (NULL == strstr(at_response, "OK"))
+    {
+        //uart_transmit(UART0, "Fail to Start MQTT Service\n", strlen("Fail to Start MQTT Service\n"));
+        mqtt_server_state = "FAIL MQTT Service";
+        bzero(at_response, BUF_SIZE);
+        
+    }
+    else
+    {
+        bzero(at_response, BUF_SIZE);
+        uart_transmit(UART1, CMQTT_CLIENT, strlen(CMQTT_CLIENT));
+        uart_wait_tx_done(UART1, 200);
+        if (xQueueReceive(uart1_queue_4g, (void *)&uart1_event, pdMS_TO_TICKS(12050)))
+        {
+            uart_receive(UART1, at_response, uart1_event.size);
+        }
+
+        uart_transmit(UART0, at_response, strlen(at_response));
+        uart_wait_tx_done(UART0, 200);
+
+        if (NULL == strstr(at_response, "OK"))
+        {
+            //uart_transmit(UART0, "Fail to get MQTT client\n", strlen("Fail to get MQTT client\n"));
+            mqtt_server_state = "FAIL MQTT Client";
+            bzero(at_response, BUF_SIZE);
+            
+        }
+        else
+        {
+
+            bzero(at_response, BUF_SIZE);
+            uart_transmit(UART1, CMQTT_CONNECT, strlen(CMQTT_CONNECT));
+            uart_wait_tx_done(UART1, 200);
+
+            if (xQueueReceive(uart1_queue_4g, (void *)&uart1_event, pdMS_TO_TICKS(12050)))
+            {
+                uart_receive(UART1, at_response, uart1_event.size);
+
+                if (NULL == strstr(at_response, "OK"))
+                {
+                    if (xQueueReceive(uart1_queue_4g, (void *)&uart1_event, pdMS_TO_TICKS(12050)))
+                    {
+                        uart_receive(UART1, at_response, uart1_event.size);
+                    }
+                }
+            }
+
+            if (NULL == strstr(at_response, "OK"))
+            {
+                //uart_transmit(UART0, "Fail to connect MQTT Server\n", strlen("Fail to connect MQTT Server\n"));
+                mqtt_server_state = "FAIL MQTT Server";
+                bzero(at_response, BUF_SIZE);
+                
+            }
+            else
+            {
+                //uart_transmit(UART0, "Success Connection to MQTT Server!\n", strlen("Success Connection to MQTT Server!\n"));
+                bzero(at_response, BUF_SIZE);
+                mqtt_server_state = "OK";
+                
+            }
+        }
+    }
+
+    // Si se inicia correctamente la comunicación con el servidor MQTT
+    // Entonces se crean las demás tareas. 
+    if(!strcmp(mqtt_server_state, "OK"))
+    {
+        xTaskCreate(gnss_task,
+                    "gnss_task",
+                    BUF_SIZE * 4,
+                    NULL,
+                    12,
+                    NULL);
+
+        xTaskCreate(collect_data_task,
+                    "transmit_to_server_task",
+                    BUF_SIZE * 4,
+                    NULL,
+                    12,
+                    NULL);
+
+        xTaskCreate(transmit_to_server_task,
+                    "transmit_to_server_task",
+                    BUF_SIZE * 4,
+                    NULL,
+                    12,
+                    NULL);
+
+        xTaskCreate(occupancy_task,
+                    "occupancy_task",
+                    BUF_SIZE * 4,
+                    NULL,
+                    12,
+                    NULL);
+
+        
+        xTaskCreate(lcd_task,
+                    "lcd_task",
+                    BUF_SIZE * 4,
+                    NULL,
+                    12,
+                    NULL);
+
+    gpio_install_isr_service(ESP_INTR_FLAG_LEVEL1);
+    gpio_isr_handler_add(OCCUPANCY_PIN, occupancy_isr_handler, (void*) OCCUPANCY_PIN);
+    
+    vTaskDelete(NULL);
+
+    }
+    else
+    {
+        lcd_clear();
+        lcd_cursor(0, 0);
+        lcd_write_string("Err init MQTT server");
+        lcd_cursor(0, 0);
+        lcd_write_string("Reset Module");
+    }
+}
+
+
+
+
+
+
+
+static void gnss_task(void *params)
 {
     uart_event_t uart_event;
     uint8_t *gnss_recv_data = (uint8_t *)malloc(BUF_SIZE*2);
@@ -129,7 +271,7 @@ static void position_gnss_task(void *params)
     while (1)
     {
         
-        if (xQueueReceive(uart0_queue_gnss, (void *)&uart_event, (TickType_t)portMAX_DELAY))
+        if (xQueueReceive(uart0_queue_gnss, (void *)&uart_event, pdMS_TO_TICKS(portMAX_DELAY)))
         {
             bzero(gnss_recv_data, BUF_SIZE*2);
             bzero(nmea_string, BUF_SIZE*2);
@@ -140,17 +282,9 @@ static void position_gnss_task(void *params)
             {
             case UART_DATA:
                     uart_receive(UART0, (void *)gnss_recv_data, (uint32_t)uart_event.size);
-                    /*
-                    if(!strcmp(gnss_recv_data, "\0")) // Comparo para validar si terminó el mensaje
-                    {
-                        fin_mensaje = 1; //Levanto un flac para 
-                    }else{
-                            
-                    }
-                    */
 
                     sprintf((char *)nmea_string, "%s", gnss_recv_data);
-                    // meter esto dentro del else anterior 
+                    
                     if (nmea_parser_r((const char *)nmea_string, &quectel_l76))
                     {
                         // https://www.freertos.org/a00117.html
@@ -183,7 +317,7 @@ static void position_gnss_task(void *params)
 }
 
 
-static void occupancy_detect_task(void *params)
+static void occupancy_task(void *params)
 {
     while (1)
     {
