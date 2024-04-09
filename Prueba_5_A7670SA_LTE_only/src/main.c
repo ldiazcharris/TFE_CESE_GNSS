@@ -43,7 +43,7 @@ static void transmit_to_server_task(void *params);
 static void transmit_to_server_task_1(void *params);
 static void occupancy_detect_task(void *params);
 void IRAM_ATTR occupancy_isr_handler(void* arg);
-static char * mqtt_activate_server();
+static char * init_sequence_mqtt_server(uart_event_t uart1_event, char * at_response, char * mqtt_server_state);
 
 /**********************FUNCIÓN PRINCIPAL**************************/
 
@@ -95,13 +95,6 @@ void app_main()
                 12,
                 NULL);
 /*
-    xTaskCreate(mqtt_activate_server,
-                "transmit_to_server_task",
-                BUF_SIZE * 4,
-                NULL,
-                10,
-                NULL);
-
 
     xTaskCreate(uart_inter_gnss_task,
                 "uart_inter_gnss_task",
@@ -186,7 +179,7 @@ static void uart_inter_gnss_task(void *params)
 
 static void transmit_to_server_task(void *params)
 {
-    xSemaphoreGive(uart_sem);
+    
     uart_event_t uart0_event;
     char *uart_recv_data = (char *)malloc(BUF_SIZE);
     char *at_command = (char *)malloc(BUF_SIZE);
@@ -203,9 +196,11 @@ static void transmit_to_server_task(void *params)
     while (1)
     {
 
-       
+       //xSemaphoreTake(uart_sem, 2000/portTICK_PERIOD_MS);
+    
+    
 
-        if (xQueueReceive(uart0_queue_gnss, (void *)&uart0_event, portMAX_DELAY/portTICK_PERIOD_MS))
+        if (xQueueReceive(uart0_queue_gnss, (void *)&uart0_event, 2000/portTICK_PERIOD_MS))
         {
             bzero(uart_recv_data, BUF_SIZE);
             bzero(at_command, BUF_SIZE);
@@ -232,8 +227,6 @@ static void transmit_to_server_task(void *params)
                 if(strstr(at_command, "1") != NULL){
                     uart_transmit(UART0, "llego 1\n", strlen("llego 1\n"));
                     
-                    mqtt_server_state = mqtt_activate_server();
-                    
                 }
                 else{
                     uart_transmit(UART1, at_command, strlen((const char *)at_command));
@@ -245,6 +238,8 @@ static void transmit_to_server_task(void *params)
                 break;
             }
         }
+
+        //xSemaphoreGive(uart_sem);
         
     }
 
@@ -254,20 +249,18 @@ static void transmit_to_server_task(void *params)
 
 static void transmit_to_server_task_1(void *params)
 {
+    //xSemaphoreGive(uart_sem);
     uart_event_t uart1_event;
-
-    char *uart_recv_data = (char *)malloc(BUF_SIZE);
     char *at_response = (char *)malloc(BUF_SIZE);
-    
-    bzero(uart_recv_data, BUF_SIZE);
     bzero(at_response, BUF_SIZE);
+    
     char *comparacion = (char *)malloc(BUF_SIZE);
     bzero(comparacion, BUF_SIZE);
     char *mqtt_server_state = (char *)malloc(25);
     bzero(mqtt_server_state, 25);
 
     ///delay(10000);
-
+    
 
     while(1)
     {
@@ -283,91 +276,9 @@ static void transmit_to_server_task_1(void *params)
         }
     }
 
-
-
-xSemaphoreTake(uart_sem, portMAX_DELAY);
-    // Iniciar servicio MQTT en el módulo SIM A7670SA
-    uart_transmit(UART1, CMQTT_START, strlen(CMQTT_START));
-    uart_wait_tx_done(UART1, 200);
-
-    if (xQueueReceive(uart1_queue_4g, (void *)&uart1_event, portMAX_DELAY / portTICK_PERIOD_MS))
-    {
-        uart_receive(UART1, at_response, uart1_event.size);
-    }
-
-    if (NULL == strstr(at_response, "OK"))
-    {
-        uart_transmit(UART0, "Fail to Start MQTT Service\n", strlen("Fail to Start MQTT Service\n"));
-        mqtt_server_state = "FAIL MQTT Service";
-        bzero(at_response, BUF_SIZE);
-        
-    }
-    else
-    {
-        uart_transmit(UART0, at_response, strlen(at_response));
-
-        uart_transmit(UART0, "Adquiring MQTT Client...\n", strlen("Adquiring MQTT Client...\n"));
-
-        bzero(at_response, BUF_SIZE);
-
-        uart_transmit(UART1, CMQTT_CLIENT, strlen(CMQTT_CLIENT));
-
-        uart_wait_tx_done(UART1, 200);
-
-        if (xQueueReceive(uart1_queue_4g, (void *)&uart1_event, portMAX_DELAY / portTICK_PERIOD_MS))
-        {
-            uart_receive(UART1, at_response, uart1_event.size);
-        }
-
-        uart_transmit(UART0, at_response, strlen(at_response));
-        uart_wait_tx_done(UART0, 200);
-
-        if (NULL == strstr(at_response, "OK"))
-        {
-            uart_transmit(UART0, "Fail to get MQTT client\n", strlen("Fail to get MQTT client\n"));
-            bzero(at_response, BUF_SIZE);
-            mqtt_server_state = "FAIL MQTT Client";
-            
-        }
-        else
-        {
-
-            bzero(at_response, BUF_SIZE);
-            uart_transmit(UART1, CMQTT_CONNECT, strlen(CMQTT_CONNECT));
-            uart_wait_tx_done(UART1, 200);
-
-            if (xQueueReceive(uart1_queue_4g, (void *)&uart1_event, portMAX_DELAY / portTICK_PERIOD_MS))
-            {
-                uart_receive(UART1, at_response, uart1_event.size);
-
-                if (xQueueReceive(uart1_queue_4g, (void *)&uart1_event, portMAX_DELAY / portTICK_PERIOD_MS))
-                {
-                    uart_receive(UART1, at_response, uart1_event.size);
-                }
-            }
-
-            uart_transmit(UART0, at_response, strlen(at_response));
-            uart_wait_tx_done(UART0, 200);
-
-            if (NULL == strstr(at_response, "OK"))
-            {
-                uart_transmit(UART0, "Fail to connect MQTT Server\n", strlen("Fail to connect MQTT Server\n"));
-                bzero(at_response, BUF_SIZE);
-                mqtt_server_state = "FAIL MQTT Server";
-                
-            }
-            else
-            {
-                uart_transmit(UART0, "Success Connection to MQTT Server!\n", strlen("Success Connection to MQTT Server!\n"));
-                bzero(at_response, BUF_SIZE);
-                mqtt_server_state = "OK";
-                
-            }
-        }
-    }
-
-xSemaphoreGive(uart_sem);
-
+    //xSemaphoreTake(uart_sem, portMAX_DELAY);
+    mqtt_server_state = init_sequence_mqtt_server(uart1_event, at_response, mqtt_server_state);
+    //xSemaphoreGive(uart_sem);
 
     while (1)
     {
@@ -376,16 +287,13 @@ xSemaphoreGive(uart_sem);
         delay(1000);
         if (xQueueReceive(uart1_queue_4g, (void *)&uart1_event, portMAX_DELAY / portTICK_PERIOD_MS))
         {
-            bzero(uart_recv_data, BUF_SIZE);
             bzero(at_response, BUF_SIZE);
 
             switch (uart1_event.type)
             {
             case UART_DATA:
 
-                uart_receive(UART1, (void *)uart_recv_data, (uint32_t)uart1_event.size);
-
-                sprintf((char *)at_response, "%s", uart_recv_data);
+                uart_receive(UART1, (void *)at_response, (uint32_t)uart1_event.size);
 
                 uart_transmit(UART0, at_response, strlen((const char *)at_response));
 
@@ -396,26 +304,13 @@ xSemaphoreGive(uart_sem);
             }
         }
     }
-    free(uart_recv_data);
     free(at_response);
     free(comparacion);
     free(mqtt_server_state);
 }
 
-static char * mqtt_activate_server()
+static char * init_sequence_mqtt_server(uart_event_t uart1_event, char * at_response, char * mqtt_server_state)
 {
-    uart_event_t uart1_event;
-
-    char *uart_recv_data = (char *)malloc(BUF_SIZE);
-    char *at_response = (char *)malloc(BUF_SIZE);
-    char *comparacion = (char *)malloc(BUF_SIZE);
-    bzero(uart_recv_data, BUF_SIZE);
-    bzero(at_response, BUF_SIZE);
-    bzero(comparacion, BUF_SIZE);
-    char *mqtt_server_state = (char *)malloc(25);
-    bzero(mqtt_server_state, 25);
-
-xSemaphoreTake(uart_sem, portMAX_DELAY);
     // Iniciar servicio MQTT en el módulo SIM A7670SA
     uart_transmit(UART1, CMQTT_START, strlen(CMQTT_START));
     uart_wait_tx_done(UART1, 200);
@@ -469,7 +364,7 @@ xSemaphoreTake(uart_sem, portMAX_DELAY);
             if (xQueueReceive(uart1_queue_4g, (void *)&uart1_event, portMAX_DELAY / portTICK_PERIOD_MS))
             {
                 uart_receive(UART1, at_response, uart1_event.size);
-                
+
                 if (xQueueReceive(uart1_queue_4g, (void *)&uart1_event, portMAX_DELAY / portTICK_PERIOD_MS))
                 {
                     uart_receive(UART1, at_response, uart1_event.size);
@@ -495,9 +390,6 @@ xSemaphoreTake(uart_sem, portMAX_DELAY);
             }
         }
     }
-
-xSemaphoreGive(uart_sem);
-//xSemaphoreGive(uart_sem);
     return mqtt_server_state;
 }
 
