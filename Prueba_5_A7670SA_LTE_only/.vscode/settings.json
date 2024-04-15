@@ -6,6 +6,7 @@
         "uart.h": "c",
         "queue.h": "c",
         "stdbool.h": "c",
-        "string_view": "c"
+        "string_view": "c",
+        "numbers": "c"
     }
 }

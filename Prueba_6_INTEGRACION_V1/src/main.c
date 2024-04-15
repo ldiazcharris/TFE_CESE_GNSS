@@ -12,7 +12,7 @@
 #include "freertos/queue.h"
 #include "utilities.h"
 #include "lcd_i2c_grove.h"
-#include "driver/adc.h"
+//#include "driver/adc.h"
 
 /************************MACROS***********************************/
 
@@ -21,6 +21,7 @@
 #define JUMP " \n"
 
 #define OCCUPANCY_PIN 4 
+#define ENABLE_4G_PIN 2
 
 
 /**************DECLARACIÓN DE VARIABLES GLOBALES*******************/
@@ -46,6 +47,7 @@ void IRAM_ATTR occupancy_isr_handler(void* arg);
 static void lcd_task(void *params);
 static void init_mqtt_server_task(void *params);
 static char * init_sequence_mqtt_server(uart_event_t *uart1_event, char * at_response, char * mqtt_server_state);
+static void create_tasks();
 
 
 /**********************FUNCIÓN PRINCIPAL**************************/
@@ -64,7 +66,14 @@ void app_main()
     //ESP_ERROR_CHECK(uart_driver_install(UART_NUM_1, BUF_SIZE * 2, 0, 0, NULL, ESP_INTR_FLAG_IRAM));
 
     // Se configruran los pines donde se conectarán los pilotos de ocupado o desocupado. 
-    init_pilots();
+    pilots_init();
+
+    // Se configura el pin de habilitación ENABLE_4G_PIN, del módulo 4g para controlar reinicios. 
+    gpio_reset_pin(ENABLE_4G_PIN);
+    gpio_set_direction(ENABLE_4G_PIN, GPIO_MODE_OUTPUT_OD);
+    gpio_set_pull_mode(ENABLE_4G_PIN, GPIO_PULLUP_ONLY);
+    
+
 
     // Secuencia de inicialización del LCD
     lcd_init(); 
@@ -99,10 +108,14 @@ static void init_mqtt_server_task(void *params)
 {
     xSemaphoreGive(uart_sem);
     uart_event_t uart1_event;
+
     char *at_response = (char *)malloc(BUF_SIZE);
     bzero(at_response, BUF_SIZE);
+    
     char *mqtt_server_state = (char *)malloc(25);
     bzero(mqtt_server_state, 25);
+
+    uint8_t try_conection_c = 0;
     
     // Espera a recibir "PB DONE" del modulo 4g que indica que está conectado a la red celular
     while(1)
@@ -125,55 +138,32 @@ static void init_mqtt_server_task(void *params)
     // Entonces se crean las demás tareas. 
     if(!strcmp(mqtt_server_state, "OK"))
     {
-        xTaskCreate(gnss_task,
-                    "gnss_task",
-                    BUF_SIZE * 4,
-                    NULL,
-                    12,
-                    NULL);
+        create_tasks();
+        vTaskDelete(NULL);
+    }
+    else // Si no, intentará 3 veces la conexión.
+    {
+        while(try_conection_c < 3)
+        {
+            
+            mqtt_server_state = init_sequence_mqtt_server(&uart1_event, at_response, mqtt_server_state);
 
-        xTaskCreate(collect_data_task,
-                    "transmit_to_server_task",
-                    BUF_SIZE * 4,
-                    NULL,
-                    12,
-                    NULL);
+            if(!strcmp(mqtt_server_state, "OK"))
+            {
+                create_tasks();
+                vTaskDelete(NULL);
+                break;
+            }
 
-        xTaskCreate(transmit_to_server_task,
-                    "transmit_to_server_task",
-                    BUF_SIZE * 4,
-                    NULL,
-                    12,
-                    NULL);
-
-        xTaskCreate(occupancy_task,
-                    "occupancy_task",
-                    BUF_SIZE * 4,
-                    NULL,
-                    12,
-                    NULL);
+            try_conection_c++;
+        }
 
         
-        xTaskCreate(lcd_task,
-                    "lcd_task",
-                    BUF_SIZE * 4,
-                    NULL,
-                    12,
-                    NULL);
-
-    gpio_install_isr_service(ESP_INTR_FLAG_LEVEL1);
-    gpio_isr_handler_add(OCCUPANCY_PIN, occupancy_isr_handler, (void*) OCCUPANCY_PIN);
-    
-    vTaskDelete(NULL);
-
-    }
-    else
-    {
         lcd_clear();
         lcd_cursor(0, 0);
-        lcd_write_string("Err init MQTT server");
+        lcd_write_string("MQTT Serv State:");
         lcd_cursor(0, 0);
-        lcd_write_string("Reset Module");
+        lcd_write_string(mqtt_server_state);
     }
 }
 
@@ -255,8 +245,46 @@ static char * init_sequence_mqtt_server(uart_event_t *uart1_event, char * at_res
     return mqtt_server_state;
 }
 
+static void create_tasks()
+{
+    xTaskCreate(gnss_task,
+                "gnss_task",
+                BUF_SIZE * 4,
+                NULL,
+                12,
+                NULL);
 
+    xTaskCreate(collect_data_task,
+                "transmit_to_server_task",
+                BUF_SIZE * 4,
+                NULL,
+                12,
+                NULL);
 
+    xTaskCreate(transmit_to_server_task,
+                "transmit_to_server_task",
+                BUF_SIZE * 4,
+                NULL,
+                12,
+                NULL);
+
+    xTaskCreate(occupancy_task,
+                "occupancy_task",
+                BUF_SIZE * 4,
+                NULL,
+                12,
+                NULL);
+
+    xTaskCreate(lcd_task,
+                "lcd_task",
+                BUF_SIZE * 4,
+                NULL,
+                12,
+                NULL);
+
+    gpio_install_isr_service(ESP_INTR_FLAG_LEVEL1);
+    gpio_isr_handler_add(OCCUPANCY_PIN, occupancy_isr_handler, (void *)OCCUPANCY_PIN);
+}
 
 static void gnss_task(void *params)
 {
@@ -284,7 +312,7 @@ static void gnss_task(void *params)
 
                     sprintf((char *)nmea_string, "%s", gnss_recv_data);
                     
-                    if (nmea_parser_r((const char *)nmea_string, &quectel_l76))
+                    if (nmea_rmc_parser_r((const char *)nmea_string, &quectel_l76))
                     {
                         // https://www.freertos.org/a00117.html
                         if(xQueueSend(position_queue, &quectel_l76, (TickType_t)10) != pdPASS)
@@ -335,6 +363,11 @@ static void collect_data_task(void *params)
 
 }
 
+static void lcd_task(void *params)
+{
+
+}
+
 
 // Esta tarea debería tener la más baja prioridad
 static void transmit_to_server_task(void *params)
@@ -359,7 +392,7 @@ static void transmit_to_server_task(void *params)
 
     
 
-        uart_receive(UART0, (void *)uart_recv_data, (uint32_t)uart_event.size);
+        //uart_receive(UART0, (void *)uart_recv_data, (uint32_t)uart_event.size);
 
         sprintf((char *)at_command, "%s\n\r", uart_recv_data);
 
@@ -371,10 +404,10 @@ static void transmit_to_server_task(void *params)
             cava_data.posicion.lon = receive_pos.lon;
             
             
-            sprintf(json_pos_mqtt, mqtt_payload_format, receive_pos.lat, receive_pos.lon);
+            //sprintf(json_pos_mqtt, mqtt_payload_format, receive_pos.lat, receive_pos.lon);
 
             // Probar así primeramente
-            fmqtt_send_payload(json_pos_mqtt, topic);
+            //fmqtt_send_payload(json_pos_mqtt, topic);
 
             // Luego crear una tarea aparte que se encargue de controlar la comunicación UART con el mod 4g
             // Enviar en una Queue el json_pos_mqtt, reemplazar 

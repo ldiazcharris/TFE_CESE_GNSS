@@ -21,9 +21,10 @@
 // Incluir en el manual como una configuración
 #define CMQTT_CONNECT        "AT+CMQTTCONNECT=0,\"tcp://18.212.130.131:1883\",300,0,\"test\",\"CloudTech*\"\r\n"
 #define CMQTT_TOPIC          "AT+CMQTTTOPIC=0,23\r\n"
-#define MQTT_TOPIC           "proyectoLuis/cava/datos\r\n"
-#define CMQTT_PAYLOAD        "AT+CMQTTPAYLOAD=0,48\r\n"
-#define MQTT_PAYLOAD_FORMAT  "{\"latitud\":\"%.6f\", \"longitud\":\"%.6f\"}\r\n"
+#define MQTT_TOPIC           "proyectoLuis/cava/datos"
+#define CMQTT_PAYLOAD        "AT+CMQTTPAYLOAD=0,%d\r\n"
+#define MQTT_PAYLOAD_FORMAT  "{\"latitud\":\"%.6f\", \"longitud\":\"%.6f\", \"occupancy\":\"%d\"}\r\n"
+#define MQTT_PUBLISH         "AT+CMQTTPUB=0,0,60,0,0\r\n"
 
 
 typedef struct

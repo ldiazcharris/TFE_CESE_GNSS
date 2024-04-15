@@ -22,6 +22,21 @@
 #define UART1 UART_NUM_1
 #define OCCUPANCY_PIN 4 
 
+typedef enum {
+    MQTT_MSG_OK = 0,
+    MQTT_MSG_FAIL,
+    MQTT_TOPIC_OK,
+    MQTT_TOPIC_FAIL,
+    MQTT_ERROR
+} mqtt_msg_state_t;
+
+typedef enum {
+    MQTT_SERVER_OK = 0,
+    MQTT_FAIL_INIT_SERVICE,
+    MQTT_FAIL_ADQ_CLIENT,
+    MQTT_FAIL_INIT_SERVER
+} mqtt_server_state_t;
+
 
 /**************DECLARACIÓN DE VARIABLES GLOBALES*******************/
 
@@ -35,7 +50,6 @@ static GNSSData_t receive_pos_4g;
 static bool occupancy_state;
 
 
-
 /****************DECLARACIÓN DE FUNCIONES*************************/
 
 static void uart_inter_gnss_task(void *params);
@@ -44,6 +58,7 @@ static void transmit_to_server_task_1(void *params);
 static void occupancy_detect_task(void *params);
 void IRAM_ATTR occupancy_isr_handler(void* arg);
 static char * init_sequence_mqtt_server(uart_event_t uart1_event, char * at_response, char * mqtt_server_state);
+static mqtt_msg_state_t transmit_msg_mqtt(float lat, float lon, bool occu, uart_event_t uart1_event, char * at_response);
 
 /**********************FUNCIÓN PRINCIPAL**************************/
 
@@ -189,6 +204,8 @@ static void transmit_to_server_task(void *params)
     char *mqtt_server_state = (char *)malloc(25);
     bzero(mqtt_server_state, 25);
 
+    mqtt_msg_state_t msg_state;
+
     gpio_reset_pin(2);
     gpio_set_direction(2, GPIO_MODE_OUTPUT);
     // mqtt_activate_server();
@@ -224,13 +241,30 @@ static void transmit_to_server_task(void *params)
                 sprintf((char *)at_command, "%s", uart_recv_data);
                 uart_transmit(UART0, at_command, strlen(at_command));
 
+                uart_transmit(UART1, at_command, strlen((const char *)at_command));
+
+                /*
+
                 if(strstr(at_command, "1") != NULL){
                     uart_transmit(UART0, "llego 1\n", strlen("llego 1\n"));
+
+                    //bzero(at_command, BUF_SIZE);
+                    //msg_state = transmit_msg_mqtt(10.960548, -74.854128, true, uart0_event, at_command);
+                    
+                    if(MQTT_MSG_OK == msg_state)
+                    {
+                        mqtt_server_state = "MSG MQTT SEND OK";
+                    }
+                    
+
+                   uart_transmit(UART1, at_command, strlen((const char *)at_command));
+
                     
                 }
                 else{
                     uart_transmit(UART1, at_command, strlen((const char *)at_command));
-                }
+                }   
+                */
 
                 break;
 
@@ -259,6 +293,8 @@ static void transmit_to_server_task_1(void *params)
     char *mqtt_server_state = (char *)malloc(25);
     bzero(mqtt_server_state, 25);
 
+    mqtt_msg_state_t msg_state;
+
     ///delay(10000);
     
 
@@ -280,11 +316,26 @@ static void transmit_to_server_task_1(void *params)
     mqtt_server_state = init_sequence_mqtt_server(uart1_event, at_response, mqtt_server_state);
     //xSemaphoreGive(uart_sem);
 
+    sprintf(comparacion, "State conection to MQTT Server: %s\n", mqtt_server_state);
+    uart_transmit(UART0, comparacion, strlen(comparacion));
+
+    delay(2000);
+
+    bzero(at_response, BUF_SIZE);
+    msg_state = transmit_msg_mqtt(10.960548, -74.854128, true, uart1_event, at_response);
+
+    if(MQTT_MSG_OK == msg_state)
+    {
+        mqtt_server_state = "MSG MQTT SEND OK";
+    }
+
     while (1)
     {
         sprintf(comparacion, "State conection to MQTT Server: %s\n", mqtt_server_state);
         uart_transmit(UART0, comparacion, strlen(comparacion));
-        delay(1000);
+        delay(2000);
+
+      
         if (xQueueReceive(uart1_queue_4g, (void *)&uart1_event, portMAX_DELAY / portTICK_PERIOD_MS))
         {
             bzero(at_response, BUF_SIZE);
@@ -303,6 +354,8 @@ static void transmit_to_server_task_1(void *params)
                 break;
             }
         }
+
+    
     }
     free(at_response);
     free(comparacion);
@@ -394,6 +447,193 @@ static char * init_sequence_mqtt_server(uart_event_t uart1_event, char * at_resp
 }
 
 
+static mqtt_msg_state_t transmit_msg_mqtt(float lat, float lon, bool occu, uart_event_t uart1_event, char * at_response)
+{
+    uart_transmit(UART0, "Iniciando send message\n", strlen("Iniciando send message\n"));
+    uart_wait_tx_done(UART0, 200);
+    mqtt_msg_state_t msg_state = MQTT_ERROR;
+    char * mqtt_payload = (char *)malloc(BUF_SIZE);
+    bzero(mqtt_payload, BUF_SIZE);
+    char * mqtt_payload_command = (char *)malloc(32);
+    bzero(mqtt_payload_command, 32);
+    size_t payload_len;
+
+    uart_transmit(UART0, "variables inicializadas\n", strlen("variables inicializadas\n"));
+    uart_wait_tx_done(UART0, 200);
+
+
+    if(NULL == mqtt_payload){
+        uart_transmit(UART0, "Malloc falló en mqtt_payload\n", strlen("Malloc falló en mqtt_payload\n"));
+        uart_wait_tx_done(UART0, 200);
+    }
+    if(NULL == mqtt_payload_command){
+        uart_transmit(UART0, "Malloc falló en mqtt_payload_command\n", strlen("Malloc falló en mqtt_payload_command\n"));
+        uart_wait_tx_done(UART0, 200);
+    }
+
+    // Configurar el tópico SIM A7670SA 
+    uart_transmit(UART1, CMQTT_TOPIC, strlen(CMQTT_TOPIC));
+    uart_wait_tx_done(UART1, 200);
+
+    uart_transmit(UART0, "Se envio CMQTT_TOPIC\n", strlen("Se envio CMQTT_TOPIC\n"));
+    uart_wait_tx_done(UART0, 200);
+
+    bzero(at_response, BUF_SIZE);
+
+    if (xQueueReceive(uart1_queue_4g, (void *)&uart1_event, pdMS_TO_TICKS(12000)))
+    {
+        sprintf(at_response, "len recived after CMQTT_TOPIC %d\n", uart1_event.size);
+
+        uart_transmit(UART0, at_response, strlen(at_response));
+        uart_wait_tx_done(UART0, 200);
+        uart_transmit(UART0, "1 Se recibio luego de CMQTT_TOPIC\n", strlen("1 Se recibio luego de CMQTT_TOPIC\n"));
+
+        bzero(at_response, BUF_SIZE);
+        uart_wait_tx_done(UART0, 200);
+        uart_receive(UART1, at_response, uart1_event.size);
+        //bzero(at_response, BUF_SIZE);
+        //sprintf(at_response, "len recived > hola\n");
+        //uart_flush(UART1);
+        //uart_transmit(UART0, "2 Se recibio luego de CMQTT_TOPIC\n", strlen("2 Se recibio luego de CMQTT_TOPIC\n"));
+    }
+
+    if (NULL == strstr(at_response, ">"))
+    {
+        uart_transmit(UART0, "Fail CMQTT Topic Command\n", strlen("Fail CMQTT Topic Command\n"));
+        uart_wait_tx_done(UART0, 200);
+        msg_state = MQTT_TOPIC_FAIL;
+        bzero(at_response, BUF_SIZE);
+        
+    }
+    else
+    {
+        uart_transmit(UART0, "Enviando TOPIC\n", strlen("Enviando TOPIC\n"));
+        uart_wait_tx_done(UART0, 200);
+        // Si todo sale bien, se envía el tópico
+        bzero(at_response, BUF_SIZE);
+
+        uart_transmit(UART1, MQTT_TOPIC, strlen(MQTT_TOPIC));
+        uart_wait_tx_done(UART1, 200);
+
+        uart_transmit(UART0, MQTT_TOPIC, strlen(MQTT_TOPIC));
+        uart_wait_tx_done(UART0, 200);
+
+        if (xQueueReceive(uart1_queue_4g, (void *)&uart1_event, pdMS_TO_TICKS(12000)))
+        {
+            uart_transmit(UART0, "Se recibio luego de TOPIC\n", strlen("Se recibio luego de TOPIC\n"));
+            uart_wait_tx_done(UART0, 200);
+            uart_receive(UART1, at_response, uart1_event.size);
+            uart_transmit(UART0, at_response, uart1_event.size);
+            uart_wait_tx_done(UART0, 200);
+        }
+
+        if (NULL == strstr(at_response, "OK"))
+        {
+            uart_transmit(UART0, "Fail sending MQTT Topic\n", strlen("Fail sending MQTT Topic\n"));
+            uart_wait_tx_done(UART0, 200);
+            msg_state = MQTT_TOPIC_FAIL;
+            bzero(at_response, BUF_SIZE);
+        }
+        // Si el topico se envío correctamente, se carga el payload
+        else
+        {
+            uart_transmit(UART0, "Enviando CMQTT_PAYLOAD\n", strlen("Enviando CMQTT_PAYLOAD\n"));
+            uart_wait_tx_done(UART0, 200);
+
+            bzero(at_response, BUF_SIZE);
+        //         (                                 , lat, lon, occu),
+            sprintf(mqtt_payload, MQTT_PAYLOAD_FORMAT, lat, lon, occu);
+
+            payload_len = strlen(mqtt_payload);
+
+            sprintf(mqtt_payload_command, CMQTT_PAYLOAD, payload_len);
+            //sprintf(mqtt_payload_command, CMQTT_PAYLOAD, 4);
+
+            uart_transmit(UART1, mqtt_payload_command, strlen(mqtt_payload_command));
+            uart_wait_tx_done(UART1, 200);
+
+            uart_transmit(UART0, mqtt_payload_command, strlen(mqtt_payload_command));
+            uart_wait_tx_done(UART0, 200);
+
+            if (xQueueReceive(uart1_queue_4g, (void *)&uart1_event, pdMS_TO_TICKS(12000)))
+            {
+                uart_transmit(UART0, "Se recibio luego de CMQTT_PAYLOAD\n", strlen("Se recibio luego de CMQTT_PAYLOAD\n"));
+                uart_wait_tx_done(UART0, 200);
+                uart_receive(UART1, at_response, uart1_event.size);
+            }
+
+            if (NULL == strstr(at_response, ">"))
+            {
+                uart_transmit(UART0, "Fail CMQTT Payload Command\n", strlen("Fail CMQTT Payload Command\n"));
+                uart_wait_tx_done(UART0, 200);
+                msg_state = MQTT_MSG_FAIL;
+                bzero(at_response, BUF_SIZE);
+                
+            }
+            else
+            {
+                uart_transmit(UART0, "Enviando PAYLOAD\n", strlen("Enviando PAYLOAD\n"));
+                uart_wait_tx_done(UART0, 200);
+                bzero(at_response, BUF_SIZE);
+                // Se envía el payload
+                
+                uart_transmit(UART1, mqtt_payload, payload_len);
+                uart_wait_tx_done(UART1, 200);
+
+                //uart_transmit(UART0, "Hola", 4);
+                uart_transmit(UART0, mqtt_payload, payload_len);
+                uart_wait_tx_done(UART0, 200);
+
+                if (xQueueReceive(uart1_queue_4g, (void *)&uart1_event, pdMS_TO_TICKS(12000)))
+                {
+                    uart_transmit(UART0, "Se recibio luego de PAYLOAD\n", strlen("Se recibio luego de PAYLOAD\n"));
+                    uart_wait_tx_done(UART0, 200);
+                    uart_receive(UART1, at_response, uart1_event.size);
+                }
+
+                if (NULL == strstr(at_response, "OK"))
+                {
+                    uart_transmit(UART0, "Fail CMQTT Payload sending\n", strlen("Fail CMQTT Payload sending\n"));
+                    uart_wait_tx_done(UART0, 200);
+                    msg_state = MQTT_MSG_FAIL;
+                    bzero(at_response, BUF_SIZE);
+                }
+                else
+                {
+                    uart_transmit(UART1, MQTT_PUBLISH, strlen(MQTT_PUBLISH));
+                    uart_wait_tx_done(UART1, 200);
+
+
+                    if (xQueueReceive(uart1_queue_4g, (void *)&uart1_event, pdMS_TO_TICKS(12000)))
+                    {
+                        uart_receive(UART1, at_response, uart1_event.size);
+                    }
+
+                    if (NULL == strstr(at_response, "OK"))
+                    {
+                        uart_transmit(UART0, "Fail CMQTT Publish\n", strlen("Fail CMQTT Publish\n"));
+                        uart_wait_tx_done(UART0, 200);
+                        msg_state = MQTT_MSG_FAIL;
+                        bzero(at_response, BUF_SIZE);
+                    }
+                    else
+                    {
+                        uart_transmit(UART0, "MQTT Publish OK\n", strlen("MQTT Publish OK\n"));
+                        uart_wait_tx_done(UART0, 200);
+                        msg_state = MQTT_MSG_OK;
+                        bzero(at_response, BUF_SIZE);
+                    }
+
+                    
+                    
+                }
+            }
+        }
+    }
+    free(mqtt_payload);
+    free(mqtt_payload_command);
+    return msg_state;
+}
 
 
 
