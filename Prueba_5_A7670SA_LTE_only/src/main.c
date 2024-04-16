@@ -22,20 +22,7 @@
 #define UART1 UART_NUM_1
 #define OCCUPANCY_PIN 4 
 
-typedef enum {
-    MQTT_MSG_OK = 0,
-    MQTT_MSG_FAIL,
-    MQTT_TOPIC_OK,
-    MQTT_TOPIC_FAIL,
-    MQTT_ERROR
-} mqtt_msg_state_t;
 
-typedef enum {
-    MQTT_SERVER_OK = 0,
-    MQTT_FAIL_INIT_SERVICE,
-    MQTT_FAIL_ADQ_CLIENT,
-    MQTT_FAIL_INIT_SERVER
-} mqtt_server_state_t;
 
 
 /**************DECLARACIÓN DE VARIABLES GLOBALES*******************/
@@ -623,9 +610,6 @@ static mqtt_msg_state_t transmit_msg_mqtt(float lat, float lon, bool occu, uart_
                         msg_state = MQTT_MSG_OK;
                         bzero(at_response, BUF_SIZE);
                     }
-
-                    
-                    
                 }
             }
         }

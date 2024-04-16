@@ -43,6 +43,22 @@ typedef struct
 } CAVA_DATA_t;
 
 
+typedef enum {
+    MQTT_MSG_OK = 0,
+    MQTT_MSG_FAIL,
+    MQTT_TOPIC_OK,
+    MQTT_TOPIC_FAIL,
+    MQTT_ERROR
+} mqtt_msg_state_t;
+
+typedef enum {
+    MQTT_SERVER_OK = 0,
+    MQTT_FAIL_INIT_SERVICE,
+    MQTT_FAIL_ADQ_CLIENT,
+    MQTT_FAIL_INIT_SERVER
+} mqtt_server_state_t;
+
+
 
 /**
  * @brief explican que hace la función
