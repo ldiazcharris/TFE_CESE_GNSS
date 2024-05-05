@@ -256,23 +256,3 @@ void write_occupancy(bool occupancy_state)
                 lcd_write_string("occ:--");
             }
 }
-
-// Esta debería ser la tarea que en el while(1) va a esperar la queue de las otras tareas
-
-// cuando la reciba va a ajecutatr esto:
-bool fmqtt_send_payload(const char * mqtt_payload_to_send)
-{
-    uart_transmit(UART1, CMQTT_TOPIC, strlen(CMQTT_TOPIC));
-    delay(50);
-    uart_transmit(UART1, MQTT_TOPIC, strlen(MQTT_TOPIC));
-    delay(50);
-    uart_transmit(UART1, CMQTT_PAYLOAD, strlen(CMQTT_PAYLOAD));
-    delay(50);
-    uart_transmit(UART1, mqtt_payload_to_send, strlen(mqtt_payload_to_send));
-    return true;
-}
-
-bool mqtt_service_init()
-{
-    return true;
-}

@@ -1,1 +1,7 @@
-Este repositorio contiene el desarrollo de firmware y pruebas para el proyecto denominado: **Prototipo de dispositivo de geolocalización basado en tecnología GNSS**, para la obtencion del título de especialista de la Carrera de Especialización en Sistemas Embebidos de la Universidad de Buenos Aires.
+### GNSS TRACKER P 
+
+## Prototipo de dispositivo de geolocalización basado en tecnología GNSS
+
+## Geolocation device prototype based on GNSS technology (GNSS TRACKER P)
+
+This repository contains the firmware development and tests for the project called: **Geolocation device prototype based on GNSS technology**, to obtain the title of specialist of the Specialisation in Embedded Systems of the University of Buenos Aires.

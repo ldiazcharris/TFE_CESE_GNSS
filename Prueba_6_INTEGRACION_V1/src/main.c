@@ -26,13 +26,14 @@
 /**************DECLARACIÓN DE VARIABLES GLOBALES*******************/
 
 static QueueHandle_t uart0_queue_gnss;
-static QueueHandle_t uart1_queue_4g; // Descomentar si se quiere usar las interrupciones de UART1
+static QueueHandle_t uart1_queue_4g; 
 static QueueHandle_t position_queue;
 static QueueHandle_t occupancy_queue;
-static SemaphoreHandle_t uart_sem;
+static QueueHandle_t cava_data_queue;
+static QueueHandle_t lcd_queue;
+static SemaphoreHandle_t uart1_sem;
 static GNSSData_t quectel_l76;
-static GNSSData_t receive_pos;
-static bool occupancy_state;
+
 
 
 
@@ -45,11 +46,12 @@ static void occupancy_task(void *params);
 void IRAM_ATTR occupancy_isr_handler(void* arg);
 static void lcd_task(void *params);
 static void init_mqtt_server_task(void *params);
-static char * init_sequence_mqtt_server(uart_event_t uart1_event, char * at_response, char * mqtt_server_state);
+static mqtt_server_state_t init_sequence_mqtt_server(uart_event_t uart1_event, char * at_response);
+static mqtt_msg_state_t transmit_msg_mqtt(char * mqtt_payload, char * topic, uart_event_t uart1_event, char * at_response);
 static void create_tasks();
 
 
-/**********************FUNCIÓN PRINCIPAL**************************/
+/**************************FUNCIÓN PRINCIPAL*******************************/
 
 void app_main()
 {
@@ -80,11 +82,13 @@ void app_main()
     lcd_set_RGB(255, 255, 255);
 
     // Semáforo para arbitrar el uso del puerto UART
-    uart_sem = xSemaphoreCreateBinary();
+    uart1_sem = xSemaphoreCreateBinary();
 
     // Creación de colas que servirán para la comunicación entre tareas. 
     position_queue = xQueueCreate(10, sizeof(GNSSData_t));
     occupancy_queue = xQueueCreate(10, sizeof(bool));
+    cava_data_queue = xQueueCreate(10, sizeof(CAVA_DATA_t));
+    lcd_queue = xQueueCreate(10, sizeof(LCD_data_t));
 
 /// Crear una tarea que se dedique unicamente a escribir por el LCD. Leer Queues de estado y actualizar la data.
 // Estado comunicación GNSS y 4G y reportar el estado de Ocupación y posición.
@@ -105,14 +109,13 @@ void app_main()
 
 static void init_mqtt_server_task(void *params)
 {
-    xSemaphoreGive(uart_sem);
+    xSemaphoreGive(uart1_sem);
     uart_event_t uart1_event;
 
     char *at_response = (char *)malloc(BUF_SIZE);
     bzero(at_response, BUF_SIZE);
     
-    char *mqtt_server_state = (char *)malloc(25);
-    bzero(mqtt_server_state, 25);
+    mqtt_server_state_t mqtt_server_state;
 
     uint8_t try_conection_c = 0;
     
@@ -130,43 +133,40 @@ static void init_mqtt_server_task(void *params)
         }
     }
 
-    mqtt_server_state = init_sequence_mqtt_server(uart1_event, at_response, mqtt_server_state);
+    mqtt_server_state = init_sequence_mqtt_server(uart1_event, at_response);
    
-
     // Si se inicia correctamente la comunicación con el servidor MQTT
     // Entonces se crean las demás tareas. 
-    if(!strcmp(mqtt_server_state, "OK"))
+    if(MQTT_SERVER_OK == mqtt_server_state)
     {
         create_tasks();
+        lcd_clear();
+        lcd_cursor(0, 0);
+        lcd_write_string("MQTT Serv: OK");
         vTaskDelete(NULL);
     }
     else // Si no, intentará 3 veces la conexión.
     {
         while(try_conection_c < 3)
         {
-            
-            mqtt_server_state = init_sequence_mqtt_server(uart1_event, at_response, mqtt_server_state);
+            mqtt_server_state = init_sequence_mqtt_server(uart1_event, at_response);
 
-            if(!strcmp(mqtt_server_state, "OK"))
+            if(MQTT_SERVER_OK == mqtt_server_state)
             {
                 create_tasks();
-                vTaskDelete(NULL);
+                lcd_clear();
+                lcd_cursor(0, 0);
+                lcd_write_string("MQTT Serv: OK");
                 break;
             }
-
             try_conection_c++;
         }
-
-        
         lcd_clear();
         lcd_cursor(0, 0);
-        lcd_write_string("MQTT Serv State:");
-        lcd_cursor(0, 0);
-        lcd_write_string(mqtt_server_state);
+        lcd_write_string("MQTT Serv: ERR");
+        vTaskDelete(NULL);
     }
 }
-
-
 
 
 static void create_tasks()
@@ -191,14 +191,14 @@ static void create_tasks()
                 NULL,
                 12,
                 NULL);
-
+/*
     xTaskCreate(occupancy_task,
                 "occupancy_task",
                 BUF_SIZE * 4,
                 NULL,
                 12,
                 NULL);
-
+*/
     xTaskCreate(lcd_task,
                 "lcd_task",
                 BUF_SIZE * 4,
@@ -241,6 +241,7 @@ static void gnss_task(void *params)
                         // https://www.freertos.org/a00117.html
                         if(xQueueSend(position_queue, &quectel_l76, (TickType_t)10) != pdPASS)
                         {
+                            lcd_clear();
                             lcd_cursor(0, 0);
                             lcd_write_string("Err Transm Pos");
                         }
@@ -267,7 +268,7 @@ static void gnss_task(void *params)
 
 }
 
-
+/*
 static void occupancy_task(void *params)
 {
     while (1)
@@ -280,78 +281,114 @@ static void occupancy_task(void *params)
 
     }
 }
-
+*/
 
 static void collect_data_task(void *params)
 {
+    static GNSSData_t receive_pos;
+    static bool occupancy_state;
+    xSemaphoreGive(uart1_sem);
+    CAVA_DATA_t cava_data;
+    // Por defecto la caba desocupada
+    cava_data.occupancy = false;
+    // Por defecto la posición matriz del centro de distribución. 10.918982886682658, -74.87194240611939
+    cava_data.position.lat = 10.918982886682658;
+    cava_data.position.lon = -74.87194240611939;
 
+    while(1){
+
+        if(xQueueReceive(position_queue, &receive_pos, pdMS_TO_TICKS(100)))
+        {
+            cava_data.position.lat = receive_pos.lat;
+            cava_data.position.lon = receive_pos.lon;
+            // Luego crear una tarea aparte que se encargue de controlar la comunicación UART con el mod 4g
+            // Enviar en una Queue el json_pos_mqtt, reemplazar 
+            // Hay que tener un mecanismo para comunicar si hay un fallo en la comunicación MQTT
+        }
+
+        if(xQueueReceive(occupancy_queue, &occupancy_state, pdMS_TO_TICKS(100)))
+        {
+            cava_data.occupancy = occupancy_state;
+        }
+
+        xQueueSend(cava_data_queue, &cava_data, pdMS_TO_TICKS(100));
+       
+    }
 }
 
 static void lcd_task(void *params)
 {
+    LCD_data_t lcd_data;
+    char print_to_lcd[16];
+    bzero(print_to_lcd, 16);
 
+    while (1)
+    {
+
+        if (xQueueReceive(lcd_queue, &lcd_data, pdMS_TO_TICKS(100)))
+        {
+            switch (lcd_data.msg_state)
+            {
+            case MQTT_MSG_OK:
+                lcd_clear();
+                lcd_cursor(0, 0);
+                sprintf(print_to_lcd, "");
+                lcd_write_string();
+                break;
+            case MQTT_MSG_FAIL:
+                /* code */
+                break;
+            case MQTT_TOPIC_OK:
+                /* code */
+                break;
+            case MQTT_TOPIC_FAIL:
+                /* code */
+                break;
+            case MQTT_MSG_ERROR:
+                /* code */
+                break;
+
+            default:
+                break;
+            }
+        }
+    }
 }
-
 
 // Esta tarea debería tener la más baja prioridad
 static void transmit_to_server_task(void *params)
 {
-    uart_event_t uart_event;
-    uint8_t *uart_recv_data = (uint8_t *)malloc(BUF_SIZE);
-    uint8_t *at_command = (uint8_t *)malloc(BUF_SIZE);
-    uint8_t *at_response = (uint8_t *)malloc(BUF_SIZE);
-    xSemaphoreGive(uart_sem);
     CAVA_DATA_t cava_data;
-    cava_data.occupacion = false;
-    // Colocar la posición matriz del centro de distribución. 
-    cava_data.posicion.lat = 0;
+    uart_event_t uart1_event;
+    mqtt_msg_state_t mqtt_msg_state = MQTT_MSG_ERROR;
+    LCD_data_t lcd_data;
 
-    char * json_pos_mqtt = (char *)malloc(BUF_SIZE);
+    // Puntero requerido por la función transmit_msg_mqtt() para procesar mensajes UART
+    char * at_response = (char *)malloc(BUF_SIZE);
+
+    char * mqtt_payload = (char *)malloc(100);
+    char * topic = CAVA_TOPIC;
+    bzero(mqtt_payload, 100);
 
     while(1){
 
-
-        bzero(uart_recv_data, BUF_SIZE);
-        bzero(at_command, BUF_SIZE);
-
-    
-
-        //uart_receive(UART0, (void *)uart_recv_data, (uint32_t)uart_event.size);
-
-        sprintf((char *)at_command, "%s\n\r", uart_recv_data);
-
-        uart_transmit(UART1, at_command, strlen((const char *)at_command));
-
-        if(xQueueReceive(position_queue, &receive_pos, (TickType_t)100/portTICK_PERIOD_MS))
+        if(xQueueReceive(cava_data_queue, &cava_data, pdMS_TO_TICKS(100)))
         {
-            cava_data.posicion.lat = receive_pos.lat;
-            cava_data.posicion.lon = receive_pos.lon;
+            sprintf(mqtt_payload, MQTT_PAYLOAD_FORMAT, cava_data.position.lat, cava_data.position.lon, cava_data.occupancy);
             
+            // mqtt_msg_state es el mecanismo para saber si hay un fallo en la comunicación MQTT
+            xSemaphoreTake(uart1_sem, pdMS_TO_TICKS(200));
+            mqtt_msg_state = transmit_msg_mqtt(mqtt_payload, topic, uart1_event, at_response);
+            xSemaphoreGive(uart1_sem);
+
             
-            //sprintf(json_pos_mqtt, mqtt_payload_format, receive_pos.lat, receive_pos.lon);
 
-            // Probar así primeramente
-            //fmqtt_send_payload(json_pos_mqtt, topic);
-
-            // Luego crear una tarea aparte que se encargue de controlar la comunicación UART con el mod 4g
-            // Enviar en una Queue el json_pos_mqtt, reemplazar 
-            // Hay que tener un mecanismo para comunicar si hay un fallo en la comunicación MQTT
-
+            xQueueSend(lcd_queue, &lcd_data, pdMS_TO_TICKS(100));
         
         }
 
-        if(xQueueReceive(occupancy_queue, &occupancy_state, (TickType_t)100/portTICK_PERIOD_MS))
-        {
-            /*Código para transmitir por MQTT la ocupación
-            */
-           //Actualizar cava_data.ocupacion y transmitir a la tarea de transmisión MQTT.
-
-        }
-
     }
-    free(uart_recv_data);
-    free(at_command);
-
+    free(mqtt_payload);
 }
 
 
@@ -363,8 +400,11 @@ void IRAM_ATTR occupancy_isr_handler(void* arg)
     xQueueSendFromISR(occupancy_queue, &gpio_num, NULL);
 }
 
-static char * init_sequence_mqtt_server(uart_event_t uart1_event, char * at_response, char * mqtt_server_state)
+static mqtt_server_state_t init_sequence_mqtt_server(uart_event_t uart1_event, char * at_response)
 {
+
+    mqtt_server_state_t mqtt_server_state = MQTT_SERVER_ERR;
+
      // Iniciar servicio MQTT en el módulo SIM A7670SA
     uart_transmit(UART1, CMQTT_START, strlen(CMQTT_START));
     uart_wait_tx_done(UART1, 200);
@@ -377,7 +417,7 @@ static char * init_sequence_mqtt_server(uart_event_t uart1_event, char * at_resp
     if (NULL == strstr(at_response, "OK"))
     {
         //uart_transmit(UART0, "Fail to Start MQTT Service\n", strlen("Fail to Start MQTT Service\n"));
-        mqtt_server_state = "FAIL MQTT Service";
+        mqtt_server_state = MQTT_FAIL_INIT_SERVICE;
         bzero(at_response, BUF_SIZE);
         
     }
@@ -397,7 +437,7 @@ static char * init_sequence_mqtt_server(uart_event_t uart1_event, char * at_resp
         if (NULL == strstr(at_response, "OK"))
         {
             //uart_transmit(UART0, "Fail to get MQTT client\n", strlen("Fail to get MQTT client\n"));
-            mqtt_server_state = "FAIL MQTT Client";
+            mqtt_server_state = MQTT_FAIL_ADQ_CLIENT;
             bzero(at_response, BUF_SIZE);
             
         }
@@ -424,7 +464,7 @@ static char * init_sequence_mqtt_server(uart_event_t uart1_event, char * at_resp
             if (NULL == strstr(at_response, "OK"))
             {
                 //uart_transmit(UART0, "Fail to connect MQTT Server\n", strlen("Fail to connect MQTT Server\n"));
-                mqtt_server_state = "FAIL MQTT Server";
+                mqtt_server_state = MQTT_FAIL_INIT_SERVER;
                 bzero(at_response, BUF_SIZE);
                 
             }
@@ -432,7 +472,7 @@ static char * init_sequence_mqtt_server(uart_event_t uart1_event, char * at_resp
             {
                 //uart_transmit(UART0, "Success Connection to MQTT Server!\n", strlen("Success Connection to MQTT Server!\n"));
                 bzero(at_response, BUF_SIZE);
-                mqtt_server_state = "OK";
+                mqtt_server_state = MQTT_SERVER_OK;
                 
             }
         }
@@ -440,19 +480,17 @@ static char * init_sequence_mqtt_server(uart_event_t uart1_event, char * at_resp
     return mqtt_server_state;
 }
 
-
-// float lat, float lon, bool occu
-static mqtt_msg_state_t transmit_msg_mqtt(char * payload, char * topic, uart_event_t uart1_event, char * at_response)
+// Función para transmitir un mensaje por MQTT
+static mqtt_msg_state_t transmit_msg_mqtt(char * mqtt_payload, char * topic, uart_event_t uart1_event, char * at_response)
 {
-    mqtt_msg_state_t msg_state = MQTT_ERROR;
-    char * mqtt_payload = (char *)malloc(BUF_SIZE);
-    bzero(mqtt_payload, BUF_SIZE);
-    size_t payload_len;
-    char * mqtt_payload_command = (char *)malloc(32);
+    mqtt_msg_state_t msg_state = MQTT_MSG_ERROR;
+
+    size_t payload_len = strlen(mqtt_payload);
+
+    char * mqtt_payload_command = (char *)malloc(32); 
     bzero(mqtt_payload_command, 32);
+    sprintf(mqtt_payload_command, CMQTT_PAYLOAD, payload_len);
     
-
-
    // Configurar el tópico SIM A7670SA 
     uart_transmit(UART1, CMQTT_TOPIC, strlen(CMQTT_TOPIC));
     uart_wait_tx_done(UART1, 200);
@@ -486,10 +524,6 @@ static mqtt_msg_state_t transmit_msg_mqtt(char * payload, char * topic, uart_eve
         else
         {
             bzero(at_response, BUF_SIZE);
-            sprintf(mqtt_payload, MQTT_PAYLOAD_FORMAT, payload);
-            payload_len = strlen(mqtt_payload);
-
-            sprintf(mqtt_payload_command, CMQTT_PAYLOAD, payload_len);
 
             uart_transmit(UART1, mqtt_payload_command, strlen(mqtt_payload_command));
             uart_wait_tx_done(UART1, 200);
@@ -524,9 +558,7 @@ static mqtt_msg_state_t transmit_msg_mqtt(char * payload, char * topic, uart_eve
 
 
                     if (xQueueReceive(uart1_queue_4g, (void *)&uart1_event, pdMS_TO_TICKS(12000)))
-                    {
                         uart_receive(UART1, at_response, uart1_event.size);
-                    }
 
                     if (NULL == strstr(at_response, "OK"))
                     {
@@ -542,7 +574,6 @@ static mqtt_msg_state_t transmit_msg_mqtt(char * payload, char * topic, uart_eve
             }
         }
     }
-    free(mqtt_payload);
     free(mqtt_payload_command);
     return msg_state;
 }

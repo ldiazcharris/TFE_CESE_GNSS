@@ -14,7 +14,7 @@
 #define UART0 UART_NUM_0
 #define UART1 UART_NUM_1
 
-//#define TOPIC "proyectoLuis/cava001/datos"
+#define CAVA_TOPIC "proyectoLuis/cava001/datos"
 
 #define CMQTT_START         "AT+CMQTTSTART\r\n"
 #define CMQTT_CLIENT        "AT+CMQTTACCQ=0,\"gnss_cavas\",0\r\n"
@@ -23,7 +23,7 @@
 #define CMQTT_TOPIC          "AT+CMQTTTOPIC=0,23\r\n"
 //#define MQTT_TOPIC           "proyectoLuis/cava/datos"
 #define CMQTT_PAYLOAD        "AT+CMQTTPAYLOAD=0,%d\r\n"
-#define MQTT_PAYLOAD_FORMAT  "{\"latitud\":\"%.6f\", \"longitud\":\"%.6f\", \"occupancy\":\"%d\"}\r\n"
+#define MQTT_PAYLOAD_FORMAT  "{\"lat\":\"%.6f\", \"long\":\"%.6f\", \"occup\":\"%d\"}\r\n"
 #define MQTT_PUBLISH         "AT+CMQTTPUB=0,0,60,0,0\r\n"
 
 
@@ -32,32 +32,42 @@ typedef enum {
     MQTT_MSG_FAIL,
     MQTT_TOPIC_OK,
     MQTT_TOPIC_FAIL,
-    MQTT_ERROR
+    MQTT_MSG_ERROR
 } mqtt_msg_state_t;
 
 typedef enum {
     MQTT_SERVER_OK = 0,
     MQTT_FAIL_INIT_SERVICE,
     MQTT_FAIL_ADQ_CLIENT,
-    MQTT_FAIL_INIT_SERVER
+    MQTT_FAIL_INIT_SERVER,
+    MQTT_SERVER_ERR
 } mqtt_server_state_t;
-
-
 
 typedef struct
 {
     float lat;
     float lon;
     char time[10];
+    
 } GNSSData_t;
 
 
 // Analizar Si la posición GNSSData_t puede ser un arreglo de 10 valores. 
 typedef struct
 {
-    bool occupacion;
-    GNSSData_t posicion;
+    bool occupancy;
+    GNSSData_t position;
+
 } CAVA_DATA_t;
+
+typedef struct 
+{
+    CAVA_DATA_t cava_data;
+    mqtt_msg_state_t msg_state;
+    mqtt_server_state_t server_state;
+
+} LCD_data_t;
+
 
 
 

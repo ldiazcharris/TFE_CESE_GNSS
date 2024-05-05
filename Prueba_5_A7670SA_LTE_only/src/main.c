@@ -115,6 +115,7 @@ void app_main()
 
     gpio_install_isr_service(ESP_INTR_FLAG_LEVEL1);
     gpio_isr_handler_add(OCCUPANCY_PIN, occupancy_isr_handler, (void*) OCCUPANCY_PIN);
+
 */
 
 
@@ -284,7 +285,7 @@ static void transmit_to_server_task_1(void *params)
 
     ///delay(10000);
     
-
+    // Esperar que el módulo A7670SA esté listo para recibir comandos AT "PB DONE" es la clave
     while(1)
     {
         
