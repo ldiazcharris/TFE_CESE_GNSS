@@ -41,5 +41,7 @@ void lcd_init();
 void lcd_write_char(char character);
 void lcd_cursor(uint8_t row, uint8_t col);
 void lcd_write_string(char *str);
+void lcd_write(uint8_t row, uint8_t column, char *str);
 void lcd_clear();
 void lcd_set_RGB(unsigned char r, unsigned char g, unsigned char b);
+

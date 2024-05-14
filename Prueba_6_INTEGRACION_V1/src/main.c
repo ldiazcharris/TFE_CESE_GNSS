@@ -32,6 +32,7 @@ static QueueHandle_t occupancy_queue;
 static QueueHandle_t cava_data_queue;
 static QueueHandle_t lcd_queue;
 static SemaphoreHandle_t uart1_sem;
+static SemaphoreHandle_t lcd_sem;
 static GNSSData_t quectel_l76;
 
 
@@ -43,12 +44,13 @@ static void gnss_task(void *params);
 static void transmit_to_server_task(void *params);
 static void collect_data_task(void *params);
 static void occupancy_task(void *params);
-void IRAM_ATTR occupancy_isr_handler(void* arg);
+void occupancy_isr_handler(void* arg);
 static void lcd_task(void *params);
 static void init_mqtt_server_task(void *params);
 static mqtt_server_state_t init_sequence_mqtt_server(uart_event_t uart1_event, char * at_response);
 static mqtt_msg_state_t transmit_msg_mqtt(char * mqtt_payload, char * topic, uart_event_t uart1_event, char * at_response);
 static void create_tasks();
+static bool wait_PB_DONE(QueueHandle_t uart_queue, uart_event_t uart_event, char * at_response);
 
 
 /**************************FUNCIÓN PRINCIPAL*******************************/
@@ -79,16 +81,19 @@ void app_main()
     // Secuencia de inicialización del LCD
     lcd_init(); 
     lcd_clear(); 
-    lcd_set_RGB(255, 255, 255);
+    lcd_set_RGB(0, 0, 255); //LCD color azul
 
     // Semáforo para arbitrar el uso del puerto UART
     uart1_sem = xSemaphoreCreateBinary();
+    lcd_sem = xSemaphoreCreateBinary();
 
     // Creación de colas que servirán para la comunicación entre tareas. 
     position_queue = xQueueCreate(10, sizeof(GNSSData_t));
     occupancy_queue = xQueueCreate(10, sizeof(bool));
     cava_data_queue = xQueueCreate(10, sizeof(CAVA_DATA_t));
     lcd_queue = xQueueCreate(10, sizeof(LCD_data_t));
+
+    lcd_write(0, 0, "Init Ok...");
 
 /// Crear una tarea que se dedique unicamente a escribir por el LCD. Leer Queues de estado y actualizar la data.
 // Estado comunicación GNSS y 4G y reportar el estado de Ocupación y posición.
@@ -110,6 +115,8 @@ void app_main()
 static void init_mqtt_server_task(void *params)
 {
     xSemaphoreGive(uart1_sem);
+    xSemaphoreGive(lcd_sem);
+    lcd_write(0, 0, "Init serv task");
     uart_event_t uart1_event;
 
     char *at_response = (char *)malloc(BUF_SIZE);
@@ -120,20 +127,9 @@ static void init_mqtt_server_task(void *params)
     uint8_t try_conection_c = 0;
     
     // Espera a recibir "PB DONE" del modulo 4g que indica que está conectado a la red celular
-    while(1)
-    {
-        if (xQueueReceive(uart1_queue_4g, (void *)&uart1_event, portMAX_DELAY / portTICK_PERIOD_MS))
-        {
-            uart_receive(UART1, at_response, uart1_event.size);
-            if (NULL != strstr(at_response,"PB DONE"))
-            {
-                bzero(at_response, BUF_SIZE);
-                break;
-            }
-        }
-    }
 
-    mqtt_server_state = init_sequence_mqtt_server(uart1_event, at_response);
+    if(wait_PB_DONE(uart1_queue_4g, uart1_event, at_response))
+        mqtt_server_state = init_sequence_mqtt_server(uart1_event, at_response);
    
     // Si se inicia correctamente la comunicación con el servidor MQTT
     // Entonces se crean las demás tareas. 
@@ -141,9 +137,28 @@ static void init_mqtt_server_task(void *params)
     {
         create_tasks();
         lcd_clear();
-        lcd_cursor(0, 0);
-        lcd_write_string("MQTT Serv: OK");
-        vTaskDelete(NULL);
+        lcd_write(0, 0, "MQTT Serv OK");
+        bzero(at_response, BUF_SIZE);
+        while(1)
+        {
+            if(pdTRUE == xSemaphoreTake(uart1_sem, portMAX_DELAY))
+            {
+                if (xQueueReceive(uart1_queue_4g, (void *)&uart1_event, portMAX_DELAY))
+                {
+                    uart_receive(UART1, at_response, uart1_event.size);
+                    lcd_write(1, 0, at_response);
+                    if (NULL != strstr(at_response,"+CMQTTCONNLOST"))
+                    {
+                        bzero(at_response, BUF_SIZE);
+                        break;
+                    }
+                }
+
+                xSemaphoreGive(uart1_sem);
+            }
+
+            delay()
+        }
     }
     else // Si no, intentará 3 veces la conexión.
     {
@@ -155,19 +170,298 @@ static void init_mqtt_server_task(void *params)
             {
                 create_tasks();
                 lcd_clear();
-                lcd_cursor(0, 0);
-                lcd_write_string("MQTT Serv: OK");
+                lcd_write(0, 0, "MQTT Serv OK");
                 break;
             }
             try_conection_c++;
         }
         lcd_clear();
-        lcd_cursor(0, 0);
-        lcd_write_string("MQTT Serv: ERR");
-        vTaskDelete(NULL);
+        lcd_write(0, 0, "MQTT Serv ERR");
+    }
+
+
+}
+
+static void gnss_task(void *params)
+{
+
+    xSemaphoreTake(lcd_sem, pdMS_TO_TICKS(100));
+    lcd_write(0,0, "GNSS TASK OK");
+    xSemaphoreGive(lcd_sem);
+
+    uart_event_t uart_event;
+    uint8_t *gnss_recv_data = (uint8_t *)malloc(BUF_SIZE*2);
+    uint8_t *nmea_string = (uint8_t *)malloc(BUF_SIZE*2);
+    char *lat_string = (char *)malloc(50);
+    char *lon_string = (char *)malloc(50);
+    
+
+    while (1)
+    {
+        
+        if (xQueueReceive(uart0_queue_gnss, (void *)&uart_event, pdMS_TO_TICKS(portMAX_DELAY)))
+        {
+            bzero(gnss_recv_data, BUF_SIZE*2);
+            bzero(nmea_string, BUF_SIZE*2);
+            bzero(lat_string, 50);
+            bzero(lon_string, 50);
+
+            switch (uart_event.type)
+            {
+            case UART_DATA:
+                    uart_receive(UART0, (void *)gnss_recv_data, (uint32_t)uart_event.size);
+
+                    sprintf((char *)nmea_string, "%s", gnss_recv_data);
+
+                    xSemaphoreTake(lcd_sem, pdMS_TO_TICKS(1000));
+                    lcd_write(0, 0, "Receving L76...");
+                    xSemaphoreGive(lcd_sem);
+                    
+                    switch(nmea_rmc_parser_r((const char *)nmea_string, &quectel_l76))
+                    {
+                    case NMEA_PARSER_OK:
+                        xSemaphoreTake(lcd_sem, pdMS_TO_TICKS(1000));
+                        lcd_write(0, 0, "Sending Pos...");
+                        xSemaphoreGive(lcd_sem);
+                        
+                        if(xQueueSend(position_queue, &quectel_l76, (TickType_t)10) != pdPASS)
+                        {
+                            xSemaphoreTake(lcd_sem, pdMS_TO_TICKS(1000));
+                            lcd_clear();
+                            lcd_write(0, 0, "Err Transm Pos");
+                            delay(2000);
+                            xSemaphoreGive(lcd_sem);
+                            
+                        }
+                        else{
+                            // Imprimir por el LCD la posición y el tópico: 
+                            sprintf(lat_string, "%.2f, %.2f",  quectel_l76.lat, quectel_l76.lon);
+                            xSemaphoreTake(lcd_sem, pdMS_TO_TICKS(1000));
+                            lcd_write(1, 0, lat_string);
+                            xSemaphoreGive(lcd_sem);
+                        }
+                        break;
+                        case NMEA_FRAME_NO_VALID:
+                             xSemaphoreTake(lcd_sem, pdMS_TO_TICKS(1000));
+                            lcd_write(1, 0, "NMEA_NO_VALID");
+                            xSemaphoreGive(lcd_sem);
+                            break;
+                        case NMEA_FRAME_NO_RMC:
+                            xSemaphoreTake(lcd_sem, pdMS_TO_TICKS(1000));
+                            lcd_write(1, 0, "NMEA_NO_RMC");
+                            xSemaphoreGive(lcd_sem);
+                            break;
+                        case NMEA_FRAME_VOID_FIELD:
+                            xSemaphoreTake(lcd_sem, pdMS_TO_TICKS(1000));
+                            lcd_write(1, 0, "NMEA_VOID_FIELD");
+                            xSemaphoreGive(lcd_sem);
+                            break;
+                        case NMEA_PARSER_ERROR:
+                            xSemaphoreTake(lcd_sem, pdMS_TO_TICKS(1000));
+                            lcd_write(1, 0, "NMEA_PARSER_ERR");
+                            xSemaphoreGive(lcd_sem);
+                            break;
+                        default:
+                            xSemaphoreTake(lcd_sem, pdMS_TO_TICKS(1000));
+                            lcd_write(1, 0, "GNSS TASK ERR");
+                            xSemaphoreGive(lcd_sem);
+                    }
+
+                break; 
+
+            default:
+                break;
+            }
+        }
+    }
+
+    free(gnss_recv_data);
+    free(nmea_string);
+    free(lat_string);
+    free(lon_string);
+
+}
+
+/*
+static void occupancy_task(void *params)
+{
+    while (1)
+    {
+        if (xQueueReceive(occupancy_queue, &occupancy_state, portMAX_DELAY)) {
+
+                write_occupancy(occupancy_state);
+                
+            }
+
+    }
+}
+*/
+
+static void collect_data_task(void *params)
+{
+    xSemaphoreTake(lcd_sem, pdMS_TO_TICKS(100));
+    lcd_write(0,0, "COLLECT TASK OK");
+    xSemaphoreGive(lcd_sem);
+
+    static GNSSData_t receive_pos;
+    static bool occupancy_state;
+    xSemaphoreGive(uart1_sem);
+    CAVA_DATA_t cava_data;
+    // Por defecto la caba desocupada
+    cava_data.occupancy = false;
+    // Por defecto la posición matriz del centro de distribución. 10.918982886682658, -74.87194240611939
+    cava_data.position.lat = 10.918982886682658;
+    cava_data.position.lon = -74.87194240611939;
+
+    while(1){
+
+        if(xQueueReceive(position_queue, &receive_pos, pdMS_TO_TICKS(100)))
+        {
+            cava_data.position.lat = receive_pos.lat;
+            cava_data.position.lon = receive_pos.lon;
+            // Luego crear una tarea aparte que se encargue de controlar la comunicación UART con el mod 4g
+            // Enviar en una Queue el json_pos_mqtt, reemplazar 
+            // Hay que tener un mecanismo para comunicar si hay un fallo en la comunicación MQTT
+        }
+
+        if(xQueueReceive(occupancy_queue, &occupancy_state, pdMS_TO_TICKS(100)))
+        {
+            cava_data.occupancy = occupancy_state;
+        }
+
+        xQueueSend(cava_data_queue, &cava_data, pdMS_TO_TICKS(100));
+        delay(12000);
+       
     }
 }
 
+static void lcd_task(void *params)
+{
+    xSemaphoreTake(lcd_sem, pdMS_TO_TICKS(100));
+    lcd_write(0,0, "LCD TASK OK");
+    xSemaphoreGive(lcd_sem);
+    
+    LCD_data_t lcd_data;
+    char print_to_lcd[16];
+    char msg_state_chr[16];
+    bzero(print_to_lcd, 16);
+    bzero(msg_state_chr, 16);
+
+    while (1)
+    {
+
+        if (xQueueReceive(lcd_queue, &lcd_data, portMAX_DELAY))
+        {
+            switch (lcd_data.msg_state)
+            {
+                case MQTT_MSG_OK:
+                    bzero(msg_state_chr, 16);
+                    sprintf(msg_state_chr, "MQTT Msg OK");
+                    lcd_set_RGB(0, 255, 0); //LCD color verde
+                    break;
+                case MQTT_MSG_FAIL:
+                    bzero(msg_state_chr, 16);
+                    sprintf(msg_state_chr, "MQTT Msg FAIL");
+                    lcd_set_RGB(125, 2, 0); //LCD color rojo
+                    break;
+                case MQTT_TOPIC_OK:
+                    bzero(msg_state_chr, 16);
+                    sprintf(msg_state_chr, "MQTT Topic OK");
+                    lcd_set_RGB(255, 255, 0); //LCD color amarillo
+                    break;
+                case MQTT_TOPIC_FAIL:
+                    bzero(msg_state_chr, 16);
+                    sprintf(msg_state_chr, "MQTT Topic FAIL");
+                    lcd_set_RGB(125, 2, 0); //LCD color rojo
+                    break;
+                case MQTT_MSG_ERROR:
+                    bzero(msg_state_chr, 16);
+                    sprintf(msg_state_chr, "MQTT Msg ERROR");
+                    lcd_set_RGB(125, 2, 0); //LCD color rojo
+                    break;
+
+                default:
+                    bzero(msg_state_chr, 16);
+                    sprintf(msg_state_chr, "Msg st not recv");
+                    lcd_set_RGB(0, 0, 255); //LCD color azul
+                    break;
+            }
+        }
+    xSemaphoreTake(lcd_sem, pdMS_TO_TICKS(1000));
+        lcd_clear();
+
+        sprintf(print_to_lcd, "Pos: %.2f, %.2f", lcd_data.cava_data.position.lat, lcd_data.cava_data.position.lon);
+        lcd_write(0, 0, print_to_lcd);
+
+        delay(2000);
+        lcd_clear();
+
+        lcd_write(1, 0, msg_state_chr);
+        delay(2000);
+    xSemaphoreGive(lcd_sem);
+        
+    }
+}
+
+// Esta tarea debería tener la más baja prioridad
+static void transmit_to_server_task(void *params)
+{
+    xSemaphoreTake(lcd_sem, pdMS_TO_TICKS(100));
+    lcd_write(0,0, "SERV TASK OK");
+    delay(2000);
+    xSemaphoreGive(lcd_sem);
+
+    CAVA_DATA_t cava_data;
+    uart_event_t uart1_event;
+    mqtt_msg_state_t mqtt_msg_state = MQTT_MSG_ERROR;
+    LCD_data_t lcd_data;
+
+    // Puntero requerido por la función transmit_msg_mqtt() para procesar mensajes UART
+    char * at_response = (char *)malloc(BUF_SIZE);
+    char * mqtt_payload = (char *)malloc(100);
+    char * topic = CAVA_TOPIC;
+    bzero(at_response, BUF_SIZE);
+    bzero(mqtt_payload, 100);
+    
+    while(1){
+
+        if(xQueueReceive(cava_data_queue, &cava_data, pdMS_TO_TICKS(100)))
+        {
+            sprintf(mqtt_payload, MQTT_PAYLOAD_FORMAT, cava_data.position.lat, cava_data.position.lon, cava_data.occupancy);
+            
+            // mqtt_msg_state es el mecanismo para saber si hay un fallo en la comunicación MQTT
+            xSemaphoreTake(uart1_sem, pdMS_TO_TICKS(200));
+            mqtt_msg_state = transmit_msg_mqtt(mqtt_payload, topic, uart1_event, at_response);
+            xSemaphoreGive(uart1_sem);
+
+            xSemaphoreTake(lcd_sem, pdMS_TO_TICKS(100));
+            lcd_clear();
+            if(MQTT_MSG_OK == mqtt_msg_state)
+                lcd_write(0,0, "SERV TASK-MSG OK");
+            else
+                lcd_write(0,0, "SERV TASK-MSG ER");
+            delay(2000);
+            xSemaphoreGive(lcd_sem);
+
+            lcd_data.cava_data.occupancy = cava_data.occupancy;
+
+            lcd_data.cava_data.position.lat = cava_data.position.lat;
+
+            lcd_data.cava_data.position.lon = cava_data.position.lon;
+
+            lcd_data.msg_state = mqtt_msg_state;
+
+            
+
+            xQueueSend(lcd_queue, &lcd_data, pdMS_TO_TICKS(100));
+        }
+    }
+    free(mqtt_payload);
+    free(at_response);
+}
+
+
+// https://github.com/espressif/esp-idf/blob/v5.2.1/examples/peripherals/gpio/generic_gpio/main/gpio_example_main.c
 
 static void create_tasks()
 {
@@ -210,191 +504,7 @@ static void create_tasks()
     gpio_isr_handler_add(OCCUPANCY_PIN, occupancy_isr_handler, (void *)OCCUPANCY_PIN);
 }
 
-static void gnss_task(void *params)
-{
-    uart_event_t uart_event;
-    uint8_t *gnss_recv_data = (uint8_t *)malloc(BUF_SIZE*2);
-    uint8_t *nmea_string = (uint8_t *)malloc(BUF_SIZE*2);
-    char *lat_string = (char *)malloc(50);
-    char *lon_string = (char *)malloc(50);
-    
-
-    while (1)
-    {
-        
-        if (xQueueReceive(uart0_queue_gnss, (void *)&uart_event, pdMS_TO_TICKS(portMAX_DELAY)))
-        {
-            bzero(gnss_recv_data, BUF_SIZE*2);
-            bzero(nmea_string, BUF_SIZE*2);
-            bzero(lat_string, 50);
-            bzero(lon_string, 50);
-
-            switch (uart_event.type)
-            {
-            case UART_DATA:
-                    uart_receive(UART0, (void *)gnss_recv_data, (uint32_t)uart_event.size);
-
-                    sprintf((char *)nmea_string, "%s", gnss_recv_data);
-                    
-                    if (nmea_rmc_parser_r((const char *)nmea_string, &quectel_l76))
-                    {
-                        // https://www.freertos.org/a00117.html
-                        if(xQueueSend(position_queue, &quectel_l76, (TickType_t)10) != pdPASS)
-                        {
-                            lcd_clear();
-                            lcd_cursor(0, 0);
-                            lcd_write_string("Err Transm Pos");
-                        }
-                        else{
-                            // Imprimir por el LCD la posición y el tópico: 
-                            sprintf((char *)lat_string, "Lat:%.2f",  quectel_l76.lat);
-                            sprintf((char *)lon_string, "Lon:%.3f", quectel_l76.lon);
-                            write_position(lat_string, lon_string);
-                        }
-                    }
-
-                break; 
-
-            default:
-                break;
-            }
-        }
-    }
-
-    free(gnss_recv_data);
-    free(nmea_string);
-    free(lat_string);
-    free(lon_string);
-
-}
-
-/*
-static void occupancy_task(void *params)
-{
-    while (1)
-    {
-        if (xQueueReceive(occupancy_queue, &occupancy_state, portMAX_DELAY)) {
-
-                write_occupancy(occupancy_state);
-                
-            }
-
-    }
-}
-*/
-
-static void collect_data_task(void *params)
-{
-    static GNSSData_t receive_pos;
-    static bool occupancy_state;
-    xSemaphoreGive(uart1_sem);
-    CAVA_DATA_t cava_data;
-    // Por defecto la caba desocupada
-    cava_data.occupancy = false;
-    // Por defecto la posición matriz del centro de distribución. 10.918982886682658, -74.87194240611939
-    cava_data.position.lat = 10.918982886682658;
-    cava_data.position.lon = -74.87194240611939;
-
-    while(1){
-
-        if(xQueueReceive(position_queue, &receive_pos, pdMS_TO_TICKS(100)))
-        {
-            cava_data.position.lat = receive_pos.lat;
-            cava_data.position.lon = receive_pos.lon;
-            // Luego crear una tarea aparte que se encargue de controlar la comunicación UART con el mod 4g
-            // Enviar en una Queue el json_pos_mqtt, reemplazar 
-            // Hay que tener un mecanismo para comunicar si hay un fallo en la comunicación MQTT
-        }
-
-        if(xQueueReceive(occupancy_queue, &occupancy_state, pdMS_TO_TICKS(100)))
-        {
-            cava_data.occupancy = occupancy_state;
-        }
-
-        xQueueSend(cava_data_queue, &cava_data, pdMS_TO_TICKS(100));
-       
-    }
-}
-
-static void lcd_task(void *params)
-{
-    LCD_data_t lcd_data;
-    char print_to_lcd[16];
-    bzero(print_to_lcd, 16);
-
-    while (1)
-    {
-
-        if (xQueueReceive(lcd_queue, &lcd_data, pdMS_TO_TICKS(100)))
-        {
-            switch (lcd_data.msg_state)
-            {
-            case MQTT_MSG_OK:
-                lcd_clear();
-                lcd_cursor(0, 0);
-                sprintf(print_to_lcd, "");
-                lcd_write_string();
-                break;
-            case MQTT_MSG_FAIL:
-                /* code */
-                break;
-            case MQTT_TOPIC_OK:
-                /* code */
-                break;
-            case MQTT_TOPIC_FAIL:
-                /* code */
-                break;
-            case MQTT_MSG_ERROR:
-                /* code */
-                break;
-
-            default:
-                break;
-            }
-        }
-    }
-}
-
-// Esta tarea debería tener la más baja prioridad
-static void transmit_to_server_task(void *params)
-{
-    CAVA_DATA_t cava_data;
-    uart_event_t uart1_event;
-    mqtt_msg_state_t mqtt_msg_state = MQTT_MSG_ERROR;
-    LCD_data_t lcd_data;
-
-    // Puntero requerido por la función transmit_msg_mqtt() para procesar mensajes UART
-    char * at_response = (char *)malloc(BUF_SIZE);
-
-    char * mqtt_payload = (char *)malloc(100);
-    char * topic = CAVA_TOPIC;
-    bzero(mqtt_payload, 100);
-
-    while(1){
-
-        if(xQueueReceive(cava_data_queue, &cava_data, pdMS_TO_TICKS(100)))
-        {
-            sprintf(mqtt_payload, MQTT_PAYLOAD_FORMAT, cava_data.position.lat, cava_data.position.lon, cava_data.occupancy);
-            
-            // mqtt_msg_state es el mecanismo para saber si hay un fallo en la comunicación MQTT
-            xSemaphoreTake(uart1_sem, pdMS_TO_TICKS(200));
-            mqtt_msg_state = transmit_msg_mqtt(mqtt_payload, topic, uart1_event, at_response);
-            xSemaphoreGive(uart1_sem);
-
-            
-
-            xQueueSend(lcd_queue, &lcd_data, pdMS_TO_TICKS(100));
-        
-        }
-
-    }
-    free(mqtt_payload);
-}
-
-
-// https://github.com/espressif/esp-idf/blob/v5.2.1/examples/peripherals/gpio/generic_gpio/main/gpio_example_main.c
-
-void IRAM_ATTR occupancy_isr_handler(void* arg)
+void occupancy_isr_handler(void* arg)
 {
     uint32_t gpio_num = (uint32_t) arg;
     xQueueSendFromISR(occupancy_queue, &gpio_num, NULL);
@@ -577,3 +687,88 @@ static mqtt_msg_state_t transmit_msg_mqtt(char * mqtt_payload, char * topic, uar
     free(mqtt_payload_command);
     return msg_state;
 }
+
+static bool wait_PB_DONE(QueueHandle_t uart_queue, uart_event_t uart_event, char * at_response)
+{
+    while(1)
+    {
+        if (xQueueReceive(uart_queue, (void *)&uart_event, portMAX_DELAY))
+        {
+            uart_receive(UART1, at_response, uart_event.size);
+            lcd_write(1, 0, at_response);
+            if (NULL != strstr(at_response,"PB DONE"))
+            {
+                bzero(at_response, BUF_SIZE);
+                break;
+            }
+        }
+    }
+    return true;
+}
+
+/*
+static void init_mqtt_server_task(void *params)
+{
+    xSemaphoreGive(uart1_sem);
+    xSemaphoreGive(lcd_sem);
+    lcd_write(0, 0, "Init serv task");
+    uart_event_t uart1_event;
+
+    char *at_response = (char *)malloc(BUF_SIZE);
+    bzero(at_response, BUF_SIZE);
+    
+    mqtt_server_state_t mqtt_server_state;
+
+    uint8_t try_conection_c = 0;
+    
+    // Espera a recibir "PB DONE" del modulo 4g que indica que está conectado a la red celular
+
+    
+    lcd_write(1, 0, "Waiting PB_DONE");
+    while(1)
+    {
+        if (xQueueReceive(uart1_queue_4g, (void *)&uart1_event, portMAX_DELAY))
+        {
+            uart_receive(UART1, at_response, uart1_event.size);
+            lcd_write(1, 0, at_response);
+            if (NULL != strstr(at_response,"PB DONE"))
+            {
+                bzero(at_response, BUF_SIZE);
+                break;
+            }
+        }
+    }
+    
+
+    mqtt_server_state = init_sequence_mqtt_server(uart1_event, at_response);
+   
+    // Si se inicia correctamente la comunicación con el servidor MQTT
+    // Entonces se crean las demás tareas. 
+    if(MQTT_SERVER_OK == mqtt_server_state)
+    {
+        create_tasks();
+        lcd_clear();
+        lcd_write(0, 0, "MQTT Serv OK");
+        vTaskDelete(NULL);
+    }
+    else // Si no, intentará 3 veces la conexión.
+    {
+        while(try_conection_c < 3)
+        {
+            mqtt_server_state = init_sequence_mqtt_server(uart1_event, at_response);
+
+            if(MQTT_SERVER_OK == mqtt_server_state)
+            {
+                create_tasks();
+                lcd_clear();
+                lcd_write(0, 0, "MQTT Serv OK");
+                break;
+            }
+            try_conection_c++;
+        }
+        lcd_clear();
+        lcd_write(0, 0, "MQTT Serv ERR");
+        vTaskDelete(NULL);
+    }
+}
+*/

@@ -14,7 +14,8 @@
 #define UART0 UART_NUM_0
 #define UART1 UART_NUM_1
 
-#define CAVA_TOPIC "proyectoLuis/cava001/datos"
+// A funturo cambiar a "proyectoLuis/cava001/datos" Para tener un control numérico de las cavas
+#define CAVA_TOPIC "proyectoLuis/cava/datos" 
 
 #define CMQTT_START         "AT+CMQTTSTART\r\n"
 #define CMQTT_CLIENT        "AT+CMQTTACCQ=0,\"gnss_cavas\",0\r\n"
@@ -26,6 +27,14 @@
 #define MQTT_PAYLOAD_FORMAT  "{\"lat\":\"%.6f\", \"long\":\"%.6f\", \"occup\":\"%d\"}\r\n"
 #define MQTT_PUBLISH         "AT+CMQTTPUB=0,0,60,0,0\r\n"
 
+
+typedef enum {
+    NMEA_PARSER_OK = 0,
+    NMEA_FRAME_NO_VALID,
+    NMEA_FRAME_NO_RMC,
+    NMEA_FRAME_VOID_FIELD,
+    NMEA_PARSER_ERROR
+} NMEA_state_t;
 
 typedef enum {
     MQTT_MSG_OK = 0,
@@ -110,7 +119,7 @@ void nmea_parser(const char *nmeaString, GNSSData_t *gnssData);
  * @param gnssData: estructura de datos del tipo GNSSData_t, que permite almacenar la latitud y la longitud
  * 
 */
-bool nmea_rmc_parser_r(const char *nmeaString, GNSSData_t *gnssData);
+NMEA_state_t nmea_rmc_parser_r(const char *nmeaString, GNSSData_t *gnssData);
 
 /**
  * @brief Esta función permite inicializar un pin GPIO de la ESP32 para usarlo como interrupición
