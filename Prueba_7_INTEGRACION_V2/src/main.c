@@ -73,8 +73,9 @@ void app_main()
     // Se configura el pin de habilitación EN_4G_BUTTON, del módulo 4g para controlar reinicios. 
     gpio_reset_pin(EN_4G_PIN);
     gpio_set_direction(EN_4G_PIN, GPIO_MODE_OUTPUT_OD);
+    gpio_set_pull_mode(EN_4G_PIN, GPIO_FLOATING);
     //gpio_set_pull_mode(EN_4G_PIN, GPIO_PULLUP_ONLY); //No se usa debido a que el pin 39 es solo entrada
-    
+    gpio_set_level(EN_4G_PIN, 1);
 
 
     // Secuencia de inicialización del LCD
@@ -140,6 +141,7 @@ static void init_mqtt_server_task(void *params)
                 bzero(at_response, BUF_SIZE);
                 break;
             }
+            bzero(at_response, BUF_SIZE);
         }
     }
     
@@ -288,11 +290,13 @@ static void gnss_task(void *params)
                     lcd_write(0, 0, "Receving L76...");
                     xSemaphoreGive(lcd_sem);
                     
-                    switch(nmea_rmc_parser_r((const char *)nmea_string, &quectel_l76))
+                    switch(nmea_rmc_parser_r((char *)nmea_string, &quectel_l76))
                     {
                     case NMEA_PARSER_OK:
                         xSemaphoreTake(lcd_sem, pdMS_TO_TICKS(1000));
+                        lcd_clear();
                         lcd_write(0, 0, "Sending Pos...");
+                        delay(1000);
                         xSemaphoreGive(lcd_sem);
                         
                         if(xQueueSend(position_queue, &quectel_l76, (TickType_t)10) != pdPASS)
@@ -300,7 +304,7 @@ static void gnss_task(void *params)
                             xSemaphoreTake(lcd_sem, pdMS_TO_TICKS(1000));
                             lcd_clear();
                             lcd_write(0, 0, "Err Transm Pos");
-                            delay(2000);
+                            delay(1000);
                             xSemaphoreGive(lcd_sem);
                             
                         }
@@ -308,34 +312,35 @@ static void gnss_task(void *params)
                             // Imprimir por el LCD la posición y el tópico: 
                             sprintf(lat_string, "%.2f, %.2f",  quectel_l76.lat, quectel_l76.lon);
                             xSemaphoreTake(lcd_sem, pdMS_TO_TICKS(1000));
-                            lcd_write(1, 0, lat_string);
+                            lcd_clear();
+                            lcd_write(0, 0, lat_string);
                             xSemaphoreGive(lcd_sem);
                         }
                         break;
-                        case NMEA_FRAME_NO_VALID:
-                             xSemaphoreTake(lcd_sem, pdMS_TO_TICKS(1000));
-                            lcd_write(1, 0, "NMEA_NO_VALID");
-                            xSemaphoreGive(lcd_sem);
-                            break;
-                        case NMEA_FRAME_NO_RMC:
-                            xSemaphoreTake(lcd_sem, pdMS_TO_TICKS(1000));
-                            lcd_write(1, 0, "NMEA_NO_RMC");
-                            xSemaphoreGive(lcd_sem);
-                            break;
-                        case NMEA_FRAME_VOID_FIELD:
-                            xSemaphoreTake(lcd_sem, pdMS_TO_TICKS(1000));
-                            lcd_write(1, 0, "NMEA_VOID_FIELD");
-                            xSemaphoreGive(lcd_sem);
-                            break;
-                        case NMEA_PARSER_ERROR:
-                            xSemaphoreTake(lcd_sem, pdMS_TO_TICKS(1000));
-                            lcd_write(1, 0, "NMEA_PARSER_ERR");
-                            xSemaphoreGive(lcd_sem);
-                            break;
-                        default:
-                            xSemaphoreTake(lcd_sem, pdMS_TO_TICKS(1000));
-                            lcd_write(1, 0, "GNSS TASK ERR");
-                            xSemaphoreGive(lcd_sem);
+                    case NMEA_FRAME_NO_VALID:
+                        xSemaphoreTake(lcd_sem, pdMS_TO_TICKS(1000));
+                        lcd_write(1, 0, "NMEA_NO_VALID");
+                        xSemaphoreGive(lcd_sem);
+                        break;
+                    case NMEA_FRAME_NO_RMC:
+                        xSemaphoreTake(lcd_sem, pdMS_TO_TICKS(1000));
+                        lcd_write(1, 0, "NMEA_NO_RMC");
+                        xSemaphoreGive(lcd_sem);
+                        break;
+                    case NMEA_FRAME_VOID_FIELD:
+                        xSemaphoreTake(lcd_sem, pdMS_TO_TICKS(1000));
+                        lcd_write(1, 0, "NMEA_VOID_FIELD");
+                        xSemaphoreGive(lcd_sem);
+                        break;
+                    case NMEA_PARSER_ERROR:
+                        xSemaphoreTake(lcd_sem, pdMS_TO_TICKS(1000));
+                        lcd_write(1, 0, "NMEA_PARSER_ERR");
+                        xSemaphoreGive(lcd_sem);
+                        break;
+                    default:
+                        xSemaphoreTake(lcd_sem, pdMS_TO_TICKS(1000));
+                        lcd_write(1, 0, "GNSS TASK ERR");
+                        xSemaphoreGive(lcd_sem);
                     }
 
                 break; 
@@ -461,7 +466,7 @@ static void lcd_task(void *params)
     xSemaphoreTake(lcd_sem, pdMS_TO_TICKS(1000));
         lcd_clear();
 
-        sprintf(print_to_lcd, "Pos: %.2f, %.2f", lcd_data.cava_data.position.lat, lcd_data.cava_data.position.lon);
+        sprintf(print_to_lcd, "%.2f, %.2f", lcd_data.cava_data.position.lat, lcd_data.cava_data.position.lon);
         lcd_write(0, 0, print_to_lcd);
 
         delay(2000);

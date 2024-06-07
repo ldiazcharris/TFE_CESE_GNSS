@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "driver/gpio.h"
 #include "driver/uart.h"
 #include "freertos/FreeRTOS.h"
@@ -62,6 +63,7 @@ typedef struct
     float lat;
     float lon;
     char time[10];
+    NMEA_state_t NMEA_state;
     
 } GNSSData_t;
 
@@ -109,22 +111,17 @@ void uart_receive(uart_port_t uart_num, void *buf, uint32_t length);
 void delay(const TickType_t delay_ms);
 
 
-/**
- * @brief Función que permite parsear las cadenas tipo RMC recibidad por el módulo Quectel L76.
- * @param nmeaString: string que priviene del módulo GNSS, que será parseado para estraer la información necesaria
- * @param gnssData: estructura de datos del tipo GNSSData_t, que permite almacenar la latitud y la longitud
- * 
-*/
-void nmea_parser(const char *nmeaString, GNSSData_t *gnssData);
 
 /**
- * @brief Función que permite parsear las cadenas tipo RMC recibidad por el módulo Quectel L76
+ * @brief Función que permite parsear las cadenas tipo RMC recibidas por el módulo Quectel L76
  *        Es la versión de tipo "reentrant".
- * @param nmeaString: string que priviene del módulo GNSS, que será parseado para estraer la información necesaria
- * @param gnssData: estructura de datos del tipo GNSSData_t, que permite almacenar la latitud y la longitud
+ * @param nmeaString: string que priviene del módulo GNSS en formato de trama NMEA, que será parseado para extraer la 
+ *                    información necesaria
+ * @param gnssData: estructura de datos del tipo GNSSData_t, que permite almacenar hora, latitud, longitud y resultao
+ *                  del proceso de parseo
  * 
 */
-NMEA_state_t nmea_rmc_parser_r(const char *nmeaString, GNSSData_t *gnssData);
+NMEA_state_t nmea_rmc_parser_r(char *nmeaString, GNSSData_t *gnssData);
 
 /**
  * @brief Esta función permite inicializar un pin GPIO de la ESP32 para usarlo como interrupición
@@ -142,6 +139,8 @@ void pilots_init();
 bool mqtt_service_init();
 
 bool fmqtt_send_payload(const char * mqtt_payload_to_send);
+
+
 
 
 /*
