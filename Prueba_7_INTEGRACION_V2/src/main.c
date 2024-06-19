@@ -68,14 +68,16 @@ void app_main()
     //ESP_ERROR_CHECK(uart_driver_install(UART_NUM_1, BUF_SIZE * 2, 0, 0, NULL, ESP_INTR_FLAG_IRAM));
 
     // Se configruran los pines donde se conectarán los pilotos de ocupado o desocupado. 
-    pilots_init();
+    occupancy_pilots_init();
 
     // Se configura el pin de habilitación EN_4G_BUTTON, del módulo 4g para controlar reinicios. 
-    gpio_reset_pin(EN_4G_PIN);
-    gpio_set_direction(EN_4G_PIN, GPIO_MODE_OUTPUT_OD);
-    gpio_set_pull_mode(EN_4G_PIN, GPIO_FLOATING);
-    //gpio_set_pull_mode(EN_4G_PIN, GPIO_PULLUP_ONLY); //No se usa debido a que el pin 39 es solo entrada
-    gpio_set_level(EN_4G_PIN, 1);
+    enable_pin_4g_init();
+
+    // Se configruran los pines donde se conectarán los botones de ocupado o desocupado.
+    gpio_config_t free_button_struct;
+    gpio_config_t bussy_button_struct;
+    ocupancy_buttons_init(&free_button_struct, FREE_BUTTON);
+    ocupancy_buttons_init(&bussy_button_struct, BUSSY_BUTTON);
 
 
     // Secuencia de inicialización del LCD
@@ -130,6 +132,10 @@ static void init_mqtt_server_task(void *params)
     // Espera a recibir "PB DONE" del modulo 4g que indica que está conectado a la red celular
     
     lcd_write(1, 0, "Waiting PB_DONE");
+
+    wait_PB_DONE(uart1_queue_4g, uart1_event, at_response);
+
+    /*
     while(1)
     {
         if (xQueueReceive(uart1_queue_4g, (void *)&uart1_event, portMAX_DELAY))
@@ -144,6 +150,7 @@ static void init_mqtt_server_task(void *params)
             bzero(at_response, BUF_SIZE);
         }
     }
+    */
     
 
     mqtt_server_state = init_sequence_mqtt_server(uart1_event, at_response);
@@ -285,65 +292,12 @@ static void gnss_task(void *params)
                     uart_receive(UART0, (void *)gnss_recv_data, (uint32_t)uart_event.size);
 
                     sprintf((char *)nmea_string, "%s", gnss_recv_data);
-
-                    xSemaphoreTake(lcd_sem, pdMS_TO_TICKS(1000));
-                    lcd_write(0, 0, "Receving L76...");
-                    xSemaphoreGive(lcd_sem);
                     
-                    switch(nmea_rmc_parser_r((char *)nmea_string, &quectel_l76))
-                    {
-                    case NMEA_PARSER_OK:
-                        xSemaphoreTake(lcd_sem, pdMS_TO_TICKS(1000));
-                        lcd_clear();
-                        lcd_write(0, 0, "Sending Pos...");
-                        delay(1000);
-                        xSemaphoreGive(lcd_sem);
-                        
-                        if(xQueueSend(position_queue, &quectel_l76, (TickType_t)10) != pdPASS)
-                        {
-                            xSemaphoreTake(lcd_sem, pdMS_TO_TICKS(1000));
-                            lcd_clear();
-                            lcd_write(0, 0, "Err Transm Pos");
-                            delay(1000);
-                            xSemaphoreGive(lcd_sem);
-                            
-                        }
-                        else{
-                            // Imprimir por el LCD la posición y el tópico: 
-                            sprintf(lat_string, "%.2f, %.2f",  quectel_l76.lat, quectel_l76.lon);
-                            xSemaphoreTake(lcd_sem, pdMS_TO_TICKS(1000));
-                            lcd_clear();
-                            lcd_write(0, 0, lat_string);
-                            xSemaphoreGive(lcd_sem);
-                        }
-                        break;
-                    case NMEA_FRAME_NO_VALID:
-                        xSemaphoreTake(lcd_sem, pdMS_TO_TICKS(1000));
-                        lcd_write(1, 0, "NMEA_NO_VALID");
-                        xSemaphoreGive(lcd_sem);
-                        break;
-                    case NMEA_FRAME_NO_RMC:
-                        xSemaphoreTake(lcd_sem, pdMS_TO_TICKS(1000));
-                        lcd_write(1, 0, "NMEA_NO_RMC");
-                        xSemaphoreGive(lcd_sem);
-                        break;
-                    case NMEA_FRAME_VOID_FIELD:
-                        xSemaphoreTake(lcd_sem, pdMS_TO_TICKS(1000));
-                        lcd_write(1, 0, "NMEA_VOID_FIELD");
-                        xSemaphoreGive(lcd_sem);
-                        break;
-                    case NMEA_PARSER_ERROR:
-                        xSemaphoreTake(lcd_sem, pdMS_TO_TICKS(1000));
-                        lcd_write(1, 0, "NMEA_PARSER_ERR");
-                        xSemaphoreGive(lcd_sem);
-                        break;
-                    default:
-                        xSemaphoreTake(lcd_sem, pdMS_TO_TICKS(1000));
-                        lcd_write(1, 0, "GNSS TASK ERR");
-                        xSemaphoreGive(lcd_sem);
-                    }
+                    nmea_rmc_parser_r((char *)nmea_string, &quectel_l76);
 
-                break; 
+                    xQueueSend(position_queue, &quectel_l76, pdMS_TO_TICKS(100));
+                    
+                break;
 
             default:
                 break;
@@ -384,17 +338,26 @@ static void collect_data_task(void *params)
     xSemaphoreGive(uart1_sem);
     CAVA_DATA_t cava_data;
     // Por defecto la caba desocupada
-    cava_data.occupancy = false;
-    // Por defecto la posición matriz del centro de distribución. 10.918982886682658, -74.87194240611939
-    cava_data.position.lat = 10.918982886682658;
-    cava_data.position.lon = -74.87194240611939;
+    cava_data.occupancy = FREE_CAVA;
+    
+
 
     while(1){
 
         if(xQueueReceive(position_queue, &receive_pos, pdMS_TO_TICKS(100)))
         {
-            cava_data.position.lat = receive_pos.lat;
-            cava_data.position.lon = receive_pos.lon;
+
+            if (cava_data.position.NMEA_state != NMEA_PARSER_OK)
+            {
+                // Por defecto la posición matriz del centro de distribución. 10.918982886682658, -74.87194240611939
+                cava_data.position.lat = 10.918982886682658;
+                cava_data.position.lon = -74.87194240611939;
+            }
+            else 
+            {
+                cava_data.position.lat = receive_pos.lat;
+                cava_data.position.lon = receive_pos.lon;
+            }
             // Luego crear una tarea aparte que se encargue de controlar la comunicación UART con el mod 4g
             // Enviar en una Queue el json_pos_mqtt, reemplazar 
             // Hay que tener un mecanismo para comunicar si hay un fallo en la comunicación MQTT
@@ -411,80 +374,12 @@ static void collect_data_task(void *params)
     }
 }
 
-static void lcd_task(void *params)
-{
-    xSemaphoreTake(lcd_sem, pdMS_TO_TICKS(100));
-    lcd_write(0,0, "LCD TASK OK");
-    xSemaphoreGive(lcd_sem);
-    
-    LCD_data_t lcd_data;
-    char print_to_lcd[16];
-    char msg_state_chr[16];
-    bzero(print_to_lcd, 16);
-    bzero(msg_state_chr, 16);
-
-    while (1)
-    {
-
-        if (xQueueReceive(lcd_queue, &lcd_data, portMAX_DELAY))
-        {
-            switch (lcd_data.msg_state)
-            {
-                case MQTT_MSG_OK:
-                    bzero(msg_state_chr, 16);
-                    sprintf(msg_state_chr, "MQTT Msg OK");
-                    lcd_set_RGB(0, 255, 0); //LCD color verde
-                    break;
-                case MQTT_MSG_FAIL:
-                    bzero(msg_state_chr, 16);
-                    sprintf(msg_state_chr, "MQTT Msg FAIL");
-                    lcd_set_RGB(125, 2, 0); //LCD color rojo
-                    break;
-                case MQTT_TOPIC_OK:
-                    bzero(msg_state_chr, 16);
-                    sprintf(msg_state_chr, "MQTT Topic OK");
-                    lcd_set_RGB(255, 255, 0); //LCD color amarillo
-                    break;
-                case MQTT_TOPIC_FAIL:
-                    bzero(msg_state_chr, 16);
-                    sprintf(msg_state_chr, "MQTT Topic FAIL");
-                    lcd_set_RGB(125, 2, 0); //LCD color rojo
-                    break;
-                case MQTT_MSG_ERROR:
-                    bzero(msg_state_chr, 16);
-                    sprintf(msg_state_chr, "MQTT Msg ERROR");
-                    lcd_set_RGB(125, 2, 0); //LCD color rojo
-                    break;
-
-                default:
-                    bzero(msg_state_chr, 16);
-                    sprintf(msg_state_chr, "Msg st not recv");
-                    lcd_set_RGB(0, 0, 255); //LCD color azul
-                    break;
-            }
-        }
-    xSemaphoreTake(lcd_sem, pdMS_TO_TICKS(1000));
-        lcd_clear();
-
-        sprintf(print_to_lcd, "%.2f, %.2f", lcd_data.cava_data.position.lat, lcd_data.cava_data.position.lon);
-        lcd_write(0, 0, print_to_lcd);
-
-        delay(2000);
-        lcd_clear();
-
-        lcd_write(1, 0, msg_state_chr);
-        delay(2000);
-    xSemaphoreGive(lcd_sem);
-        
-    }
-}
 
 // Esta tarea debería tener la más baja prioridad
 static void transmit_to_server_task(void *params)
 {
     xSemaphoreTake(lcd_sem, pdMS_TO_TICKS(100));
     lcd_write(0,0, "SERV TASK OK");
-    delay(2000);
     xSemaphoreGive(lcd_sem);
 
     CAVA_DATA_t cava_data;
@@ -501,30 +396,20 @@ static void transmit_to_server_task(void *params)
     
     while(1){
 
-        if(xQueueReceive(cava_data_queue, &cava_data, pdMS_TO_TICKS(100)))
+        if(xQueueReceive(cava_data_queue, &cava_data, portMAX_DELAY))
         {
-            sprintf(mqtt_payload, MQTT_PAYLOAD_FORMAT, cava_data.position.lat, cava_data.position.lon, cava_data.occupancy);
+            sprintf(mqtt_payload, MQTT_PAYLOAD_FORMAT, cava_data.position.lat, cava_data.position.lon, cava_data.occupancy, cava_data.position.NMEA_state);
             
             // mqtt_msg_state es el mecanismo para saber si hay un fallo en la comunicación MQTT
             xSemaphoreTake(uart1_sem, pdMS_TO_TICKS(200));
             mqtt_msg_state = transmit_msg_mqtt(mqtt_payload, topic, uart1_event, at_response);
             xSemaphoreGive(uart1_sem);
 
-            xSemaphoreTake(lcd_sem, pdMS_TO_TICKS(100));
-            lcd_clear();
-            if(MQTT_MSG_OK == mqtt_msg_state)
-                lcd_write(0,0, "SERV TASK-MSG OK");
-            else
-                lcd_write(0,0, "SERV TASK-MSG ER");
-            delay(2000);
-            xSemaphoreGive(lcd_sem);
+            memcpy(&lcd_data.cava_data, &cava_data, sizeof(cava_data));
 
-            lcd_data.cava_data.occupancy = cava_data.occupancy;
-
-            lcd_data.cava_data.position.lat = cava_data.position.lat;
-
-            lcd_data.cava_data.position.lon = cava_data.position.lon;
-
+            // lcd_data.cava_data.occupancy = cava_data.occupancy;
+            // lcd_data.cava_data.position.lat = cava_data.position.lat;
+            // lcd_data.cava_data.position.lon = cava_data.position.lon;
             lcd_data.msg_state = mqtt_msg_state;
 
             
@@ -534,6 +419,56 @@ static void transmit_to_server_task(void *params)
     }
     free(mqtt_payload);
     free(at_response);
+}
+
+static void lcd_task(void *params)
+{
+    xSemaphoreTake(lcd_sem, pdMS_TO_TICKS(100));
+    lcd_write(0,0, "LCD TASK OK");
+    xSemaphoreGive(lcd_sem);
+    
+    LCD_data_t lcd_data;
+    char print_to_lcd[16];
+    char occupancy_str[8];
+
+    bzero(print_to_lcd, 16);
+    bzero(occupancy_str, 8);
+
+    while (1)
+    {
+
+        if (xQueueReceive(lcd_queue, &lcd_data, portMAX_DELAY))
+        {
+            
+            xSemaphoreTake(lcd_sem, portMAX_DELAY);
+            
+            lcd_clear();
+            sprintf(print_to_lcd, "%.2f, %.2f", lcd_data.cava_data.position.lat, lcd_data.cava_data.position.lon);
+            lcd_write(0, 0, print_to_lcd);
+
+            delay(1000);
+            
+            bzero(print_to_lcd, 16);
+            nmea_state_to_str(lcd_data.cava_data.position.NMEA_state, print_to_lcd);
+            lcd_write(1, 0, print_to_lcd);
+
+            delay(1000);
+
+            bzero(print_to_lcd, 16);
+            bzero(occupancy_str, 8);
+            occupancy_to_string(lcd_data.cava_data.occupancy, occupancy_str);
+            sprintf(print_to_lcd, "Occu: %s", occupancy_str);
+            lcd_clear();
+            lcd_write(0, 0, print_to_lcd);
+            
+            bzero(print_to_lcd, 16);
+            mqtt_msg_state_to_string(lcd_data.msg_state, print_to_lcd);
+            lcd_write(1, 0, print_to_lcd);
+            delay(1000);
+
+            xSemaphoreGive(lcd_sem);
+        }
+    }
 }
 
 
@@ -583,7 +518,27 @@ static void create_tasks()
 void occupancy_isr_handler(void* arg)
 {
     uint32_t gpio_num = (uint32_t) arg;
-    xQueueSendFromISR(occupancy_queue, &gpio_num, NULL);
+    bool occupancy = false;
+
+    switch (gpio_num)
+    {
+    case BUSSY_BUTTON:
+        occupancy = BUSSY_CAVA;
+        gpio_set_level(BUSSY_PILOT, !BUSSY_CAVA);
+        gpio_set_level(FREE_PILOT, !FREE_CAVA);
+
+        break;
+    case FREE_BUTTON:
+        occupancy = FREE_CAVA;
+        gpio_set_level(BUSSY_PILOT, BUSSY_CAVA);
+        gpio_set_level(FREE_PILOT, FREE_CAVA);
+        break;
+    
+    default:
+        break;
+    }
+
+    xQueueSendFromISR(occupancy_queue, &occupancy, NULL);
 }
 
 static mqtt_server_state_t init_sequence_mqtt_server(uart_event_t uart1_event, char * at_response)

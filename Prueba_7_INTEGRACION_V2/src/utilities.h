@@ -9,7 +9,7 @@
 #include "esp_log.h"
 
 
-#define BUSY_PILOT            27
+#define BUSSY_PILOT            27
 #define FREE_PILOT            13
 #define FREE_BUTTON           36 
 #define BUSSY_BUTTON          39
@@ -30,16 +30,16 @@
 #define CMQTT_CONNECT        "AT+CMQTTCONNECT=0,\"tcp://18.212.130.131:1883\",300,0,\"test\",\"CloudTech*\"\r\n"
 #define CMQTT_TOPIC          "AT+CMQTTTOPIC=0,23\r\n"
 #define CMQTT_PAYLOAD        "AT+CMQTTPAYLOAD=0,%d\r\n"
-#define MQTT_PAYLOAD_FORMAT  "{\"lat\":\"%.6f\", \"long\":\"%.6f\", \"occup\":\"%d\"}\r\n"
+#define MQTT_PAYLOAD_FORMAT  "{\"lat\":\"%.6f\", \"long\":\"%.6f\", \"occup\":\"%d\", \"NMEA_st\":\"%d\"}\r\n"
 #define MQTT_PUBLISH         "AT+CMQTTPUB=0,0,60,0,0\r\n"
 
 
 typedef enum {
     NMEA_PARSER_OK = 0,
-    NMEA_FRAME_NO_VALID,
-    NMEA_FRAME_NO_RMC,
-    NMEA_FRAME_VOID_FIELD,
-    NMEA_PARSER_ERROR
+    NMEA_NO_VALID,
+    NMEA_NO_RMC,
+    NMEA_VOID_FIELD,
+    NMEA_PARSER_ERR
 } NMEA_state_t;
 
 typedef enum {
@@ -57,6 +57,11 @@ typedef enum {
     MQTT_FAIL_INIT_SERVER,
     MQTT_SERVER_ERR
 } mqtt_server_state_t;
+
+typedef enum{
+BUSSY_CAVA = 0,
+FREE_CAVA
+}occupancy_t;
 
 typedef struct
 {
@@ -128,13 +133,43 @@ NMEA_state_t nmea_rmc_parser_r(char *nmeaString, GNSSData_t *gnssData);
  * @param occupancy_pin_config: structura del tipo  gpio_config_t para inicializar la interrupción por GPIO
  * @param occupancy_pin: Pin que será utilizado para detectar la interrupción.
 */
-void ocupancy_pin_init(gpio_config_t* occupancy_pin_config, uint64_t occupancy_pin);
+void ocupancy_buttons_init(gpio_config_t* occupancy_pin_config, uint64_t occupancy_pin);
 
 void write_position(char * lat, char * lon);
 
-void write_occupancy(bool occupancy_state);
+/**
+ * @brief Esta función permite inicializar un los pines GPIO de la ESP32 que serán usados para conectar los pilots
+ * 
+*/
+void occupancy_pilots_init();
 
-void pilots_init();
+/**
+ * @brief Inicializa el pin GPIO donde se conecta el pin de EN (enable) del módulo 4G SIM A7670SA
+ *        Permite controlar reinicios del módulo por software. 
+*/
+void enable_pin_4g_init();
+
+/**
+ * @brief convierte un estado de la estructura NMEA_state_t en un string.
+ * @param nmea_state: estado NMEA a convertir en string.
+ * @param str: puntero a char de destino. 
+ */
+void nmea_state_to_str(NMEA_state_t nmea_state, char * str);
+
+
+/**
+ * @brief convierte un estado de la estructura mqtt_msg_state_t en un string.
+ * @param mqtt_msg_st: estado del mensaje MQTT a convertir en string.
+ * @param str: puntero a char de destino. 
+ */
+void mqtt_msg_state_to_string(mqtt_msg_state_t mqtt_msg_st, char * str);
+
+/**
+ * @brief convierte un estado de la estructura occupancy_t en un string.
+ * @param occupancy: estado de la occupancy a convertir en string.
+ * @param str: puntero a char de destino. 
+ */
+void occupancy_to_string(occupancy_t occupancy, char * str);
 
 bool mqtt_service_init();
 

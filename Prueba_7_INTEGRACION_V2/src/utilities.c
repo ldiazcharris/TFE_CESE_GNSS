@@ -63,12 +63,12 @@ void delay(const TickType_t delay_ms)
 
 NMEA_state_t nmea_rmc_parser_r(char *nmeaString, GNSSData_t *gnssData)
 {
-    NMEA_state_t result_parser = NMEA_PARSER_ERROR;
+    NMEA_state_t result_parser = NMEA_PARSER_ERR;
     // Verificar que la cadena comience con '$'
     if (NULL == strstr(nmeaString, "$"))
     {
         // Cadena NMEA no válida, no comienza con $
-        result_parser = NMEA_FRAME_NO_VALID;
+        result_parser = NMEA_NO_VALID;
     }
     else
     {
@@ -82,7 +82,7 @@ NMEA_state_t nmea_rmc_parser_r(char *nmeaString, GNSSData_t *gnssData)
         if (NULL == strstr(token, "RMC"))
         {
             // Cadena NMEA no válida, no es un mensaje RMC
-            result_parser = NMEA_FRAME_NO_RMC;
+            result_parser = NMEA_NO_RMC;
             
         }
         else
@@ -93,7 +93,7 @@ NMEA_state_t nmea_rmc_parser_r(char *nmeaString, GNSSData_t *gnssData)
                 if (token == NULL)
                 {
                     // Cadena NMEA no válida, falta un campo
-                    result_parser = NMEA_FRAME_VOID_FIELD;
+                    result_parser = NMEA_VOID_FIELD;
                     break;
                 }
 
@@ -109,7 +109,7 @@ NMEA_state_t nmea_rmc_parser_r(char *nmeaString, GNSSData_t *gnssData)
                     // Obtener la hora en formato HHMMSS
                     if(NULL == strstr(token, "A"))
                     {
-                        result_parser = NMEA_FRAME_NO_VALID;
+                        result_parser = NMEA_NO_VALID;
                         break;
                     }
                         
@@ -159,9 +159,9 @@ NMEA_state_t nmea_rmc_parser_r(char *nmeaString, GNSSData_t *gnssData)
 }
 
 
-void ocupancy_pin_init(gpio_config_t* occupancy_pin_config, uint64_t occupancy_pin)
+void ocupancy_buttons_init(gpio_config_t* occupancy_pin_config, uint64_t occupancy_pin)
 {
-    occupancy_pin_config->intr_type = GPIO_INTR_ANYEDGE;
+    occupancy_pin_config->intr_type = GPIO_INTR_POSEDGE;
     occupancy_pin_config->pin_bit_mask = (1ULL << occupancy_pin);
     occupancy_pin_config->mode = GPIO_MODE_INPUT;
     occupancy_pin_config->pull_up_en = GPIO_PULLUP_DISABLE;
@@ -169,13 +169,21 @@ void ocupancy_pin_init(gpio_config_t* occupancy_pin_config, uint64_t occupancy_p
     gpio_config(occupancy_pin_config);
 }
 
-void pilots_init()
+void occupancy_pilots_init()
 {    
-    gpio_reset_pin(BUSY_PILOT);
+    gpio_reset_pin(BUSSY_PILOT);
     gpio_reset_pin(FREE_PILOT);
-    gpio_set_direction(BUSY_PILOT, GPIO_MODE_OUTPUT);
+    gpio_set_direction(BUSSY_PILOT, GPIO_MODE_OUTPUT);
     gpio_set_direction(FREE_PILOT, GPIO_MODE_OUTPUT);
+}
+
+void enable_pin_4g_init()
+{
     
+    gpio_reset_pin(EN_4G_PIN);
+    gpio_set_direction(EN_4G_PIN, GPIO_MODE_OUTPUT_OD);
+    gpio_set_pull_mode(EN_4G_PIN, GPIO_FLOATING);
+    gpio_set_level(EN_4G_PIN, 1);
 }
 
 void write_position(char * lat, char * lon)
@@ -187,30 +195,87 @@ void write_position(char * lat, char * lon)
     lcd_write_string(lon);
 }
 
-void write_occupancy(bool occupancy_state)
+void nmea_state_to_str(NMEA_state_t nmea_state, char * str)
 {
-                //lcd_clear();
-            if(occupancy_state)
-            {
-                gpio_set_level(FREE_PILOT, 0);
-                gpio_set_level(BUSY_PILOT, 1);
-                lcd_cursor(0, 11);
-                lcd_write_string("occ:SI");
-                
-            }
-            else if(!occupancy_state)
-            {
-                gpio_set_level(FREE_PILOT, 1);
-                gpio_set_level(BUSY_PILOT, 0);
-                lcd_cursor(0, 11);
-                lcd_write_string("occ:NO");
-                
-            }
-            else
-            {
-                gpio_set_level(FREE_PILOT, 1);
-                gpio_set_level(BUSY_PILOT, 1);
-                lcd_cursor(0, 11);
-                lcd_write_string("occ:--");
-            }
+    switch (nmea_state)
+    {
+    case NMEA_PARSER_OK:
+        bzero(str, 16);
+        strcpy(str, "NMEA_PARSER_OK");
+        break;
+    case NMEA_NO_VALID:
+        bzero(str, 16);
+        strcpy(str, "NMEA_NO_VALID");
+        break;
+    case NMEA_NO_RMC:
+        bzero(str, 16);
+        strcpy(str, "NMEA_NO_RMC");
+        break;
+    case NMEA_VOID_FIELD:
+        bzero(str, 16);
+        strcpy(str, "NMEA_VOID_FIELD");
+        break;
+    case NMEA_PARSER_ERR:
+        bzero(str, 16);
+        strcpy(str, "NMEA_PARSER_ERR");
+        break;
+    default:
+        bzero(str, 16);
+        strcpy(str, "NMEA_default");
+    }
+}
+
+void mqtt_msg_state_to_string(mqtt_msg_state_t mqtt_msg_st, char *str)
+{
+    switch (mqtt_msg_st)
+    {
+    case MQTT_MSG_OK:
+        bzero(str, 16);
+        sprintf(str, "MQTT Msg OK");
+        lcd_set_RGB(0, 255, 0); // LCD color verde
+        break;
+    case MQTT_MSG_FAIL:
+        bzero(str, 16);
+        sprintf(str, "MQTT Msg FAIL");
+        lcd_set_RGB(125, 2, 0); // LCD color rojo
+        break;
+    case MQTT_TOPIC_OK:
+        bzero(str, 16);
+        sprintf(str, "MQTT Topic OK");
+        lcd_set_RGB(255, 255, 0); // LCD color amarillo
+        break;
+    case MQTT_TOPIC_FAIL:
+        bzero(str, 16);
+        sprintf(str, "MQTT Topic FAIL");
+        lcd_set_RGB(125, 2, 0); // LCD color rojo
+        break;
+    case MQTT_MSG_ERROR:
+        bzero(str, 16);
+        sprintf(str, "MQTT Msg ERROR");
+        lcd_set_RGB(125, 2, 0); // LCD color rojo
+        break;
+
+    default:
+        bzero(str, 16);
+        sprintf(str, "Msg st not recv");
+        lcd_set_RGB(0, 0, 255); // LCD color azul
+        break;
+    }
+}
+
+void occupancy_to_string(occupancy_t occupancy, char * str)
+{
+    switch (occupancy)
+    {
+    case BUSSY_CAVA:
+        strcpy(str, "OCUPADA");
+        break;
+    case FREE_CAVA:
+        strcpy(str, "LIBRE");
+        break;
+    
+    default:
+        strcpy(str, "NaN");
+        break;
+    }
 }
