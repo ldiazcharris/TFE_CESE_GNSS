@@ -33,6 +33,7 @@ static QueueHandle_t lcd_queue;
 static SemaphoreHandle_t uart1_sem;
 static SemaphoreHandle_t lcd_sem;
 static GNSSData_t quectel_l76;
+static occupancy_t occupancy;
 
 
 
@@ -42,8 +43,8 @@ static GNSSData_t quectel_l76;
 static void gnss_task(void *params);
 static void transmit_to_server_task(void *params);
 static void collect_data_task(void *params);
-static void occupancy_task(void *params);
-void occupancy_isr_handler(void* arg);
+//static void occupancy_task(void *params);
+void IRAM_ATTR occupancy_isr_handler(void* arg);
 static void lcd_task(void *params);
 static void init_mqtt_server_task(void *params);
 static mqtt_server_state_t init_sequence_mqtt_server(uart_event_t uart1_event, char * at_response);
@@ -74,11 +75,13 @@ void app_main()
     enable_pin_4g_init();
 
     // Se configruran los pines donde se conectarán los botones de ocupado o desocupado.
-    gpio_config_t free_button_struct;
-    gpio_config_t bussy_button_struct;
-    ocupancy_buttons_init(&free_button_struct, FREE_BUTTON);
-    ocupancy_buttons_init(&bussy_button_struct, BUSSY_BUTTON);
 
+    ocupancy_buttons_init(); 
+    gpio_install_isr_service(ESP_INTR_FLAG_IRAM);
+    gpio_isr_handler_add(BUSSY_BUTTON, occupancy_isr_handler, (void *)BUSSY_BUTTON);
+    gpio_isr_handler_add(FREE_BUTTON, occupancy_isr_handler, (void *)FREE_BUTTON);
+
+    debounce_init();
 
     // Secuencia de inicialización del LCD
     lcd_init(); 
@@ -91,7 +94,7 @@ void app_main()
 
     // Creación de colas que servirán para la comunicación entre tareas. 
     position_queue = xQueueCreate(10, sizeof(GNSSData_t));
-    occupancy_queue = xQueueCreate(10, sizeof(bool));
+    occupancy_queue = xQueueCreate(10, sizeof(occupancy_t));
     cava_data_queue = xQueueCreate(10, sizeof(CAVA_DATA_t));
     lcd_queue = xQueueCreate(10, sizeof(LCD_data_t));
 
@@ -333,43 +336,48 @@ static void collect_data_task(void *params)
     lcd_write(0,0, "COLLECT TASK OK");
     xSemaphoreGive(lcd_sem);
 
-    static GNSSData_t receive_pos;
-    static bool occupancy_state;
+    GNSSData_t receive_pos;
+    occupancy_t occupancy_state;
     xSemaphoreGive(uart1_sem);
     CAVA_DATA_t cava_data;
-    // Por defecto la caba desocupada
-    cava_data.occupancy = FREE_CAVA;
-    
-
 
     while(1){
 
-        if(xQueueReceive(position_queue, &receive_pos, pdMS_TO_TICKS(100)))
+        if(xQueueReceive(occupancy_queue, &occupancy_state, pdMS_TO_TICKS(500)))
         {
+            cava_data.occupancy = occupancy_state;
+        }
+
+        if(xQueueReceive(position_queue, &receive_pos, pdMS_TO_TICKS(500)))
+        {
+            cava_data.position.NMEA_state = receive_pos.NMEA_state;
 
             if (cava_data.position.NMEA_state != NMEA_PARSER_OK)
             {
-                // Por defecto la posición matriz del centro de distribución. 10.918982886682658, -74.87194240611939
+                // Por defecto la posición matriz del centro de distribución.
                 cava_data.position.lat = 10.918982886682658;
                 cava_data.position.lon = -74.87194240611939;
+                strcpy(cava_data.position.time, "33:33");
             }
             else 
             {
                 cava_data.position.lat = receive_pos.lat;
                 cava_data.position.lon = receive_pos.lon;
+                strcpy(cava_data.position.time, receive_pos.time);
             }
-            // Luego crear una tarea aparte que se encargue de controlar la comunicación UART con el mod 4g
-            // Enviar en una Queue el json_pos_mqtt, reemplazar 
-            // Hay que tener un mecanismo para comunicar si hay un fallo en la comunicación MQTT
+
+            
+            /* Luego crear una tarea aparte que se encargue de controlar la comunicación UART con el mod 4g
+               Enviar en una Queue el json_pos_mqtt, reemplazar --- ok el formato json se genera en la tarea 
+               transmit_to_server_task()
+               Hay que tener un mecanismo para comunicar si hay un fallo en la comunicación MQTT ---- ok 
+               el fallo se detecta en función transmit_to_server_task() y se transmite por una queue a lcd_task() 
+               y también se transmite a través de los datos de la cava, porvenientes de la tarea gnss_task() 
+               en los datos de la cava.
+            */
         }
 
-        if(xQueueReceive(occupancy_queue, &occupancy_state, pdMS_TO_TICKS(100)))
-        {
-            cava_data.occupancy = occupancy_state;
-        }
-
-        xQueueSend(cava_data_queue, &cava_data, pdMS_TO_TICKS(100));
-        delay(12000);
+        xQueueSend(cava_data_queue, &cava_data, pdMS_TO_TICKS(500));
        
     }
 }
@@ -398,10 +406,15 @@ static void transmit_to_server_task(void *params)
 
         if(xQueueReceive(cava_data_queue, &cava_data, portMAX_DELAY))
         {
-            sprintf(mqtt_payload, MQTT_PAYLOAD_FORMAT, cava_data.position.lat, cava_data.position.lon, cava_data.occupancy, cava_data.position.NMEA_state);
+            sprintf(mqtt_payload, MQTT_PAYLOAD_FORMAT, 
+                    cava_data.position.lat, 
+                    cava_data.position.lon, 
+                    cava_data.occupancy, 
+                    cava_data.position.NMEA_state
+                    );
             
             // mqtt_msg_state es el mecanismo para saber si hay un fallo en la comunicación MQTT
-            xSemaphoreTake(uart1_sem, pdMS_TO_TICKS(200));
+            xSemaphoreTake(uart1_sem, portMAX_DELAY);
             mqtt_msg_state = transmit_msg_mqtt(mqtt_payload, topic, uart1_event, at_response);
             xSemaphoreGive(uart1_sem);
 
@@ -412,10 +425,9 @@ static void transmit_to_server_task(void *params)
             // lcd_data.cava_data.position.lon = cava_data.position.lon;
             lcd_data.msg_state = mqtt_msg_state;
 
-            
-
             xQueueSend(lcd_queue, &lcd_data, pdMS_TO_TICKS(100));
         }
+        delay(2000);
     }
     free(mqtt_payload);
     free(at_response);
@@ -443,7 +455,7 @@ static void lcd_task(void *params)
             xSemaphoreTake(lcd_sem, portMAX_DELAY);
             
             lcd_clear();
-            sprintf(print_to_lcd, "%.2f, %.2f", lcd_data.cava_data.position.lat, lcd_data.cava_data.position.lon);
+            sprintf(print_to_lcd, "%.3f, %.3f", lcd_data.cava_data.position.lat, lcd_data.cava_data.position.lon);
             lcd_write(0, 0, print_to_lcd);
 
             delay(1000);
@@ -457,9 +469,10 @@ static void lcd_task(void *params)
             bzero(print_to_lcd, 16);
             bzero(occupancy_str, 8);
             occupancy_to_string(lcd_data.cava_data.occupancy, occupancy_str);
-            sprintf(print_to_lcd, "Occu: %s", occupancy_str);
+            sprintf(print_to_lcd, "Cava %s", occupancy_str);
             lcd_clear();
             lcd_write(0, 0, print_to_lcd);
+            delay(1000);
             
             bzero(print_to_lcd, 16);
             mqtt_msg_state_to_string(lcd_data.msg_state, print_to_lcd);
@@ -487,14 +500,14 @@ static void create_tasks()
                 "transmit_to_server_task",
                 BUF_SIZE * 4,
                 NULL,
-                12,
+                10,
                 NULL);
 
     xTaskCreate(transmit_to_server_task,
                 "transmit_to_server_task",
                 BUF_SIZE * 4,
                 NULL,
-                12,
+                8,
                 NULL);
 /*
     xTaskCreate(occupancy_task,
@@ -508,38 +521,41 @@ static void create_tasks()
                 "lcd_task",
                 BUF_SIZE * 4,
                 NULL,
-                12,
+                8,
                 NULL);
 
-    gpio_install_isr_service(ESP_INTR_FLAG_LEVEL1);
-    gpio_isr_handler_add(BUSSY_BUTTON, occupancy_isr_handler, (void *)BUSSY_BUTTON);
+    
 }
+
+
 
 void occupancy_isr_handler(void* arg)
 {
     uint32_t gpio_num = (uint32_t) arg;
-    bool occupancy = false;
-
+    
     switch (gpio_num)
     {
     case BUSSY_BUTTON:
         occupancy = BUSSY_CAVA;
-        gpio_set_level(BUSSY_PILOT, !BUSSY_CAVA);
-        gpio_set_level(FREE_PILOT, !FREE_CAVA);
+        gpio_set_level(BUSSY_PILOT, 0);
+        gpio_set_level(FREE_PILOT, 1);
 
         break;
     case FREE_BUTTON:
         occupancy = FREE_CAVA;
-        gpio_set_level(BUSSY_PILOT, BUSSY_CAVA);
-        gpio_set_level(FREE_PILOT, FREE_CAVA);
+        gpio_set_level(BUSSY_PILOT, 1);
+        gpio_set_level(FREE_PILOT, 0);
         break;
     
     default:
         break;
     }
-
     xQueueSendFromISR(occupancy_queue, &occupancy, NULL);
+
+    
 }
+
+
 
 static mqtt_server_state_t init_sequence_mqtt_server(uart_event_t uart1_event, char * at_response)
 {

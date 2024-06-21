@@ -4,13 +4,6 @@
 // Uncomment for debugging with UART_0
 //static const char *TAG = "NMEA_PARSER";
 
-static void error_message_gnss_data(const char *message){
-    lcd_clear();
-    lcd_cursor(0,0);
-    lcd_write_string((char *)"ERR posicion:");
-    lcd_cursor(1,0);
-    lcd_write_string((char *) message);
-}
 
 void uart_init(  uart_port_t     uart_num, 
                         int             baud_rate, 
@@ -106,7 +99,7 @@ NMEA_state_t nmea_rmc_parser_r(char *nmeaString, GNSSData_t *gnssData)
                 }
                 else if (i == 2)
                 {
-                    // Obtener la hora en formato HHMMSS
+                    // 
                     if(NULL == strstr(token, "A"))
                     {
                         result_parser = NMEA_NO_VALID;
@@ -159,14 +152,23 @@ NMEA_state_t nmea_rmc_parser_r(char *nmeaString, GNSSData_t *gnssData)
 }
 
 
-void ocupancy_buttons_init(gpio_config_t* occupancy_pin_config, uint64_t occupancy_pin)
+void ocupancy_buttons_init()
 {
-    occupancy_pin_config->intr_type = GPIO_INTR_POSEDGE;
-    occupancy_pin_config->pin_bit_mask = (1ULL << occupancy_pin);
-    occupancy_pin_config->mode = GPIO_MODE_INPUT;
-    occupancy_pin_config->pull_up_en = GPIO_PULLUP_DISABLE;
-    occupancy_pin_config->pull_down_en = GPIO_PULLDOWN_ENABLE;
-    gpio_config(occupancy_pin_config);
+    gpio_reset_pin(BUSSY_BUTTON);
+    gpio_reset_pin(FREE_BUTTON);
+    gpio_config_t occupancy_pin_config;
+    occupancy_pin_config.intr_type = GPIO_INTR_POSEDGE;
+    occupancy_pin_config.pin_bit_mask = ((1ULL<<BUSSY_BUTTON) | (1ULL<<FREE_BUTTON));
+    occupancy_pin_config.mode = GPIO_MODE_INPUT;
+    occupancy_pin_config.pull_up_en = GPIO_PULLUP_DISABLE;
+    occupancy_pin_config.pull_down_en = GPIO_PULLDOWN_DISABLE;
+    //gpio_config(occupancy_pin_config);
+    esp_err_t error = gpio_config(&occupancy_pin_config);
+    if(error!=ESP_OK){
+        gpio_set_level(BUSSY_PILOT, 1);
+        gpio_set_level(FREE_PILOT, 1);
+    }
+
 }
 
 void occupancy_pilots_init()
@@ -175,6 +177,12 @@ void occupancy_pilots_init()
     gpio_reset_pin(FREE_PILOT);
     gpio_set_direction(BUSSY_PILOT, GPIO_MODE_OUTPUT);
     gpio_set_direction(FREE_PILOT, GPIO_MODE_OUTPUT);
+    gpio_pulldown_dis(BUSSY_PILOT);
+    gpio_pulldown_dis(FREE_PILOT);
+    gpio_pullup_dis(BUSSY_PILOT);
+    gpio_pullup_dis(FREE_PILOT);
+    //gpio_set_level(BUSSY_PILOT, 1);
+    //gpio_set_level(FREE_PILOT, 1);
 }
 
 void enable_pin_4g_init()
@@ -273,7 +281,9 @@ void occupancy_to_string(occupancy_t occupancy, char * str)
     case FREE_CAVA:
         strcpy(str, "LIBRE");
         break;
-    
+    case Def_CAVA:
+        strcpy(str, "Defect");
+        break;
     default:
         strcpy(str, "NaN");
         break;

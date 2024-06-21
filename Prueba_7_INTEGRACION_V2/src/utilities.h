@@ -7,9 +7,10 @@
 #include "freertos/task.h"
 #include "freertos/queue.h"
 #include "esp_log.h"
+#include "esp_timer.h"
 
 
-#define BUSSY_PILOT            27
+#define BUSSY_PILOT           27
 #define FREE_PILOT            13
 #define FREE_BUTTON           36 
 #define BUSSY_BUTTON          39
@@ -60,7 +61,8 @@ typedef enum {
 
 typedef enum{
 BUSSY_CAVA = 0,
-FREE_CAVA
+FREE_CAVA,
+Def_CAVA
 }occupancy_t;
 
 typedef struct
@@ -76,7 +78,7 @@ typedef struct
 // Analizar Si la posición GNSSData_t puede ser un arreglo de 10 valores. 
 typedef struct
 {
-    bool occupancy;
+    occupancy_t occupancy;
     GNSSData_t position;
 
 } CAVA_DATA_t;
@@ -130,10 +132,9 @@ NMEA_state_t nmea_rmc_parser_r(char *nmeaString, GNSSData_t *gnssData);
 
 /**
  * @brief Esta función permite inicializar un pin GPIO de la ESP32 para usarlo como interrupición
- * @param occupancy_pin_config: structura del tipo  gpio_config_t para inicializar la interrupción por GPIO
- * @param occupancy_pin: Pin que será utilizado para detectar la interrupción.
+ * 
 */
-void ocupancy_buttons_init(gpio_config_t* occupancy_pin_config, uint64_t occupancy_pin);
+void ocupancy_buttons_init();
 
 void write_position(char * lat, char * lon);
 
@@ -176,18 +177,38 @@ bool mqtt_service_init();
 bool fmqtt_send_payload(const char * mqtt_payload_to_send);
 
 
-
-
-/*
-UART EVENTS TYPES
-
-    UART_DATA,              /!< UART data event
-    UART_BREAK,             /!< UART break event
-    UART_BUFFER_FULL,       /!< UART RX buffer full event
-    UART_FIFO_OVF,          /!< UART FIFO overflow event
-    UART_FRAME_ERR,         /!< UART RX frame error event
-    UART_PARITY_ERR,        /!< UART RX parity event
-    UART_DATA_BREAK,        /!< UART TX data and break evenT
-    UART_PATTERN_DET,       /!< UART pattern detected 
-
+/**
+ * Debounce functions
 */
+
+typedef enum{
+	BUTTON_UP = 0,
+	BUTTON_RISING,
+	BUTTON_DOWN,
+	BUTTON_FALLING
+} debounce_t;
+
+bool debounce_init();
+
+debounce_t debounce_up(int pinState);
+
+/**
+ * Delay_t functions
+*/
+
+typedef struct{
+	uint32_t startTime;
+	uint32_t duration;
+	bool running;
+} delay_t;
+
+
+void delay_init(delay_t * delay, uint32_t duration);
+bool delay_read(delay_t * delay);
+void delay_write(delay_t * delay, uint32_t duration);
+
+
+
+
+
+
