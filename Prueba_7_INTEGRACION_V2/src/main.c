@@ -33,9 +33,6 @@ static QueueHandle_t lcd_queue;
 static SemaphoreHandle_t uart1_sem;
 static SemaphoreHandle_t lcd_sem;
 static GNSSData_t quectel_l76;
-static occupancy_t occupancy;
-
-
 
 
 /****************DECLARACIÓN DE FUNCIONES*************************/
@@ -43,7 +40,6 @@ static occupancy_t occupancy;
 static void gnss_task(void *params);
 static void transmit_to_server_task(void *params);
 static void collect_data_task(void *params);
-//static void occupancy_task(void *params);
 void IRAM_ATTR occupancy_isr_handler(void* arg);
 static void lcd_task(void *params);
 static void init_mqtt_server_task(void *params);
@@ -117,6 +113,11 @@ void app_main()
 /****************DEFINICIÓN DE FUNCIONES Y TAREAS**************************/
 
 
+// Luego crear una tarea aparte que se encargue de controlar la comunicación UART con el mod 4g
+
+// Hacer secuencia de desconexión del Cliente MQTT
+                        // Hacer secuencia de liberación del Cliente MQTT
+                        // Hacer secuencia de conexión al servidor nuevamente
 
 static void init_mqtt_server_task(void *params)
 {
@@ -190,81 +191,6 @@ static void init_mqtt_server_task(void *params)
 
 
 
-/*
-
-static void init_mqtt_server_task(void *params)
-{
-    xSemaphoreGive(uart1_sem);
-    xSemaphoreGive(lcd_sem);
-    lcd_write(0, 0, "Init serv task");
-    uart_event_t uart1_event;
-
-    char *at_response = (char *)malloc(BUF_SIZE);
-    bzero(at_response, BUF_SIZE);
-    
-    mqtt_server_state_t mqtt_server_state;
-
-    uint8_t try_conection_c = 0;
-    
-    // Espera a recibir "PB DONE" del modulo 4g que indica que está conectado a la red celular
-
-    if(wait_PB_DONE(uart1_queue_4g, uart1_event, at_response))
-        mqtt_server_state = init_sequence_mqtt_server(uart1_event, at_response);
-   
-    // Si se inicia correctamente la comunicación con el servidor MQTT
-    // Entonces se crean las demás tareas. 
-    if(MQTT_SERVER_OK == mqtt_server_state)
-    {
-        create_tasks();
-        lcd_clear();
-        lcd_write(0, 0, "MQTT Serv OK");
-        bzero(at_response, BUF_SIZE);
-        while(1)
-        {
-            if(pdTRUE == xSemaphoreTake(uart1_sem, pdMS_TO_TICKS(500)))
-            {
-                if (xQueueReceive(uart1_queue_4g, (void *)&uart1_event, pdMS_TO_TICKS(500)))
-                {
-                    uart_receive(UART1, at_response, uart1_event.size);
-                    lcd_write(1, 0, at_response);
-                    if (NULL != strstr(at_response,"+CMQTTCONNLOST"))
-                    {
-                        // Hacer secuencia de desconexión del Cliente MQTT
-                        // Hacer secuencia de liberación del Cliente MQTT
-                        // Hacer secuencia de conexión al servidor nuevamente
-                        bzero(at_response, BUF_SIZE);
-                        break;
-                    }
-                }
-            }
-            xSemaphoreGive(uart1_sem);
-            
-        }
-    }
-    else // Si no, intentará 3 veces la conexión.
-    {
-        while(try_conection_c < 3)
-        {
-            mqtt_server_state = init_sequence_mqtt_server(uart1_event, at_response);
-
-            if(MQTT_SERVER_OK == mqtt_server_state)
-            {
-                create_tasks();
-                lcd_clear();
-                lcd_write(0, 0, "MQTT Serv OK");
-                break;
-            }
-            try_conection_c++;
-        }
-        lcd_clear();
-        lcd_write(0, 0, "MQTT Serv ERR");
-    }
-
-
-}
-
-*/
-
 static void gnss_task(void *params)
 {
 
@@ -315,20 +241,7 @@ static void gnss_task(void *params)
 
 }
 
-/*
-static void occupancy_task(void *params)
-{
-    while (1)
-    {
-        if (xQueueReceive(occupancy_queue, &occupancy_state, portMAX_DELAY)) {
 
-                write_occupancy(occupancy_state);
-                
-            }
-
-    }
-}
-*/
 
 static void collect_data_task(void *params)
 {
@@ -366,15 +279,6 @@ static void collect_data_task(void *params)
                 strcpy(cava_data.position.time, receive_pos.time);
             }
 
-            
-            /* Luego crear una tarea aparte que se encargue de controlar la comunicación UART con el mod 4g
-               Enviar en una Queue el json_pos_mqtt, reemplazar --- ok el formato json se genera en la tarea 
-               transmit_to_server_task()
-               Hay que tener un mecanismo para comunicar si hay un fallo en la comunicación MQTT ---- ok 
-               el fallo se detecta en función transmit_to_server_task() y se transmite por una queue a lcd_task() 
-               y también se transmite a través de los datos de la cava, porvenientes de la tarea gnss_task() 
-               en los datos de la cava.
-            */
         }
 
         xQueueSend(cava_data_queue, &cava_data, pdMS_TO_TICKS(500));
@@ -433,6 +337,7 @@ static void transmit_to_server_task(void *params)
     free(at_response);
 }
 
+
 static void lcd_task(void *params)
 {
     xSemaphoreTake(lcd_sem, pdMS_TO_TICKS(100));
@@ -485,7 +390,6 @@ static void lcd_task(void *params)
 }
 
 
-// https://github.com/espressif/esp-idf/blob/v5.2.1/examples/peripherals/gpio/generic_gpio/main/gpio_example_main.c
 
 static void create_tasks()
 {
@@ -509,30 +413,21 @@ static void create_tasks()
                 NULL,
                 8,
                 NULL);
-/*
-    xTaskCreate(occupancy_task,
-                "occupancy_task",
-                BUF_SIZE * 4,
-                NULL,
-                12,
-                NULL);
-*/
+
     xTaskCreate(lcd_task,
                 "lcd_task",
                 BUF_SIZE * 4,
                 NULL,
                 8,
-                NULL);
-
-    
+                NULL); 
 }
 
 
 
 void occupancy_isr_handler(void* arg)
 {
-    uint32_t gpio_num = (uint32_t) arg;
-    
+    uint32_t gpio_num = (uint32_t)arg;
+    occupancy_t occupancy;
     switch (gpio_num)
     {
     case BUSSY_BUTTON:
@@ -552,7 +447,6 @@ void occupancy_isr_handler(void* arg)
     }
     xQueueSendFromISR(occupancy_queue, &occupancy, NULL);
 
-    
 }
 
 

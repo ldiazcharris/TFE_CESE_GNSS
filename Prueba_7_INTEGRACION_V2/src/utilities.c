@@ -43,16 +43,20 @@ void uart_transmit(uart_port_t uart_num, const void *src, size_t size)
 }
 
 
+
 void uart_receive(uart_port_t uart_num, void *buf, uint32_t length)
 {
     uart_read_bytes(uart_num, buf, length, portMAX_DELAY);
 }
 
 
+
 void delay(const TickType_t delay_ms)
 {
     vTaskDelay(pdMS_TO_TICKS(delay_ms));
 }
+
+
 
 NMEA_state_t nmea_rmc_parser_r(char *nmeaString, GNSSData_t *gnssData)
 {
@@ -171,6 +175,8 @@ void ocupancy_buttons_init()
 
 }
 
+
+
 void occupancy_pilots_init()
 {    
     gpio_reset_pin(BUSSY_PILOT);
@@ -185,14 +191,17 @@ void occupancy_pilots_init()
     //gpio_set_level(FREE_PILOT, 1);
 }
 
+
+
 void enable_pin_4g_init()
 {
-    
     gpio_reset_pin(EN_4G_PIN);
     gpio_set_direction(EN_4G_PIN, GPIO_MODE_OUTPUT_OD);
     gpio_set_pull_mode(EN_4G_PIN, GPIO_FLOATING);
     gpio_set_level(EN_4G_PIN, 1);
 }
+
+
 
 void write_position(char * lat, char * lon)
 {
@@ -202,6 +211,8 @@ void write_position(char * lat, char * lon)
     lcd_cursor(1, 0);
     lcd_write_string(lon);
 }
+
+
 
 void nmea_state_to_str(NMEA_state_t nmea_state, char * str)
 {
@@ -232,6 +243,8 @@ void nmea_state_to_str(NMEA_state_t nmea_state, char * str)
         strcpy(str, "NMEA_default");
     }
 }
+
+
 
 void mqtt_msg_state_to_string(mqtt_msg_state_t mqtt_msg_st, char *str)
 {
@@ -270,6 +283,8 @@ void mqtt_msg_state_to_string(mqtt_msg_state_t mqtt_msg_st, char *str)
         break;
     }
 }
+
+
 
 void occupancy_to_string(occupancy_t occupancy, char * str)
 {

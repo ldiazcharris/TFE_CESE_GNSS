@@ -1,0 +1,42 @@
+\BOOKMARK [0][-]{section*.1}{Resumen}{}% 1
+\BOOKMARK [0][-]{chapter.1}{Introducción general}{}% 2
+\BOOKMARK [1][-]{section.1.1}{Descripción del proyecto}{chapter.1}% 3
+\BOOKMARK [2][-]{subsection.1.1.1}{Contexto y problema}{section.1.1}% 4
+\BOOKMARK [2][-]{subsection.1.1.2}{Alternativa de solución}{section.1.1}% 5
+\BOOKMARK [1][-]{section.1.2}{Estado del arte}{chapter.1}% 6
+\BOOKMARK [2][-]{subsection.1.2.1}{Antecedentes}{section.1.2}% 7
+\BOOKMARK [1][-]{section.1.3}{Objetivos y alcance}{chapter.1}% 8
+\BOOKMARK [2][-]{subsection.1.3.1}{Objetivo general}{section.1.3}% 9
+\BOOKMARK [2][-]{subsection.1.3.2}{Objetivos específicos}{section.1.3}% 10
+\BOOKMARK [2][-]{subsection.1.3.3}{Alcance}{section.1.3}% 11
+\BOOKMARK [0][-]{chapter.2}{Introducción específica}{}% 12
+\BOOKMARK [1][-]{section.2.1}{Requerimientos}{chapter.2}% 13
+\BOOKMARK [1][-]{section.2.2}{Estructura del sistema}{chapter.2}% 14
+\BOOKMARK [1][-]{section.2.3}{Componentes del sistema}{chapter.2}% 15
+\BOOKMARK [2][-]{subsection.2.3.1}{Microcontrolador ESP32}{section.2.3}% 16
+\BOOKMARK [2][-]{subsection.2.3.2}{Receptor GNSS}{section.2.3}% 17
+\BOOKMARK [2][-]{subsection.2.3.3}{Módulo 4G}{section.2.3}% 18
+\BOOKMARK [3][-]{section*.14}{Antena Quectel YG0035AA}{subsection.2.3.3}% 19
+\BOOKMARK [2][-]{subsection.2.3.4}{Sistema operativo de tiempo real}{section.2.3}% 20
+\BOOKMARK [3][-]{section*.16}{FreeRTOS™}{subsection.2.3.4}% 21
+\BOOKMARK [2][-]{subsection.2.3.5}{Servicio web para mapas}{section.2.3}% 22
+\BOOKMARK [0][-]{chapter.3}{Diseño e implementación}{}% 23
+\BOOKMARK [1][-]{section.3.1}{Diseño e implementación general del sistema}{chapter.3}% 24
+\BOOKMARK [1][-]{section.3.2}{Diseño e implementación de hardware}{chapter.3}% 25
+\BOOKMARK [2][-]{subsection.3.2.1}{Diseño del Hardware}{section.3.2}% 26
+\BOOKMARK [2][-]{subsection.3.2.2}{Implementación del Hardware}{section.3.2}% 27
+\BOOKMARK [3][-]{section*.18}{Placa base del sistema}{subsection.3.2.2}% 28
+\BOOKMARK [3][-]{section*.21}{Adaptador para el módulo Quectel L76}{subsection.3.2.2}% 29
+\BOOKMARK [1][-]{section.3.3}{Diseño e implementación del firmware}{chapter.3}% 30
+\BOOKMARK [2][-]{subsection.3.3.1}{Diseño del firmware}{section.3.3}% 31
+\BOOKMARK [3][-]{section*.24}{Arquitectura del firmware}{subsection.3.3.1}% 32
+\BOOKMARK [2][-]{subsection.3.3.2}{Implementación del firmware}{section.3.3}% 33
+\BOOKMARK [1][-]{section.3.4}{Diseño e implementación de la interfaz web}{chapter.3}% 34
+\BOOKMARK [2][-]{subsection.3.4.1}{Diseño de la interfaz web}{section.3.4}% 35
+\BOOKMARK [2][-]{subsection.3.4.2}{Implementación de la interfaz web}{section.3.4}% 36
+\BOOKMARK [0][-]{chapter.4}{Ensayos y resultados}{}% 37
+\BOOKMARK [1][-]{section.4.1}{Pruebas funcionales del hardware}{chapter.4}% 38
+\BOOKMARK [0][-]{chapter.5}{Conclusiones}{}% 39
+\BOOKMARK [1][-]{section.5.1}{Conclusiones generales }{chapter.5}% 40
+\BOOKMARK [1][-]{section.5.2}{Próximos pasos}{chapter.5}% 41
+\BOOKMARK [0][-]{appendix.Alph1}{Esquemáctico de la placa base del sistema}{}% 42

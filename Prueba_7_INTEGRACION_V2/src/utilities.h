@@ -136,6 +136,7 @@ NMEA_state_t nmea_rmc_parser_r(char *nmeaString, GNSSData_t *gnssData);
 */
 void ocupancy_buttons_init();
 
+
 void write_position(char * lat, char * lon);
 
 /**
@@ -172,9 +173,6 @@ void mqtt_msg_state_to_string(mqtt_msg_state_t mqtt_msg_st, char * str);
  */
 void occupancy_to_string(occupancy_t occupancy, char * str);
 
-bool mqtt_service_init();
-
-bool fmqtt_send_payload(const char * mqtt_payload_to_send);
 
 
 /**

@@ -1,0 +1,43 @@
+\babel@toc {spanish}{}\relax 
+\contentsline {chapter}{Resumen}{\es@scroman {i}}{section*.1}%
+\contentsline {chapter}{\numberline {1}Introducción general}{1}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Descripción del proyecto}{1}{section.1.1}%
+\contentsline {subsection}{\numberline {1.1.1}Contexto y problema}{1}{subsection.1.1.1}%
+\contentsline {subsection}{\numberline {1.1.2}Alternativa de solución}{2}{subsection.1.1.2}%
+\contentsline {section}{\numberline {1.2}Estado del arte}{2}{section.1.2}%
+\contentsline {subsection}{\numberline {1.2.1}Antecedentes}{3}{subsection.1.2.1}%
+\contentsline {section}{\numberline {1.3}Objetivos y alcance}{4}{section.1.3}%
+\contentsline {subsection}{\numberline {1.3.1}Objetivo general}{4}{subsection.1.3.1}%
+\contentsline {subsection}{\numberline {1.3.2}Objetivos específicos}{4}{subsection.1.3.2}%
+\contentsline {subsection}{\numberline {1.3.3}Alcance}{4}{subsection.1.3.3}%
+\contentsline {chapter}{\numberline {2}Introducción específica}{5}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Requerimientos}{5}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Estructura del sistema}{6}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Componentes del sistema}{6}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}Microcontrolador ESP32}{7}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.2}Receptor GNSS}{9}{subsection.2.3.2}%
+\contentsline {subsection}{\numberline {2.3.3}Módulo 4G}{9}{subsection.2.3.3}%
+\contentsline {subsubsection}{Antena Quectel YG0035AA}{11}{section*.14}%
+\contentsline {subsection}{\numberline {2.3.4}Sistema operativo de tiempo real}{11}{subsection.2.3.4}%
+\contentsline {subsubsection}{FreeRTOS™}{12}{section*.16}%
+\contentsline {subsection}{\numberline {2.3.5}Servicio web para mapas}{12}{subsection.2.3.5}%
+\contentsline {chapter}{\numberline {3}Diseño e implementación}{15}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Diseño e implementación general del sistema}{15}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Diseño e implementación de hardware}{15}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Diseño del Hardware}{15}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Implementación del Hardware}{16}{subsection.3.2.2}%
+\contentsline {subsubsection}{Placa base del sistema}{16}{section*.18}%
+\contentsline {subsubsection}{Adaptador para el módulo Quectel L76}{17}{section*.21}%
+\contentsline {section}{\numberline {3.3}Diseño e implementación del firmware}{17}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Diseño del firmware}{17}{subsection.3.3.1}%
+\contentsline {subsubsection}{Arquitectura del firmware}{19}{section*.24}%
+\contentsline {subsection}{\numberline {3.3.2}Implementación del firmware}{20}{subsection.3.3.2}%
+\contentsline {section}{\numberline {3.4}Diseño e implementación de la interfaz web}{20}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Diseño de la interfaz web}{20}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}Implementación de la interfaz web}{20}{subsection.3.4.2}%
+\contentsline {chapter}{\numberline {4}Ensayos y resultados}{21}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Pruebas funcionales del hardware}{21}{section.4.1}%
+\contentsline {chapter}{\numberline {5}Conclusiones}{23}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Conclusiones generales }{23}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Próximos pasos}{23}{section.5.2}%
+\contentsline {chapter}{\numberline {A}Esquemáctico de la placa base del sistema}{25}{appendix.Alph1}%
