@@ -1,0 +1,88 @@
+This is BibTeX, Version 0.99d
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: memoria.aux
+Reallocating 'name_of_file' (item size: 1) to 9 items.
+The style file: biblatex.bst
+Reallocating 'name_of_file' (item size: 1) to 12 items.
+Reallocating 'name_of_file' (item size: 1) to 11 items.
+This database file appears more than once: references.bib
+---line 9 of file memoria.aux
+ : \bibdata{memoria-blx,references,references
+ :                                           }
+I'm skipping whatever remains of this command
+Reallocating 'name_of_file' (item size: 1) to 22 items.
+A level-1 auxiliary file: Chapters/Chapter1.aux
+Reallocating 'name_of_file' (item size: 1) to 22 items.
+A level-1 auxiliary file: Chapters/Chapter2.aux
+Reallocating 'name_of_file' (item size: 1) to 22 items.
+A level-1 auxiliary file: Chapters/Chapter3.aux
+Reallocating 'name_of_file' (item size: 1) to 22 items.
+A level-1 auxiliary file: Chapters/Chapter4.aux
+Reallocating 'name_of_file' (item size: 1) to 22 items.
+A level-1 auxiliary file: Chapters/Chapter5.aux
+Reallocating 'name_of_file' (item size: 1) to 25 items.
+A level-1 auxiliary file: Appendices/AppendixA.aux
+Reallocating 'glb_str_end' (item size: 4) to 20 items.
+Reallocating 'glb_str_ptr' (item size: 4) to 20 items.
+Reallocating 'global_strs' (item size: 1) to 4000000 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'wiz_functions' (item size: 4) to 6000 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Database file #1: memoria-blx.bib
+Database file #2: references.bib
+Biblatex version: 3.20
+Warning--bcf version mismatch: biblatex.bst has 3.11, but biblatex.sty has 3.10
+         The bcf version need not be the same as the biblatex version.
+Reallocating 'wiz_functions' (item size: 4) to 9000 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+You've used 11 entries,
+            6402 wiz_defined-function locations,
+            1266 strings with 10804 characters,
+and the built_in function-call counts, 51078 in all, are:
+= -- 3860
+> -- 565
+< -- 162
++ -- 1266
+- -- 260
+* -- 3553
+:= -- 5348
+add.period$ -- 0
+call.type$ -- 11
+change.case$ -- 40
+chr.to.int$ -- 0
+cite$ -- 20
+duplicate$ -- 5261
+empty$ -- 5066
+format.name$ -- 366
+if$ -- 10511
+int.to.chr$ -- 0
+int.to.str$ -- 14
+missing$ -- 0
+newline$ -- 207
+num.names$ -- 152
+pop$ -- 3528
+preamble$ -- 1
+purify$ -- 82
+quote$ -- 0
+skip$ -- 1125
+stack$ -- 0
+substring$ -- 7403
+swap$ -- 964
+text.length$ -- 175
+text.prefix$ -- 0
+top$ -- 2
+type$ -- 362
+warning$ -- 1
+while$ -- 576
+width$ -- 0
+write$ -- 197
+(There was 1 error message)

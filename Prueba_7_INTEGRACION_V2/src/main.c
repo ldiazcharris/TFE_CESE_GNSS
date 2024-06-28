@@ -37,15 +37,16 @@ static GNSSData_t quectel_l76;
 
 /****************DECLARACIÓN DE FUNCIONES*************************/
 
-static void gnss_task(void *params);
-static void transmit_to_server_task(void *params);
-static void collect_data_task(void *params);
-void IRAM_ATTR occupancy_isr_handler(void* arg);
-static void lcd_task(void *params);
 static void init_mqtt_server_task(void *params);
+static void gnss_task(void *params);
+void IRAM_ATTR occupancy_isr_handler(void* arg);
+static void collect_data_task(void *params);
+static void transmit_to_server_task(void *params);
+static void lcd_task(void *params);
+
+static void create_tasks();
 static mqtt_server_state_t init_sequence_mqtt_server(uart_event_t uart1_event, char * at_response);
 static mqtt_msg_state_t transmit_msg_mqtt(char * mqtt_payload, char * topic, uart_event_t uart1_event, char * at_response);
-static void create_tasks();
 static bool wait_PB_DONE(QueueHandle_t uart_queue, uart_event_t uart_event, char * at_response);
 
 
@@ -482,19 +483,14 @@ static mqtt_server_state_t init_sequence_mqtt_server(uart_event_t uart1_event, c
             uart_receive(UART1, at_response, uart1_event.size);
         }
 
-        uart_transmit(UART0, at_response, strlen(at_response));
-        uart_wait_tx_done(UART0, 200);
-
         if (NULL == strstr(at_response, "OK"))
         {
             //uart_transmit(UART0, "Fail to get MQTT client\n", strlen("Fail to get MQTT client\n"));
             mqtt_server_state = MQTT_FAIL_ADQ_CLIENT;
             bzero(at_response, BUF_SIZE);
-            
         }
         else
         {
-
             bzero(at_response, BUF_SIZE);
             uart_transmit(UART1, CMQTT_CONNECT, strlen(CMQTT_CONNECT));
             uart_wait_tx_done(UART1, 200);

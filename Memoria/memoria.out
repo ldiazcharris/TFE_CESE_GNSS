@@ -29,14 +29,17 @@
 \BOOKMARK [3][-]{section*.21}{Adaptador para el módulo Quectel L76}{subsection.3.2.2}% 29
 \BOOKMARK [1][-]{section.3.3}{Diseño e implementación del firmware}{chapter.3}% 30
 \BOOKMARK [2][-]{subsection.3.3.1}{Diseño del firmware}{section.3.3}% 31
-\BOOKMARK [3][-]{section*.24}{Arquitectura del firmware}{subsection.3.3.1}% 32
+\BOOKMARK [3][-]{section*.25}{Arquitectura del firmware}{subsection.3.3.1}% 32
 \BOOKMARK [2][-]{subsection.3.3.2}{Implementación del firmware}{section.3.3}% 33
-\BOOKMARK [1][-]{section.3.4}{Diseño e implementación de la interfaz web}{chapter.3}% 34
-\BOOKMARK [2][-]{subsection.3.4.1}{Diseño de la interfaz web}{section.3.4}% 35
-\BOOKMARK [2][-]{subsection.3.4.2}{Implementación de la interfaz web}{section.3.4}% 36
-\BOOKMARK [0][-]{chapter.4}{Ensayos y resultados}{}% 37
-\BOOKMARK [1][-]{section.4.1}{Pruebas funcionales del hardware}{chapter.4}% 38
-\BOOKMARK [0][-]{chapter.5}{Conclusiones}{}% 39
-\BOOKMARK [1][-]{section.5.1}{Conclusiones generales }{chapter.5}% 40
-\BOOKMARK [1][-]{section.5.2}{Próximos pasos}{chapter.5}% 41
-\BOOKMARK [0][-]{appendix.Alph1}{Esquemáctico de la placa base del sistema}{}% 42
+\BOOKMARK [3][-]{section*.27}{Flujo general del firmware}{subsection.3.3.2}% 34
+\BOOKMARK [3][-]{section*.31}{Implementación de las tareas del sistema}{subsection.3.3.2}% 35
+\BOOKMARK [3][-]{section*.32}{Otros componentes del firmware}{subsection.3.3.2}% 36
+\BOOKMARK [1][-]{section.3.4}{Diseño e implementación de la interfaz web}{chapter.3}% 37
+\BOOKMARK [2][-]{subsection.3.4.1}{Diseño de la interfaz web}{section.3.4}% 38
+\BOOKMARK [2][-]{subsection.3.4.2}{Implementación de la interfaz web}{section.3.4}% 39
+\BOOKMARK [0][-]{chapter.4}{Ensayos y resultados}{}% 40
+\BOOKMARK [1][-]{section.4.1}{Pruebas funcionales del hardware}{chapter.4}% 41
+\BOOKMARK [0][-]{chapter.5}{Conclusiones}{}% 42
+\BOOKMARK [1][-]{section.5.1}{Conclusiones generales }{chapter.5}% 43
+\BOOKMARK [1][-]{section.5.2}{Próximos pasos}{chapter.5}% 44
+\BOOKMARK [0][-]{appendix.Alph1}{Esquemáctico de la placa base del sistema}{}% 45

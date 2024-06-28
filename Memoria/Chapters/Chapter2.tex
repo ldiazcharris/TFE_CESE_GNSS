@@ -43,7 +43,7 @@ A continuación,  se presentan los requerimientos planteados en la planificació
 \section{Estructura del sistema}
 \label{sec:Estructura_sistema}
 
-En la figura ~\ref{fig:diagrama_general} se observa el diagrama general del prototipo que se construyó. Allí se representa al microcontrolador, que funge como unidad de procesamiento central. Además, se distinguen los componentes de comunicación satelital y celular: un receptor GNSS y un módulo GPRS/GSM. Así mismo, para agregar redundancia en la transmisión de datos hacia internet, se incluye un módulo Wi-Fi. Se aprecian, las infraestructuras de comunicación que se emplearon para hacer posible la comunicación. Se distingue la infaltable fuente de alimentación para garantizar la energía. Por último, el sistema comprende de una interfaz web como herramienta para la presentación y seguimiento de la información. 
+En la figura ~\ref{fig:diagrama_general} se observa el diagrama general del prototipo que se construyó. Allí se representa al microcontrolador, que funge como unidad de procesamiento central. Además, se distinguen los componentes de comunicación satelital y celular: un receptor GNSS y un módulo 4G LTE. Se aprecian, las infraestructuras de comunicación que se emplearon para hacer posible la comunicación. Se distingue la infaltable fuente de alimentación para garantizar la energía. Por último, el sistema comprende de una interfaz web como herramienta para la presentación y seguimiento de la información. 
 
 En el capítulo siguiente se aborda con más detalle la implementación de cada uno de estos módulos.
 
@@ -69,7 +69,6 @@ En este trabajo se desarrolló un prototipo para realizar el posicionamiento geo
     \item Microcontrolador, que realiza las labores de unidad central de procesamiento.
     \item Receptor GNSS, para la recepción de datos de posicionamiento.
     \item Módulo de comunicación 4G, para la conexión a Internet.
-    \item Módulo de comunicación Wi-Fi, como otro método de conexión a Internet. 
     \item Plataforma de software para la presentación de la información. 
     \item Fuente de alimentación.
 \end{itemize}
@@ -145,7 +144,7 @@ A continuación, se presentan los beneficios de haber aplicado el microcontrolad
 
 \begin{itemize}
     \item Es de resaltar la significativa capacidad de cómputo inherente a su diseño, ya que cuenta con un procesador de doble núcleo. Esto fue especialmente útil para implementar multitarea a través de FreeRTOS.
-    \item Incorpora dos módulos de comunicación inalámbrica: Wi-Fi y Bluetooth. Esto permite la conexión con Internet y la conexión en redes de área personal. Lo anterior fue importante para este trabajo debido a que redujo la necesidad incorporar módulos de hardware separados. En cuanto a firmware, facilitó la implementación de los algoritmos de comunicación, debido a que el fabricante proporciona el \textit{framework} para estas funciones. 
+    \item Incorpora dos módulos de comunicación inalámbrica: Wi-Fi y Bluetooth. Esto permite la conexión con Internet y la conexión en redes de área personal. 
     \item Otro punto a favor importante para los requerimientos del trabajo, es que presenta modos de bajo de consumo energético configurables. 
     \item El fabricante proporciona una documentación extensa de su producto. Además, provee el \textit{framework} ESP-IDF que es bastante potente y está disponible gratuitamente.  
     \item Debido a que es un producto \textit{Open Source} y \textit{Open Hardware}, goza de una comunidad de desarrolladores bastante activa y una gran disponibilidad de documentación. Estas dos características posibilitan que cualquier inconveniente que se consulte tenga una alta probabilidad de ser resuelto.  
@@ -158,7 +157,7 @@ A continuación, se presentan los beneficios de haber aplicado el microcontrolad
 
 Un receptor de Sistemas de Navegación Global por Satélite (GNSS, por sus siglas en inglés) es un dispositivo que permite realizar posicionamiento global. Esto lo hace a través de la recepción de señales provenientes de distintas constelaciones de satélites. Estas señales contienen información detallada sobre la posición de un objetivo a nivel mundial, lo que ofrece precisiones que abarcan desde los 10 metros hasta los 0,1 milímetros.  
 
-Para este trabajo se seleccionó el módulo Quectel L76 (QL76), que es un receptor GNSS que admite cinco sistemas de navegación y posicionamiento global: GPS, GLONASS, Galileo, BDS y QZSS. En la figura ~\ref{fig:QL76} se puede observar el aspecto físico de dicho módulo \citep{QL76}. Se eligió este debido a la disponibilidad en el mercado local y a que sus características cumplen perfectamente con los requerimientos planteados. 
+Para este trabajo se seleccionó el módulo Quectel L76 (QL76), que es un receptor GNSS que admite cinco sistemas de navegación y posicionamiento global: GPS, GLONASS, Galileo, BeiDou y QZSS. En la figura ~\ref{fig:QL76} se puede observar el aspecto físico de dicho módulo \citep{QL76}. Se eligió este debido a la disponibilidad en el mercado local y a que sus características cumplen perfectamente con los requerimientos planteados. 
 
 \vspace{1cm}
 
@@ -264,7 +263,7 @@ El firmware que se implementó en este trabajo está basado en FreeRTOS™. En e
 FreeRTOS™ es un sistema operativo de tiempo real de código abierto diseñado para sistemas embebidos y microcontroladores. Es apto para microcontroladores y microprocesadores pequeños \citep{FreeRTOS}. A continuación, se presentan las ventajas de haber implementado este sistema operativo en el trabajo.
 
 \begin{itemize}
-    \item Debido a que proporciona un kernel multitarea, permitió generar concurrencia entre tareas, como lo fueron la recepción y parseo de tramas GNSS, la transmisión de datos en tiempo real, la detección de redes Wi-Fi conocidas y la triangulación.  
+    \item Debido a que proporciona un kernel multitarea, permitió generar concurrencia entre tareas, como lo fueron la recepción y parseo de tramas GNSS, la transmisión de datos en tiempo real.  
     \item Gracias a la temporización precisa, se pudo asegurar la transmisión de datos de posicionamiento en tiempo real. 
     \item Permitió la gestión de la memoria y los periféricos UART del microcontrolador. De hecho, con FreeRTOS™, es posible gestionar todos los recursos del dispositivo con colas y semáforos. Al mismo tiempo, el kernel no representa una carga pesada para la capacidad de cómputo del microcontrolador utilizado. 
     \item Se pudo acceder a las ventajas de un RTOS de forma libre con la licencia MIT de FreeRTOS™.

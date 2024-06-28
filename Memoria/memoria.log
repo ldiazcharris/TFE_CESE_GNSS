@@ -1,45 +1,45 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.6.24)  26 JUN 2024 03:18
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.6.26)  28 JUN 2024 01:35
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **./memoria.tex
 (memoria.tex
-LaTeX2e <2023-11-01> patch level 1
-L3 programming layer <2024-01-04>
+LaTeX2e <2024-06-01> patch level 1
+L3 programming layer <2024-05-27>
 (MastersDoctoralThesis.cls
 Document Class: MastersDoctoralThesis 2016/03/25 v1.4 LaTeXTemplates.com
 (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/etoolbox\etoolbox.sty
 Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
-\etb@tempcnta=\count187
+\etb@tempcnta=\count194
 )
 (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/l3packages/xparse\xparse.
 sty (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/l3kernel\expl3.sty
-Package: expl3 2024-01-04 L3 programming layer (loader) 
+Package: expl3 2024-05-27 L3 programming layer (loader) 
 
 (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdfte
 x.def
-File: l3backend-pdftex.def 2024-01-04 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count188
-\l__pdf_internal_box=\box51
+File: l3backend-pdftex.def 2024-05-08 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count195
+\l__pdf_internal_box=\box52
 ))
-Package: xparse 2023-10-10 L3 Experimental document command parser
+Package: xparse 2024-05-08 L3 Experimental document command parser
 ) (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/base\book.cls
-Document Class: book 2023/05/17 v1.4n Standard LaTeX document class
+Document Class: book 2024/02/08 v1.4n Standard LaTeX document class
 (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/base\bk11.clo
-File: bk11.clo 2023/05/17 v1.4n Standard LaTeX file (size option)
+File: bk11.clo 2024/02/08 v1.4n Standard LaTeX file (size option)
 )
-\c@part=\count189
-\c@chapter=\count190
-\c@section=\count191
-\c@subsection=\count192
-\c@subsubsection=\count193
-\c@paragraph=\count194
-\c@subparagraph=\count195
-\c@figure=\count196
-\c@table=\count197
-\abovecaptionskip=\skip48
-\belowcaptionskip=\skip49
-\bibindent=\dimen140
+\c@part=\count196
+\c@chapter=\count197
+\c@section=\count198
+\c@subsection=\count199
+\c@subsubsection=\count266
+\c@paragraph=\count267
+\c@subparagraph=\count268
+\c@figure=\count269
+\c@table=\count270
+\abovecaptionskip=\skip49
+\belowcaptionskip=\skip50
+\bibindent=\dimen141
 )
 (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/parskip\parskip.sty
 Package: parskip 2021-03-14 v2.0h non-zero parskip adjustments
@@ -57,14 +57,14 @@ Package: ltxcmds 2023-12-04 v1.26 LaTeX kernel commands for general use (HO)
 (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/kvsetkeys\kvsetkeys.sty
 Package: kvsetkeys 2022-10-05 v1.19 Key value parser (HO)
 ))) (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/generic/babel\babel.sty
-Package: babel 2024/01/07 v24.1 The Babel package
-\babel@savecnt=\count198
-\U@D=\dimen141
+Package: babel 2024/06/02 v24.6 The Babel package
+\babel@savecnt=\count271
+\U@D=\dimen142
 \l@unhyphenated=\language79
 
 (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/generic/babel\txtbabel.def)
 \bbl@readstream=\read2
-\bbl@dirlevel=\count199
+\bbl@dirlevel=\count272
 
 *************************************
 * Local config file bblopts.cfg used
@@ -76,7 +76,7 @@ File: bblopts.cfg 2005/09/08 v0.1 add Arabic and Farsi to "declared" options of
 (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/babel-spanish\spanish.ldf
 Language: spanish.ldf 2021/05/27 v5.0q Spanish support from the babel system
 \es@quottoks=\toks18
-\es@quotdepth=\count266
+\es@quotdepth=\count273
 Package babel Info: Making " an active character on input line 570.
 Package babel Info: Making . an active character on input line 675.
 Package babel Info: Making < an active character on input line 722.
@@ -124,40 +124,40 @@ Package scrhack Info: loading setspace hack on input line 189.
 File: setspace.hak 2023/07/07 v3.41 KOMA-Script scrhack part (hacking package s
 etspace)
 ) (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/tools\longtable.sty
-Package: longtable 2023-11-01 v4.19 Multi-page Table package (DPC)
-\LTleft=\skip50
-\LTright=\skip51
-\LTpre=\skip52
-\LTpost=\skip53
-\LTchunksize=\count267
-\LTcapwidth=\dimen142
-\LT@head=\box52
-\LT@firsthead=\box53
-\LT@foot=\box54
-\LT@lastfoot=\box55
-\LT@gbox=\box56
-\LT@cols=\count268
-\LT@rows=\count269
-\c@LT@tables=\count270
-\c@LT@chunks=\count271
+Package: longtable 2024-04-26 v4.20 Multi-page Table package (DPC)
+\LTleft=\skip51
+\LTright=\skip52
+\LTpre=\skip53
+\LTpost=\skip54
+\LTchunksize=\count274
+\LTcapwidth=\dimen143
+\LT@head=\box53
+\LT@firsthead=\box54
+\LT@foot=\box55
+\LT@lastfoot=\box56
+\LT@gbox=\box57
+\LT@cols=\count275
+\LT@rows=\count276
+\c@LT@tables=\count277
+\c@LT@chunks=\count278
 \LT@p@ftn=\toks19
 )
 (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/siunitx\siunitx.sty
 Package: siunitx 2024-06-14 v3.3.18 A comprehensive (SI) units package
-\l__siunitx_number_uncert_offset_int=\count272
-\l__siunitx_number_exponent_fixed_int=\count273
-\l__siunitx_number_min_decimal_int=\count274
-\l__siunitx_number_min_integer_int=\count275
-\l__siunitx_number_round_precision_int=\count276
-\l__siunitx_number_lower_threshold_int=\count277
-\l__siunitx_number_upper_threshold_int=\count278
-\l__siunitx_number_group_first_int=\count279
-\l__siunitx_number_group_size_int=\count280
-\l__siunitx_number_group_minimum_int=\count281
-\l__siunitx_angle_tmp_dim=\dimen143
-\l__siunitx_angle_marker_box=\box57
-\l__siunitx_angle_unit_box=\box58
-\l__siunitx_compound_count_int=\count282
+\l__siunitx_number_uncert_offset_int=\count279
+\l__siunitx_number_exponent_fixed_int=\count280
+\l__siunitx_number_min_decimal_int=\count281
+\l__siunitx_number_min_integer_int=\count282
+\l__siunitx_number_round_precision_int=\count283
+\l__siunitx_number_lower_threshold_int=\count284
+\l__siunitx_number_upper_threshold_int=\count285
+\l__siunitx_number_group_first_int=\count286
+\l__siunitx_number_group_size_int=\count287
+\l__siunitx_number_group_minimum_int=\count288
+\l__siunitx_angle_tmp_dim=\dimen144
+\l__siunitx_angle_marker_box=\box58
+\l__siunitx_angle_unit_box=\box59
+\l__siunitx_compound_count_int=\count289
 
 (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/translations\translations
 .sty
@@ -184,113 +184,116 @@ Package: amstext 2021/08/26 v2.01 AMS text
 (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0 generic functions
 \@emptytoks=\toks20
-\ex@=\dimen144
+\ex@=\dimen145
 ))
-\l__siunitx_table_tmp_box=\box59
-\l__siunitx_table_tmp_dim=\dimen145
-\l__siunitx_table_column_width_dim=\dimen146
-\l__siunitx_table_integer_box=\box60
-\l__siunitx_table_decimal_box=\box61
-\l__siunitx_table_uncert_box=\box62
-\l__siunitx_table_before_box=\box63
-\l__siunitx_table_after_box=\box64
-\l__siunitx_table_before_dim=\dimen147
-\l__siunitx_table_carry_dim=\dimen148
-\l__siunitx_unit_tmp_int=\count283
-\l__siunitx_unit_position_int=\count284
-\l__siunitx_unit_total_int=\count285
+\l__siunitx_table_tmp_box=\box60
+\l__siunitx_table_tmp_dim=\dimen146
+\l__siunitx_table_column_width_dim=\dimen147
+\l__siunitx_table_integer_box=\box61
+\l__siunitx_table_decimal_box=\box62
+\l__siunitx_table_uncert_box=\box63
+\l__siunitx_table_before_box=\box64
+\l__siunitx_table_after_box=\box65
+\l__siunitx_table_before_dim=\dimen148
+\l__siunitx_table_carry_dim=\dimen149
+\l__siunitx_unit_tmp_int=\count290
+\l__siunitx_unit_position_int=\count291
+\l__siunitx_unit_total_int=\count292
 
 (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/tools\array.sty
-Package: array 2023/10/16 v2.5g Tabular extension package (FMi)
-\col@sep=\dimen149
-\ar@mcellbox=\box65
-\extrarowheight=\dimen150
+Package: array 2024/06/14 v2.6d Tabular extension package (FMi)
+\col@sep=\dimen150
+\ar@mcellbox=\box66
+\extrarowheight=\dimen151
 \NC@list=\toks21
-\extratabsurround=\skip54
-\backup@length=\skip55
-\ar@cellbox=\box66
+\extratabsurround=\skip55
+\backup@length=\skip56
+\ar@cellbox=\box67
 ))
 (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/graphics\graphicx.sty
 Package: graphicx 2021/09/16 v1.2d Enhanced LaTeX Graphics (DPC,SPQR)
 
 (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/graphics\graphics.sty
-Package: graphics 2022/03/10 v1.4e Standard LaTeX Graphics (DPC,SPQR)
+Package: graphics 2024/05/23 v1.4g Standard LaTeX Graphics (DPC,SPQR)
 
 (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/graphics\trig.sty
-Package: trig 2021/08/11 v1.11 sin cos tan (DPC)
+Package: trig 2023/12/02 v1.11 sin cos tan (DPC)
 )
 (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/graphics-cfg\graphics.cfg
 File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 )
-Package graphics Info: Driver file: pdftex.def on input line 107.
+Package graphics Info: Driver file: pdftex.def on input line 106.
  (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/graphics-def\pdftex.def
-File: pdftex.def 2022/09/22 v1.2b Graphics/color driver for pdftex
+File: pdftex.def 2024/04/13 v1.2c Graphics/color driver for pdftex
 ))
-\Gin@req@height=\dimen151
-\Gin@req@width=\dimen152
+\Gin@req@height=\dimen152
+\Gin@req@width=\dimen153
 ) (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/booktabs\booktabs.sty
 Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
-\heavyrulewidth=\dimen153
-\lightrulewidth=\dimen154
-\cmidrulewidth=\dimen155
-\belowrulesep=\dimen156
-\belowbottomsep=\dimen157
-\aboverulesep=\dimen158
-\abovetopsep=\dimen159
-\cmidrulesep=\dimen160
-\cmidrulekern=\dimen161
-\defaultaddspace=\dimen162
-\@cmidla=\count286
-\@cmidlb=\count287
-\@aboverulesep=\dimen163
-\@belowrulesep=\dimen164
-\@thisruleclass=\count288
-\@lastruleclass=\count289
-\@thisrulewidth=\dimen165
+\heavyrulewidth=\dimen154
+\lightrulewidth=\dimen155
+\cmidrulewidth=\dimen156
+\belowrulesep=\dimen157
+\belowbottomsep=\dimen158
+\aboverulesep=\dimen159
+\abovetopsep=\dimen160
+\cmidrulesep=\dimen161
+\cmidrulekern=\dimen162
+\defaultaddspace=\dimen163
+\@cmidla=\count293
+\@cmidlb=\count294
+\@aboverulesep=\dimen164
+\@belowrulesep=\dimen165
+\@thisruleclass=\count295
+\@lastruleclass=\count296
+\@thisrulewidth=\dimen166
 ) (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/caption\caption.sty
 Package: caption 2023/08/05 v3.6o Customizing captions (AR)
 
 (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/caption\caption3.sty
 Package: caption3 2023/07/31 v2.4d caption3 kernel (AR)
-\caption@tempdima=\dimen166
-\captionmargin=\dimen167
-\caption@leftmargin=\dimen168
-\caption@rightmargin=\dimen169
-\caption@width=\dimen170
-\caption@indent=\dimen171
-\caption@parindent=\dimen172
-\caption@hangindent=\dimen173
+\caption@tempdima=\dimen167
+\captionmargin=\dimen168
+\caption@leftmargin=\dimen169
+\caption@rightmargin=\dimen170
+\caption@width=\dimen171
+\caption@indent=\dimen172
+\caption@parindent=\dimen173
+\caption@hangindent=\dimen174
 Package caption Info: Standard document class detected.
 )
-\c@caption@flags=\count290
-\c@continuedfloat=\count291
+\c@caption@flags=\count297
+\c@continuedfloat=\count298
 Package caption Info: longtable package is loaded.
 
 (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/caption\ltcaption.sty
 Package: ltcaption 2021/01/08 v1.4c longtable captions (AR)
 ))
 (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/listings\listings.sty
-\lst@mode=\count292
-\lst@gtempboxa=\box67
+\lst@mode=\count299
+\lst@gtempboxa=\box68
 \lst@token=\toks22
-\lst@length=\count293
-\lst@currlwidth=\dimen174
-\lst@column=\count294
-\lst@pos=\count295
-\lst@lostspace=\dimen175
-\lst@width=\dimen176
-\lst@newlines=\count296
-\lst@lineno=\count297
-\lst@maxwidth=\dimen177
+\lst@length=\count300
+\lst@currlwidth=\dimen175
+\lst@column=\count301
+\lst@pos=\count302
+\lst@lostspace=\dimen176
+\lst@width=\dimen177
+\lst@newlines=\count303
+\lst@lineno=\count304
+\lst@maxwidth=\dimen178
 
+(C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstpatch.sty
+File: lstpatch.sty 2024/05/25 1.10b (Carsten Heinz)
+)
 (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstmisc.sty
-File: lstmisc.sty 2023/02/27 1.9 (Carsten Heinz)
-\c@lstnumber=\count298
-\lst@skipnumbers=\count299
-\lst@framebox=\box68
+File: lstmisc.sty 2024/05/25 1.10b (Carsten Heinz)
+\c@lstnumber=\count305
+\lst@skipnumbers=\count306
+\lst@framebox=\box69
 )
 (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/listings\listings.cfg
-File: listings.cfg 2023/02/27 1.9 listings configuration
+File: listings.cfg 2024/05/25 1.10b listings configuration
 ))
 Package scrhack Info: loading listings hack on input line 203.
 
@@ -298,18 +301,14 @@ Package scrhack Info: loading listings hack on input line 203.
 File: listings.hak 2023/07/07 v3.41 KOMA-Script scrhack part (hacking package l
 istings)
 
-(C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/koma-script\tocbasic.sty
-Package: tocbasic 2023/07/07 v3.41 KOMA-Script package (handling toc-files)
-\scr@dte@tocline@numberwidth=\skip56
-\scr@dte@tocline@numbox=\box69
+
+Package scrhack Warning: unknown \lstlistoflistings definition found!
+(scrhack)                Maybe you are using a unsupported listings version.
+
 )
-Package tocbasic Info: setting babel extension for `lol' on input line 157.
-Package scrhack Info: redefining \lstlistoflistings on input line 157.
-Package scrhack Info: patching \lst@MakeCaption on input line 157.
-)
-Package: listings 2023/02/27 1.9 (Carsten Heinz)
+Package: listings 2024/05/25 1.10b (Carsten Heinz)
  (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/base\inputenc.sty
-Package: inputenc 2021/02/14 v1.3d Input encoding file
+Package: inputenc 2024/02/08 v1.3d Input encoding file
 \inpenc@prehook=\toks23
 \inpenc@posthook=\toks24
 )
@@ -320,65 +319,65 @@ Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
 Package: palatino 2020/03/25 PSNFSS-v9.3 (SPQR) 
 )
 (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/biblatex\biblatex.sty
-Package: biblatex 2023/03/05 v3.19 programmable bibliographies (PK/MW)
+Package: biblatex 2024/03/21 v3.20 programmable bibliographies (PK/MW)
 
 (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/logreq\logreq.sty
 Package: logreq 2010/08/04 v1.0 xml request logger
-\lrq@indent=\count300
+\lrq@indent=\count307
 
 (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/logreq\logreq.def
 File: logreq.def 2010/08/04 v1.0 logreq spec v1.0
 ))
 (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/base\ifthen.sty
-Package: ifthen 2022/04/13 v1.1d Standard LaTeX ifthen package (DPC)
+Package: ifthen 2024/03/16 v1.1e Standard LaTeX ifthen package (DPC)
 )
 (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/url\url.sty
-\Urlmuskip=\muskip16
+\Urlmuskip=\muskip17
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
-\c@tabx@nest=\count301
-\c@listtotal=\count302
-\c@listcount=\count303
-\c@liststart=\count304
-\c@liststop=\count305
-\c@citecount=\count306
-\c@citetotal=\count307
-\c@multicitecount=\count308
-\c@multicitetotal=\count309
-\c@instcount=\count310
-\c@maxnames=\count311
-\c@minnames=\count312
-\c@maxitems=\count313
-\c@minitems=\count314
-\c@citecounter=\count315
-\c@maxcitecounter=\count316
-\c@savedcitecounter=\count317
-\c@uniquelist=\count318
-\c@uniquename=\count319
-\c@refsection=\count320
-\c@refsegment=\count321
-\c@maxextratitle=\count322
-\c@maxextratitleyear=\count323
-\c@maxextraname=\count324
-\c@maxextradate=\count325
-\c@maxextraalpha=\count326
-\c@abbrvpenalty=\count327
-\c@highnamepenalty=\count328
-\c@lownamepenalty=\count329
-\c@maxparens=\count330
-\c@parenlevel=\count331
-\blx@tempcnta=\count332
-\blx@tempcntb=\count333
-\blx@tempcntc=\count334
-\c@blx@maxsection=\count335
-\blx@maxsegment@0=\count336
-\blx@notetype=\count337
-\blx@parenlevel@text=\count338
-\blx@parenlevel@foot=\count339
-\blx@sectionciteorder@0=\count340
-\blx@sectionciteorderinternal@0=\count341
-\blx@entrysetcounter=\count342
-\blx@biblioinstance=\count343
+\c@tabx@nest=\count308
+\c@listtotal=\count309
+\c@listcount=\count310
+\c@liststart=\count311
+\c@liststop=\count312
+\c@citecount=\count313
+\c@citetotal=\count314
+\c@multicitecount=\count315
+\c@multicitetotal=\count316
+\c@instcount=\count317
+\c@maxnames=\count318
+\c@minnames=\count319
+\c@maxitems=\count320
+\c@minitems=\count321
+\c@citecounter=\count322
+\c@maxcitecounter=\count323
+\c@savedcitecounter=\count324
+\c@uniquelist=\count325
+\c@uniquename=\count326
+\c@refsection=\count327
+\c@refsegment=\count328
+\c@maxextratitle=\count329
+\c@maxextratitleyear=\count330
+\c@maxextraname=\count331
+\c@maxextradate=\count332
+\c@maxextraalpha=\count333
+\c@abbrvpenalty=\count334
+\c@highnamepenalty=\count335
+\c@lownamepenalty=\count336
+\c@maxparens=\count337
+\c@parenlevel=\count338
+\blx@tempcnta=\count339
+\blx@tempcntb=\count340
+\blx@tempcntc=\count341
+\c@blx@maxsection=\count342
+\blx@maxsegment@0=\count343
+\blx@notetype=\count344
+\blx@parenlevel@text=\count345
+\blx@parenlevel@foot=\count346
+\blx@sectionciteorder@0=\count347
+\blx@sectionciteorderinternal@0=\count348
+\blx@entrysetcounter=\count349
+\blx@biblioinstance=\count350
 \labelnumberwidth=\skip57
 \labelalphawidth=\skip58
 \biblabelsep=\skip59
@@ -390,87 +389,87 @@ Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 \blx@bcfin=\read3
 \blx@bcfout=\write3
 \blx@langwohyphens=\language80
-\c@mincomprange=\count344
-\c@maxcomprange=\count345
-\c@mincompwidth=\count346
+\c@mincomprange=\count351
+\c@maxcomprange=\count352
+\c@mincompwidth=\count353
 Package biblatex Info: Trying to load biblatex default data model...
 Package biblatex Info: ... file 'blx-dm.def' found.
 
 (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/biblatex\blx-dm.def
-File: blx-dm.def 2023/03/05 v3.19 biblatex localization (PK/MW)
+File: blx-dm.def 2024/03/21 v3.20 biblatex datamodel (PK/MW)
 )
 Package biblatex Info: Trying to load biblatex style data model...
 Package biblatex Info: ... file 'numeric.dbx' not found.
 Package biblatex Info: Trying to load biblatex custom data model...
 Package biblatex Info: ... file 'biblatex-dm.cfg' not found.
-\c@afterword=\count347
-\c@savedafterword=\count348
-\c@annotator=\count349
-\c@savedannotator=\count350
-\c@author=\count351
-\c@savedauthor=\count352
-\c@bookauthor=\count353
-\c@savedbookauthor=\count354
-\c@commentator=\count355
-\c@savedcommentator=\count356
-\c@editor=\count357
-\c@savededitor=\count358
-\c@editora=\count359
-\c@savededitora=\count360
-\c@editorb=\count361
-\c@savededitorb=\count362
-\c@editorc=\count363
-\c@savededitorc=\count364
-\c@foreword=\count365
-\c@savedforeword=\count366
-\c@holder=\count367
-\c@savedholder=\count368
-\c@introduction=\count369
-\c@savedintroduction=\count370
-\c@namea=\count371
-\c@savednamea=\count372
-\c@nameb=\count373
-\c@savednameb=\count374
-\c@namec=\count375
-\c@savednamec=\count376
-\c@translator=\count377
-\c@savedtranslator=\count378
-\c@shortauthor=\count379
-\c@savedshortauthor=\count380
-\c@shorteditor=\count381
-\c@savedshorteditor=\count382
-\c@labelname=\count383
-\c@savedlabelname=\count384
-\c@institution=\count385
-\c@savedinstitution=\count386
-\c@lista=\count387
-\c@savedlista=\count388
-\c@listb=\count389
-\c@savedlistb=\count390
-\c@listc=\count391
-\c@savedlistc=\count392
-\c@listd=\count393
-\c@savedlistd=\count394
-\c@liste=\count395
-\c@savedliste=\count396
-\c@listf=\count397
-\c@savedlistf=\count398
-\c@location=\count399
-\c@savedlocation=\count400
-\c@organization=\count401
-\c@savedorganization=\count402
-\c@origlocation=\count403
-\c@savedoriglocation=\count404
-\c@origpublisher=\count405
-\c@savedorigpublisher=\count406
-\c@publisher=\count407
-\c@savedpublisher=\count408
-\c@language=\count409
-\c@savedlanguage=\count410
-\c@origlanguage=\count411
-\c@savedoriglanguage=\count412
-\c@pageref=\count413
-\c@savedpageref=\count414
+\c@afterword=\count354
+\c@savedafterword=\count355
+\c@annotator=\count356
+\c@savedannotator=\count357
+\c@author=\count358
+\c@savedauthor=\count359
+\c@bookauthor=\count360
+\c@savedbookauthor=\count361
+\c@commentator=\count362
+\c@savedcommentator=\count363
+\c@editor=\count364
+\c@savededitor=\count365
+\c@editora=\count366
+\c@savededitora=\count367
+\c@editorb=\count368
+\c@savededitorb=\count369
+\c@editorc=\count370
+\c@savededitorc=\count371
+\c@foreword=\count372
+\c@savedforeword=\count373
+\c@holder=\count374
+\c@savedholder=\count375
+\c@introduction=\count376
+\c@savedintroduction=\count377
+\c@namea=\count378
+\c@savednamea=\count379
+\c@nameb=\count380
+\c@savednameb=\count381
+\c@namec=\count382
+\c@savednamec=\count383
+\c@translator=\count384
+\c@savedtranslator=\count385
+\c@shortauthor=\count386
+\c@savedshortauthor=\count387
+\c@shorteditor=\count388
+\c@savedshorteditor=\count389
+\c@labelname=\count390
+\c@savedlabelname=\count391
+\c@institution=\count392
+\c@savedinstitution=\count393
+\c@lista=\count394
+\c@savedlista=\count395
+\c@listb=\count396
+\c@savedlistb=\count397
+\c@listc=\count398
+\c@savedlistc=\count399
+\c@listd=\count400
+\c@savedlistd=\count401
+\c@liste=\count402
+\c@savedliste=\count403
+\c@listf=\count404
+\c@savedlistf=\count405
+\c@location=\count406
+\c@savedlocation=\count407
+\c@organization=\count408
+\c@savedorganization=\count409
+\c@origlocation=\count410
+\c@savedoriglocation=\count411
+\c@origpublisher=\count412
+\c@savedorigpublisher=\count413
+\c@publisher=\count414
+\c@savedpublisher=\count415
+\c@language=\count416
+\c@savedlanguage=\count417
+\c@origlanguage=\count418
+\c@savedoriglanguage=\count419
+\c@pageref=\count420
+\c@savedpageref=\count421
 \shorthandwidth=\skip65
 \shortjournalwidth=\skip66
 \shortserieswidth=\skip67
@@ -489,13 +488,13 @@ Package biblatex Info: Trying to load compatibility code...
 Package biblatex Info: ... file 'blx-compat.def' found.
 
 (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/biblatex\blx-compat.def
-File: blx-compat.def 2023/03/05 v3.19 biblatex compatibility (PK/MW)
+File: blx-compat.def 2024/03/21 v3.20 biblatex compatibility (PK/MW)
 )
 Package biblatex Info: Trying to load BibTeX backend compatibility...
 Package biblatex Info: ... file 'blx-bibtex.def' found.
 
 (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/biblatex\blx-bibtex.def
-File: blx-bibtex.def 2023/03/05 v3.19 biblatex compatibility (PK/MW)
+File: blx-bibtex.def 2024/03/21 v3.20 biblatex compatibility (PK/MW)
 
 
 Package biblatex Warning: Using fall-back bibtex backend:
@@ -505,26 +504,26 @@ Package biblatex Warning: Using fall-back bibtex backend:
 Package biblatex Info: Trying to load generic definitions...
 Package biblatex Info: ... file 'biblatex.def' found.
  (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/biblatex\biblatex.def
-File: biblatex.def 2023/03/05 v3.19 biblatex compatibility (PK/MW)
-\c@textcitecount=\count415
-\c@textcitetotal=\count416
-\c@textcitemaxnames=\count417
-\c@biburlbigbreakpenalty=\count418
-\c@biburlbreakpenalty=\count419
-\c@biburlnumpenalty=\count420
-\c@biburlucpenalty=\count421
-\c@biburllcpenalty=\count422
-\biburlbigskip=\muskip17
-\biburlnumskip=\muskip18
-\biburlucskip=\muskip19
-\biburllcskip=\muskip20
-\c@smartand=\count423
+File: biblatex.def 2024/03/21 v3.20 biblatex compatibility (PK/MW)
+\c@textcitecount=\count422
+\c@textcitetotal=\count423
+\c@textcitemaxnames=\count424
+\c@biburlbigbreakpenalty=\count425
+\c@biburlbreakpenalty=\count426
+\c@biburlnumpenalty=\count427
+\c@biburlucpenalty=\count428
+\c@biburllcpenalty=\count429
+\biburlbigskip=\muskip18
+\biburlnumskip=\muskip19
+\biburlucskip=\muskip20
+\biburllcskip=\muskip21
+\c@smartand=\count430
 )
 Package biblatex Info: Trying to load natbib compatibility...
 Package biblatex Info: ... file 'blx-natbib.def' found.
 
 (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/biblatex\blx-natbib.def
-File: blx-natbib.def 2023/03/05 v3.19 biblatex compatibility (PK/MW)
+File: blx-natbib.def 2024/03/21 v3.20 biblatex compatibility (PK/MW)
 Package biblatex Info: Delimiter 'nameyeardelim' in context '' already defined,
  overwriting.
 )
@@ -532,20 +531,20 @@ Package biblatex Info: Trying to load bibliography style 'numeric'...
 Package biblatex Info: ... file 'numeric.bbx' found.
 
 (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/biblatex/bbx\numeric.bbx
-File: numeric.bbx 2023/03/05 v3.19 biblatex bibliography style (PK/MW)
+File: numeric.bbx 2024/03/21 v3.20 biblatex bibliography style (PK/MW)
 Package biblatex Info: Trying to load bibliography style 'standard'...
 Package biblatex Info: ... file 'standard.bbx' found.
 
 (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/biblatex/bbx\standard.bbx
-File: standard.bbx 2023/03/05 v3.19 biblatex bibliography style (PK/MW)
-\c@bbx:relatedcount=\count424
-\c@bbx:relatedtotal=\count425
+File: standard.bbx 2024/03/21 v3.20 biblatex bibliography style (PK/MW)
+\c@bbx:relatedcount=\count431
+\c@bbx:relatedtotal=\count432
 ))
 Package biblatex Info: Trying to load citation style 'numeric'...
 Package biblatex Info: ... file 'numeric.cbx' found.
 
 (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/biblatex/cbx\numeric.cbx
-File: numeric.cbx 2023/03/05 v3.19 biblatex citation style (PK/MW)
+File: numeric.cbx 2024/03/21 v3.20 biblatex citation style (PK/MW)
 Package biblatex Info: Redefining '\cite'.
 Package biblatex Info: Redefining '\parencite'.
 Package biblatex Info: Redefining '\footcite'.
@@ -566,22 +565,22 @@ File: biblatex.cfg
 Package biblatex Info: Input encoding 'utf8' detected.
 Package biblatex Info: Document encoding is UTF8 ....
 Package biblatex Info: ... and expl3
-(biblatex)             2024-01-04 L3 programming layer (loader) 
+(biblatex)             2024-05-27 L3 programming layer (loader) 
 (biblatex)             is new enough (at least 2020/04/06),
 (biblatex)             setting 'casechanger=expl3'.
 
 (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/biblatex\blx-case-expl3.s
 ty
-Package: blx-case-expl3 2023/03/05 v3.19 expl3 case changing code for biblatex
+Package: blx-case-expl3 2024/03/21 v3.20 expl3 case changing code for biblatex
 ))
 (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/csquotes\csquotes.sty
 Package: csquotes 2024-04-04 v5.2o context-sensitive quotations (JAW)
-\csq@reset=\count426
-\csq@gtype=\count427
-\csq@glevel=\count428
-\csq@qlevel=\count429
-\csq@maxlvl=\count430
-\csq@tshold=\count431
+\csq@reset=\count433
+\csq@gtype=\count434
+\csq@glevel=\count435
+\csq@qlevel=\count436
+\csq@maxlvl=\count437
+\csq@tshold=\count438
 \csq@ltx@everypar=\toks25
 
 (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/csquotes\csquotes.def
@@ -617,12 +616,12 @@ Package xcolor Info: Model `wave' substituted by `hsb' on input line 1373.
 (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/caption\subcaption.sty
 Package: subcaption 2023/07/28 v1.6b Sub-captions (AR)
 Package caption Info: New subtype `subfigure' on input line 238.
-\c@subfigure=\count432
+\c@subfigure=\count439
 Package caption Info: New subtype `subtable' on input line 238.
-\c@subtable=\count433
+\c@subtable=\count440
 )
 (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hyperref.sty
-Package: hyperref 2023-11-26 v7.01g Hypertext links for LaTeX
+Package: hyperref 2024-05-23 v7.01i Hypertext links for LaTeX
 
 (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/generic/kvdefinekeys\kvdefineke
 ys.sty
@@ -632,12 +631,6 @@ Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
 Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
 ) (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/hycolor\hycolor.sty
 Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
-)
-(C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/letltxmacro\letltxmacro.s
-ty
-Package: letltxmacro 2019/12/03 v1.6 Let assignment for LaTeX macros (HO)
-) (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/auxhook\auxhook.sty
-Package: auxhook 2019-12-17 v1.6 Hooks for auxiliary files (HO)
 )
 (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\nameref.sty
 Package: nameref 2023-11-26 v2.56 Cross-referencing by name of section
@@ -649,43 +642,46 @@ Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 string.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
-\c@section@level=\count434
+\c@section@level=\count441
 )
-\@linkdim=\dimen178
-\Hy@linkcounter=\count435
-\Hy@pagecounter=\count436
-
-(C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\pd1enc.def
-File: pd1enc.def 2023-11-26 v7.01g Hyperref: PDFDocEncoding definition (HO)
+(C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/generic/stringenc\stringenc.sty
+Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO
+)
+)
+\@linkdim=\dimen179
+\Hy@linkcounter=\count442
+\Hy@pagecounter=\count443
+ (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\pd1enc.def
+File: pd1enc.def 2024-05-23 v7.01i Hyperref: PDFDocEncoding definition (HO)
 Now handling font encoding PD1 ...
 ... no UTF-8 mapping file for font encoding PD1
 )
 (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/generic/intcalc\intcalc.sty
 Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
 )
-\Hy@SavedSpaceFactor=\count437
+\Hy@SavedSpaceFactor=\count444
 
 (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\puenc.def
-File: puenc.def 2023-11-26 v7.01g Hyperref: PDF Unicode definition (HO)
+File: puenc.def 2024-05-23 v7.01i Hyperref: PDF Unicode definition (HO)
 Now handling font encoding PU ...
 ... no UTF-8 mapping file for font encoding PU
 )
-Package hyperref Info: Option `bookmarks' set `true' on input line 4064.
-Package hyperref Info: Option `unicode' set `false' on input line 4064.
-Package hyperref Info: Option `pdftoolbar' set `true' on input line 4064.
-Package hyperref Info: Option `pdfmenubar' set `true' on input line 4064.
-Package hyperref Info: Option `pdffitwindow' set `false' on input line 4064.
-Package hyperref Info: Option `colorlinks' set `true' on input line 4064.
-Package hyperref Info: Hyper figures OFF on input line 4181.
-Package hyperref Info: Link nesting OFF on input line 4186.
-Package hyperref Info: Hyper index ON on input line 4189.
-Package hyperref Info: Plain pages OFF on input line 4196.
-Package hyperref Info: Backreferencing OFF on input line 4201.
+Package hyperref Info: Option `bookmarks' set `true' on input line 4040.
+Package hyperref Info: Option `unicode' set `false' on input line 4040.
+Package hyperref Info: Option `pdftoolbar' set `true' on input line 4040.
+Package hyperref Info: Option `pdfmenubar' set `true' on input line 4040.
+Package hyperref Info: Option `pdffitwindow' set `false' on input line 4040.
+Package hyperref Info: Option `colorlinks' set `true' on input line 4040.
+Package hyperref Info: Hyper figures OFF on input line 4157.
+Package hyperref Info: Link nesting OFF on input line 4162.
+Package hyperref Info: Hyper index ON on input line 4165.
+Package hyperref Info: Plain pages OFF on input line 4172.
+Package hyperref Info: Backreferencing OFF on input line 4177.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
-Package hyperref Info: Bookmarks ON on input line 4448.
-\c@Hy@tempcnt=\count438
-LaTeX Info: Redefining \url on input line 4786.
-\XeTeXLinkMargin=\dimen179
+Package hyperref Info: Bookmarks ON on input line 4424.
+\c@Hy@tempcnt=\count445
+LaTeX Info: Redefining \url on input line 4763.
+\XeTeXLinkMargin=\dimen180
 
 (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/generic/bitset\bitset.sty
 Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
@@ -695,24 +691,24 @@ ty
 Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
 )
 ))
-\Fld@menulength=\count439
-\Field@Width=\dimen180
-\Fld@charsize=\dimen181
-Package hyperref Info: Hyper figures OFF on input line 6065.
-Package hyperref Info: Link nesting OFF on input line 6070.
-Package hyperref Info: Hyper index ON on input line 6073.
-Package hyperref Info: backreferencing OFF on input line 6080.
-Package hyperref Info: Link coloring ON on input line 6083.
-Package hyperref Info: Link coloring with OCG OFF on input line 6090.
-Package hyperref Info: PDF/A mode OFF on input line 6095.
+\Fld@menulength=\count446
+\Field@Width=\dimen181
+\Fld@charsize=\dimen182
+Package hyperref Info: Hyper figures OFF on input line 6042.
+Package hyperref Info: Link nesting OFF on input line 6047.
+Package hyperref Info: Hyper index ON on input line 6050.
+Package hyperref Info: backreferencing OFF on input line 6057.
+Package hyperref Info: Link coloring ON on input line 6060.
+Package hyperref Info: Link coloring with OCG OFF on input line 6067.
+Package hyperref Info: PDF/A mode OFF on input line 6072.
 
 (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/base\atbegshi-ltx.sty
 Package: atbegshi-ltx 2021/01/10 v1.0c Emulation of the original atbegshi
 package with kernel methods
 )
-\Hy@abspage=\count440
-\c@Item=\count441
-\c@Hfootnote=\count442
+\Hy@abspage=\count447
+\c@Item=\count448
+\c@Hfootnote=\count449
 )
 Package scrhack Info: hyperref hack deactivated because of
 (scrhack)             detection of hyperref version, that doesn't
@@ -720,15 +716,15 @@ Package scrhack Info: hyperref hack deactivated because of
 Package hyperref Info: Driver (autodetected): hpdftex.
 
 (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hpdftex.def
-File: hpdftex.def 2023-11-26 v7.01g Hyperref driver for pdfTeX
+File: hpdftex.def 2024-05-23 v7.01i Hyperref driver for pdfTeX
 
 (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/base\atveryend-ltx.sty
 Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atveryend pac
 kage
 with kernel methods
 )
-\Fld@listcount=\count443
-\c@bookmark@seq@number=\count444
+\Fld@listcount=\count450
+\c@bookmark@seq@number=\count451
 
 (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/rerunfilecheck\rerunfilec
 heck.sty
@@ -749,17 +745,17 @@ Package: geometry 2020/01/02 v5.9 Page Geometry
 (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/generic/iftex\ifvtex.sty
 Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
 )
-\Gm@cnth=\count445
-\Gm@cntv=\count446
-\c@Gm@tempcnt=\count447
-\Gm@bindingoffset=\dimen182
-\Gm@wd@mp=\dimen183
-\Gm@odd@mp=\dimen184
-\Gm@even@mp=\dimen185
-\Gm@layoutwidth=\dimen186
-\Gm@layoutheight=\dimen187
-\Gm@layouthoffset=\dimen188
-\Gm@layoutvoffset=\dimen189
+\Gm@cnth=\count452
+\Gm@cntv=\count453
+\c@Gm@tempcnt=\count454
+\Gm@bindingoffset=\dimen183
+\Gm@wd@mp=\dimen184
+\Gm@odd@mp=\dimen185
+\Gm@even@mp=\dimen186
+\Gm@layoutwidth=\dimen187
+\Gm@layoutheight=\dimen188
+\Gm@layouthoffset=\dimen189
+\Gm@layoutvoffset=\dimen190
 \Gm@dimlist=\toks26
 
 (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/geometry\geometry.cfg))
@@ -794,36 +790,36 @@ Package: pdfpages 2024/05/29 v0.6a Insert pages of external PDF documents (AM)
 
 (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/tools\calc.sty
 Package: calc 2023/07/08 v4.3 Infix arithmetic (KKT,FJ)
-\calc@Acount=\count448
-\calc@Bcount=\count449
-\calc@Adimen=\dimen190
-\calc@Bdimen=\dimen191
+\calc@Acount=\count455
+\calc@Bcount=\count456
+\calc@Adimen=\dimen191
+\calc@Bdimen=\dimen192
 \calc@Askip=\skip81
 \calc@Bskip=\skip82
 LaTeX Info: Redefining \setlength on input line 80.
 LaTeX Info: Redefining \addtolength on input line 81.
-\calc@Ccount=\count450
+\calc@Ccount=\count457
 \calc@Cskip=\skip83
 )
 (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/eso-pic\eso-pic.sty
 Package: eso-pic 2023/05/03 v3.0c eso-pic (RN)
-\ESO@tempdima=\dimen192
-\ESO@tempdimb=\dimen193
+\ESO@tempdima=\dimen193
+\ESO@tempdimb=\dimen194
 )
-\AM@pagewidth=\dimen194
-\AM@pageheight=\dimen195
-\AM@fboxrule=\dimen196
+\AM@pagewidth=\dimen195
+\AM@pageheight=\dimen196
+\AM@fboxrule=\dimen197
 
 (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/pdfpages\pppdftex.def
 File: pppdftex.def 2024/05/29 v0.6a Pdfpages driver for pdfTeX (AM)
 )
-\pdfpages@includegraphics@status=\count451
+\pdfpages@includegraphics@status=\count458
 \AM@pagebox=\box70
 \AM@global@opts=\toks27
-\AM@pagecnt=\count452
+\AM@pagecnt=\count459
 \AM@toc@title=\toks28
 \AM@lof@heading=\toks29
-\c@AM@survey=\count453
+\c@AM@survey=\count460
 \AM@templatesizebox=\box71
 )
 (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/pdflscape\pdflscape.sty
@@ -847,11 +843,17 @@ Package scrhack Info: \landscape patched to make \textheight change optional on
 \scrh@LT@textheight=\skip84
 )
 Package pdflscape Info: Auto-detected driver: pdftex on input line 81.
-))
+)) (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstlang1.sty
+File: lstlang1.sty 2024/05/25 1.10b listings language file
+)
+(C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstmisc.sty
+File: lstmisc.sty 2024/05/25 1.10b (Carsten Heinz)
+)
 Package csquotes Info: Checking for multilingual support...
 Package csquotes Info: ... found 'babel' package.
-LaTeX Font Info:    Trying to load font information for T1+ppl on input line 68
+LaTeX Font Info:    Trying to load font information for T1+ppl on input line 93
 .
+
 (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\t1ppl.fd
 File: t1ppl.fd 2001/06/04 font definitions for T1/ppl.
 )
@@ -863,26 +865,26 @@ LaTeX Info: Redefining \% on input line 15.
 (Appendices/AppendixA.aux))
 \openout1 = `memoria.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 68.
-LaTeX Font Info:    ... okay on input line 68.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 68.
-LaTeX Font Info:    ... okay on input line 68.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 68.
-LaTeX Font Info:    ... okay on input line 68.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 68.
-LaTeX Font Info:    ... okay on input line 68.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 68.
-LaTeX Font Info:    ... okay on input line 68.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 68.
-LaTeX Font Info:    ... okay on input line 68.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 68.
-LaTeX Font Info:    ... okay on input line 68.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 68.
-LaTeX Font Info:    ... okay on input line 68.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 68.
-LaTeX Font Info:    ... okay on input line 68.
-LaTeX Info: Redefining \. on input line 68.
-LaTeX Info: Redefining \% on input line 68.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 93.
+LaTeX Font Info:    ... okay on input line 93.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 93.
+LaTeX Font Info:    ... okay on input line 93.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 93.
+LaTeX Font Info:    ... okay on input line 93.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 93.
+LaTeX Font Info:    ... okay on input line 93.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 93.
+LaTeX Font Info:    ... okay on input line 93.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 93.
+LaTeX Font Info:    ... okay on input line 93.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 93.
+LaTeX Font Info:    ... okay on input line 93.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 93.
+LaTeX Font Info:    ... okay on input line 93.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 93.
+LaTeX Font Info:    ... okay on input line 93.
+LaTeX Info: Redefining \. on input line 93.
+LaTeX Info: Redefining \% on input line 93.
 
 (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/translations/dicts\transl
 ations-basic-dictionary-spanish.trsl
@@ -890,20 +892,20 @@ File: translations-basic-dictionary-spanish.trsl (spanish translation file `tra
 nslations-basic-dictionary')
 )
 Package translations Info: loading dictionary `translations-basic-dictionary' f
-or `spanish'. on input line 68.
+or `spanish'. on input line 93.
 
 (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count454
-\scratchdimen=\dimen197
+\scratchcounter=\count461
+\scratchdimen=\dimen198
 \scratchbox=\box72
-\nofMPsegments=\count455
-\nofMParguments=\count456
+\nofMPsegments=\count462
+\nofMParguments=\count463
 \everyMPshowfont=\toks30
-\MPscratchCnt=\count457
-\MPscratchDim=\dimen198
-\MPnumerator=\count458
-\makeMPintoPDFobject=\count459
+\MPscratchCnt=\count464
+\MPscratchDim=\dimen199
+\MPnumerator=\count465
+\makeMPintoPDFobject=\count466
 \everyMPtoPDFconversion=\toks31
 )
 (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-bas
@@ -919,13 +921,12 @@ Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: hyperref package is loaded.
 Package caption Info: listings package is loaded.
 Package caption Info: End \AtBeginDocument code.
-\c@lstlisting=\count460
-Package scrhack Info: undefining \float@addtolists on input line 68.
+\c@lstlisting=\count467
 Package biblatex Info: Trying to load language 'spanish'...
 Package biblatex Info: ... file 'spanish.lbx' found.
 
 (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/biblatex/lbx\spanish.lbx
-File: spanish.lbx 2023/03/05 v3.19 biblatex localization (PK/MW)
+File: spanish.lbx 2024/03/21 v3.20 biblatex localization (PK/MW)
 )
 Package biblatex Info: Input encoding 'utf8' detected.
 Package biblatex Info: Automatic encoding selection.
@@ -936,57 +937,59 @@ Package biblatex Info: Data encoding 'utf8' specified.
 \openout3 = `memoria-blx.bib'.
 
 Package biblatex Info: Trying to load bibliographic data...
-Package biblatex Info: ... file 'memoria.bbl' not found.
-No file memoria.bbl.
-Package biblatex Info: Reference section=0 on input line 68.
-Package biblatex Info: Reference segment=0 on input line 68.
-Package hyperref Info: Link coloring ON on input line 68.
-(memoria.out) (memoria.out)
+Package biblatex Info: ... file 'memoria.bbl' found.
+(memoria.bbl)
+Package biblatex Info: Reference section=0 on input line 93.
+Package biblatex Info: Reference segment=0 on input line 93.
+Package hyperref Info: Link coloring ON on input line 93.
+ (memoria.out) (memoria.out)
 \@outlinefile=\write5
 \openout5 = `memoria.out'.
 
-<./Figures/logoFIUBA.pdf, id=171, 460.9062pt x 153.61644pt>
+<./Figures/logoFIUBA.pdf, id=183, 460.9062pt x 153.61644pt>
 File: ./Figures/logoFIUBA.pdf Graphic file (type pdf)
 <use ./Figures/logoFIUBA.pdf>
-Package pdftex.def Info: ./Figures/logoFIUBA.pdf  used on input line 68.
+Package pdftex.def Info: ./Figures/logoFIUBA.pdf  used on input line 93.
 (pdftex.def)             Requested size: 311.84334pt x 103.93976pt.
- [1
+
+
+[1
 
 
 {C:/Users/CUC/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/CUC/Ap
 pData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc} <./Figures/logoFIUBA.p
 df>]
-LaTeX Info: Redefining \sptext on input line 68.
-LaTeX Info: Redefining \lsc on input line 68.
-LaTeX Info: Redefining \. on input line 68.
-LaTeX Info: Redefining \% on input line 68.
-LaTeX Info: Redefining \dotlessi on input line 68.
-Package scrbase Info: activating spanish \lstlistingname on input line 68.
-LaTeX Info: Redefining \sptext on input line 68.
-LaTeX Info: Redefining \lsc on input line 68.
-LaTeX Info: Redefining \. on input line 68.
-LaTeX Info: Redefining \% on input line 68.
-LaTeX Info: Redefining \dotlessi on input line 68.
-Package scrbase Info: activating spanish \acknowledgementname on input line 68.
+LaTeX Info: Redefining \sptext on input line 93.
+LaTeX Info: Redefining \lsc on input line 93.
+LaTeX Info: Redefining \. on input line 93.
+LaTeX Info: Redefining \% on input line 93.
+LaTeX Info: Redefining \dotlessi on input line 93.
+Package scrbase Info: activating spanish \lstlistingname on input line 93.
+LaTeX Info: Redefining \sptext on input line 93.
+LaTeX Info: Redefining \lsc on input line 93.
+LaTeX Info: Redefining \. on input line 93.
+LaTeX Info: Redefining \% on input line 93.
+LaTeX Info: Redefining \dotlessi on input line 93.
+Package scrbase Info: activating spanish \acknowledgementname on input line 93.
 
-LaTeX Info: Redefining \sptext on input line 68.
-LaTeX Info: Redefining \lsc on input line 68.
-LaTeX Info: Redefining \. on input line 68.
-LaTeX Info: Redefining \% on input line 68.
-LaTeX Info: Redefining \dotlessi on input line 68.
-Package scrbase Info: activating spanish \authorshipname on input line 68.
-LaTeX Info: Redefining \sptext on input line 68.
-LaTeX Info: Redefining \lsc on input line 68.
-LaTeX Info: Redefining \. on input line 68.
-LaTeX Info: Redefining \% on input line 68.
-LaTeX Info: Redefining \dotlessi on input line 68.
-Package scrbase Info: activating spanish \abbrevname on input line 68.
-LaTeX Info: Redefining \sptext on input line 68.
-LaTeX Info: Redefining \lsc on input line 68.
-LaTeX Info: Redefining \. on input line 68.
-LaTeX Info: Redefining \% on input line 68.
-LaTeX Info: Redefining \dotlessi on input line 68.
-Package scrbase Info: activating spanish \byname on input line 68.
+LaTeX Info: Redefining \sptext on input line 93.
+LaTeX Info: Redefining \lsc on input line 93.
+LaTeX Info: Redefining \. on input line 93.
+LaTeX Info: Redefining \% on input line 93.
+LaTeX Info: Redefining \dotlessi on input line 93.
+Package scrbase Info: activating spanish \authorshipname on input line 93.
+LaTeX Info: Redefining \sptext on input line 93.
+LaTeX Info: Redefining \lsc on input line 93.
+LaTeX Info: Redefining \. on input line 93.
+LaTeX Info: Redefining \% on input line 93.
+LaTeX Info: Redefining \dotlessi on input line 93.
+Package scrbase Info: activating spanish \abbrevname on input line 93.
+LaTeX Info: Redefining \sptext on input line 93.
+LaTeX Info: Redefining \lsc on input line 93.
+LaTeX Info: Redefining \. on input line 93.
+LaTeX Info: Redefining \% on input line 93.
+LaTeX Info: Redefining \dotlessi on input line 93.
+Package scrbase Info: activating spanish \byname on input line 93.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -1023,6 +1026,8 @@ Package scrbase Info: activating spanish \byname on input line 68.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
+
+
 [2
 
 ]
@@ -1030,23 +1035,31 @@ Package scrbase Info: activating spanish \byname on input line 68.
 --------------------
  Resumen
 --------------------
+
+
 1: section
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <10.95> on input line 96.
+(Font)              <10.95> on input line 121.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 96.
+(Font)              <8> on input line 121.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 96.
+(Font)              <6> on input line 121.
 [1
 
-] [2
+]
+
+[2
 
 ]
 --------------------
  Agradecimientos
 --------------------
+
+
 1: section
-[3] [4
+[3]
+
+[4
 
 ] (memoria.toc
 LaTeX Info: Redefining \sptext on input line 1.
@@ -1058,12 +1071,15 @@ LaTeX Font Info:    Trying to load font information for TS1+ppl on input line 2
 (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ts1ppl.fd
 File: ts1ppl.fd 2001/06/04 font definitions for TS1/ppl.
 )
+
 1: section
 [5])
 \tf@toc=\write6
 \openout6 = `memoria.toc'.
 
- [6] (memoria.lof
+
+
+[6] (memoria.lof
 LaTeX Info: Redefining \sptext on input line 1.
 LaTeX Info: Redefining \. on input line 1.
 LaTeX Info: Redefining \% on input line 1.
@@ -1072,10 +1088,13 @@ LaTeX Info: Redefining \% on input line 1.
 \openout7 = `memoria.lof'.
 
 
+
 1: section
 [7
 
-] [8
+]
+
+[8
 
 ] (memoria.lot
 LaTeX Info: Redefining \sptext on input line 1.
@@ -1086,15 +1105,22 @@ LaTeX Info: Redefining \% on input line 1.
 \openout8 = `memoria.lot'.
 
 
+
 1: section
-[9] [10
+[9]
+
+[10
 
 ]
 --------------------
  Dedicatory
 --------------------
+
+
 1: section
-[11] [12
+[11]
+
+[12
 
 ]
 1: section
@@ -1102,7 +1128,7 @@ LaTeX Info: Redefining \% on input line 1.
 
 (Chapters/Chapter1.tex
 Cap\'{\i }tulo 1.
-<./Figures/cava.png, id=327, 613.29124pt x 521.95pt>
+<./Figures/cava.png, id=350, 613.29124pt x 521.95pt>
 File: ./Figures/cava.png Graphic file (type png)
 <use ./Figures/cava.png>
 Package pdftex.def Info: ./Figures/cava.png  used on input line 39.
@@ -1113,6 +1139,8 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <5> on input line 40.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <9> on input line 43.
+
+
 1: section
 
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
@@ -1138,6 +1166,8 @@ LaTeX Warning: Citation 'GNSS-ONU' on page 2 undefined on input line 59.
 LaTeX Warning: Citation 'GNSS-Junta-Adalucia' on page 2 undefined on input line
  61.
 
+
+
 LaTeX Info: Redefining \. on input line 75.
 LaTeX Info: Redefining \% on input line 75.
 
@@ -1157,16 +1187,21 @@ LaTeX Warning: Citation 'Shu' on page 3 undefined on input line 85.
 
 LaTeX Warning: Citation 'Villien' on page 3 undefined on input line 93.
 
+
+
 LaTeX Info: Redefining \. on input line 108.
 LaTeX Info: Redefining \% on input line 108.
 [3])
-LaTeX Info: Redefining \. on input line 147.
-LaTeX Info: Redefining \% on input line 147.
- [4]
+
+LaTeX Info: Redefining \. on input line 172.
+LaTeX Info: Redefining \% on input line 172.
+[4]
 \openout2 = `Chapters/Chapter2.aux'.
 
  (Chapters/Chapter2.tex
 Cap\'{\i }tulo 2.
+
+
 1: section
 [5
 
@@ -1174,249 +1209,379 @@ Cap\'{\i }tulo 2.
 
 
 ]
-<./Figures/diagrama_general.png, id=371, 874.26625pt x 462.72874pt>
+<./Figures/diagrama_general.png, id=394, 874.26625pt x 462.72874pt>
 File: ./Figures/diagrama_general.png Graphic file (type png)
 <use ./Figures/diagrama_general.png>
 Package pdftex.def Info: ./Figures/diagrama_general.png  used on input line 55.
 
 (pdftex.def)             Requested size: 389.80269pt x 206.31256pt.
-LaTeX Info: Redefining \. on input line 79.
-LaTeX Info: Redefining \% on input line 79.
- [6 <./Figures/diagrama_general.png>]
-Underfull \hbox (badness 2080) in paragraph at lines 90--90
+
+
+LaTeX Info: Redefining \. on input line 82.
+LaTeX Info: Redefining \% on input line 82.
+[6 <./Figures/diagrama_general.png>]
+Underfull \hbox (badness 2080) in paragraph at lines 89--89
 []|\T1/ppl/b/n/10.95 Arduino ME-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 92--92
+Underfull \hbox (badness 10000) in paragraph at lines 91--91
 []|\T1/ppl/m/n/10.95 ATmega2560
  []
 
 
-Underfull \hbox (badness 4940) in paragraph at lines 92--93
+Underfull \hbox (badness 4940) in paragraph at lines 91--92
 []|\T1/ppl/m/n/10.95 ARM Cortex-
  []
 
 
-Underfull \hbox (badness 2277) in paragraph at lines 94--94
+Underfull \hbox (badness 2277) in paragraph at lines 93--93
 []|\T1/ppl/b/n/10.95 Número de nú-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 96--96
+Underfull \hbox (badness 10000) in paragraph at lines 95--95
 []|\T1/ppl/b/n/10.95 Frecuencia del
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 96--96
+Underfull \hbox (badness 10000) in paragraph at lines 95--95
 \T1/ppl/b/n/10.95 pro-ce-sa-dor
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 102--102
+Underfull \hbox (badness 10000) in paragraph at lines 101--101
 []|\T1/ppl/m/n/10.95 1x USB, 2x
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 104--104
+Underfull \hbox (badness 10000) in paragraph at lines 103--103
 []|\T1/ppl/b/n/10.95 Lenguajes de
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 104--104
+Underfull \hbox (badness 10000) in paragraph at lines 103--103
 []|\T1/ppl/m/n/10.95 Arduino y
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 104--105
+Underfull \hbox (badness 10000) in paragraph at lines 103--104
 []|\T1/ppl/m/n/10.95 Arduino y
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 106--106
+Underfull \hbox (badness 10000) in paragraph at lines 105--105
 []|\T1/ppl/b/n/10.95 Cantidad de
  []
 
 
-Underfull \hbox (badness 4832) in paragraph at lines 108--108
+Underfull \hbox (badness 4832) in paragraph at lines 107--107
 []|\T1/ppl/m/n/10.95 No 16 (Ana-
  []
 
 
-LaTeX Warning: Citation 'ESPRESSIF' on page 7 undefined on input line 116.
+LaTeX Warning: Citation 'ESPRESSIF' on page 7 undefined on input line 115.
 
 
-LaTeX Warning: Citation 'ESPRESSIF' on page 7 undefined on input line 118.
+LaTeX Warning: Citation 'ESPRESSIF' on page 7 undefined on input line 117.
 
-LaTeX Info: Redefining \. on input line 128.
-LaTeX Info: Redefining \% on input line 128.
-[7]
-<./Figures/ESP32.jpg, id=385, 963.6pt x 542.025pt>
+<./Figures/ESP32.jpg, id=404, 963.6pt x 542.025pt>
 File: ./Figures/ESP32.jpg Graphic file (type jpg)
 <use ./Figures/ESP32.jpg>
-Package pdftex.def Info: ./Figures/ESP32.jpg  used on input line 137.
+Package pdftex.def Info: ./Figures/ESP32.jpg  used on input line 136.
 (pdftex.def)             Requested size: 389.80269pt x 219.26253pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 142--142
+
+LaTeX Info: Redefining \. on input line 140.
+LaTeX Info: Redefining \% on input line 140.
+[7]
+Underfull \hbox (badness 10000) in paragraph at lines 141--141
 [][][]\T1/ppl/m/n/9 Imagen to-ma-da de: [][]$https : / / docs . espressif . com
  / projects / esp-[]idf / en / latest / esp32 /
  []
 
-LaTeX Info: Redefining \. on input line 153.
-LaTeX Info: Redefining \% on input line 153.
+
+
+LaTeX Info: Redefining \. on input line 159.
+LaTeX Info: Redefining \% on input line 159.
 [8 <./Figures/ESP32.jpg>]
 
-LaTeX Warning: Citation 'QL76' on page 9 undefined on input line 161.
+LaTeX Warning: Citation 'QL76' on page 9 undefined on input line 160.
 
-<./Figures/QL76.png, id=395, 602.25pt x 452.69125pt>
+<./Figures/QL76.png, id=418, 602.25pt x 452.69125pt>
 File: ./Figures/QL76.png Graphic file (type png)
 <use ./Figures/QL76.png>
-Package pdftex.def Info: ./Figures/QL76.png  used on input line 167.
+Package pdftex.def Info: ./Figures/QL76.png  used on input line 166.
 (pdftex.def)             Requested size: 194.90134pt x 146.50124pt.
 
-LaTeX Warning: Citation 'QL76' on page 9 undefined on input line 173.
+LaTeX Warning: Citation 'QL76' on page 9 undefined on input line 172.
 
 
-Overfull \hbox (12.46284pt too wide) in paragraph at lines 173--174
+Overfull \hbox (12.46284pt too wide) in paragraph at lines 172--173
 []\T1/ppl/m/n/10.95 A con-ti-nua-ción, se des-cri-ben las ca-rac-te-rís-ti-cas 
 prin-ci-pa-les del mó-du-lo QL76 [[]]: 
  []
 
-LaTeX Info: Redefining \. on input line 189.
-LaTeX Info: Redefining \% on input line 189.
+
+
+LaTeX Info: Redefining \. on input line 190.
+LaTeX Info: Redefining \% on input line 190.
 [9 <./Figures/QL76.png>]
 
-LaTeX Warning: Citation 'A7670SA' on page 10 undefined on input line 197.
+LaTeX Warning: Citation 'A7670SA' on page 10 undefined on input line 196.
 
-<./Figures/A7670SA.jpg, id=404, 173.89969pt x 170.88844pt>
+<./Figures/A7670SA.jpg, id=427, 173.89969pt x 170.88844pt>
 File: ./Figures/A7670SA.jpg Graphic file (type jpg)
 <use ./Figures/A7670SA.jpg>
-Package pdftex.def Info: ./Figures/A7670SA.jpg  used on input line 203.
+Package pdftex.def Info: ./Figures/A7670SA.jpg  used on input line 202.
 (pdftex.def)             Requested size: 194.90134pt x 191.53455pt.
 
-Overfull \hbox (4.70375pt too wide) in paragraph at lines 212--213
+Overfull \hbox (4.70375pt too wide) in paragraph at lines 211--212
 []\T1/ppl/m/n/10.95 Frecuencias de tra-ba-jo: LTE-FDD(B1/B2/B3/B4/B5/B7/B8/B28/
 B66), GSM
  []
 
-LaTeX Info: Redefining \. on input line 221.
-LaTeX Info: Redefining \% on input line 221.
-[10 <./Figures/A7670SA.jpg>]
-<./Figures/A7670SA_Mod.jpg, id=413, 602.25pt x 602.25pt>
+<./Figures/A7670SA_Mod.jpg, id=431, 602.25pt x 602.25pt>
 File: ./Figures/A7670SA_Mod.jpg Graphic file (type jpg)
 <use ./Figures/A7670SA_Mod.jpg>
-Package pdftex.def Info: ./Figures/A7670SA_Mod.jpg  used on input line 224.
+Package pdftex.def Info: ./Figures/A7670SA_Mod.jpg  used on input line 223.
 (pdftex.def)             Requested size: 194.90134pt x 194.90186pt.
-<./Figures/Antena_Quectel_YG0035AA.png, id=417, 318.43968pt x 220.57407pt>
+
+
+LaTeX Info: Redefining \. on input line 232.
+LaTeX Info: Redefining \% on input line 232.
+[10 <./Figures/A7670SA.jpg>]
+<./Figures/Antena_Quectel_YG0035AA.png, id=441, 318.43968pt x 220.57407pt>
 File: ./Figures/Antena_Quectel_YG0035AA.png Graphic file (type png)
 <use ./Figures/Antena_Quectel_YG0035AA.png>
 Package pdftex.def Info: ./Figures/Antena_Quectel_YG0035AA.png  used on input l
-ine 246.
+ine 245.
 (pdftex.def)             Requested size: 194.90134pt x 135.00098pt.
 
-Overfull \hbox (47.79962pt too wide) in paragraph at lines 250--250
+Overfull \hbox (47.79962pt too wide) in paragraph at lines 249--249
 [][][]\T1/ppl/m/n/9 Imagen to-ma-da de: [][]$https : / / www . quectel . com / 
 product / yg0035aa-[]gnss-[]active-[]magnetic-[]mount-[]antenna/$[][]| 
  []
 
-LaTeX Info: Redefining \. on input line 259.
-LaTeX Info: Redefining \% on input line 259.
-[11 <./Figures/A7670SA_Mod.jpg>]
-
-LaTeX Warning: Citation 'FreeRTOS' on page 12 undefined on input line 264.
 
 
-LaTeX Warning: Citation 'GoogleMaps' on page 12 undefined on input line 281.
+LaTeX Info: Redefining \. on input line 257.
+LaTeX Info: Redefining \% on input line 257.
+[11 <./Figures/A7670SA_Mod.jpg> <./Figures/Antena_Quectel_YG0035AA.png>]
+
+LaTeX Warning: Citation 'FreeRTOS' on page 12 undefined on input line 263.
+
+
+LaTeX Warning: Citation 'GoogleMaps' on page 12 undefined on input line 280.
 
 )
-LaTeX Info: Redefining \. on input line 148.
-LaTeX Info: Redefining \% on input line 148.
- [12 <./Figures/Antena_Quectel_YG0035AA.png>]
-LaTeX Info: Redefining \. on input line 148.
-LaTeX Info: Redefining \% on input line 148.
- [13]
+
+LaTeX Info: Redefining \. on input line 173.
+LaTeX Info: Redefining \% on input line 173.
+[12]
 \openout2 = `Chapters/Chapter3.aux'.
 
  (Chapters/Chapter3.tex
-[14
+Cap\'{\i }tulo 3.
+
+
+1: section
+[13
 
 
 
 
 ]
-Cap\'{\i }tulo 3.
-1: section
-[15]
-<./Figures/arquitectura_hardware_sistema.png, id=447, 906.38625pt x 464.73625pt
+<./Figures/arquitectura_hardware_sistema.png, id=462, 906.38625pt x 464.73625pt
 >
 File: ./Figures/arquitectura_hardware_sistema.png Graphic file (type png)
 <use ./Figures/arquitectura_hardware_sistema.png>
 Package pdftex.def Info: ./Figures/arquitectura_hardware_sistema.png  used on i
-nput line 54.
+nput line 53.
 (pdftex.def)             Requested size: 389.80269pt x 199.86105pt.
-LaTeX Info: Redefining \. on input line 77.
-LaTeX Info: Redefining \% on input line 77.
- [16 <./Figures/arquitectura_hardware_sistema.png>]
-<./Figures/PCB_TFE_Modelo_2D.png, id=458, 398.08725pt x 280.52805pt>
+
+
+LaTeX Info: Redefining \. on input line 76.
+LaTeX Info: Redefining \% on input line 76.
+[14 <./Figures/arquitectura_hardware_sistema.png>]
+<./Figures/PCB_TFE_Modelo_2D.png, id=473, 398.08725pt x 280.52805pt>
 File: ./Figures/PCB_TFE_Modelo_2D.png Graphic file (type png)
 <use ./Figures/PCB_TFE_Modelo_2D.png>
-Package pdftex.def Info: ./Figures/PCB_TFE_Modelo_2D.png  used on input line 80
+Package pdftex.def Info: ./Figures/PCB_TFE_Modelo_2D.png  used on input line 79
 .
 (pdftex.def)             Requested size: 194.90134pt x 137.34436pt.
-<./Figures/PCB_TFE_Modelo_3D.png, id=459, 484.81125pt x 349.305pt>
+<./Figures/PCB_TFE_Modelo_3D.png, id=474, 484.81125pt x 349.305pt>
 File: ./Figures/PCB_TFE_Modelo_3D.png Graphic file (type png)
 <use ./Figures/PCB_TFE_Modelo_3D.png>
-Package pdftex.def Info: ./Figures/PCB_TFE_Modelo_3D.png  used on input line 87
+Package pdftex.def Info: ./Figures/PCB_TFE_Modelo_3D.png  used on input line 86
 .
 (pdftex.def)             Requested size: 194.90134pt x 140.4284pt.
-<./Figures/QL76_Esquematico.png, id=462, 285.31593pt x 383.18156pt>
+<./Figures/QL76_Esquematico.png, id=478, 260.47313pt x 318.43968pt>
 File: ./Figures/QL76_Esquematico.png Graphic file (type png)
 <use ./Figures/QL76_Esquematico.png>
-Package pdftex.def Info: ./Figures/QL76_Esquematico.png  used on input line 101
+Package pdftex.def Info: ./Figures/QL76_Esquematico.png  used on input line 100
 .
-(pdftex.def)             Requested size: 194.90134pt x 261.75276pt.
-<./Figures/QL76_modelo_3d_sup.png, id=463, 429.85594pt x 365.86688pt>
+(pdftex.def)             Requested size: 233.88399pt x 285.9371pt.
+<./Figures/QL76_modelo_2d_sup.png, id=479, 414.04688pt x 360.59718pt>
+File: ./Figures/QL76_modelo_2d_sup.png Graphic file (type png)
+<use ./Figures/QL76_modelo_2d_sup.png>
+Package pdftex.def Info: ./Figures/QL76_modelo_2d_sup.png  used on input line 1
+07.
+(pdftex.def)             Requested size: 155.91869pt x 135.79034pt.
+<./Figures/QL76_modelo_3d_sup.png, id=480, 429.85594pt x 365.86688pt>
 File: ./Figures/QL76_modelo_3d_sup.png Graphic file (type png)
 <use ./Figures/QL76_modelo_3d_sup.png>
 Package pdftex.def Info: ./Figures/QL76_modelo_3d_sup.png  used on input line 1
-08.
-(pdftex.def)             Requested size: 194.90134pt x 165.88908pt.
-LaTeX Info: Redefining \. on input line 130.
-LaTeX Info: Redefining \% on input line 130.
- [17 <./Figures/PCB_TFE_Modelo_2D.png> <./Figures/PCB_TFE_Modelo_3D.png>]
-LaTeX Info: Redefining \. on input line 130.
-LaTeX Info: Redefining \% on input line 130.
- [18 <./Figures/QL76_Esquematico.png> <./Figures/QL76_modelo_3d_sup.png>]
-<./Figures/Arquitectura_firmware_TFE_GNSS.png, id=479, 2192.19pt x 1439.3775pt>
+14.
+(pdftex.def)             Requested size: 155.91869pt x 132.71127pt.
 
+
+LaTeX Info: Redefining \. on input line 134.
+LaTeX Info: Redefining \% on input line 134.
+[15 <./Figures/PCB_TFE_Modelo_2D.png> <./Figures/PCB_TFE_Modelo_3D.png>]
+
+LaTeX Info: Redefining \. on input line 134.
+LaTeX Info: Redefining \% on input line 134.
+[16 <./Figures/QL76_Esquematico.png> <./Figures/QL76_modelo_2d_sup.png> <./Figu
+res/QL76_modelo_3d_sup.png>]
+<./Figures/Arquitectura_firmware_TFE_GNSS.png, id=496, 2138.99126pt x 1430.3437
+5pt>
 File: ./Figures/Arquitectura_firmware_TFE_GNSS.png Graphic file (type png)
 <use ./Figures/Arquitectura_firmware_TFE_GNSS.png>
 Package pdftex.def Info: ./Figures/Arquitectura_firmware_TFE_GNSS.png  used on 
-input line 146.
-(pdftex.def)             Requested size: 389.80269pt x 255.93605pt.
- Excluding 'comment' comment.)
-LaTeX Info: Redefining \. on input line 149.
-LaTeX Info: Redefining \% on input line 149.
+input line 152.
+(pdftex.def)             Requested size: 428.78532pt x 286.71844pt.
 
-[19 <./Figures/Arquitectura_firmware_TFE_GNSS.png>]
-LaTeX Info: Redefining \. on input line 149.
-LaTeX Info: Redefining \% on input line 149.
- [20]
+Overfull \hbox (38.98264pt too wide) in paragraph at lines 152--153
+ [][] 
+ []
+
+
+
+LaTeX Info: Redefining \. on input line 165.
+LaTeX Info: Redefining \% on input line 165.
+[17]
+
+LaTeX Info: Redefining \. on input line 169.
+LaTeX Info: Redefining \% on input line 169.
+[18 <./Figures/Arquitectura_firmware_TFE_GNSS.png>]
+<./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_1.png, id=522, 1153.30875pt x 
+1288.815pt>
+File: ./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_1.png Graphic file (type 
+png)
+<use ./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_1.png>
+Package pdftex.def Info: ./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_1.png 
+ used on input line 190.
+(pdftex.def)             Requested size: 311.84334pt x 348.47635pt.
+<./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_2.png, id=523, 1437.37pt x 123
+8.6275pt>
+File: ./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_2.png Graphic file (type 
+png)
+<use ./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_2.png>
+Package pdftex.def Info: ./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_2.png 
+ used on input line 197.
+(pdftex.def)             Requested size: 311.84334pt x 268.71892pt.
+<./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_3.png, id=524, 1236.62pt x 123
+8.6275pt>
+File: ./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_3.png Graphic file (type 
+png)
+<use ./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_3.png>
+Package pdftex.def Info: ./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_3.png 
+ used on input line 204.
+(pdftex.def)             Requested size: 311.84334pt x 312.3399pt.
+Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on i
+nput line 215.
+LaTeX Font Info:    Trying to load font information for T1+pcr on input line 21
+5.
+
+(C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\t1pcr.fd
+File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
+)
+
+LaTeX Info: Redefining \. on input line 223.
+LaTeX Info: Redefining \% on input line 223.
+[19]
+
+LaTeX Info: Redefining \. on input line 223.
+LaTeX Info: Redefining \% on input line 223.
+[20 <./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_1.png> <./Figures/Diagrama
+_flujo_firmware_TFE_CESE_Part_2.png>]
+
+LaTeX Info: Redefining \. on input line 252.
+LaTeX Info: Redefining \% on input line 252.
+[21 <./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_3.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 265--265
+ []\T1/ppl/m/sc/10 Código 3.3. |\T1/ppl/m/n/10 Pseu-do-có-di-go de la fun-ción 
+oc-cu- 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 302--302
+ []\T1/ppl/m/sc/10 Código 3.5. |\T1/ppl/m/n/10 Pseu-do-có-di-go de la fun-ción 
+trans- 
+ []
+
+
+
+LaTeX Info: Redefining \. on input line 314.
+LaTeX Info: Redefining \% on input line 314.
+[22]
+Overfull \hbox (8.66345pt too wide) in paragraph at lines 345--346
+[]\T1/ppl/m/n/10.95 Una fun-ción pa-ra en-cap-su-lar la fun-cio-na-li-dad de tr
+ans-mi-tir al ser-vi-dor MQTT
+ []
+
+
+Overfull \hbox (1.40366pt too wide) in paragraph at lines 347--348
+[]\T1/ppl/m/n/10.95 Una fun-ción que per-mi-te ex-traer la in-for-ma-ción de la
+s ca-de-nas ti-po GNRMC
+ []
+
+
+
+LaTeX Info: Redefining \. on input line 360.
+LaTeX Info: Redefining \% on input line 360.
+[23]
+Underfull \hbox (badness 10000) in paragraph at lines 386--386
+ []\T1/ppl/m/sc/10 Código 3.8. |\T1/ppl/m/n/10 Pseu-do-có-di-go de la fun-ción 
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 411--411
+ []\T1/ppl/m/sc/10 Código 3.9. |\T1/ppl/m/n/10 Pseu-do-có-di-go de la fun-ción 
+
+ []
+
+
+
+LaTeX Info: Redefining \. on input line 418.
+LaTeX Info: Redefining \% on input line 418.
+[24] Excluding 'comment' comment.)
+
+LaTeX Info: Redefining \. on input line 174.
+LaTeX Info: Redefining \% on input line 174.
+[25]
 \openout2 = `Chapters/Chapter4.aux'.
 
  (Chapters/Chapter4.tex
-Cap\'{\i }tulo 4.
-)
-1: section
-[21
+
+[26
 
 
 
 
 ]
+Cap\'{\i }tulo 4.
+)
+
+1: section
+[27]
 \openout2 = `Chapters/Chapter5.aux'.
 
- (Chapters/Chapter5.tex [22
+ (Chapters/Chapter5.tex
+
+[28
 
 
 
@@ -1424,11 +1589,14 @@ Cap\'{\i }tulo 4.
 ]
 Cap\'{\i }tulo 5.
 )
+
 1: section
-[23]
+[29]
 \openout2 = `Appendices/AppendixA.aux'.
 
- (Appendices/AppendixA.tex [24
+ (Appendices/AppendixA.tex
+
+[30
 
 
 
@@ -1436,22 +1604,25 @@ Cap\'{\i }tulo 5.
 
 ]
 Ap\'{e}ndice A.
-<./Appendices/Esquematico_placa_base.pdf, id=513, 1178.2018pt x 833.91548pt>
+<./Appendices/Esquematico_placa_base.pdf, id=773, 1178.2018pt x 833.91548pt>
 File: ./Appendices/Esquematico_placa_base.pdf Graphic file (type pdf)
 <use ./Appendices/Esquematico_placa_base.pdf>
 Package pdftex.def Info: ./Appendices/Esquematico_placa_base.pdf  used on input
  line 10.
 (pdftex.def)             Requested size: 471.27237pt x 333.56027pt.
+
+
 1: section
-[25]
+[31]
 Overfull \vbox (107.52672pt too high) has occurred while \output is active []
+
+
 
 LaTeX Info: Redefining \. on input line 20.
 LaTeX Info: Redefining \% on input line 20.
+[32 <./Appendices/Esquematico_placa_base.pdf>])
 
-[26 <./Appendices/Esquematico_placa_base.pdf>])
-
-LaTeX Warning: Empty bibliography on input line 172.
+LaTeX Warning: Empty bibliography on input line 197.
 
 (memoria.aux
 LaTeX Info: Redefining \sptext on input line 15.
@@ -1461,15 +1632,24 @@ LaTeX Info: Redefining \% on input line 15.
 (Chapters/Chapter3.aux) (Chapters/Chapter4.aux) (Chapters/Chapter5.aux)
 (Appendices/AppendixA.aux))
  ***********
-LaTeX2e <2023-11-01> patch level 1
+LaTeX2e <2024-06-01> patch level 1
 L3 programming layer <2020/03/25>
  ***********
 
 
 LaTeX Warning: There were undefined references.
 
-Package rerunfilecheck Info: File `memoria.out' has not changed.
-(rerunfilecheck)             Checksum: FBD6D92C4E98A23CA5787849326A849A;3026.
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+
+Package rerunfilecheck Warning: File `memoria.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `memoria.out':
+(rerunfilecheck)             Before: C3308C22F53FC781006448D90A750F50;3285
+(rerunfilecheck)             After:  2592EB88943C6D66A67E749DDB8FEE0D;3285.
 
 Package biblatex Warning: Please (re)run BibTeX on the file(s):
 (biblatex)                memoria
@@ -1480,13 +1660,13 @@ Package logreq Info: Writing requests to 'memoria.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 31851 strings out of 474485
- 688486 string characters out of 5744678
- 1945542 words of memory out of 5000000
- 53588 multiletter control sequences out of 15000+600000
- 608481 words of font info for 106 fonts, out of 8000000 for 9000
+ 32660 strings out of 473919
+ 698858 string characters out of 5727897
+ 2272908 words of memory out of 5000000
+ 54758 multiletter control sequences out of 15000+600000
+ 609424 words of font info for 109 fonts, out of 8000000 for 9000
  1142 hyphenation exceptions out of 8191
- 96i,20n,94p,1966b,2714s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 96i,20n,94p,1966b,2715s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
 pdfTeX warning (dest): name{Hfootnote.6} has been referenced but does not exist
 , replaced by a fixed one
@@ -1511,15 +1691,22 @@ pdfTeX warning (dest): name{Hfootnote.2} has been referenced but does not exist
 pdfTeX warning (dest): name{Hfootnote.1} has been referenced but does not exist
 , replaced by a fixed one
 
-<C:/Users/CUC/AppData/Local/Programs/MiKTeX/fonts/type1/urw/palatino/uplb8a.pfb
-><C:/Users/CUC/AppData/Local/Programs/MiKTeX/fonts/type1/urw/palatino/uplb8a.pf
-b><C:/Users/CUC/AppData/Local/Programs/MiKTeX/fonts/type1/urw/palatino/uplr8a.p
-fb><C:/Users/CUC/AppData/Local/Programs/MiKTeX/fonts/type1/urw/palatino/uplr8a.
-pfb><C:/Users/CUC/AppData/Local/Programs/MiKTeX/fonts/type1/urw/palatino/uplri8
-a.pfb>
-Output written on memoria.pdf (40 pages, 5058323 bytes).
+
+pdfTeX warning (dest): name{section*.38} has been referenced but does not exist
+, replaced by a fixed one
+
+<C:/Users/CUC/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi
+10.pfb><C:/Users/CUC/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/
+cm/cmsy10.pfb><C:/Users/CUC/AppData/Local/Programs/MiKTeX/fonts/type1/urw/couri
+er/ucrr8a.pfb><C:/Users/CUC/AppData/Local/Programs/MiKTeX/fonts/type1/urw/palat
+ino/uplb8a.pfb><C:/Users/CUC/AppData/Local/Programs/MiKTeX/fonts/type1/urw/pala
+tino/uplb8a.pfb><C:/Users/CUC/AppData/Local/Programs/MiKTeX/fonts/type1/urw/pal
+atino/uplr8a.pfb><C:/Users/CUC/AppData/Local/Programs/MiKTeX/fonts/type1/urw/pa
+latino/uplr8a.pfb><C:/Users/CUC/AppData/Local/Programs/MiKTeX/fonts/type1/urw/p
+alatino/uplri8a.pfb>
+Output written on memoria.pdf (46 pages, 5666220 bytes).
 PDF statistics:
- 589 PDF objects out of 1000 (max. 8388607)
- 144 named destinations out of 1000 (max. 500000)
- 412 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 902 PDF objects out of 1000 (max. 8388607)
+ 341 named destinations out of 1000 (max. 500000)
+ 456 words of extra memory for PDF output out of 10000 (max. 10000000)
 

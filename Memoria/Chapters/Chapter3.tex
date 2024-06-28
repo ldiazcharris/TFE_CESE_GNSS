@@ -42,12 +42,11 @@ En el diagrama se pueden ver los protocolos de comunicación entre módulos, ent
 \end{itemize}
 
 Se presenta una fuente de alimentación correspondiente a una batería de 12 VDC. Debido a que los componentes del sistema operan con tensiones diferentes, se hizo necesaria la implementación de circuitos adicionales. En el diagrama, estos circuitos se denominan <<Fuente>>. Estos suplen 2 niveles de tensión distintos: 
+
 \begin{itemize}
     \item 3,3 VDC para el Quectel L76.
     \item 5 VDC para la ESP32, el módulo SIM A7670SA y la pantalla LCD.
 \end{itemize}
-
-
 
 \begin{figure}[htbp]
 	\centering
@@ -71,9 +70,9 @@ En la etapa de implementación del hardware, se trabajó en 2 placas de circuito
 
 \subsubsection{Placa base del sistema}
 
-La placa base se encargará de interconectar los módulos y periféricos principales del sistema. Por lo tanto, en el apéndice~\ref{AppendixA}, se presenta el circuito esquemático correspondiente a esta implementación. En esta se empleó el regulador MIC29302WU, con una configuración de ajuste por defecto en 5 VDC, para la alimentación de la ESP32, del módulo SIM A7670SA, la placa adaptador para el módulo Quectel L76 y la Pantalla LCD. En la figura~\ref{fig:placa_base_2d} se puede apreciar el diseño final del PCB en un modelo de dos dimensiones. Además, en la figura~\ref{fig:placa_base_3d} se observa el modelo en tres dimensiones. 
+La placa base se encargará de interconectar los módulos y periféricos principales del sistema. Por lo tanto, en el apéndice~\ref{AppendixA}, se presenta el circuito esquemático correspondiente a esta implementación. En esta se empleó el regulador MIC29302WU, con una configuración de ajuste por defecto en 5 VDC, para la alimentación de la ESP32, del módulo SIM A7670SA, la placa adaptador para el módulo Quectel L76 y la pantalla LCD. En la figura~\ref{fig:placa_base_2d} se puede apreciar el diseño final del PCB en un modelo de dos dimensiones. Además, en la figura~\ref{fig:placa_base_3d} se observa el modelo en tres dimensiones. 
 
-Los componentes U1, U2 y H3, corresponden a las ranuras donde se conectan la ESP32 DevKit V4, el adaptador para el módulo Quectel L76, y el módulo SIM A7670SA. Las terminales marcadas con CN6 y CN7 permiten la conexión de los pilotos que indican la ocupación de la cava. Las terminales CN4 y CN5 corresponden a las conexiones de los botones de que dispondrá el operario de la cava para la indicación de la ocupación. Por otro lado, las terminales CN2 y CN3 corresponden a la interfaz I2C y la alimentación de la pantalla LCD, respectivamente. La bornera CN1 corresponde a la entrada de alimentación del sistema. Finalmente, las terminales CN9 y CN11 externalizan los pines GPI 34 y GPI 35, y GPIO 5 y GPIO 18 de la ESP32, respectivamente; esto para facilitar, en una etapa posterior, la agregación de nuevas funcionalidades. 
+Los componentes U1, U2 y H3, corresponden a las ranuras donde se conectan la ESP32 DevKit V4, el adaptador para el módulo Quectel L76, y el módulo SIM A7670SA. Las terminales marcadas con CN6 y CN7 permiten la conexión de los pilotos que indican la ocupación de la cava. Las terminales CN4 y CN5 corresponden a las conexiones de los botones de que dispondrá el operario de la cava para la indicación de la ocupación. Por otro lado, las terminales CN2 y CN3 corresponden a la interfaz I2C y la alimentación de la pantalla LCD, respectivamente. La terminal CN1 corresponde a la entrada de alimentación del sistema. Finalmente, las terminales CN9 y CN11 externalizan los pines GPI 34 y GPI 35, y GPIO 5 y GPIO 18 de la ESP32, respectivamente; esto para facilitar, en una etapa posterior, la agregación de nuevas funcionalidades. 
 
 \begin{figure}[htbp]
 	\centering
@@ -94,18 +93,25 @@ Los componentes U1, U2 y H3, corresponden a las ranuras donde se conectan la ESP
 
 El circuito esquemático del adaptador L76 se encuentra en la figura~\ref{fig:adap_L76}. En este esquemático se puede observar la fuente de 3.3 VDC. Además, en la figura se presenta el circuito de entrada de alimentación, la conexión UART y la conexión entre el módulo y el microcontrolador ESP32.  
 
-En la figura~\ref{fig:adap_L76_3d}, se puede observar el modelo 3D del circuito diseñado. 
+En las figuras~\ref{fig:adap_L76_2d} y~\ref{fig:adap_L76_3d}, se muestran los modelos 2D y 3D del circuito diseñado. 
 
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[width=.5\textwidth]{./Figures/QL76_Esquematico.png}
+	\includegraphics[width=.6\textwidth]{./Figures/QL76_Esquematico.png}
 	\caption{Esquemático del adaptador L76.}
 	\label{fig:adap_L76}
 \end{figure}
 
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[width=.5\textwidth]{./Figures/QL76_modelo_3d_sup.png}
+	\includegraphics[width=.4\textwidth]{./Figures/QL76_modelo_2d_sup.png}
+	\caption{Modelo 2D del adaptador L76.}
+	\label{fig:adap_L76_2d}
+\end{figure}
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=.4\textwidth]{./Figures/QL76_modelo_3d_sup.png}
 	\caption{Modelo 3D del adaptador L76.}
 	\label{fig:adap_L76_3d}
 \end{figure}
@@ -121,36 +127,334 @@ En esta sección se presentan las consideraciones de diseño y el proceso de imp
 
 \subsection{Diseño del firmware}
 
-El propósito del firmware desarrollado es satisfacer los requerimientos de conectividad, administración del hardware e interfaz con el usuario. De acuerdo con esto, a continuación se describen las principales funcionalidades del firmware: 
+El propósito del firmware desarrollado es satisfacer los requerimientos de conectividad, administración del hardware e interfaz con el usuario. A continuación se describen las principales funcionalidades del firmware: 
 
 \begin{enumerate}
- \item Realizar las funciones de conexión a internet a través de la red celular y conexión de área local con wifi. Dentro de estas funciones se encuentran:
- 	\begin{enumerate}
- 		\item Comunicación a través de comandos AT por el puerto UART con el módulo SIM A7670SA, para asegurar la conexión con el servidor utilizando el protocolo MQTT.
- 		\item Utilización del módulo wifi de la ESP32 para generar una conexión wifi cuando exista una red conocida. Transmisión de datos a través del protocolo MQTT. 
- 	\end{enumerate}
+ \item Realizar las funciones de conexión a Internet a través de la red celular, a través de la comunicación por comandos AT-UART con el módulo SIM A7670SA, para asegurar la conexión con el servidor utilizando el protocolo MQTT.
  \item Comunicación a través de tramas NMEA por el puerto UART con el módulo Quectel L76. Para la recepción e interpretación de la información de geolocalización de las constelaciones GPS y BeiDou.  
  \item Monitoreo de los botones de ocupación a través de interrupciones y visualización de los estados de ocupación a través de los pilotos. 
  \item Generación de interfaz visual a través de la comunicación I2C con la pantalla LCD 16x2. 
  \item Administración de la energía del sistema a través de los modos de bajo consumo de los módulos del sistema. 
- \item Administración de los recursos del microcontrolador a través de la implementación del sitema operativo en tiempo real FreeRTOS. 
+ \item Administración de los recursos del microcontrolador a través de la implementación del sistema operativo en tiempo real FreeRTOS. 
 \end{enumerate}
 
 \subsubsection{Arquitectura del firmware}
-\label{arquitectura_firmware}
+\label{sec:arquitectura_firmware}
 
 De acuerdo con lo planteado anteriormente, en la figura~\ref{fig:arq_firmware} se presenta un diagrama de componentes UML, que representa la arquitectura del sistema. 
 
+En este diagrama (figura~\ref{fig:arq_firmware}) se representan como subsistemas (\textit{Subsystem}) los componentes de hardware como la ESP32, la pantalla LCD, el módulo 4G SIM A7670SA, los botones y los pilotos. Así mismo, se entienden como subsistemas los componentes de firmware proporcionados por el fabricante del microcontrolador, que corresponden a los drivers GPIO, UART y el bus I2C. Además, se hizo necesaria la implementación de una biblioteca propia para el control de la pantalla LCD a través del bus I2C.
+
+De acuerdo con esto, los componentes del firmware se establecen en la ESP32, que corresponde al dispositivo programable encargado de realizar el control general del sistema. 
+
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[width=1\textwidth]{./Figures/Arquitectura_firmware_TFE_GNSS.png}
+	\includegraphics[width=1.1\textwidth]{./Figures/Arquitectura_firmware_TFE_GNSS.png}
 	\caption{Arquitectura del firmware.}
 	\label{fig:arq_firmware}
 \end{figure}
 
+En el diagrama de la figura~\ref{fig:arq_firmware} se presentan las los componentes de firmware más relevantes del sistema y la forma en que interactúan entre ellos. A continuación, se describe la funcionalidad d ecada componente del firmware:
+
+\begin{enumerate}
+	\item El firmware inicia con la tarea \textit{init\_mqtt\_server\_task()}, resaltada con color rojo, la cual se encarga de tres funciones primordiales: realizar la inicialización de los servicios MQTT que proporciona el módulo 4G (SIM A7670SA), realizar la conexión con el servidor remoto y, si todo sale bien, desencadena la creación de las demás tareas del sistema. Esta tarea utiliza líneas de comandos AT para comunicarse con el módulo 4G.
+	
+	\item Tarea \textit{collect\_data\_task()}, se encarga de recibir a través de colas, la información relacionada con la ocupación y la posición de la cava, dicha información proveniente de la tarea \textit{gnss\_task()} y del manejador de interrupciones \textit{occupancy\_isr\_handler()}, respectivamente. Cuando esta tarea obtiene la información mencionada, las transmite a la tarea \textit{transmit\_to\_server\_task()}, a través de la cola \textit{cava\_data\_queue}.
+	
+	\item Manejador de interrupción \textit{occupancy\_isr\_handler()}, resaltada con color amarillo, es la función que se ejecuta siempre que ocurra una interrupción debida a los botones de ocupación de la cava, a saber, ocupado-desocupado. Este manejador de interrupción detecta qué botón se presionó, y comunica a la tarea \textit{collect\_data\_task()} el estado de ocupación, a través de la cola \textit{occupancy\_queue}. Además, esta tarea genera una acción de \textit{wakeup} del sistema cuando se encuentra en modo ahorro de energía. 	
+	
+	\item Tarea \textit{gnss\_task()}, se encarga primordialmente de detectar la recepción de una trama NMEA del tipo GNRMC, lo que asegura que la posición ha sido calculada con señales de dos o más constelaciones satelitales; en este caso, GPS y BeiDou. La detección de tramas se realiza a través de interrupciones del módulo UART de la ESP32. Esta tarea descarta todas las tramas que no sean compatibles con el estándar NMEA y todas las que no sean del tipo GNRMC. Además, se encarga de la extracción de la información de las tramas RMC a través de la función \textit{nmea\_rmc\_parser\_r()}. Esta última es una implementación de tipo \textit{thread-safe} para asegurar la compatibilidad con FreeRTOS, ya que permite la multitarea. Además, comunica la posición actual a la tarea \textit{collect\_data\_task()}, a través de la cola \textit{position\_queue}. Por último, esta tarea verifica si la posición no ha cambiado en los últimos 5 minutos, en caso de no cambiar, colocará al sistema completo en modo ahorro de energía. 
+		
+	\item Tarea \textit{transmit\_to\_server\_task()}, se encarga de ejecutar la secuencia de transmisión de datos a través del protocolo MQTT, con el módulo 4G. La comunicación entre microcontrolador y el módulo se realiza a través de comandos AT. Esta tarea recibe los datos provenientes de la tarea \textit{collect\_data\_task()}, los transmite con la función \textit{transmit\_msg\_mqtt()}. Al finalizar, construye un paquete de información con los datos de ocupación, posición y resultado de la transmisión MQTT, para ser transferido a través de la cola \textit{lcd\_queue} hacia la tarea \textit{lcd\_task()}. 
+		
+	\item Tarea \textit{lcd\_task()} se encarga de administrar adecuadamente el acceso a los recursos de la pantalla LCD, para evitar sobrescritura o pérdida de información relevante que deba ser mostrada a través de la pantalla LCD. 
+\end{enumerate}
+
+
 
 \subsection{Implementación del firmware}
+\label{sec:implementacion_firmware}
 
+El firmware se implementó en el \textit{framework} ESP-IDF desarrollado por la empresa ESPRESSIF, para las series de SoCs ESP32, ESP32-S y ESP32-C. Este \textit{framework} proporciona un SDK apto para el desarrollo de cualquier aplicación genérica en estas plataformas, a partir de lenguajes de programación C y C++. Además, está optimizado para para aplicaciones de Internet de las Cosas (IoT, del inglés \textit{Internet of Things}). 
+
+También se utilizó el entorno de desarrollo (IDE) \textit{PlatformIO}, que corre como una extensión nativa en el IDE de \textit{Visual Studio Code}. \textit{PlatformIO} permite usar todas las funcionalidades de ESP-IDF de una manera fiable y ágil, sin enmascarar funcionalidades o configuraciones avanzadas del \textit{framework}. Además, permite ejecutar las versiones mas estables de ESP-IDF, proporciona soporte por la comunidad de desarrolladores, es multiplataforma y de software libre. 
+
+Para la implementación del firmware se utilizó el lenguaje de programación C y se implementó el sistema operativo en tiempo real FreeRTOS. Una ventaja importante que ofrece ESP-IDF es que está desarrollado sobre FreeRTOS, por tanto, el firmware se ejecuta nativamente en este. 
+
+\subsubsection{Flujo general del firmware}
+
+Gracias a la implementación en FreeRTOS, el firmware tiene la capacidad de ejecutar multitarea. El flujo general del programa se muestra en las figuras \ref{fig:flujo_firmware_1}, \ref{fig:flujo_firmware_2} y \ref{fig:flujo_firmware_3}. Como se puede ver en dicho diagrama y en el diagrama de la arquitectura (ver figura \ref{fig:arq_firmware}), las diferentes tareas se ejecutan una independiente de la otra. Sin embargo, existe un flujo de información que se sucede de una tarea a otra. Como mecanismo de comunicación entre tareas, se usan las colas. Este comportamiento del firmware es relevante desde el punto de vista en que el sistema puede estar recibiendo, procesando y transmitiendo datos de posicionamiento de manera casi concurrente. 
+
+\begin{figure}
+	\centering
+	\includegraphics[width=.8\textwidth]{./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_1.png}
+	\caption{Diagrama de flujo del firmware (parte 1).}
+	\label{fig:flujo_firmware_1}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=.8\textwidth]{./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_2.png}
+	\caption{Diagrama de flujo del firmware (parte 2).}
+	\label{fig:flujo_firmware_2}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=.8\textwidth]{./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_3.png}
+	\caption{Diagrama de flujo del firmware (parte 3).}
+	\label{fig:flujo_firmware_3}
+\end{figure}
+
+
+\subsubsection{Implementación de las tareas del sistema}
+
+En los códigos, \ref{cod:init_mqtt_server_task}, \ref{cod:gnss_task}, \ref{cod:occupancy_isr_handler}, \ref{cod:collect_data_task}, \ref{cod:transmit_to_server_task} y \ref{cod:lcd_task} se presenta la implementación en pseudocódigo de cada una de las tareas principales del firmware. 
+
+
+\begin{lstlisting}[label=cod:init_mqtt_server_task, caption=Pseudocódigo de la función init\_mqtt\_server\_task().] 
+
+init_mqtt_server_task()
+{
+	while ("READY" == SIM_A7670SA)
+		Esperar
+	Inicalizar servicios MQTT en SIM_A7670SA
+	while (4 == intentos)
+		Conectar con servidor MQTT en la nube
+		if ("OK" == Conexion_Servidor)
+			Crear tareas: 
+				gnss_task()
+				collect_data_task()
+				transmit_to_server_task()
+				lcd_task()
+			Eliminar: init_mqtt_server_task
+			break
+		else
+			Reportar por LCD: Falla conexion servidor
+			Eliminar: init_mqtt_server_task
+}
+
+\end{lstlisting}
+
+ 
+
+
+\begin{lstlisting}[label=cod:gnss_task, caption=Pseudocódigo de la función gnss\_task().] 
+
+gnss_task()
+{
+	while (1)
+		if (DATA == envento_UART_0)
+			Procesar trama: 
+				posicion_actual = nmea_rmc_parser_r()
+			Enviar por cola position_queue: posicion_actual
+			if (Temporizar 5)
+				if (posicion_anterior == posicion_actual)
+					sleep_mode: Modulo_celular
+					sleep_mode: Modulo_GNSS
+					sleep_mode: ESP32
+					
+		posicion_anterior = posicion_actual
+}
+
+\end{lstlisting}
+
+ 
+
+
+\begin{lstlisting}[label=cod:occupancy_isr_handler, caption=Pseudocódigo de la función occupancy\_isr\_handler().] 
+
+occupancy_isr_handler()
+{
+	Capturar boton presionado
+	switch (bonton)
+		case boton_libre: 
+			Setear los pilotos como libre
+			Enviar por cola occupancy_queue: "Libre"
+		
+		case boton_ocupado:
+			Setear los pilotos como ocupado
+			Enviar por cola occupancy_queue: "Ocupado"	
+}
+
+\end{lstlisting}
+
+ 
+
+\begin{lstlisting}[label=cod:collect_data_task, caption=Pseudocódigo de la función collect\_data\_task().] 
+
+collect_data_task()
+{
+	while (1)
+		if (DATA == occupancy_queue.event)
+			datos_cava.occupancy = occupancy
+			
+		if (DATA == position_queue.event)
+			datos_cava.position = position
+		
+		Enviar por cola cava_data_queue: datos_cava		
+}
+
+\end{lstlisting}
+
+ 
+
+\begin{lstlisting}[label=cod:transmit_to_server_task, caption=Pseudocódigo de la función transmit\_to\_server\_task().] 
+
+transmit_to_server_task()
+{
+	posicion_anterior
+	while (1)
+		if (DATA == cava_data_queue.event)
+			Transmitir al servidor MQTT: 
+				transmision_state = transmit_msg_mqtt()
+			Enviar por cola lcd_queue: cava_data+transmision_state
+}
+
+\end{lstlisting}
+
+ 
+
+\begin{lstlisting}[label=cod:lcd_task, caption=Pseudocódigo de la función lcd\_task().] 
+
+lcd_task()
+{
+	while (1)
+		if (DATA == lcd_queue.event)
+			Escribir_LCD: position.lat
+			Escribir_LCD: position.long
+			Escribir_LCD: position.time
+			Escribir_LCD: position.val // Validez de la posicion
+			Escribir_LCD: occupancy
+			Escribir_LCD: server_state
+}
+
+\end{lstlisting}
+
+
+
+\subsubsection{Otros componentes del firmware}
+
+Además de las tareas y funciones descritas en la sección \ref{fig:arq_firmware}, fue necesario implementar varios componentes de firmware. Sin embargo, por ser los más relevantes, se mencionan los siguientes:
+
+\begin{enumerate}
+	\item Un driver para el manejo de la pantalla \textit{LCD RGB Backlight} de 16x2 que se llamó \textit{lcd\_i2c\_grove.h}. Esta pantalla presenta interfaz de comunicación I2C, para reducir la cantidad de pines utilizados por el microcontrolador. Este driver presenta las funciones descritas en el código \ref{lst:driver_lcd}.
+	
+	\item Una función para inicializar los servicios MQTT en el módulo SIM A7670SA y conectarse al servidor en la nube, que se llamó \textit{init\_sequence\_mqtt\_server()}. Esta función implementa comandos AT específicos para el módulo en mención. Retorna el estado de conexión con el servidor o en su defecto los errores encontrados en el proceso. En el código \ref{cod:init_sequence_mqtt_server} se muestra el pseudocódigo que describe su funcionamiento.
+	
+	\item Una función para encapsular la funcionalidad de transmitir al servidor MQTT una vez se ha establecido la conexión. Esta es \textit{transmit\_msg\_mqtt()}. Esta función implementa comandos AT específicos del módulo SIM A7670SA y retorna el estado de transmisión del mensaje. En el código \ref{cod:transmit_msg_mqtt} se muestra el pseudocódigo que describe su funcionamiento.
+	
+	\item Una función que permite extraer la información de las cadenas tipo GNRMC recibidas por el módulo Quectel L76. Esta es una función de tipo \textit{thread-safe} para facilitar la multitarea, que se nombró como \textit{nmea\_rmc\_parser\_r()}. En el código \ref{cod:nmea_rmc_parser_r} se muestra el pseudocódigo que describe su funcionamiento.
+\end{enumerate}
+
+
+\begin{lstlisting}[label={lst:driver_lcd}, caption={Funciones principales del driver LCD.}] 
+
+/**
+ * @brief Esta funcion incializa las funcionalidades I2C y la configuracion de escritura de la pantalla
+ */
+void lcd_init();
+
+/**
+ * @brief Esta funcion escribe en la pantalla LCD el texto deseado.
+ * 
+ * @param row: Columna desde la cual se inica la escritura
+ * @param column: Fila sobre la cual se desea escribir
+ * @param str: Texto que se desea escribir
+ */
+void lcd_write(uint8_t row, uint8_t column, char *str);
+
+/**
+ * @brief Esta funcion limpia o borra todos los caracteres de la pantalla LCD.
+ */
+void lcd_clear();
+
+/**
+ * @brief Esta funcion cambia el color de fondo de la pantalla LCD segun el modelo de color RGB.
+ * 
+ * @param r: valor para cantidad de color rojo.
+ * @param g: valor para cantidad de color verde.
+ * @param b: valor para cantidad de color azul.
+ */
+void lcd_set_RGB(unsigned char r, unsigned char g, unsigned char b);
+
+\end{lstlisting}
+
+ 
+
+
+\begin{lstlisting}[label=cod:init_sequence_mqtt_server, caption=Pseudocódigo de la función init\_sequence\_mqtt\_server().] 
+
+init_sequence_mqtt_server(uart_event_t uart1_event, char * at_response)
+{
+  Enviar AT: iniciar el servicio MQTT
+  if ("OK" == respuesta)
+      Enviar AT: adquirir cliente MQTT
+      if ("OK" == respuesta)
+          Enviar AT: conectar con servidor MQTT
+	      if ("OK" == respuesta)
+	          return: MQTT_SERVER_OK
+	      else 
+	          return: MQTT_FAIL_INIT_SERVER
+      else
+          return: MQTT_FAIL_ADQ_CLIENT
+  else
+      return: MQTT_FAIL_INIT_SERVICE	
+}
+
+\end{lstlisting}
+ 
+
+
+
+
+\begin{lstlisting}[label=cod:transmit_msg_mqtt, caption=Pseudocódigo de la función init\_sequence\_mqtt\_server().] 
+
+transmit_msg_mqtt(char * mqtt_payload, char * topic, uart_event_t uart1_event, char * at_response)
+{
+	Enviar AT: configurar topic
+	if ("OK" == respuesta)
+		Enviar AT: cargar payload
+		if ("OK" == respuesta)
+			Enviar AT: publicar
+			if ("OK" == respuesta)
+				return: MQTT_MSG_OK
+			else
+				return: MQTT_MSG_FAIL
+		else
+			return: MQTT_MSG_FAIL
+	else
+		return: MQTT_TOPIC_FAIL
+}
+
+\end{lstlisting}
+
+ 
+
+
+\begin{lstlisting}[label=cod:nmea_rmc_parser_r, caption=Pseudocódigo de la función nmea\_rmc\_parser\_r().] 
+
+nmea_rmc_parser_r(char *nmeaString, GNSSData_t *gnssData)
+{
+	Verificar trama inicia con "$"
+	if ("$" == token_0)
+		Dividir trama en tokens por ","
+		Verificar que el primer token sea "GNRMC"
+		if("GNRMC" == token_1)
+			time = token_2 
+			if("A" == token_3)
+				latitud = convertir_DMS_to_DD(token_4, token_5)
+				longitud = convertir_DMS_to_DD(token_6, token_7)
+			else
+				return: NMEA_NO_VALID			
+			 
+		else
+			return: NMEA_NO_RMC
+	else
+		return: NMEA_NO_VALID
+}
+
+\end{lstlisting}
 
 
 

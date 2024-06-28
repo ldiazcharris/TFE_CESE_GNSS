@@ -120,7 +120,7 @@ void delay(const TickType_t delay_ms);
 
 
 /**
- * @brief Función que permite parsear las cadenas tipo RMC recibidas por el módulo Quectel L76
+ * @brief Función que permite parsear las cadenas tipo GNRMC recibidas por el módulo Quectel L76
  *        Es la versión de tipo "reentrant".
  * @param nmeaString: string que priviene del módulo GNSS en formato de trama NMEA, que será parseado para extraer la 
  *                    información necesaria

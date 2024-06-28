@@ -1,0 +1,215 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated as
+% required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+\datalist[entry]{nty/global//global/global/global}
+  \entry{GNSS-Junta-Adalucia}{misc}{}{}
+    \field{labeltitlesource}{title}
+  \field{howpublished}{\url{https://www.juntadeandalucia.es/institutodeestadisticaycartografia/rap/aplicaciones-gnss}}
+    \field{note}{Accessed: 2023-11-01}
+    \field{title}{Aplicaciones GNSS}
+  \endentry
+
+  \entry{GNSS-ONU}{book}{}{}
+    \name{author}{1}{}{%
+      {{hash=NUOdAdEU}{%
+         family={Naciones\bibnamedelima Unidas},
+         familyi={N\bibinitperiod\bibinitdelim U\bibinitperiod},
+         given={Oficina de Asuntos del Espacio\bibnamedelima Ultraterrestre},
+         giveni={O\bibinitperiod\bibinitdelim d\bibinitperiod\bibinitdelim
+  A\bibinitperiod\bibinitdelim d\bibinitperiod\bibinitdelim
+  E\bibinitperiod\bibinitdelim U\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{NUOdAdEU1}
+    \strng{fullhash}{NUOdAdEU1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{edition}{ST/SPACE/59}
+    \field{title}{Programa de estudios Sistemas mundiales de navegación por
+  satélite}
+    \field{year}{2013}
+  \endentry
+
+  \entry{DiGrazia}{article}{}{}
+    \name{author}{5}{}{%
+      {{hash=DGD}{%
+         family={Di\bibnamedelima Grazia},
+         familyi={D\bibinitperiod\bibinitdelim G\bibinitperiod},
+         given={Domenico},
+         giveni={D\bibinitperiod},
+      }}%
+      {{hash=PF}{%
+         family={Pisoni},
+         familyi={P\bibinitperiod},
+         given={Fabio},
+         giveni={F\bibinitperiod},
+      }}%
+      {{hash=GG}{%
+         family={Gogliettino},
+         familyi={G\bibinitperiod},
+         given={Giovanni},
+         giveni={G\bibinitperiod},
+      }}%
+      {{hash=AS}{%
+         family={Ardiero},
+         familyi={A\bibinitperiod},
+         given={Simone},
+         giveni={S\bibinitperiod},
+      }}%
+      {{hash=AG}{%
+         family={Avellone},
+         familyi={A\bibinitperiod},
+         given={Giuseppe},
+         giveni={G\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{DGDPFGGASAG1}
+    \strng{fullhash}{DGDPFGGASAG1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{booktitle}{2022 IEEE International Workshop on Metrology for
+  Automotive (MetroAutomotive)}
+    \verb{doi}
+    \verb 10.1109/MetroAutomotive54295.2022.9855084
+    \endverb
+    \field{pages}{41\bibrangedash 46}
+    \field{title}{A Triple-Band GNSS Receiver for High Accuracy Automotive
+  Applications}
+    \field{year}{2022}
+  \endentry
+
+  \entry{Shu}{article}{}{}
+    \name{author}{6}{}{%
+      {{hash=SY}{%
+         family={Shu},
+         familyi={S\bibinitperiod},
+         given={Yuanming},
+         giveni={Y\bibinitperiod},
+      }}%
+      {{hash=XP}{%
+         family={Xu},
+         familyi={X\bibinitperiod},
+         given={Peiliang},
+         giveni={P\bibinitperiod},
+      }}%
+      {{hash=NX}{%
+         family={Niu},
+         familyi={N\bibinitperiod},
+         given={Xiaoji},
+         giveni={X\bibinitperiod},
+      }}%
+      {{hash=CQ}{%
+         family={Chen},
+         familyi={C\bibinitperiod},
+         given={Qijin},
+         giveni={Q\bibinitperiod},
+      }}%
+      {{hash=QL}{%
+         family={Qiao},
+         familyi={Q\bibinitperiod},
+         given={Lulu},
+         giveni={L\bibinitperiod},
+      }}%
+      {{hash=LJ}{%
+         family={Liu},
+         familyi={L\bibinitperiod},
+         given={Jingnan},
+         giveni={J\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{SYXPNXCQQLLJ1}
+    \strng{fullhash}{SYXPNXCQQLLJ1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \verb{doi}
+    \verb 10.1109/TIM.2022.3168896
+    \endverb
+    \field{pages}{1\bibrangedash 13}
+    \field{title}{High-Rate Attitude Determination of Moving Vehicles With
+  GNSS: GPS, BDS, GLONASS, and Galileo}
+    \field{volume}{71}
+    \field{journaltitle}{IEEE Transactions on Instrumentation and Measurement}
+    \field{year}{2022}
+  \endentry
+
+  \entry{Villien}{article}{}{}
+    \name{author}{2}{}{%
+      {{hash=VC}{%
+         family={Villien},
+         familyi={V\bibinitperiod},
+         given={Christophe},
+         giveni={C\bibinitperiod},
+      }}%
+      {{hash=DB}{%
+         family={Denis},
+         familyi={D\bibinitperiod},
+         given={Benoît},
+         giveni={B\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{VCDB1}
+    \strng{fullhash}{VCDB1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{booktitle}{2023 IEEE/ION Position, Location and Navigation Symposium
+  (PLANS)}
+    \verb{doi}
+    \verb 10.1109/PLANS53410.2023.10139961
+    \endverb
+    \field{pages}{167\bibrangedash 178}
+    \field{title}{UWB-aided GNSS/INS Fusion for Resilient Positioning in GNSS
+  Challenged Environments}
+    \field{year}{2023}
+  \endentry
+
+  \entry{ESPRESSIF}{misc}{}{}
+    \field{labeltitlesource}{title}
+  \field{howpublished}{\url{https://docs.espressif.com/projects/esp-idf/en/latest/esp32/hw-reference/index.html}}
+    \field{note}{Accessed: 2023-11-6}
+    \field{title}{Hardware Reference - ESPRESSIF}
+  \endentry
+
+  \entry{QL76}{misc}{}{}
+    \field{labeltitlesource}{title}
+    \field{howpublished}{\url{https://www.quectel.com/product/gnss-l76}}
+    \field{note}{Accessed: 2023-11-6}
+    \field{title}{Receptor GNSS Quectel L76}
+  \endentry
+
+  \entry{A7670SA}{misc}{}{}
+    \field{labeltitlesource}{title}
+    \field{howpublished}{\url{https://www.simcom.com/product/A7670X.html}}
+    \field{note}{Accessed: 2023-11-6}
+    \field{title}{Módulo 4G SIMA7670SA}
+  \endentry
+
+  \entry{FreeRTOS}{misc}{}{}
+    \field{labeltitlesource}{title}
+    \field{howpublished}{\url{https://www.freertos.org/RTOS.html}}
+    \field{note}{Accessed: 2023-11-6}
+    \field{title}{The FreeRTOS™ Kernel}
+  \endentry
+
+  \entry{GoogleMaps}{misc}{}{}
+    \field{labeltitlesource}{title}
+  \field{howpublished}{\url{https://developers.google.com/maps/faq?hl=es-419}}
+    \field{note}{Accessed: 2023-11-14}
+    \field{title}{¿Qué es Google Maps Platform?}
+  \endentry
+\enddatalist
+\endinput

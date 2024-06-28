@@ -63,7 +63,32 @@ headsepline, % Uncomment to get a line under the header
 \usepackage{pdfpages}
 \usepackage{pdflscape}
 
+
+%\usepackage[]{biblatex}
+%\addbibresource{references.bib}
+
+
 \maxdeadcycles=200
+
+
+\lstset{
+  language=C,             % Define el lenguaje del código (puedes cambiarlo a tu necesidad)
+  basicstyle=\color{white}\ttfamily\small,  % Define el estilo básico del texto del código
+  keywordstyle=\color{blue},   % Define el estilo para las palabras clave
+  commentstyle=\color{green},  % Define el estilo para los comentarios
+  stringstyle=\color{red},     % Define el estilo para las cadenas de texto
+  numbers=left,                % Coloca los números de línea a la izquierda
+  numberstyle=\tiny\color{gray}, % Estilo de los números de línea
+  stepnumber=1,                % Numera cada línea
+  numbersep=10pt,              % Espacio entre los números de línea y el código
+  backgroundcolor=\color{black}, % Fondo gris claro para el código
+  frame=single,                % Marco alrededor del código
+  breaklines=true,             % Permite romper líneas largas
+  breakatwhitespace=false,     % Rompe líneas en cualquier espacio en blanco
+  postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space} % Caracter para indicar líneas continuadas
+}
+
+
 
 \begin{document}
 
@@ -83,7 +108,7 @@ headsepline, % Uncomment to get a line under the header
 %The Thesis Abstract is written here (and usually kept to just this page). The page is kept centered vertically so can expand into the blank space above the title too\ldots
 \centering
 
-En esta memoria se describe el diseño y desarrollo de un prototipo de dispositivo de geolocalización basado en tecnología GNSS. Este permite reportar la posición geográfica de una cava móvil de transporte de alimentos con una precisión mínima de diez metros. El prototipo implementa un receptor de señales GNSS capaz de recibir simultáneamente señales de los sistemas GPS y GLONASS. Además de incorporar comunicación GSM/GPRS y WI-FI, redunda la posibilidad de transmitir datos vía internet a una aplicación web de monitoreo en tiempo real. 
+En esta memoria se describe el diseño y desarrollo de un prototipo de dispositivo de geolocalización basado en tecnología GNSS. Este permite reportar la posición geográfica de una cava móvil de transporte de alimentos con una precisión mínima de diez metros. El prototipo implementa un receptor de señales GNSS capaz de recibir simultáneamente señales de los sistemas GPS y BeiDou. Además de incorporar comunicación 4G, lo que permite la posibilidad de transmitir datos vía internet a una aplicación web de monitoreo en tiempo real. 
 
 Para el desarrollo del presente trabajo, se aplicaron todos los conocimientos en planificación y gestión de proyectos, ingeniería del software para sistemas embebidos, programación de microcontroladores, sistemas operativos en tiempo real, diseño de circuitos impresos y protocolos de comunicación. 
 

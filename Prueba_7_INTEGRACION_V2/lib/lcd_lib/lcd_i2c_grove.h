@@ -36,12 +36,35 @@
 #define REG_BLUE        0x02
 
 
-
+/**
+ * @brief Esta función incializa las funcionalidades I2C y la configuración de escritura de la pantalla
+ */
 void lcd_init();
+
 void lcd_write_char(char character);
 void lcd_cursor(uint8_t row, uint8_t col);
 void lcd_write_string(char *str);
+
+/**
+ * @brief Esta función escribe enla pantalla LCD el texto deseado.
+ * 
+ * @param row: Columna desde la cual se inica la escritura
+ * @param column: Fila sobre la cual se desea escribir
+ * @param str: Texto que se desea escribir
+ */
 void lcd_write(uint8_t row, uint8_t column, char *str);
+
+/**
+ * @brief Esta función limpia o borra todos los caracteres de la pantalla LCD.
+ */
 void lcd_clear();
+
+/**
+ * @brief Esta función cambia el color de fondo de la pantalla LCD según el modelo de color RGB.
+ * 
+ * @param r: valor para cantidad de color rojo.
+ * @param g: valor para cantidad de color verde.
+ * @param b: valor para cantidad de color azul.
+ */
 void lcd_set_RGB(unsigned char r, unsigned char g, unsigned char b);
 
