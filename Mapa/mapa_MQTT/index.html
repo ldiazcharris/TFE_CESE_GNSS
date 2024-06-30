@@ -38,21 +38,23 @@
         clean: true, // retain session
         connectTimeout: 4000, // Timeout period
         // Authentication information
-        clientId: 'localizadorCavas',
-        username: 'test',
-        password: 'CloudTech*',
+        clientId: 'web_app_cava_position',
+        username: 'cava_pos_test',
+        password: 'test1234',
         keepalive: 60,
 
     }
 
 
-    const connectUrl = 'ws://18.212.130.131:8083/mqtt'
+    //const connectUrl = 'ws://18.212.130.131:8083/mqtt'
+    const connectUrl = 'ws://emqx@127.0.0.1:8083/mqtt';
     const client = mqtt.connect(connectUrl, options)
+    const topic_cava = 'proyectoLuis/cava/datos';
 
     client.on('connect', () => {
         console.log('MQTT conectado con exito')
 
-        client.subscribe('proyectoLuis/cava/datos', { qos: 0 }, (error) => {
+        client.subscribe(topic_cava, { qos: 0 }, (error) => {
             if (!error) {
                 console.log('subscripcion exitosaaaaaaaaaaaaaaaaaaaaaaaa!')
             }
@@ -94,7 +96,7 @@
     var marker, circle;
 
     function getPosition(position) {
-        //los datos procedientes del topico mqtt vienen con el formato json {"latitud":"10.980000", "longitud":"-74.795000"}
+        //los datos procedentes del tópico mqtt vienen con el formato json {"latitud":"10.980000", "longitud":"-74.795000"}
 
 
         // console.log(position)

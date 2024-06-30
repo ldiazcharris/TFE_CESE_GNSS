@@ -130,7 +130,7 @@ En esta sección se presentan las consideraciones de diseño y el proceso de imp
 El propósito del firmware desarrollado es satisfacer los requerimientos de conectividad, administración del hardware e interfaz con el usuario. A continuación se describen las principales funcionalidades del firmware: 
 
 \begin{enumerate}
- \item Realizar las funciones de conexión a Internet a través de la red celular, a través de la comunicación por comandos AT-UART con el módulo SIM A7670SA, para asegurar la conexión con el servidor utilizando el protocolo MQTT.
+ \item Realizar las funciones de conexión a Internet a través de la red celular, a través de la comunicación por comandos AT-UART con el módulo SIM A7670SA, para asegurar la conexión con el \textit{Broker} MQTT.
  \item Comunicación a través de tramas NMEA por el puerto UART con el módulo Quectel L76. Para la recepción e interpretación de la información de geolocalización de las constelaciones GPS y BeiDou.  
  \item Monitoreo de los botones de ocupación a través de interrupciones y visualización de los estados de ocupación a través de los pilotos. 
  \item Generación de interfaz visual a través de la comunicación I2C con la pantalla LCD 16x2. 
@@ -157,7 +157,7 @@ De acuerdo con esto, los componentes del firmware se establecen en la ESP32, que
 En el diagrama de la figura~\ref{fig:arq_firmware} se presentan las los componentes de firmware más relevantes del sistema y la forma en que interactúan entre ellos. A continuación, se describe la funcionalidad d ecada componente del firmware:
 
 \begin{enumerate}
-	\item El firmware inicia con la tarea \textit{init\_mqtt\_server\_task()}, resaltada con color rojo, la cual se encarga de tres funciones primordiales: realizar la inicialización de los servicios MQTT que proporciona el módulo 4G (SIM A7670SA), realizar la conexión con el servidor remoto y, si todo sale bien, desencadena la creación de las demás tareas del sistema. Esta tarea utiliza líneas de comandos AT para comunicarse con el módulo 4G.
+	\item El firmware inicia con la tarea \textit{init\_mqtt\_server\_task()}, resaltada con color rojo, la cual se encarga de tres funciones primordiales: realizar la inicialización de los servicios MQTT que proporciona el módulo 4G (SIM A7670SA), realizar la conexión con el \textit{Broker} MQTT remoto y, si todo sale bien, desencadena la creación de las demás tareas del sistema. Esta tarea utiliza líneas de comandos AT para comunicarse con el módulo 4G.
 	
 	\item Tarea \textit{collect\_data\_task()}, se encarga de recibir a través de colas, la información relacionada con la ocupación y la posición de la cava, dicha información proveniente de la tarea \textit{gnss\_task()} y del manejador de interrupciones \textit{occupancy\_isr\_handler()}, respectivamente. Cuando esta tarea obtiene la información mencionada, las transmite a la tarea \textit{transmit\_to\_server\_task()}, a través de la cola \textit{cava\_data\_queue}.
 	
@@ -220,7 +220,7 @@ init_mqtt_server_task()
 		Esperar
 	Inicalizar servicios MQTT en SIM_A7670SA
 	while (4 == intentos)
-		Conectar con servidor MQTT en la nube
+		Conectar con Broker MQTT en la nube
 		if ("OK" == Conexion_Servidor)
 			Crear tareas: 
 				gnss_task()
@@ -230,7 +230,7 @@ init_mqtt_server_task()
 			Eliminar: init_mqtt_server_task
 			break
 		else
-			Reportar por LCD: Falla conexion servidor
+			Reportar por LCD: Falla conexion Broker
 			Eliminar: init_mqtt_server_task
 }
 
@@ -306,7 +306,7 @@ transmit_to_server_task()
 	posicion_anterior
 	while (1)
 		if (DATA == cava_data_queue.event)
-			Transmitir al servidor MQTT: 
+			Transmitir al Broker MQTT: 
 				transmision_state = transmit_msg_mqtt()
 			Enviar por cola lcd_queue: cava_data+transmision_state
 }
@@ -340,9 +340,9 @@ Además de las tareas y funciones descritas en la sección \ref{fig:arq_firmware
 \begin{enumerate}
 	\item Un driver para el manejo de la pantalla \textit{LCD RGB Backlight} de 16x2 que se llamó \textit{lcd\_i2c\_grove.h}. Esta pantalla presenta interfaz de comunicación I2C, para reducir la cantidad de pines utilizados por el microcontrolador. Este driver presenta las funciones descritas en el código \ref{lst:driver_lcd}.
 	
-	\item Una función para inicializar los servicios MQTT en el módulo SIM A7670SA y conectarse al servidor en la nube, que se llamó \textit{init\_sequence\_mqtt\_server()}. Esta función implementa comandos AT específicos para el módulo en mención. Retorna el estado de conexión con el servidor o en su defecto los errores encontrados en el proceso. En el código \ref{cod:init_sequence_mqtt_server} se muestra el pseudocódigo que describe su funcionamiento.
+	\item Una función para inicializar los servicios MQTT en el módulo SIM A7670SA y conectarse al \textit{Broker} MQTT, que se llamó \textit{init\_sequence\_mqtt\_server()}. Esta función implementa comandos AT específicos para el módulo en mención. Retorna el estado de conexión con el \textit{Broker} MQTT o en su defecto los errores encontrados en el proceso. En el código \ref{cod:init_sequence_mqtt_server} se muestra el pseudocódigo que describe su funcionamiento.
 	
-	\item Una función para encapsular la funcionalidad de transmitir al servidor MQTT una vez se ha establecido la conexión. Esta es \textit{transmit\_msg\_mqtt()}. Esta función implementa comandos AT específicos del módulo SIM A7670SA y retorna el estado de transmisión del mensaje. En el código \ref{cod:transmit_msg_mqtt} se muestra el pseudocódigo que describe su funcionamiento.
+	\item Una función para encapsular la funcionalidad de transmitir al \textit{Broker} MQTT una vez se ha establecido la conexión. Esta es \textit{transmit\_msg\_mqtt()}. Esta función implementa comandos AT específicos del módulo SIM A7670SA y retorna el estado de transmisión del mensaje. En el código \ref{cod:transmit_msg_mqtt} se muestra el pseudocódigo que describe su funcionamiento.
 	
 	\item Una función que permite extraer la información de las cadenas tipo GNRMC recibidas por el módulo Quectel L76. Esta es una función de tipo \textit{thread-safe} para facilitar la multitarea, que se nombró como \textit{nmea\_rmc\_parser\_r()}. En el código \ref{cod:nmea_rmc_parser_r} se muestra el pseudocódigo que describe su funcionamiento.
 \end{enumerate}
@@ -391,7 +391,7 @@ init_sequence_mqtt_server(uart_event_t uart1_event, char * at_response)
   if ("OK" == respuesta)
       Enviar AT: adquirir cliente MQTT
       if ("OK" == respuesta)
-          Enviar AT: conectar con servidor MQTT
+          Enviar AT: conectar con Broker MQTT
 	      if ("OK" == respuesta)
 	          return: MQTT_SERVER_OK
 	      else 
