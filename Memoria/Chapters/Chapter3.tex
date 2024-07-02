@@ -30,9 +30,9 @@ En esta sección, se describen las consideraciones de diseño del hardware del s
 
 \subsection{Diseño del Hardware}
 
-En la figura~\ref{fig:Arq_harware} se presenta la arquitectura del hardware desarrollado. Se incluyen todos los componentes descritos en las secciones anteriores. El sistema cuenta con 3 antenas correspondientes a la comunicación GNSS, 4G y Wi-Fi. 
+En la figura~\ref{fig:Arq_harware} se presenta la arquitectura del hardware desarrollado. Se incluyen todos los componentes descritos en las secciones anteriores. El sistema cuenta con 2 antenas correspondientes a la comunicación GNSS y 4G. 
 
-Como parte de la interfaz humano-máquina, se cuenta con una pantalla LCD de 16x2, un botón para la indicación manual de estado ocupado/desocupado y dos pilotos que permiten visualizar el estado de ocupación actual. 
+Como parte de la interfaz humano-máquina, se cuenta con una pantalla LCD de 16x2, dos botones para la indicación manual de estado ocupado/desocupado y dos pilotos que permiten visualizar el estado de ocupación actual. 
 
 En el diagrama se pueden ver los protocolos de comunicación entre módulos, entre los que se destacan:
 
@@ -70,20 +70,20 @@ En la etapa de implementación del hardware, se trabajó en 2 placas de circuito
 
 \subsubsection{Placa base del sistema}
 
-La placa base se encargará de interconectar los módulos y periféricos principales del sistema. Por lo tanto, en el apéndice~\ref{AppendixA}, se presenta el circuito esquemático correspondiente a esta implementación. En esta se empleó el regulador MIC29302WU, con una configuración de ajuste por defecto en 5 VDC, para la alimentación de la ESP32, del módulo SIM A7670SA, la placa adaptador para el módulo Quectel L76 y la pantalla LCD. En la figura~\ref{fig:placa_base_2d} se puede apreciar el diseño final del PCB en un modelo de dos dimensiones. Además, en la figura~\ref{fig:placa_base_3d} se observa el modelo en tres dimensiones. 
+La placa base se encarga de interconectar los módulos y periféricos principales del sistema. Por lo tanto, en el apéndice~\ref{AppendixA} se presenta el circuito esquemático correspondiente a esta implementación. En esta se empleó el regulador MIC29302WU, con una configuración de ajuste por defecto en 5 VDC, para la alimentación de la ESP32, del módulo SIM A7670SA, la placa adaptador para el módulo Quectel L76 y la pantalla LCD. En la figura~\ref{fig:placa_base_2d} se puede apreciar el diseño final del PCB en un modelo de dos dimensiones. Además, en la figura~\ref{fig:placa_base_3d} se observa el modelo en tres dimensiones. 
 
-Los componentes U1, U2 y H3, corresponden a las ranuras donde se conectan la ESP32 DevKit V4, el adaptador para el módulo Quectel L76, y el módulo SIM A7670SA. Las terminales marcadas con CN6 y CN7 permiten la conexión de los pilotos que indican la ocupación de la cava. Las terminales CN4 y CN5 corresponden a las conexiones de los botones de que dispondrá el operario de la cava para la indicación de la ocupación. Por otro lado, las terminales CN2 y CN3 corresponden a la interfaz I2C y la alimentación de la pantalla LCD, respectivamente. La terminal CN1 corresponde a la entrada de alimentación del sistema. Finalmente, las terminales CN9 y CN11 externalizan los pines GPI 34 y GPI 35, y GPIO 5 y GPIO 18 de la ESP32, respectivamente; esto para facilitar, en una etapa posterior, la agregación de nuevas funcionalidades. 
+Los componentes U1, U2 y H3, corresponden a las ranuras donde se conectan la ESP32 DevKit V4, el adaptador para el módulo Quectel L76, y el módulo SIM A7670SA, respectivamente. Las terminales marcadas con CN6 y CN7 permiten la conexión de los pilotos que indican la ocupación de la cava. Las terminales CN4 y CN5 corresponden a las conexiones de los botones de que dispondrá el operario de la cava para la indicación de la ocupación. Por otro lado, las terminales CN2 y CN3 corresponden a la interfaz I2C y la alimentación de la pantalla LCD, respectivamente. La terminal CN1 corresponde a la entrada de alimentación del sistema. Finalmente, las terminales CN9 y CN11 externalizan los pines GPI 34 y GPI 35, y GPIO 5 y GPIO 18 de la ESP32, respectivamente; esto para facilitar, en una etapa posterior, la agregación de nuevas funcionalidades. 
 
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[width=.5\textwidth]{./Figures/PCB_TFE_Modelo_2D.png}
+	\includegraphics[width=.8\textwidth]{./Figures/PCB_TFE_Modelo_2D.png}
 	\caption{Modelo 2D de la placa base del sistema.}
 	\label{fig:placa_base_2d}
 \end{figure}
 
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[width=.5\textwidth]{./Figures/PCB_TFE_Modelo_3D.png}
+	\includegraphics[width=.8\textwidth]{./Figures/PCB_TFE_Modelo_3D.png}
 	\caption{Modelo 3D de la placa base del sistema.}
 	\label{fig:placa_base_3d}
 \end{figure}
@@ -91,7 +91,7 @@ Los componentes U1, U2 y H3, corresponden a las ranuras donde se conectan la ESP
 
 \subsubsection{Adaptador para el módulo Quectel L76}
 
-El circuito esquemático del adaptador L76 se encuentra en la figura~\ref{fig:adap_L76}. En este esquemático se puede observar la fuente de 3.3 VDC. Además, en la figura se presenta el circuito de entrada de alimentación, la conexión UART y la conexión entre el módulo y el microcontrolador ESP32.  
+El circuito esquemático del adaptador L76 se encuentra en la figura~\ref{fig:adap_L76}. En este esquemático se puede observar la fuente de 3.3 VDC de entrada de alimentación, la conexión UART y la conexión entre el módulo y el microcontrolador ESP32.  
 
 En las figuras~\ref{fig:adap_L76_2d} y~\ref{fig:adap_L76_3d}, se muestran los modelos 2D y 3D del circuito diseñado. 
 
@@ -131,17 +131,17 @@ El propósito del firmware desarrollado es satisfacer los requerimientos de cone
 
 \begin{enumerate}
  \item Realizar las funciones de conexión a Internet a través de la red celular, a través de la comunicación por comandos AT-UART con el módulo SIM A7670SA, para asegurar la conexión con el \textit{Broker} MQTT.
- \item Comunicación a través de tramas NMEA por el puerto UART con el módulo Quectel L76. Para la recepción e interpretación de la información de geolocalización de las constelaciones GPS y BeiDou.  
+ \item Comunicación a través de tramas NMEA por el puerto UART con el módulo Quectel L76. Para la recepción e interpretación de los datos de geolocalización de las constelaciones GPS y BeiDou.  
  \item Monitoreo de los botones de ocupación a través de interrupciones y visualización de los estados de ocupación a través de los pilotos. 
  \item Generación de interfaz visual a través de la comunicación I2C con la pantalla LCD 16x2. 
- \item Administración de la energía del sistema a través de los modos de bajo consumo de los módulos del sistema. 
+ \item Administración de la energía del sistema a través de los modos de bajo consumo. 
  \item Administración de los recursos del microcontrolador a través de la implementación del sistema operativo en tiempo real FreeRTOS. 
 \end{enumerate}
 
 \subsubsection{Arquitectura del firmware}
 \label{sec:arquitectura_firmware}
 
-De acuerdo con lo planteado anteriormente, en la figura~\ref{fig:arq_firmware} se presenta un diagrama de componentes UML, que representa la arquitectura del sistema. 
+De acuerdo con lo planteado anteriormente, en la figura~\ref{fig:arq_firmware} se presenta un diagrama de componentes UML, que representa la arquitectura del sistema general, con énfasis en los componentes del firmware. 
 
 En este diagrama (figura~\ref{fig:arq_firmware}) se representan como subsistemas (\textit{Subsystem}) los componentes de hardware como la ESP32, la pantalla LCD, el módulo 4G SIM A7670SA, los botones y los pilotos. Así mismo, se entienden como subsistemas los componentes de firmware proporcionados por el fabricante del microcontrolador, que corresponden a los drivers GPIO, UART y el bus I2C. Además, se hizo necesaria la implementación de una biblioteca propia para el control de la pantalla LCD a través del bus I2C.
 
@@ -161,7 +161,7 @@ En el diagrama de la figura~\ref{fig:arq_firmware} se presentan las los componen
 	
 	\item Tarea \textit{collect\_data\_task()}, se encarga de recibir a través de colas, la información relacionada con la ocupación y la posición de la cava, dicha información proveniente de la tarea \textit{gnss\_task()} y del manejador de interrupciones \textit{occupancy\_isr\_handler()}, respectivamente. Cuando esta tarea obtiene la información mencionada, las transmite a la tarea \textit{transmit\_to\_server\_task()}, a través de la cola \textit{cava\_data\_queue}.
 	
-	\item Manejador de interrupción \textit{occupancy\_isr\_handler()}, resaltada con color amarillo, es la función que se ejecuta siempre que ocurra una interrupción debida a los botones de ocupación de la cava, a saber, ocupado-desocupado. Este manejador de interrupción detecta qué botón se presionó, y comunica a la tarea \textit{collect\_data\_task()} el estado de ocupación, a través de la cola \textit{occupancy\_queue}. Además, esta tarea genera una acción de \textit{wakeup} del sistema cuando se encuentra en modo ahorro de energía. 	
+	\item Manejador de interrupción \textit{occupancy\_isr\_handler()}, resaltada con color amarillo, es la función que se ejecuta siempre que ocurra una interrupción debida a los botones de ocupación de la cava, a saber, ocupado-desocupado. Este manejador de interrupción detecta qué botón se presionó y comunica a la tarea \textit{collect\_data\_task()} el estado de ocupación, a través de la cola \textit{occupancy\_queue}. Además, esta tarea genera una acción de \textit{wakeup} del sistema cuando se encuentra en modo ahorro de energía. 	
 	
 	\item Tarea \textit{gnss\_task()}, se encarga primordialmente de detectar la recepción de una trama NMEA del tipo GNRMC, lo que asegura que la posición ha sido calculada con señales de dos o más constelaciones satelitales; en este caso, GPS y BeiDou. La detección de tramas se realiza a través de interrupciones del módulo UART de la ESP32. Esta tarea descarta todas las tramas que no sean compatibles con el estándar NMEA y todas las que no sean del tipo GNRMC. Además, se encarga de la extracción de la información de las tramas RMC a través de la función \textit{nmea\_rmc\_parser\_r()}. Esta última es una implementación de tipo \textit{thread-safe} para asegurar la compatibilidad con FreeRTOS, ya que permite la multitarea. Además, comunica la posición actual a la tarea \textit{collect\_data\_task()}, a través de la cola \textit{position\_queue}. Por último, esta tarea verifica si la posición no ha cambiado en los últimos 5 minutos, en caso de no cambiar, colocará al sistema completo en modo ahorro de energía. 
 		
@@ -177,13 +177,15 @@ En el diagrama de la figura~\ref{fig:arq_firmware} se presentan las los componen
 
 El firmware se implementó en el \textit{framework} ESP-IDF desarrollado por la empresa ESPRESSIF, para las series de SoCs ESP32, ESP32-S y ESP32-C. Este \textit{framework} proporciona un SDK apto para el desarrollo de cualquier aplicación genérica en estas plataformas, a partir de lenguajes de programación C y C++. Además, está optimizado para para aplicaciones de Internet de las Cosas (IoT, del inglés \textit{Internet of Things}). 
 
-También se utilizó el entorno de desarrollo (IDE) \textit{PlatformIO}, que corre como una extensión nativa en el IDE de \textit{Visual Studio Code}. \textit{PlatformIO} permite usar todas las funcionalidades de ESP-IDF de una manera fiable y ágil, sin enmascarar funcionalidades o configuraciones avanzadas del \textit{framework}. Además, permite ejecutar las versiones mas estables de ESP-IDF, proporciona soporte por la comunidad de desarrolladores, es multiplataforma y de software libre. 
+También se utilizó el entorno de desarrollo (IDE) \textit{PlatformIO}, que se ejecuta como una extensión nativa en el IDE de \textit{Visual Studio Code}. \textit{PlatformIO} permite usar todas las funcionalidades de ESP-IDF de una manera fiable y ágil, sin enmascarar funcionalidades o configuraciones avanzadas del \textit{framework}. Además, permite ejecutar las versiones mas estables de ESP-IDF, proporciona soporte por la comunidad de desarrolladores, es multiplataforma y de software libre. 
 
-Para la implementación del firmware se utilizó el lenguaje de programación C y se implementó el sistema operativo en tiempo real FreeRTOS. Una ventaja importante que ofrece ESP-IDF es que está desarrollado sobre FreeRTOS, por tanto, el firmware se ejecuta nativamente en este. 
+Para la implementación del firmware se utilizó el lenguaje de programación C y se implementó el sistema operativo en tiempo real FreeRTOS. Una ventaja importante que ofrece ESP-IDF es que está desarrollado sobre FreeRTOS, por tanto, el firmware se ejecuta nativamente en este.
+
+Por petición del cliente, la codificación correspondiente al firmware no podrá ser mostrada, sin embargo, se empleará pseudocódigo para sustentarla y no comprometer la calidad del trabajo desarrollado. 
 
 \subsubsection{Flujo general del firmware}
 
-Gracias a la implementación en FreeRTOS, el firmware tiene la capacidad de ejecutar multitarea. El flujo general del programa se muestra en las figuras \ref{fig:flujo_firmware_1}, \ref{fig:flujo_firmware_2} y \ref{fig:flujo_firmware_3}. Como se puede ver en dicho diagrama y en el diagrama de la arquitectura (ver figura \ref{fig:arq_firmware}), las diferentes tareas se ejecutan una independiente de la otra. Sin embargo, existe un flujo de información que se sucede de una tarea a otra. Como mecanismo de comunicación entre tareas, se usan las colas. Este comportamiento del firmware es relevante desde el punto de vista en que el sistema puede estar recibiendo, procesando y transmitiendo datos de posicionamiento de manera casi concurrente. 
+Gracias a la implementación en FreeRTOS, el firmware tiene la capacidad de ejecutar multitarea. El flujo general del programa se muestra en las figuras \ref{fig:flujo_firmware_1}, \ref{fig:flujo_firmware_2} y \ref{fig:flujo_firmware_3}. Como se puede ver en dicho diagrama y en el diagrama de la arquitectura (ver figura \ref{fig:arq_firmware}), las diferentes tareas se ejecutan una independiente de la otra. Sin embargo, existe un flujo de información que se sucede de una tarea a otra. Como mecanismo de comunicación entre tareas, se utilizan las colas. Este comportamiento del firmware es relevante desde el punto de vista en que el sistema puede estar recibiendo, procesando y transmitiendo datos de posicionamiento de manera casi concurrente. 
 
 \begin{figure}
 	\centering
@@ -464,19 +466,277 @@ nmea_rmc_parser_r(char *nmeaString, GNSSData_t *gnssData)
 %----------------------------------------------------------------------------------------
 \section{Diseño e implementación de la interfaz web}
 
+En esta sección se presentan las consideraciones de diseño y la metodología de implementación de la interfaz web.
+
 \subsection{Diseño de la interfaz web}
 
+Para el diseño de la interfaz web, se tuvo en cuenta satisfacer la historia de usuario descrita en la planificación de este trabajo y que motiva al desarrollo de este componente: 
+
+\textit{Como usuario final quiero ver una página web con un mapa que me muestre la posición en tiempo real de todas las cavas y su estado de ocupación para realizar un seguimiento de estas y organizar la logística del reparto de productos en la cadena de frío.}
+
+De acuerdo con lo anterior y con el análisis de la sección \ref{sec:mapas_web}, se escogió la biblioteca \textit{leaflet.js}\footnote{Documentación en: \url{https://leafletjs.com/index.html}} para la creación de mapas en la web, debido a que la empresa Cloud Technologys SAS, integra sus desarrollos web con tecnologías web con JavaScript y a que en la etapa de desarrollo del producto no se requerirá incurrir en gastos para el despliegue en pruebas o en entornos relevantes. 
+
+El desarrollo de la aplicación web se llevó a cabo siguiendo la arquitectura mostrada en la figura \ref{fig:arq_mqtt}. En ella se puede apreciar 
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=.9\textwidth]{./Figures/arquitectura_MQTT.png}
+	\caption{Arquitectura MQTT \protect\footnotemark.}
+	\label{fig:arq_mqtt}
+\end{figure}
+\footnotetext{Imagen adaptada de: \url{https://www.emqx.com/en/blog/mqtt-5-introduction-to-publish-subscribe-model}}
+
+En esta arquitectura, el centro de la comunicación es el \textit{Broker} MQTT, donde se centralizan los mensajes de los \textit{publishers} para ser transmitidos hacia los dispositivos \textit{subscribers}, a través de canales específicos, llamados tópicos. El \textit{Broker} MQTT es responsable de recibir conexiones iniciadas por el cliente y reenviar mensajes enviados por el cliente a otros clientes elegibles \citep{MasteringMQTT}. 
+
+Para este trabajo, se utilizó el \textit{Broker} EMQX\footnote{Documentación en: \url{https://www.emqx.io/}}, que es utilizado para aplicaciones de IoT \citep{MasteringMQTT}.
+
+La aplicación web al igual que el hardware desarrollado, son clientes del \textit{Broker} EMQX. El hardware es el encargado de publicar mensajes con los datos de posicionamiento, estado ocupación, validez de la posición, la hora y la referencia de la cava. Por otro lado, la aplicación web recibe dichos datos y los hace visibles al usuario a través un mapa y otros elementos de visualización web. El usuario final puede visualizar   
 
 \subsection{Implementación de la interfaz web}
 
+Para la implementación de la interfaz web, se utilizaron las siguientes tecnologías: 
+
+\begin{itemize}
+	\item HTML: Se utiliza para estructurar la página web.
+	\item CSS (Bootstrap): Se usa para dar estilo a la página, para crear un diseño \textit{responsiv} y facilitar la implementación ya que cuenta con componentes predefinidos.
+	\item lenguaje de programación JavaScript, características y bibliotecas de éste. A continuación, se detallan las más relevantes para este trabajo: 
+		\begin{itemize}
+			\item jQuery: Biblioteca de JavaScript utilizada para facilitar la manipulación del DOM, eventos y AJAX.
+			\item Leaflet.js: Biblioteca de JavaScript para mapas interactivos.
+			\item mqtt.js: Biblioteca de JavaScript para conectarse a un broker MQTT, permitiendo la comunicación en tiempo real entre el navegador y el broker.
+		\end{itemize}
+	\item \textit{IDE Visual Studio Code} para realizar la codificación. 
+	\item Docker como plataforma para la etapa de desarrollo, donde se ejecutó el EMQX.
+	\item \textit{Broker} EMQX. 
+\end{itemize}
+
+
+\subsection{Metodología de la implementación}
+\label{sec:met_web}
+
+A continuación, se presenta el proceso llevado a cabo para la implementación de la interfaz web. 
+
+\begin{enumerate}
+	\item \textbf{Configuración Inicial:}
+		\begin{itemize}
+		\item Se diseñó la estructura de la página web usando HTML y Bootstrap. En este punto se utilizaron las bibliotecas necesarias para la funcionalidad del mapa y la conexión MQTT. En la figura \ref{} se observa la versión desarrollada por el autor. Además, en la figura \ref{} se muestra la versión implementada en el servidor de la empresa Cloud Technologys SAS, la cual fue migrada y ajustada por su equipo de desarrolladores web.
+		\end{itemize}
+
+	\item \textbf{Configuración del Mapa:}
+		\begin{itemize}
+		\item Con Leaflet.js se inicializa un mapa centrado en una posición predeterminada y se añade una capa de OpenStreetMap para mostrar el mapa base.
+		\end{itemize}
+		
+	\item \textbf{Configuración de la Conexión MQTT:}
+		\begin{itemize}
+		\item Se configuran las opciones de conexión al broker MQTT, a saber URL del broker, credenciales de usuario, parámetro \textit{keepalive} y el parámetro \textit{connectTimeout}. Se establece la conexión con el \textit{Broker} utilizando mqtt.js. Por último, se realiza la suscripción  al tópico que recibe los datos de ubicación del dispositivo GNSS.
+		\end{itemize}
+	
+	\item \textbf{Gestión de Mensajes:}
+		\begin{itemize}
+		\item Se define la función \textit{get\_cava\_data()} para procesar los mensajes recibidos del broker. Se convierten los mensajes a formato JSON y se extraen los datos de la cava. Se actualiza el mapa con la nueva posición de la cava, los demás datos actualizados y se muestra la ruta seguida.
+		\end{itemize}
+		
+	\item \textbf{Actualización del Mapa:}
+		\begin{itemize}
+		\item Se elimina el marcador anterior y se añade un nuevo marcador en la nueva posición. Se actualiza la vista del mapa para centrarse en la nueva posición y se muestra la ruta recorrida por la cava utilizando una polilínea.
+		\end{itemize}
+
+\end{enumerate}
+
+
+En el código \ref{cod:aplicacion_web} se muestra la implementación HTML de la interfaz web desarrollada por el autor, la cual sirvió de maqueta para que el equipo de desarrollo web de la empresa Cloud Technologys SAS lo implementara en sus servidores. Sin embargo, por petición del cliente, no es posible compartir el código implementado en sus servidores. 
+
+Además, en el código \ref{cod:aplicacion_web_js}, se presenta la implementación de la dinámica de conexión del dispositivo y las funcionalidades necesarias para la inicialización del mapa y las conexiones 
+
+\begin{lstlisting}[label=cod:aplicacion_web, caption=Pseudocódigo para la implementación HTML de la página web.] 
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Cava mapa</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" type="text/css" href="leaflet.css" />
+    
+  </head>
+  <body>
+
+    <h1> GNSS Cava: </h1> <h2> Cava001 </h2> 
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Dispositivo: </h5>
+                        <p class="card-text" id="cava_name">h</p>
+                    </div>
+                </div>
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Posicion: </h5>
+                        <p class="card-text" id="lat"></p>
+                        <p class="card-text" id="lng"></p>
+                    </div>
+                </div>
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Estado: </h5>
+                        <p class="card-text" id="estado"></p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="exampleSelect">Seleccionar cava</label>
+                    <select class="form-control" id="cava_select">
+                        <option>Cava_001</option>
+                        <option>Cava_002</option>
+                        <option>Cava_003</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <div id="map"></div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="leaflet.js"></script>
+    <script src="mqtt.min.js"></script>
+    <script type="module" src="mapa.js"></script>
+  </body>
+
+</html>
 
 
 
+\end{lstlisting}
 
 
+\begin{lstlisting}[label=cod:aplicacion_web_js, caption=Implementación en javascript de la parte dinámica de la página web.] 
+
+let map;
+let marker;
+let path = [];
+let polyline
+const home = { lat: 10.918982886682658, lng: -74.87194240611939 };
+let current_cava_position;
+
+const options = {
+    clean: true, // retain session
+    connectTimeout: 4000, // Timeout period
+    clientId: 'web_app_cava_position',
+    username: '*****',
+    password: '****',
+    Keepalive: 60,
+};
+
+const connectUrl = '*******';
+const client = mqtt.connect(connectUrl, options);
+const topic_cava = 'proyectoLuis/cava/datos';
+let cava_data;
+
+function init_map(){
+    //map = L.map('cava_map').setView([home.lat, home.lng], 13);
+    map = L.map('map').setView([home.lat, home.lng], 13);
+    //OpenStreetMap 
+    var tile_map = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    });
+
+    tile_map.addTo(map)
+
+    marker = L.marker([home.lat, home.lng]).addTo(map);
+    marker.bindPopup("<b>Posicion</b>"+"<br>"+"lat: "+home.lat.toString()+
+                     "<br>"+" lng: "+home.lng.toString()+
+                     "<br> CD"
+                    ).openPopup();
+}
+
+function get_cava_data(cava_data) {
+
+    let latitude = parseFloat(cava_data.lat);
+    let longitude = parseFloat(cava_data.long);
+
+    return { lat: latitude, lng: longitude };
+}
+
+function set_cava_position_map(position){
+    
+    document.getElementById('lat').textContent = "Lat: "+position.lat.toString();
+    document.getElementById('lng').textContent = "Lng: "+position.lng.toString();
+    
+    if (marker) {
+        map.removeLayer(marker);
+    }
+
+    marker = L.marker([position.lat, position.lng]).addTo(map);
+    var popup_info = "<b>Posicion</b>"+"<br>"+position.lat.toString()+", "+position.lng.toString();
+    marker.bindPopup(popup_info).openPopup();
+
+    path.push([position.lat, position.lng]);
+/*
+    if (path.length > 1) {
+        map.removeLayer(rastro);
+    }
+        */
+
+    var rastro = L.polyline(path, {color: 'blue'}).addTo(map);
+
+    map.setView([position.lat, position.lng], 15);
+}
+
+init_map();
+
+client.on('connect', function () {
+    console.log('Conectado')
+    // Subscribe to a topic
+    client.subscribe(topic_cava, { qos: 0 }, function (err) {
+        if (!err) {
+            console.log('Suscrito')
+        }
+    })
+});
+
+client.on('reconnect', (error) => {
+    console.log('reconectando:', error)
+});
+
+client.on('error', (error) => {
+    console.log('Conexion fallida:', error)
+});
+
+client.on('message', (topic, message) => {
+
+    //console.log('mensaje recibido', topic, current_cava_position)
+    current_cava_position = get_cava_data(JSON.parse(message.toString()));
+    set_cava_position_map(current_cava_position);
+});
+
+\end{lstlisting}
 
 
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=1\textwidth]{./Figures/Mockup_web.png}
+	\caption{Maqueta de la interfaz web.}
+	\label{fig:mockup}
+\end{figure}
 
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=1\textwidth]{./Figures/web_final.jpeg}
+	\caption{Maqueta de la interfaz web.}
+	\label{fig:web_final}
+\end{figure}
 
 
 

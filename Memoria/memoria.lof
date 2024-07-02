@@ -9,16 +9,19 @@
 \contentsline {figure}{\numberline {2.5}{\ignorespaces Módulo A7670SA\footnotemark .}}{11}{figure.caption.13}%
 \contentsline {figure}{\numberline {2.6}{\ignorespaces Antena Quectel YG0035AA\footnotemark .}}{11}{figure.caption.15}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Arquitectura del hardware desarrollado.}}{14}{figure.caption.17}%
-\contentsline {figure}{\numberline {3.2}{\ignorespaces Modelo 2D de la placa base del sistema.}}{15}{figure.caption.19}%
-\contentsline {figure}{\numberline {3.3}{\ignorespaces Modelo 3D de la placa base del sistema.}}{15}{figure.caption.20}%
-\contentsline {figure}{\numberline {3.4}{\ignorespaces Esquemático del adaptador L76.}}{16}{figure.caption.22}%
-\contentsline {figure}{\numberline {3.5}{\ignorespaces Modelo 2D del adaptador L76.}}{16}{figure.caption.23}%
-\contentsline {figure}{\numberline {3.6}{\ignorespaces Modelo 3D del adaptador L76.}}{16}{figure.caption.24}%
-\contentsline {figure}{\numberline {3.7}{\ignorespaces Arquitectura del firmware.}}{18}{figure.caption.26}%
-\contentsline {figure}{\numberline {3.8}{\ignorespaces Diagrama de flujo del firmware (parte 1).}}{20}{figure.caption.28}%
-\contentsline {figure}{\numberline {3.9}{\ignorespaces Diagrama de flujo del firmware (parte 2).}}{20}{figure.caption.29}%
-\contentsline {figure}{\numberline {3.10}{\ignorespaces Diagrama de flujo del firmware (parte 3).}}{21}{figure.caption.30}%
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Arquitectura del hardware desarrollado.}}{16}{figure.caption.18}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Modelo 2D de la placa base del sistema.}}{17}{figure.caption.20}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Modelo 3D de la placa base del sistema.}}{17}{figure.caption.21}%
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Esquemático del adaptador L76.}}{18}{figure.caption.23}%
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Modelo 2D del adaptador L76.}}{18}{figure.caption.24}%
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Modelo 3D del adaptador L76.}}{18}{figure.caption.25}%
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Arquitectura del firmware.}}{20}{figure.caption.27}%
+\contentsline {figure}{\numberline {3.8}{\ignorespaces Diagrama de flujo del firmware (parte 1).}}{22}{figure.caption.29}%
+\contentsline {figure}{\numberline {3.9}{\ignorespaces Diagrama de flujo del firmware (parte 2).}}{23}{figure.caption.30}%
+\contentsline {figure}{\numberline {3.10}{\ignorespaces Diagrama de flujo del firmware (parte 3).}}{23}{figure.caption.31}%
+\contentsline {figure}{\numberline {3.11}{\ignorespaces Arquitectura MQTT \footnotemark .}}{28}{figure.caption.34}%
+\contentsline {figure}{\numberline {3.12}{\ignorespaces Maqueta de la interfaz web.}}{34}{figure.caption.35}%
+\contentsline {figure}{\numberline {3.13}{\ignorespaces Maqueta de la interfaz web.}}{34}{figure.caption.36}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

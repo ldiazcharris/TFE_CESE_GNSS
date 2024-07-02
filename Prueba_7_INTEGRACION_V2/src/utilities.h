@@ -22,6 +22,7 @@
 #define UART1 UART_NUM_1
 
 // A funturo cambiar a "proyectoLuis/cava001/datos" Para tener un control numérico de las cavas
+#define CAVA_REF            "C001"
 #define CAVA_TOPIC          "proyectoLuis/cava/datos" 
 
 #define CMQTT_START         "AT+CMQTTSTART\r\n"
@@ -31,9 +32,12 @@
 #define CMQTT_CONNECT        "AT+CMQTTCONNECT=0,\"tcp://18.212.130.131:1883\",300,0,\"test\",\"CloudTech*\"\r\n"
 #define CMQTT_TOPIC          "AT+CMQTTTOPIC=0,23\r\n"
 #define CMQTT_PAYLOAD        "AT+CMQTTPAYLOAD=0,%d\r\n"
-#define MQTT_PAYLOAD_FORMAT  "{\"lat\":\"%.6f\", \"long\":\"%.6f\", \"occup\":\"%d\", \"NMEA_st\":\"%d\"}\r\n"
+#define MQTT_PAYLOAD_FORMAT  "{\"lat\":\"%.6f\", \"long\":\"%.6f\", \"occup\":\"%d\", \"NMEA_st\":\"%d\", \"Cref\":\"%s\", \"time\":\"%s\", \"date\":\"%s\"}\r\n"
 #define MQTT_PUBLISH         "AT+CMQTTPUB=0,0,60,0,0\r\n"
 
+#define RADIO_TIERRA_EQUIVOLUMEN_KM    6371.0
+#define RADIO_TIERRA_ECUATORIAL_KM     6378.0
+#define RADIO_TIERRA_POLAR_KM          6357.0
 
 typedef enum {
     NMEA_PARSER_OK = 0,
@@ -70,6 +74,7 @@ typedef struct
     float lat;
     float lon;
     char time[10];
+    char date[7];
     NMEA_state_t NMEA_state;
     
 } GNSSData_t;
@@ -205,7 +210,7 @@ void delay_init(delay_t * delay, uint32_t duration);
 bool delay_read(delay_t * delay);
 void delay_write(delay_t * delay, uint32_t duration);
 
-
+double haversine(double lat1, double lon1, double lat2, double lon2);
 
 
 

@@ -1,5 +1,6 @@
 #include "utilities.h"
 #include "lcd_i2c_grove.h"
+#include <math.h>
 
 // Uncomment for debugging with UART_0
 //static const char *TAG = "NMEA_PARSER";
@@ -76,43 +77,31 @@ NMEA_state_t nmea_rmc_parser_r(char *nmeaString, GNSSData_t *gnssData)
        
 
         // Comprobar si el primer token contiene "RMC"
-        if (NULL == strstr(token, "RMC"))
+        if (NULL == strstr(token, "GNRMC"))
         {
-            // Cadena NMEA no válida, no es un mensaje RMC
+            // Cadena NMEA no válida, no es un mensaje GNRMC
             result_parser = NMEA_NO_RMC;
-            
         }
         else
         {    // Si todo sale bien se itera a través de los tokens
             for (int i = 1; i < 12; i++)
             {
                 token = strtok_r(NULL, ",", &rest);
-                if (token == NULL)
-                {
-                    // Cadena NMEA no válida, falta un campo
-                    result_parser = NMEA_VOID_FIELD;
-                    break;
-                }
 
-            
-                if (i == 1)
+                switch (i)
                 {
+                case 1:
                     // Obtener la hora en formato HHMMSS
                     strncpy(gnssData->time, token, 10);
-                    
-                }
-                else if (i == 2)
-                {
+                    break;
+                case 2:
                     // 
                     if(NULL == strstr(token, "A"))
-                    {
-                        result_parser = NMEA_NO_VALID;
-                        break;
-                    }
-                        
-                }
-                else if (i == 3)
-                {
+                        return NMEA_NO_VALID;
+
+					break;
+
+                case 3:
                     // Obtener la latitud en formato DMS (DDMM.MMMM) y convertir a formato DD
                     float lat_float_1 = atof(token) / 100;
                     int lat_deg = (int)lat_float_1;
@@ -120,16 +109,15 @@ NMEA_state_t nmea_rmc_parser_r(char *nmeaString, GNSSData_t *gnssData)
                     int lat_min = (int)(lat_float_2);
                     float lat_sec = (lat_float_2 - lat_min)*10;
                     gnssData->lat = (float)lat_deg + ((float)lat_min/60) + (lat_sec/3600);
-                    
-                }
-                else if (i == 4)
-                {
+                    break;
+                
+                case 4:
                     // Obtener la dirección de latitud Norte o Sur
                     if (0 == strcmp("S", token))
                         gnssData->lat *=-1;
-                }
-                else if (i == 5)
-                {
+					break;
+					
+                case 5:
                     // Obtener la longitud en formato DMS (DDDMM.MMMM) y convertir a formato DD
                     float lon_float_1 = atof(token) / 100;
                     int lon_deg = (int)lon_float_1;
@@ -138,14 +126,20 @@ NMEA_state_t nmea_rmc_parser_r(char *nmeaString, GNSSData_t *gnssData)
                     float lon_sec = (lon_float_2 - lon_min)*10;
                     gnssData->lon = (float)lon_deg + ((float)lon_min/60) + (lon_sec/3600);
                     
-
                     result_parser = NMEA_PARSER_OK;
-                }
-                else if (i == 6)
-                {
+                    break;
+					
+                case 6:
                     // Obtener la dirección de longitud Este u Oeste
                     if (0 == strcmp("W", token))
                         gnssData->lon *=-1;
+                    break;
+				case 9:
+                    // Obtener la fecha
+                    strncpy(gnssData->date, token, 7);
+                    break;
+
+                default:
                     break;
                 }
             }
@@ -303,4 +297,27 @@ void occupancy_to_string(occupancy_t occupancy, char * str)
         strcpy(str, "NaN");
         break;
     }
+}
+
+
+
+static double deg_to_rad(double deg) {
+    return deg * (M_PI / 180.0);
+}
+
+double haversine(double lat1, double lon1, double lat2, double lon2) 
+{
+    lat1 = deg_to_rad(lat1);
+    lon1 = deg_to_rad(lon1);
+    lat2 = deg_to_rad(lat2);
+    lon2 = deg_to_rad(lon2);
+
+    double dlat = lat2 - lat1;
+    double dlon = lon2 - lon1;
+
+    double a = pow(sin(dlat / 2), 2) + cos(lat1) * cos(lat2) * pow(sin(dlon / 2), 2);
+    double c = 2 * atan2(sqrt(a), sqrt(1 - a));
+    double dist = RADIO_TIERRA_EQUIVOLUMEN_KM * c;
+
+    return dist;
 }

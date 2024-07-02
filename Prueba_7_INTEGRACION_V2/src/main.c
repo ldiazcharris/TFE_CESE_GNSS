@@ -28,6 +28,7 @@ static QueueHandle_t uart0_queue_gnss;
 static QueueHandle_t uart1_queue_4g; 
 static QueueHandle_t position_queue;
 static QueueHandle_t occupancy_queue;
+static QueueHandle_t occupancy_queue_isr;
 static QueueHandle_t cava_data_queue;
 static QueueHandle_t lcd_queue;
 static SemaphoreHandle_t uart1_sem;
@@ -43,6 +44,7 @@ void IRAM_ATTR occupancy_isr_handler(void* arg);
 static void collect_data_task(void *params);
 static void transmit_to_server_task(void *params);
 static void lcd_task(void *params);
+static void button_bridge(void *params);
 
 static void create_tasks();
 static mqtt_server_state_t init_sequence_mqtt_server(uart_event_t uart1_event, char * at_response);
@@ -92,6 +94,7 @@ void app_main()
     // Creación de colas que servirán para la comunicación entre tareas. 
     position_queue = xQueueCreate(10, sizeof(GNSSData_t));
     occupancy_queue = xQueueCreate(10, sizeof(occupancy_t));
+    occupancy_queue_isr = xQueueCreate(10, sizeof(occupancy_t));
     cava_data_queue = xQueueCreate(10, sizeof(CAVA_DATA_t));
     lcd_queue = xQueueCreate(10, sizeof(LCD_data_t));
 
@@ -139,25 +142,7 @@ static void init_mqtt_server_task(void *params)
     lcd_write(1, 0, "Waiting PB_DONE");
 
     wait_PB_DONE(uart1_queue_4g, uart1_event, at_response);
-
-    /*
-    while(1)
-    {
-        if (xQueueReceive(uart1_queue_4g, (void *)&uart1_event, portMAX_DELAY))
-        {
-            uart_receive(UART1, at_response, uart1_event.size);
-            lcd_write(1, 0, at_response);
-            if (NULL != strstr(at_response,"PB DONE"))
-            {
-                bzero(at_response, BUF_SIZE);
-                break;
-            }
-            bzero(at_response, BUF_SIZE);
-        }
-    }
-    */
     
-
     mqtt_server_state = init_sequence_mqtt_server(uart1_event, at_response);
    
     // Si se inicia correctamente la comunicación con el servidor MQTT
@@ -194,11 +179,6 @@ static void init_mqtt_server_task(void *params)
 
 static void gnss_task(void *params)
 {
-
-    xSemaphoreTake(lcd_sem, pdMS_TO_TICKS(100));
-    lcd_write(0,0, "GNSS TASK OK");
-    xSemaphoreGive(lcd_sem);
-
     uart_event_t uart_event;
     uint8_t *gnss_recv_data = (uint8_t *)malloc(BUF_SIZE*2);
     uint8_t *nmea_string = (uint8_t *)malloc(BUF_SIZE*2);
@@ -246,10 +226,6 @@ static void gnss_task(void *params)
 
 static void collect_data_task(void *params)
 {
-    xSemaphoreTake(lcd_sem, pdMS_TO_TICKS(100));
-    lcd_write(0,0, "COLLECT TASK OK");
-    xSemaphoreGive(lcd_sem);
-
     GNSSData_t receive_pos;
     occupancy_t occupancy_state;
     xSemaphoreGive(uart1_sem);
@@ -282,7 +258,7 @@ static void collect_data_task(void *params)
 
         }
 
-        xQueueSend(cava_data_queue, &cava_data, pdMS_TO_TICKS(500));
+        xQueueSend(cava_data_queue, &cava_data, pdMS_TO_TICKS(1000));
        
     }
 }
@@ -291,21 +267,19 @@ static void collect_data_task(void *params)
 // Esta tarea debería tener la más baja prioridad
 static void transmit_to_server_task(void *params)
 {
-    xSemaphoreTake(lcd_sem, pdMS_TO_TICKS(100));
-    lcd_write(0,0, "SERV TASK OK");
-    xSemaphoreGive(lcd_sem);
 
     CAVA_DATA_t cava_data;
     uart_event_t uart1_event;
     mqtt_msg_state_t mqtt_msg_state = MQTT_MSG_ERROR;
     LCD_data_t lcd_data;
+    const uint8_t payload_size = 200;
 
     // Puntero requerido por la función transmit_msg_mqtt() para procesar mensajes UART
     char * at_response = (char *)malloc(BUF_SIZE);
-    char * mqtt_payload = (char *)malloc(100);
+    char * mqtt_payload = (char *)malloc(payload_size);
     char * topic = CAVA_TOPIC;
     bzero(at_response, BUF_SIZE);
-    bzero(mqtt_payload, 100);
+    bzero(mqtt_payload, payload_size);
     
     while(1){
 
@@ -315,7 +289,10 @@ static void transmit_to_server_task(void *params)
                     cava_data.position.lat, 
                     cava_data.position.lon, 
                     cava_data.occupancy, 
-                    cava_data.position.NMEA_state
+                    cava_data.position.NMEA_state,
+                    CAVA_REF,
+                    cava_data.position.time,
+                    cava_data.position.date
                     );
             
             // mqtt_msg_state es el mecanismo para saber si hay un fallo en la comunicación MQTT
@@ -323,14 +300,16 @@ static void transmit_to_server_task(void *params)
             mqtt_msg_state = transmit_msg_mqtt(mqtt_payload, topic, uart1_event, at_response);
             xSemaphoreGive(uart1_sem);
 
-            memcpy(&lcd_data.cava_data, &cava_data, sizeof(cava_data));
-
+            //memcpy(&lcd_data.cava_data, &cava_data, sizeof(cava_data));
+            lcd_data.cava_data = cava_data;
+            lcd_data.msg_state = mqtt_msg_state;
             // lcd_data.cava_data.occupancy = cava_data.occupancy;
             // lcd_data.cava_data.position.lat = cava_data.position.lat;
             // lcd_data.cava_data.position.lon = cava_data.position.lon;
-            lcd_data.msg_state = mqtt_msg_state;
+            
 
             xQueueSend(lcd_queue, &lcd_data, pdMS_TO_TICKS(100));
+            bzero(mqtt_payload, payload_size);
         }
         delay(2000);
     }
@@ -341,10 +320,7 @@ static void transmit_to_server_task(void *params)
 
 static void lcd_task(void *params)
 {
-    xSemaphoreTake(lcd_sem, pdMS_TO_TICKS(100));
-    lcd_write(0,0, "LCD TASK OK");
-    xSemaphoreGive(lcd_sem);
-    
+   
     LCD_data_t lcd_data;
     char print_to_lcd[16];
     char occupancy_str[8];
@@ -400,12 +376,19 @@ static void create_tasks()
                 NULL,
                 12,
                 NULL);
+    
+    xTaskCreate(button_bridge,
+                "button_bridge",
+                BUF_SIZE * 4,
+                NULL,
+                12,
+                NULL);
 
     xTaskCreate(collect_data_task,
                 "transmit_to_server_task",
                 BUF_SIZE * 4,
                 NULL,
-                10,
+                13,
                 NULL);
 
     xTaskCreate(transmit_to_server_task,
@@ -446,8 +429,20 @@ void occupancy_isr_handler(void* arg)
     default:
         break;
     }
-    xQueueSendFromISR(occupancy_queue, &occupancy, NULL);
+    xQueueSendFromISR(occupancy_queue_isr, &occupancy, NULL);
 
+}
+
+static void button_bridge(void *params)
+{
+    occupancy_t occupancy;
+    while(1){
+
+        if(xQueueReceive(occupancy_queue_isr, &occupancy, portMAX_DELAY))
+        {
+            xQueueSend(occupancy_queue, &occupancy, portMAX_DELAY); 
+        }
+    }
 }
 
 

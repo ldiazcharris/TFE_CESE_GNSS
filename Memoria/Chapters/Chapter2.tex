@@ -277,4 +277,39 @@ FreeRTOS™ es un sistema operativo de tiempo real de código abierto diseñado 
 
 Un servicio de mapas es un conjunto de herramientas y servicios de software que permiten que los mapas estén disponibles en la web. A menudo este es ofrecido por un proveedor especializado. 
 
-Para este trabajo se creó una aplicación web basada en los servicios de Google Maps Platform \citep{GoogleMaps}. Esta utiliza la ubicación obtenida del módulo GNSS para visualizar información geográfica en un mapa de Google. 
+Para este trabajo se creó una aplicación web basada en los servicios de la biblioteca para JavaScript Leaflet. Esta es de código abierto y ofrece todas las funciones cartográficas necesarias para la creación de aplicaciones que requieren el uso de mapas, como es el caso de la geolocalización.
+
+En la tabla \ref{tabla:comparativa_api_mapas} se presenta una comparación entre tres bibliotecas que prestan herramientas para la creación de mapas en la web: 
+
+\begin{table}[h]
+    \centering
+    \caption{Tabla comparativa de APIs de mapas.}
+    \begin{tabular}{p{3cm} p{3cm} p{2.5cm} p{2.5cm} }
+    \toprule
+        \textbf{Característica}           & \textbf{Google Maps API}           & \textbf{Leaflet.js}               & \textbf{Carto.js} \\
+        \midrule
+        \textbf{Licencia}                & De pago, con un nivel gratuito limitado. & Open-source (BSD 2-clause License). & De pago, con un nivel gratuito limitado. \\
+        
+        \textbf{Facilidad de uso}        & Alta                               & Alta                              & Media \\
+        
+        \textbf{Documentación}           & Extensa y detallada.                & Buena, pero poco extensa. Complementa con muchos ejemplos. & Buena, orientada a usuarios con conocimientos en GIS \\
+        
+        \textbf{Soporte y Comunidad}     & Amplio soporte y gran comunidad.    & Gran comunidad open-source.         & Comunidad activa, pero reducida. \\
+        
+        \textbf{Capacidades de Mapa}     & Incluye vistas de satélite, terreno, y Street View. & Básico, pero extensible con plugins. & Enfocado en visualización de datos geoespaciales. \\
+        
+        \textbf{Personalización}           & Alta, mediante opciones y controles avanzados. & Muy alta, altamente personalizable con plugins. & Alta, especialmente en visualización de datos. \\
+        
+        \textbf{Rendimiento}             & Muy bueno, optimizado por Google.   & Muy bueno, especialmente en navegadores modernos. & Bueno, puede ser pesado con grandes conjuntos de datos. \\
+        
+        \textbf{Integración de Datos}    & Fácil integración con servicios de Google como Places, Routes, etc. & Necesita plugins adicionales para integración avanzada de datos. & Muy bueno para integración de datos geoespaciales y análisis. \\
+        
+        \textbf{Soporte para Móviles}    & Excelente, completamente responsive. & Muy bueno, compatible con dispositivos móviles. & Bueno, pero depende del tamaño de los datos. \\
+        
+        \textbf{Características Avanzadas} & Geocoding, Directions, Distance Matrix, Places API, etc. & Depende de plugins externos. & Análisis espacial avanzado, mapas temáticos, SQL API. \\
+        
+        \textbf{Facilidad de Integración} & Muy fácil con otros servicios de Google. & Fácil con bibliotecas JavaScript estándar. & Requiere conocimiento de GIS y SQL para máxima utilidad. \\
+    \bottomrule
+    \end{tabular}
+    \label{tabla:comparativa_api_mapas}
+\end{table}

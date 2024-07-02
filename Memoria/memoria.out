@@ -25,21 +25,22 @@
 \BOOKMARK [1][-]{section.3.2}{Diseño e implementación de hardware}{chapter.3}% 25
 \BOOKMARK [2][-]{subsection.3.2.1}{Diseño del Hardware}{section.3.2}% 26
 \BOOKMARK [2][-]{subsection.3.2.2}{Implementación del Hardware}{section.3.2}% 27
-\BOOKMARK [3][-]{section*.18}{Placa base del sistema}{subsection.3.2.2}% 28
-\BOOKMARK [3][-]{section*.21}{Adaptador para el módulo Quectel L76}{subsection.3.2.2}% 29
+\BOOKMARK [3][-]{section*.19}{Placa base del sistema}{subsection.3.2.2}% 28
+\BOOKMARK [3][-]{section*.22}{Adaptador para el módulo Quectel L76}{subsection.3.2.2}% 29
 \BOOKMARK [1][-]{section.3.3}{Diseño e implementación del firmware}{chapter.3}% 30
 \BOOKMARK [2][-]{subsection.3.3.1}{Diseño del firmware}{section.3.3}% 31
-\BOOKMARK [3][-]{section*.25}{Arquitectura del firmware}{subsection.3.3.1}% 32
+\BOOKMARK [3][-]{section*.26}{Arquitectura del firmware}{subsection.3.3.1}% 32
 \BOOKMARK [2][-]{subsection.3.3.2}{Implementación del firmware}{section.3.3}% 33
-\BOOKMARK [3][-]{section*.27}{Flujo general del firmware}{subsection.3.3.2}% 34
-\BOOKMARK [3][-]{section*.31}{Implementación de las tareas del sistema}{subsection.3.3.2}% 35
-\BOOKMARK [3][-]{section*.32}{Otros componentes del firmware}{subsection.3.3.2}% 36
+\BOOKMARK [3][-]{section*.28}{Flujo general del firmware}{subsection.3.3.2}% 34
+\BOOKMARK [3][-]{section*.32}{Implementación de las tareas del sistema}{subsection.3.3.2}% 35
+\BOOKMARK [3][-]{section*.33}{Otros componentes del firmware}{subsection.3.3.2}% 36
 \BOOKMARK [1][-]{section.3.4}{Diseño e implementación de la interfaz web}{chapter.3}% 37
 \BOOKMARK [2][-]{subsection.3.4.1}{Diseño de la interfaz web}{section.3.4}% 38
 \BOOKMARK [2][-]{subsection.3.4.2}{Implementación de la interfaz web}{section.3.4}% 39
-\BOOKMARK [0][-]{chapter.4}{Ensayos y resultados}{}% 40
-\BOOKMARK [1][-]{section.4.1}{Pruebas funcionales del hardware}{chapter.4}% 41
-\BOOKMARK [0][-]{chapter.5}{Conclusiones}{}% 42
-\BOOKMARK [1][-]{section.5.1}{Conclusiones generales }{chapter.5}% 43
-\BOOKMARK [1][-]{section.5.2}{Próximos pasos}{chapter.5}% 44
-\BOOKMARK [0][-]{appendix.Alph1}{Esquemáctico de la placa base del sistema}{}% 45
+\BOOKMARK [2][-]{subsection.3.4.3}{Metodología de la implementación}{section.3.4}% 40
+\BOOKMARK [0][-]{chapter.4}{Ensayos y resultados}{}% 41
+\BOOKMARK [1][-]{section.4.1}{Pruebas funcionales del hardware}{chapter.4}% 42
+\BOOKMARK [0][-]{chapter.5}{Conclusiones}{}% 43
+\BOOKMARK [1][-]{section.5.1}{Conclusiones generales }{chapter.5}% 44
+\BOOKMARK [1][-]{section.5.2}{Próximos pasos}{chapter.5}% 45
+\BOOKMARK [0][-]{appendix.Alph1}{Esquemáctico de la placa base del sistema}{}% 46

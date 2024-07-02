@@ -37,7 +37,7 @@ function init_map(){
                     ).openPopup();
 }
 
-function get_cava_position(cava_data) {
+function get_cava_data(cava_data) {
 
     let latitude = parseFloat(cava_data.lat);
     let longitude = parseFloat(cava_data.long);
@@ -93,7 +93,7 @@ client.on('error', (error) => {
 client.on('message', (topic, message) => {
 
     //console.log('mensaje recibido：', topic, current_cava_position)
-    current_cava_position = get_cava_position(JSON.parse(message.toString()));
+    current_cava_position = get_cava_data(JSON.parse(message.toString()));
     set_cava_position_map(current_cava_position);
 });
 

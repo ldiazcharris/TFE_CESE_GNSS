@@ -67,13 +67,13 @@ headsepline, % Uncomment to get a line under the header
 %\usepackage[]{biblatex}
 %\addbibresource{references.bib}
 
-
+%%\begin{comment}
 \maxdeadcycles=200
 
 
 \lstset{
   language=C,             % Define el lenguaje del código (puedes cambiarlo a tu necesidad)
-  basicstyle=\color{white}\ttfamily\small,  % Define el estilo básico del texto del código
+  basicstyle=\color{black}\ttfamily\small,  % Define el estilo básico del texto del código
   keywordstyle=\color{blue},   % Define el estilo para las palabras clave
   commentstyle=\color{green},  % Define el estilo para los comentarios
   stringstyle=\color{red},     % Define el estilo para las cadenas de texto
@@ -81,13 +81,13 @@ headsepline, % Uncomment to get a line under the header
   numberstyle=\tiny\color{gray}, % Estilo de los números de línea
   stepnumber=1,                % Numera cada línea
   numbersep=10pt,              % Espacio entre los números de línea y el código
-  backgroundcolor=\color{black}, % Fondo gris claro para el código
+  backgroundcolor=\color{white}, % Fondo blanco para el código
   frame=single,                % Marco alrededor del código
   breaklines=true,             % Permite romper líneas largas
   breakatwhitespace=false,     % Rompe líneas en cualquier espacio en blanco
   postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space} % Caracter para indicar líneas continuadas
 }
-
+%%\end{comment}
 
 
 \begin{document}
