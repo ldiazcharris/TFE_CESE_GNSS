@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.6.26)  3 JUL 2024 02:00
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.6.26)  3 JUL 2024 11:54
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1853,7 +1853,7 @@ png)
 <use ./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_1.png>
 Package pdftex.def Info: ./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_1.png 
  used on input line 228.
-(pdftex.def)             Requested size: 272.86069pt x 304.91681pt.
+(pdftex.def)             Requested size: 311.84334pt x 348.47635pt.
 <./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_2.png, id=577, 1437.37pt x 123
 8.6275pt>
 File: ./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_2.png Graphic file (type 
@@ -1861,7 +1861,7 @@ png)
 <use ./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_2.png>
 Package pdftex.def Info: ./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_2.png 
  used on input line 246.
-(pdftex.def)             Requested size: 272.86069pt x 235.13377pt.
+(pdftex.def)             Requested size: 350.82004pt x 302.30405pt.
 
 
 LaTeX Info: Redefining \. on input line 250.
@@ -1908,115 +1908,111 @@ LaTeX Info: Redefining \% on input line 363.
 LaTeX Info: Redefining \. on input line 432.
 LaTeX Info: Redefining \% on input line 432.
 [29]
-Overfull \hbox (1.40366pt too wide) in paragraph at lines 445--446
-[]\T1/ppl/m/n/10.95 Una fun-ción que per-mi-te ex-traer la in-for-ma-ción de la
-s ca-de-nas ti-po GNRMC
- []
 
-
-
-LaTeX Info: Redefining \. on input line 481.
-LaTeX Info: Redefining \% on input line 481.
+LaTeX Info: Redefining \. on input line 473.
+LaTeX Info: Redefining \% on input line 473.
 [30]
-Underfull \hbox (badness 10000) in paragraph at lines 484--484
+Underfull \hbox (badness 10000) in paragraph at lines 478--478
  []\T1/ppl/m/sc/10 Código 3.8. |\T1/ppl/m/n/10 Pseu-do-có-di-go de la fun-ción 
 
  []
 
 
 
-LaTeX Info: Redefining \. on input line 505.
-LaTeX Info: Redefining \% on input line 505.
+LaTeX Info: Redefining \. on input line 499.
+LaTeX Info: Redefining \% on input line 499.
 [31]
-Underfull \hbox (badness 10000) in paragraph at lines 509--509
+Underfull \hbox (badness 10000) in paragraph at lines 504--504
  []\T1/ppl/m/sc/10 Código 3.9. |\T1/ppl/m/n/10 Pseu-do-có-di-go de la fun-ción 
 
  []
 
 
 
-LaTeX Info: Redefining \. on input line 557.
-LaTeX Info: Redefining \% on input line 557.
+LaTeX Info: Redefining \. on input line 553.
+LaTeX Info: Redefining \% on input line 553.
 [32]
-<./Figures/arquitectura_MQTT.png, id=807, 1025.8325pt x 362.35374pt>
+<./Figures/arquitectura_MQTT.png, id=806, 1025.8325pt x 362.35374pt>
 File: ./Figures/arquitectura_MQTT.png Graphic file (type png)
 <use ./Figures/arquitectura_MQTT.png>
 Package pdftex.def Info: ./Figures/arquitectura_MQTT.png  used on input line 57
-9.
+5.
 (pdftex.def)             Requested size: 350.82004pt x 123.91742pt.
 
-Overfull \hbox (47.6601pt too wide) in paragraph at lines 583--583
+Overfull \hbox (47.6601pt too wide) in paragraph at lines 579--579
 [][][]\T1/ppl/m/n/9 Imagen adap-ta-da de: [][]$https : / / www . emqx . com / e
 n / blog / mqtt-[]5-[]introduction-[]to-[]publish-[]subscribe-[]model$[][]| 
  []
 
 
-LaTeX Warning: Citation 'MasteringMQTT' on page 33 undefined on input line 585.
+LaTeX Warning: Citation 'MasteringMQTT' on page 33 undefined on input line 581.
 
 
 
 
-LaTeX Info: Redefining \. on input line 586.
-LaTeX Info: Redefining \% on input line 586.
+LaTeX Info: Redefining \. on input line 582.
+LaTeX Info: Redefining \% on input line 582.
 [33]
 
-LaTeX Warning: Citation 'MasteringMQTT' on page 34 undefined on input line 587.
+LaTeX Warning: Citation 'MasteringMQTT' on page 34 undefined on input line 583.
 
 
 
 
-LaTeX Info: Redefining \. on input line 607.
-LaTeX Info: Redefining \% on input line 607.
+LaTeX Info: Redefining \. on input line 603.
+LaTeX Info: Redefining \% on input line 603.
 [34 <./Figures/arquitectura_MQTT.png>]
 
-LaTeX Warning: Reference `' on page 35 undefined on input line 618.
+LaTeX Warning: Reference `' on page 35 undefined on input line 614.
 
 
-LaTeX Warning: Reference `' on page 35 undefined on input line 618.
+LaTeX Warning: Reference `' on page 35 undefined on input line 614.
 
 
 
-LaTeX Info: Redefining \. on input line 716.
-LaTeX Info: Redefining \% on input line 716.
+LaTeX Info: Redefining \. on input line 645.
+LaTeX Info: Redefining \% on input line 645.
 [35]
-Overfull \vbox (240.70174pt too high) has occurred while \output is active []
 
-
-
-LaTeX Info: Redefining \. on input line 716.
-LaTeX Info: Redefining \% on input line 716.
+LaTeX Info: Redefining \. on input line 681.
+LaTeX Info: Redefining \% on input line 681.
 [36]
-Overfull \vbox (648.70174pt too high) has occurred while \output is active []
-
-
-
-LaTeX Info: Redefining \. on input line 822.
-LaTeX Info: Redefining \% on input line 822.
-[37]
-<./Figures/Mockup_web.png, id=1032, 1028.34187pt x 516.42938pt>
+<./Figures/Mockup_web.png, id=880, 1028.34187pt x 516.42938pt>
 File: ./Figures/Mockup_web.png Graphic file (type png)
 <use ./Figures/Mockup_web.png>
-Package pdftex.def Info: ./Figures/Mockup_web.png  used on input line 825.
+Package pdftex.def Info: ./Figures/Mockup_web.png  used on input line 722.
 (pdftex.def)             Requested size: 389.80269pt x 195.75664pt.
-<./Figures/web_final.jpeg, id=1033, 963.6pt x 539.01375pt>
+
+
+LaTeX Info: Redefining \. on input line 726.
+LaTeX Info: Redefining \% on input line 726.
+[37]
+<./Figures/web_final.jpeg, id=922, 963.6pt x 539.01375pt>
 File: ./Figures/web_final.jpeg Graphic file (type jpg)
 <use ./Figures/web_final.jpeg>
-Package pdftex.def Info: ./Figures/web_final.jpeg  used on input line 833.
+Package pdftex.def Info: ./Figures/web_final.jpeg  used on input line 729.
 (pdftex.def)             Requested size: 389.80269pt x 218.0444pt.
- Excluding 'comment' comment.)
+
+
+LaTeX Info: Redefining \. on input line 744.
+LaTeX Info: Redefining \% on input line 744.
+[38 <./Figures/Mockup_web.png> <./Figures/web_final.jpeg>]
+
+LaTeX Info: Redefining \. on input line 785.
+LaTeX Info: Redefining \% on input line 785.
+[39] Excluding 'comment' comment.)
 
 LaTeX Info: Redefining \. on input line 174.
 LaTeX Info: Redefining \% on input line 174.
-[38 <./Figures/Mockup_web.png> <./Figures/web_final.jpeg>]
+[40]
 \openout2 = `Chapters/Chapter4.aux'.
 
-
-(Chapters/Chapter4.tex
+ (Chapters/Chapter4.tex
 Cap\'{\i }tulo 4.
 )
 
 1: section
-[39
+[41
 
 
 
@@ -2026,7 +2022,7 @@ Cap\'{\i }tulo 4.
 
  (Chapters/Chapter5.tex
 
-[40
+[42
 
 
 
@@ -2036,19 +2032,19 @@ Cap\'{\i }tulo 5.
 )
 
 1: section
-[41]
+[43]
 \openout2 = `Appendices/AppendixA.aux'.
 
  (Appendices/AppendixA.tex
 
-[42
+[44
 
 
 
 
 ]
 Ap\'{e}ndice A.
-<./Appendices/Esquematico_placa_base.pdf, id=1057, 1178.2018pt x 833.91548pt>
+<./Appendices/Esquematico_placa_base.pdf, id=1018, 1178.2018pt x 833.91548pt>
 File: ./Appendices/Esquematico_placa_base.pdf Graphic file (type pdf)
 <use ./Appendices/Esquematico_placa_base.pdf>
 Package pdftex.def Info: ./Appendices/Esquematico_placa_base.pdf  used on input
@@ -2059,7 +2055,7 @@ File: ./Appendices/Esquematico_placa_base.pdf Graphic file (type pdf)
 Package pdftex.def Info: ./Appendices/Esquematico_placa_base.pdf  used on input
  line 20.
 (pdftex.def)             Requested size: 1178.19893pt x 833.91344pt.
-<./Appendices/Esquematico_placa_base.pdf, id=1060, page=1, 1178.2018pt x 833.91
+<./Appendices/Esquematico_placa_base.pdf, id=1021, page=1, 1178.2018pt x 833.91
 548pt>
 File: ./Appendices/Esquematico_placa_base.pdf Graphic file (type pdf)
 <use ./Appendices/Esquematico_placa_base.pdf, page 1>
@@ -2074,7 +2070,7 @@ n input line 20.
 
 
 1: section
-[43]
+[45]
 File: ./Appendices/Esquematico_placa_base.pdf Graphic file (type pdf)
 <use ./Appendices/Esquematico_placa_base.pdf, page 1>
 Package pdftex.def Info: ./Appendices/Esquematico_placa_base.pdf , page1 used o
@@ -2092,7 +2088,7 @@ File: ./Appendices/Esquematico_placa_base.pdf Graphic file (type pdf)
 Package pdftex.def Info: ./Appendices/Esquematico_placa_base.pdf , page1 used o
 n input line 20.
 (pdftex.def)             Requested size: 597.603pt x 422.9754pt.
-[44
+[46
 
  <./Appendices/Esquematico_placa_base.pdf>])
 
@@ -2113,9 +2109,6 @@ L3 programming layer <2020/03/25>
 
 LaTeX Warning: There were undefined references.
 
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
 Package rerunfilecheck Info: File `memoria.out' has not changed.
 (rerunfilecheck)             Checksum: F6844C1BC72F81824CD83EFA56BBB40A;3373.
 
@@ -2128,10 +2121,10 @@ Package logreq Info: Writing requests to 'memoria.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 33444 strings out of 473919
- 713468 string characters out of 5727897
- 2604908 words of memory out of 5000000
- 55325 multiletter control sequences out of 15000+600000
+ 33418 strings out of 473919
+ 712948 string characters out of 5727897
+ 2222908 words of memory out of 5000000
+ 55346 multiletter control sequences out of 15000+600000
  609424 words of font info for 109 fonts, out of 8000000 for 9000
  1142 hyphenation exceptions out of 8191
  96i,20n,94p,1966b,2672s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -2172,9 +2165,9 @@ tino/uplb8a.pfb><C:/Users/CUC/AppData/Local/Programs/MiKTeX/fonts/type1/urw/pal
 atino/uplr8a.pfb><C:/Users/CUC/AppData/Local/Programs/MiKTeX/fonts/type1/urw/pa
 latino/uplr8a.pfb><C:/Users/CUC/AppData/Local/Programs/MiKTeX/fonts/type1/urw/p
 alatino/uplri8a.pfb>
-Output written on memoria.pdf (58 pages, 6625979 bytes).
+Output written on memoria.pdf (60 pages, 6623324 bytes).
 PDF statistics:
- 1231 PDF objects out of 1440 (max. 8388607)
- 549 named destinations out of 1000 (max. 500000)
+ 1182 PDF objects out of 1200 (max. 8388607)
+ 502 named destinations out of 1000 (max. 500000)
  509 words of extra memory for PDF output out of 10000 (max. 10000000)
 

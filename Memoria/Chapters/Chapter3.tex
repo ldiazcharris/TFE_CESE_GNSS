@@ -74,7 +74,7 @@ La placa base se encarga de interconectar los módulos y periféricos principale
 
 Los componentes U1, U2 y H3, corresponden a las ranuras donde se conectan la ESP32 DevKit V4, el adaptador para el módulo Quectel L76, y el módulo SIM A7670SA, respectivamente. Las terminales marcadas con CN6 y CN7 permiten la conexión de los pilotos que indican la ocupación de la cava. Las terminales CN4 y CN5 corresponden a las conexiones de los botones de que dispondrá el operario de la cava para la indicación de la ocupación. Por otro lado, las terminales CN2 y CN3 corresponden a la interfaz I2C y la alimentación de la pantalla LCD, respectivamente. La terminal CN1 corresponde a la entrada de alimentación del sistema. Finalmente, las terminales CN9 y CN11 externalizan los pines GPI 34 y GPI 35, y GPIO 5 y GPIO 18 de la ESP32, respectivamente; esto para facilitar, en una etapa posterior, la agregación de nuevas funcionalidades. 
 
-En las figuras \ref{fig:placa_base_2d} y \ref{fig:placa_base_3d}, se puede ver la versión de dos capas de la placa base. Sin embargo, por razones de tiempo, se decidió implementar una versión de una sola capa que fue construida usando máquinas de fresado automático o CNC (\textit{Computer Numerical Control}). En las figuras \ref{fig:placa_base_real_f} y \ref{fig:placa_base_real_r}, se muestra el resultado final de la manufactura de la placa. 
+En las figuras \ref{fig:placa_base_2d} y \ref{fig:placa_base_3d}, se puede ver la versión de dos capas de la placa base. Sin embargo, por razones de tiempo, se decidió implementar una versión de una sola capa que fue manufacturada con una máquina de fresado automático o CNC (\textit{Computer Numerical Control}). En las figuras \ref{fig:placa_base_real_f} y \ref{fig:placa_base_real_r}, se muestra el resultado final de la manufactura de la placa. 
 
 \begin{figure}[H]
 	\centering
@@ -225,7 +225,7 @@ En el mismo diagrama de la figura \ref{fig:flujo_firmware_1} (bifurcación A), s
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=.7\textwidth]{./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_1.png}
+	\includegraphics[width=.8\textwidth]{./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_1.png}
 	\caption{Diagrama de flujo del firmware (parte 1).}
 	\label{fig:flujo_firmware_1}
 \end{figure}
@@ -243,7 +243,7 @@ En la figura \ref{fig:flujo_firmware_2} se representan dos tareas:
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=.7\textwidth]{./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_2.png}
+	\includegraphics[width=.9\textwidth]{./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_2.png}
 	\caption{Diagrama de flujo del firmware (parte 2).}
 	\label{fig:flujo_firmware_2}
 \end{figure}
@@ -435,15 +435,7 @@ lcd_task()
 
 Además de las tareas y funciones descritas en la sección \ref{fig:arq_firmware}, fue necesario implementar varios componentes de firmware. Sin embargo, por ser los más relevantes, se mencionan los siguientes:
 
-\begin{enumerate}
-	\item Un driver para el manejo de la pantalla \textit{LCD RGB Backlight} de 16x2 que se llamó \textit{lcd\_i2c\_grove.h}. Esta pantalla presenta interfaz de comunicación I2C, para reducir la cantidad de pines utilizados por el microcontrolador. Este driver presenta las funciones descritas en el código \ref{lst:driver_lcd}.
-	
-	\item Una función para inicializar los servicios MQTT en el módulo SIM A7670SA y conectarse al \textit{Broker} MQTT, que se llamó \textit{init\_sequence\_mqtt\_server()}. Esta función implementa comandos AT específicos para el módulo en mención. Retorna el estado de conexión con el \textit{Broker} MQTT o en su defecto los errores encontrados en el proceso. En el código \ref{cod:init_sequence_mqtt_server} se muestra el pseudocódigo que describe su funcionamiento.
-	
-	\item Una función para encapsular la funcionalidad de transmitir al \textit{Broker} MQTT una vez se ha establecido la conexión. Esta es \textit{transmit\_msg\_mqtt()}. Esta función implementa comandos AT específicos del módulo SIM A7670SA y retorna el estado de transmisión del mensaje. En el código \ref{cod:transmit_msg_mqtt} se muestra el pseudocódigo que describe su funcionamiento.
-	
-	\item Una función que permite extraer la información de las cadenas tipo GNRMC recibidas por el módulo Quectel L76. Esta es una función de tipo \textit{thread-safe} para facilitar la multitarea, que se nombró como \textit{nmea\_rmc\_parser\_r()}. En el código \ref{cod:nmea_rmc_parser_r} se muestra el pseudocódigo que describe su funcionamiento.
-\end{enumerate}
+Un driver para el manejo de la pantalla \textit{LCD RGB Backlight} de 16x2 que se llamó \textit{lcd\_i2c\_grove.h}. Esta pantalla presenta interfaz de comunicación I2C, para reducir la cantidad de pines utilizados por el microcontrolador. Este driver presenta las funciones descritas en el código \ref{lst:driver_lcd}.
 
 \begin{figure}[H]
 \begin{lstlisting}[label={lst:driver_lcd}, caption={Funciones principales del driver LCD.}] 
@@ -480,6 +472,8 @@ void lcd_set_RGB(unsigned char r, unsigned char g, unsigned char b);
 \end{figure}
  
 
+Una función para inicializar los servicios MQTT en el módulo SIM A7670SA y conectarse al \textit{Broker} MQTT, que se llamó \textit{init\_sequence\_mqtt\_server()}. Esta función implementa comandos AT específicos para el módulo en mención. Retorna el estado de conexión con el \textit{Broker} MQTT o en su defecto los errores encontrados en el proceso. En el código \ref{cod:init_sequence_mqtt_server} se muestra el pseudocódigo que describe su funcionamiento.
+
 \begin{figure}[H]
 \begin{lstlisting}[label=cod:init_sequence_mqtt_server, caption=Pseudocódigo de la función init\_sequence\_mqtt\_server().] 
 
@@ -503,6 +497,7 @@ init_sequence_mqtt_server(uart_event_t uart1_event, char * at_response)
 \end{lstlisting}
  \end{figure}
 
+Una función para encapsular la funcionalidad de transmitir al \textit{Broker} MQTT una vez se ha establecido la conexión. Esta es \textit{transmit\_msg\_mqtt()}. Esta función implementa comandos AT específicos del módulo SIM A7670SA y retorna el estado de transmisión del mensaje. En el código \ref{cod:transmit_msg_mqtt} se muestra el pseudocódigo que describe su funcionamiento.
 
 
 \begin{figure}[H]
@@ -528,6 +523,7 @@ transmit_msg_mqtt(char * mqtt_payload, char * topic, uart_event_t uart1_event, c
 \end{lstlisting}
 \end{figure}
  
+Una función que permite extraer la información de las cadenas tipo GNRMC recibidas por el módulo Quectel L76. Esta es una función de tipo \textit{thread-safe} para facilitar la multitarea, que se nombró como \textit{nmea\_rmc\_parser\_r()}. En el código \ref{cod:nmea_rmc_parser_r} se muestra el pseudocódigo que describe su funcionamiento.
 
 \begin{figure}[H]
 \begin{lstlisting}[label=cod:nmea_rmc_parser_r, caption=Pseudocódigo de la función nmea\_rmc\_parser\_r().] 
@@ -643,7 +639,23 @@ A continuación, se presenta el proceso llevado a cabo para la implementación d
 
 En el código \ref{cod:aplicacion_web} se muestra la implementación HTML de la interfaz web desarrollada por el autor, la cual sirvió de maqueta para que el equipo de desarrollo web de la empresa Cloud Technologys SAS lo implementara en sus servidores. Sin embargo, por petición del cliente, no es posible compartir el código implementado en sus servidores. 
 
-Además, en el código \ref{cod:aplicacion_web_js}, se presenta la implementación de la dinámica de conexión del dispositivo y las funcionalidades necesarias para la inicialización del mapa y las conexiones.
+El código HTML inicia con la declaración del tipo de documento (<!DOCTYPE html>), ya que se trata de un archivo HTML5. Luego, se abre la etiqueta <html> que contiene todo la página web.
+
+En la sección <head>, se define el título de la página como "Cava mapa". También se incluyen enlaces a hojas de estilo y \textit{scripts} externos. Específicamente, se carga \textit{Bootstrap} desde un CDN (del inglés \textit{content delivery network}), para estilos y componentes de interfaz de usuario, y \textit{jQuery}, \textit{Popper.js} y el propio \textit{JavaScript} de \textit{Bootstrap} para funcionalidad adicional. Además, se incluye una hoja de estilo para \textit{Leaflet}.
+
+En la sección <body>, se muestra un encabezado principal (<h1>) <<GNSS Cava:>>, seguido de un encabezado secundario (<h2>) que especifica <<Cava001>>.
+
+Luego, hay una estructura de contenedor \textit{Bootstrap} (<div class="container mt-4">) que contiene una fila (<div class="row">) con dos columnas (<div class="col-md-4"> y <div class="col-md-8">). En la primera columna, se colocan varias tarjetas de información y un menú desplegable:
+
+La primera tarjeta (<div class="card mb-3">) tiene un cuerpo (<div class="card-body">) que muestra el título <<Dispositivo:>> y un párrafo con el ID \textit{cava\_name} para mostrar el nombre del dispositivo.
+
+La segunda tarjeta muestra el título <<Posicion:>> y dos párrafos con los IDs lat y lng para mostrar la latitud y longitud.
+
+La tercera tarjeta muestra el título <<Estado:>> y un párrafo con el ID estado para mostrar el estado del dispositivo.
+
+La segunda columna (que ocupa dos tercios del ancho) contiene un div (<div id="map">) que servirá como contenedor para el mapa que se mostrará en la página.
+
+Al final del cuerpo, se incluyen tres \textit{scripts}: la biblioteca de \textit{Leaflet}, la biblioteca MQTT y el archivo \textit{JavaScript} específico de la aplicación \textit{mapa.js}, que contiene la lógica para interactuar con el mapa y los datos de MQTT. En la figura \ref{fig:mockup}, se muestra la maqueta de la página desarrollada, y en la figura \ref{fig:web_final}
 
 
 \begin{lstlisting}[label=cod:aplicacion_web, caption=Pseudocódigo para la implementación HTML de la página web.] 
@@ -687,14 +699,6 @@ Además, en el código \ref{cod:aplicacion_web_js}, se presenta la implementaci�
                         <p class="card-text" id="estado"></p>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="exampleSelect">Seleccionar cava</label>
-                    <select class="form-control" id="cava_select">
-                        <option>Cava_001</option>
-                        <option>Cava_002</option>
-                        <option>Cava_003</option>
-                    </select>
-                </div>
             </div>
 
             <div class="col-md-8">
@@ -713,113 +717,6 @@ Además, en el código \ref{cod:aplicacion_web_js}, se presenta la implementaci�
 
 \end{lstlisting}
 
-
-
-
-\begin{lstlisting}[label=cod:aplicacion_web_js, caption=Implementación en javascript de la parte dinámica de la página web.] 
-
-let map;
-let marker;
-let path = [];
-let polyline
-const home = { lat: 10.918982886682658, lng: -74.87194240611939 };
-let current_cava_position;
-
-const options = {
-    clean: true, // retain session
-    connectTimeout: 4000, // Timeout period
-    clientId: 'web_app_cava_position',
-    username: '*****',
-    password: '****',
-    Keepalive: 60,
-};
-
-const connectUrl = '*******';
-const client = mqtt.connect(connectUrl, options);
-const topic_cava = 'proyectoLuis/cava/datos';
-let cava_data;
-
-function init_map(){
-    //map = L.map('cava_map').setView([home.lat, home.lng], 13);
-    map = L.map('map').setView([home.lat, home.lng], 13);
-    //OpenStreetMap 
-    var tile_map = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    });
-
-    tile_map.addTo(map)
-
-    marker = L.marker([home.lat, home.lng]).addTo(map);
-    marker.bindPopup("<b>Posicion</b>"+"<br>"+"lat: "+home.lat.toString()+
-                     "<br>"+" lng: "+home.lng.toString()+
-                     "<br> CD"
-                    ).openPopup();
-}
-
-function get_cava_data(cava_data) {
-
-    let latitude = parseFloat(cava_data.lat);
-    let longitude = parseFloat(cava_data.long);
-
-    return { lat: latitude, lng: longitude };
-}
-
-function set_cava_position_map(position){
-    
-    document.getElementById('lat').textContent = "Lat: "+position.lat.toString();
-    document.getElementById('lng').textContent = "Lng: "+position.lng.toString();
-    
-    if (marker) {
-        map.removeLayer(marker);
-    }
-
-    marker = L.marker([position.lat, position.lng]).addTo(map);
-    var popup_info = "<b>Posicion</b>"+"<br>"+position.lat.toString()+", "+position.lng.toString();
-    marker.bindPopup(popup_info).openPopup();
-
-    path.push([position.lat, position.lng]);
-/*
-    if (path.length > 1) {
-        map.removeLayer(rastro);
-    }
-        */
-
-    var rastro = L.polyline(path, {color: 'blue'}).addTo(map);
-
-    map.setView([position.lat, position.lng], 15);
-}
-
-init_map();
-
-client.on('connect', function () {
-    console.log('Conectado')
-    // Subscribe to a topic
-    client.subscribe(topic_cava, { qos: 0 }, function (err) {
-        if (!err) {
-            console.log('Suscrito')
-        }
-    })
-});
-
-client.on('reconnect', (error) => {
-    console.log('reconectando:', error)
-});
-
-client.on('error', (error) => {
-    console.log('Conexion fallida:', error)
-});
-
-client.on('message', (topic, message) => {
-
-    //console.log('mensaje recibido', topic, current_cava_position)
-    current_cava_position = get_cava_data(JSON.parse(message.toString()));
-    set_cava_position_map(current_cava_position);
-});
-
-\end{lstlisting}
-
-
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\textwidth]{./Figures/Mockup_web.png}
@@ -827,13 +724,109 @@ client.on('message', (topic, message) => {
 	\label{fig:mockup}
 \end{figure}
 
-
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\textwidth]{./Figures/web_final.jpeg}
 	\caption{Maqueta de la interfaz web.}
 	\label{fig:web_final}
 \end{figure}
+
+En el código \ref{cod:aplicacion_web_js}, se presenta la implementación de la dinámica de conexión del dispositivo y las funcionalidades necesarias para la inicialización del mapa y las conexiones.
+
+El programa declara un mapa (\textit{map}), un marcador (\textit{marker}), una lista para almacenar el rastro de posiciones (\textit{path}), y una variable para la línea que representará ese rastro (\textit{polyline}). Además, define una posición inicial (\textit{home}) con coordenadas específicas y una variable para la posición actual de la cava (\textit{current\_cava\_position}).
+
+A continuación, se configura una serie de opciones para conectarse a un servidor MQTT, incluyendo el tiempo de espera para la conexión, el ID del cliente, el nombre de usuario, la contraseña y el intervalo de mantenimiento. También se especifica la URL para la conexión (\textit{connectUrl}) y crea un cliente MQTT con estas opciones. Define un tema (\textit{topic\_cava}) al que la web se suscribe para recibir datos de la cava y declara una variable (\textit{cava\_data}) para almacenar estos datos.
+
+Se definen las siguientes funciones: 
+
+\begin{itemize}
+
+\item La función \textit{init\_map} inicializa el mapa utilizando OpenStreetMap. Centra el mapa en la posición inicial (\textit{home}) y añade un marcador en esta posición. Además, crea un \textit{popup} para el marcador que muestra la latitud y longitud de la posición inicial.
+
+\item La función \textit{get\_cava\_data} recibe datos de la cava, convierte las coordenadas de latitud y longitud de estos datos a números flotantes, y devuelve un objeto con estas coordenadas.
+
+\item La función \textit{set\_cava\_position\_map} se encarga de actualizar el mapa con la nueva posición de la cava. Primero, actualiza elementos HTML con los nuevos valores de latitud y longitud. Si ya existe un marcador, lo elimina del mapa. Luego, crea un nuevo marcador en la nueva posición y añade un \textit{popup} con la información de esta posición. Además, añade la nueva posición a la lista path y dibuja un rastro en el mapa utilizando esta lista. Finalmente, ajusta la vista del mapa para centrarlo en la nueva posición.
+
+\end{itemize}
+
+El programa llama a \textit{init\_map} para inicializar el mapa. Cuando el cliente MQTT se conecta, imprime un mensaje de 'Conectado' y se suscribe al tema \textit{topic\_cava}. Maneja eventos de reconexión e impresión de errores en caso de que falle la conexión. Cuando el cliente recibe un mensaje, convierte el mensaje a un objeto JSON, obtiene la posición de la cava utilizando \textit{get\_cava\_data}, y llama a \textit{set\_cava\_position\_map} con esta posición para actualizar el mapa.
+
+
+\begin{lstlisting}[label=cod:aplicacion_web_js, caption=Implementación en javascript de la parte dinámica de la página web.] 
+
+Variables globales:
+    map
+    marker
+    path = lista vacia
+    polyline
+    home = { lat: 10.918982886682658, lng: -74.87194240611939 }
+    current_cava_position
+    connectUrl = '*******' // URL del broker MQTT
+	topic_cava = 'proyectoLuis/cava/datos'
+
+Configuracion de opciones MQTT:
+    clean = true
+    connectTimeout = 4000
+    clientId = 'web_app_cava_position'
+    username = '*****'
+    password = '****'
+    Keepalive = 60
+
+Funcion init_map:
+    Crear un mapa centrado en home usando OpenStreetMap
+    Anadir un marcador en la posicion home al mapa
+    Anadir un popup al marcador con la informacion de la posicion
+
+Funcion get_cava_data:
+    Recibir cava_data
+    Convertir la latitud y longitud de cava_data a numeros flotantes
+    Devolver un objeto con la latitud y longitud
+
+Funcion set_cava_position_map:
+    Recibir la posicion
+    Actualizar los elementos HTML con los valores de latitud y longitud de posicion
+    
+    Si existe un marcador:
+        Eliminar el marcador del mapa
+
+    Crear un nuevo marcador en la posicion y anadirlo al mapa
+    Crear un popup con la informacion de posicion y anadirlo al marcador
+    Anadir la posicion a la lista path
+
+    Crear un rastro en el mapa usando la lista path
+
+    Ajustar la vista del mapa a la nueva posicion 
+
+client = Conectar a MQTT usando connectUrl y opciones
+
+Llamar a init_map
+
+Evento 'connect' del cliente MQTT:
+    Imprimir 'Conectado'
+    Suscribirse al topic_cava con calidad de servicio 0
+    Si la suscripcion es exitosa:
+        Imprimir 'Suscrito'
+
+Evento 'reconnect' del cliente MQTT:
+    Imprimir 'reconectando' y el error
+
+Evento 'error' del cliente MQTT:
+    Imprimir 'Conexion fallida' y el error
+
+Evento 'message' del cliente MQTT:
+    Convertir el mensaje a un objeto JSON
+    Obtener la posicion de cava usando get_cava_data
+    Llamar a set_cava_position_map con la posicion obtenida
+
+
+\end{lstlisting}
+
+
+
+
+
+
+
 
 
 

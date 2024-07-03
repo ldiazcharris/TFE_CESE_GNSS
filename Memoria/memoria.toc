@@ -39,9 +39,9 @@
 \contentsline {subsection}{\numberline {3.4.1}Diseño de la interfaz web}{33}{subsection.3.4.1}%
 \contentsline {subsection}{\numberline {3.4.2}Implementación de la interfaz web}{34}{subsection.3.4.2}%
 \contentsline {subsection}{\numberline {3.4.3}Metodología de la implementación}{35}{subsection.3.4.3}%
-\contentsline {chapter}{\numberline {4}Ensayos y resultados}{39}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Pruebas funcionales del hardware}{39}{section.4.1}%
-\contentsline {chapter}{\numberline {5}Conclusiones}{41}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Conclusiones generales }{41}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Próximos pasos}{41}{section.5.2}%
-\contentsline {chapter}{\numberline {A}Esquemáctico de la placa base del sistema}{43}{appendix.Alph1}%
+\contentsline {chapter}{\numberline {4}Ensayos y resultados}{41}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Pruebas funcionales del hardware}{41}{section.4.1}%
+\contentsline {chapter}{\numberline {5}Conclusiones}{43}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Conclusiones generales }{43}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Próximos pasos}{43}{section.5.2}%
+\contentsline {chapter}{\numberline {A}Esquemáctico de la placa base del sistema}{45}{appendix.Alph1}%
