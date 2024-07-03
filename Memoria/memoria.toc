@@ -1,7 +1,7 @@
 \babel@toc {spanish}{}\relax 
 \contentsline {chapter}{Resumen}{\es@scroman {i}}{section*.1}%
 \contentsline {chapter}{\numberline {1}Introducción general}{1}{chapter.1}%
-\contentsline {section}{\numberline {1.1}Descripción del proyecto}{1}{section.1.1}%
+\contentsline {section}{\numberline {1.1}Descripción del trabajo}{1}{section.1.1}%
 \contentsline {subsection}{\numberline {1.1.1}Contexto y problema}{1}{subsection.1.1.1}%
 \contentsline {subsection}{\numberline {1.1.2}Alternativa de solución}{2}{subsection.1.1.2}%
 \contentsline {section}{\numberline {1.2}Estado del arte}{2}{section.1.2}%
@@ -20,28 +20,28 @@
 \contentsline {subsubsection}{Antena Quectel YG0035AA}{11}{section*.14}%
 \contentsline {subsection}{\numberline {2.3.4}Sistema operativo de tiempo real}{12}{subsection.2.3.4}%
 \contentsline {subsubsection}{FreeRTOS™}{12}{section*.16}%
-\contentsline {subsection}{\numberline {2.3.5}Servicio web para mapas}{12}{subsection.2.3.5}%
+\contentsline {subsection}{\numberline {2.3.5}Servicios web para mapas}{12}{subsection.2.3.5}%
 \contentsline {chapter}{\numberline {3}Diseño e implementación}{15}{chapter.3}%
 \contentsline {section}{\numberline {3.1}Diseño e implementación general del sistema}{15}{section.3.1}%
 \contentsline {section}{\numberline {3.2}Diseño e implementación de hardware}{15}{section.3.2}%
-\contentsline {subsection}{\numberline {3.2.1}Diseño del Hardware}{15}{subsection.3.2.1}%
-\contentsline {subsection}{\numberline {3.2.2}Implementación del Hardware}{16}{subsection.3.2.2}%
+\contentsline {subsection}{\numberline {3.2.1}Diseño del hardware}{15}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Implementación del hardware}{16}{subsection.3.2.2}%
 \contentsline {subsubsection}{Placa base del sistema}{16}{section*.19}%
-\contentsline {subsubsection}{Adaptador para el módulo Quectel L76}{17}{section*.22}%
-\contentsline {section}{\numberline {3.3}Diseño e implementación del firmware}{19}{section.3.3}%
-\contentsline {subsection}{\numberline {3.3.1}Diseño del firmware}{19}{subsection.3.3.1}%
-\contentsline {subsubsection}{Arquitectura del firmware}{19}{section*.26}%
-\contentsline {subsection}{\numberline {3.3.2}Implementación del firmware}{21}{subsection.3.3.2}%
-\contentsline {subsubsection}{Flujo general del firmware}{21}{section*.28}%
-\contentsline {subsubsection}{Implementación de las tareas del sistema}{22}{section*.32}%
-\contentsline {subsubsection}{Otros componentes del firmware}{25}{section*.33}%
-\contentsline {section}{\numberline {3.4}Diseño e implementación de la interfaz web}{28}{section.3.4}%
-\contentsline {subsection}{\numberline {3.4.1}Diseño de la interfaz web}{28}{subsection.3.4.1}%
-\contentsline {subsection}{\numberline {3.4.2}Implementación de la interfaz web}{29}{subsection.3.4.2}%
-\contentsline {subsection}{\numberline {3.4.3}Metodología de la implementación}{29}{subsection.3.4.3}%
-\contentsline {chapter}{\numberline {4}Ensayos y resultados}{35}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Pruebas funcionales del hardware}{35}{section.4.1}%
-\contentsline {chapter}{\numberline {5}Conclusiones}{37}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Conclusiones generales }{37}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Próximos pasos}{37}{section.5.2}%
-\contentsline {chapter}{\numberline {A}Esquemáctico de la placa base del sistema}{39}{appendix.Alph1}%
+\contentsline {subsubsection}{Adaptador para el módulo Quectel L76}{18}{section*.24}%
+\contentsline {section}{\numberline {3.3}Diseño e implementación del firmware}{20}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Diseño del firmware}{20}{subsection.3.3.1}%
+\contentsline {subsubsection}{Arquitectura del firmware}{21}{section*.29}%
+\contentsline {subsection}{\numberline {3.3.2}Implementación del firmware}{22}{subsection.3.3.2}%
+\contentsline {subsubsection}{Flujo general del firmware}{23}{section*.31}%
+\contentsline {subsubsection}{Implementación de las tareas del sistema}{26}{section*.35}%
+\contentsline {subsubsection}{Otros componentes del firmware}{30}{section*.42}%
+\contentsline {section}{\numberline {3.4}Diseño e implementación de la interfaz web}{33}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Diseño de la interfaz web}{33}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}Implementación de la interfaz web}{34}{subsection.3.4.2}%
+\contentsline {subsection}{\numberline {3.4.3}Metodología de la implementación}{35}{subsection.3.4.3}%
+\contentsline {chapter}{\numberline {4}Ensayos y resultados}{39}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Pruebas funcionales del hardware}{39}{section.4.1}%
+\contentsline {chapter}{\numberline {5}Conclusiones}{41}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Conclusiones generales }{41}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Próximos pasos}{41}{section.5.2}%
+\contentsline {chapter}{\numberline {A}Esquemáctico de la placa base del sistema}{43}{appendix.Alph1}%

@@ -28,7 +28,7 @@ A continuación, se describen cada una de estas partes.
 
 En esta sección, se describen las consideraciones de diseño del hardware del sistema. 
 
-\subsection{Diseño del Hardware}
+\subsection{Diseño del hardware}
 
 En la figura~\ref{fig:Arq_harware} se presenta la arquitectura del hardware desarrollado. Se incluyen todos los componentes descritos en las secciones anteriores. El sistema cuenta con 2 antenas correspondientes a la comunicación GNSS y 4G. 
 
@@ -57,7 +57,7 @@ Se presenta una fuente de alimentación correspondiente a una batería de 12 VDC
 
 
 
-\subsection{Implementación del Hardware}
+\subsection{Implementación del hardware}
 
 En la etapa de implementación del hardware, se trabajó en 2 placas de circuito impreso. 
 
@@ -70,50 +70,75 @@ En la etapa de implementación del hardware, se trabajó en 2 placas de circuito
 
 \subsubsection{Placa base del sistema}
 
-La placa base se encarga de interconectar los módulos y periféricos principales del sistema. Por lo tanto, en el apéndice~\ref{AppendixA} se presenta el circuito esquemático correspondiente a esta implementación. En esta se empleó el regulador MIC29302WU, con una configuración de ajuste por defecto en 5 VDC, para la alimentación de la ESP32, del módulo SIM A7670SA, la placa adaptador para el módulo Quectel L76 y la pantalla LCD. En la figura~\ref{fig:placa_base_2d} se puede apreciar el diseño final del PCB en un modelo de dos dimensiones. Además, en la figura~\ref{fig:placa_base_3d} se observa el modelo en tres dimensiones. 
+La placa base se encarga de interconectar los módulos y periféricos principales del sistema. Por lo tanto, en el apéndice~\ref{AppendixA} se presenta el circuito esquemático correspondiente a esta implementación. En esta se empleó el regulador MIC29302WU \citep{MIC29302WU}, con una configuración de ajuste por defecto en 5 VDC, para la alimentación de la ESP32, del módulo SIM A7670SA, la placa adaptador para el módulo Quectel L76 y la pantalla LCD. En la figura~\ref{fig:placa_base_2d} se puede apreciar el diseño final del PCB en un modelo de dos dimensiones. Además, en la figura~\ref{fig:placa_base_3d} se observa el modelo en tres dimensiones. 
 
 Los componentes U1, U2 y H3, corresponden a las ranuras donde se conectan la ESP32 DevKit V4, el adaptador para el módulo Quectel L76, y el módulo SIM A7670SA, respectivamente. Las terminales marcadas con CN6 y CN7 permiten la conexión de los pilotos que indican la ocupación de la cava. Las terminales CN4 y CN5 corresponden a las conexiones de los botones de que dispondrá el operario de la cava para la indicación de la ocupación. Por otro lado, las terminales CN2 y CN3 corresponden a la interfaz I2C y la alimentación de la pantalla LCD, respectivamente. La terminal CN1 corresponde a la entrada de alimentación del sistema. Finalmente, las terminales CN9 y CN11 externalizan los pines GPI 34 y GPI 35, y GPIO 5 y GPIO 18 de la ESP32, respectivamente; esto para facilitar, en una etapa posterior, la agregación de nuevas funcionalidades. 
 
-\begin{figure}[htbp]
+En las figuras \ref{fig:placa_base_2d} y \ref{fig:placa_base_3d}, se puede ver la versión de dos capas de la placa base. Sin embargo, por razones de tiempo, se decidió implementar una versión de una sola capa que fue construida usando máquinas de fresado automático o CNC (\textit{Computer Numerical Control}). En las figuras \ref{fig:placa_base_real_f} y \ref{fig:placa_base_real_r}, se muestra el resultado final de la manufactura de la placa. 
+
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=.8\textwidth]{./Figures/PCB_TFE_Modelo_2D.png}
 	\caption{Modelo 2D de la placa base del sistema.}
 	\label{fig:placa_base_2d}
 \end{figure}
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=.8\textwidth]{./Figures/PCB_TFE_Modelo_3D.png}
 	\caption{Modelo 3D de la placa base del sistema.}
 	\label{fig:placa_base_3d}
 \end{figure}
 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=.8\textwidth]{./Figures/PCB_TFE__real_front.jpeg}
+	\caption{Placa base del sistema versión de una capa (frente).}
+	\label{fig:placa_base_real_f}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=.8\textwidth]{./Figures/PCB_TFE__real_reverse.jpeg}
+	\caption{Placa base del sistema versión de una capa (reverso).}
+	\label{fig:placa_base_real_r}
+\end{figure}
+
+
+
 
 \subsubsection{Adaptador para el módulo Quectel L76}
 
 El circuito esquemático del adaptador L76 se encuentra en la figura~\ref{fig:adap_L76}. En este esquemático se puede observar la fuente de 3.3 VDC de entrada de alimentación, la conexión UART y la conexión entre el módulo y el microcontrolador ESP32.  
 
-En las figuras~\ref{fig:adap_L76_2d} y~\ref{fig:adap_L76_3d}, se muestran los modelos 2D y 3D del circuito diseñado. 
+En las figuras~\ref{fig:adap_L76_2d} y~\ref{fig:adap_L76_3d}, se muestran los modelos 2D y 3D del circuito diseñado. Además, en la figura \ref{fig:adap_L76_real} se presenta el resultado final de la manufactura de la PCB.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=.6\textwidth]{./Figures/QL76_Esquematico.png}
 	\caption{Esquemático del adaptador L76.}
 	\label{fig:adap_L76}
 \end{figure}
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=.4\textwidth]{./Figures/QL76_modelo_2d_sup.png}
 	\caption{Modelo 2D del adaptador L76.}
 	\label{fig:adap_L76_2d}
 \end{figure}
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=.4\textwidth]{./Figures/QL76_modelo_3d_sup.png}
 	\caption{Modelo 3D del adaptador L76.}
 	\label{fig:adap_L76_3d}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=.5\textwidth]{./Figures/QL76_real.jpeg}
+	\caption{Adaptador L76 real.}
+	\label{fig:adap_L76_real}
 \end{figure}
 
 
@@ -147,9 +172,9 @@ En este diagrama (figura~\ref{fig:arq_firmware}) se representan como subsistemas
 
 De acuerdo con esto, los componentes del firmware se establecen en la ESP32, que corresponde al dispositivo programable encargado de realizar el control general del sistema. 
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 	\centering
-	\includegraphics[width=1.1\textwidth]{./Figures/Arquitectura_firmware_TFE_GNSS.png}
+	\includegraphics[width=1\textwidth]{./Figures/Arquitectura_firmware_TFE_GNSS.png}
 	\caption{Arquitectura del firmware.}
 	\label{fig:arq_firmware}
 \end{figure}
@@ -185,23 +210,56 @@ Por petición del cliente, la codificación correspondiente al firmware no podr�
 
 \subsubsection{Flujo general del firmware}
 
-Gracias a la implementación en FreeRTOS, el firmware tiene la capacidad de ejecutar multitarea. El flujo general del programa se muestra en las figuras \ref{fig:flujo_firmware_1}, \ref{fig:flujo_firmware_2} y \ref{fig:flujo_firmware_3}. Como se puede ver en dicho diagrama y en el diagrama de la arquitectura (ver figura \ref{fig:arq_firmware}), las diferentes tareas se ejecutan una independiente de la otra. Sin embargo, existe un flujo de información que se sucede de una tarea a otra. Como mecanismo de comunicación entre tareas, se utilizan las colas. Este comportamiento del firmware es relevante desde el punto de vista en que el sistema puede estar recibiendo, procesando y transmitiendo datos de posicionamiento de manera casi concurrente. 
+Gracias a la implementación en FreeRTOS, el firmware tiene la capacidad de ejecutar multitarea. El flujo general del programa se muestra en las figuras \ref{fig:flujo_firmware_1}, \ref{fig:flujo_firmware_2} y \ref{fig:flujo_firmware_3}. El programa se dividió en tareas, que son funciones puntuales que ejecutan una acción concreta y colaboran entre sí para operar el sistema en su conjunto. Las diferentes tareas se ejecutan de forma independiente y existe un flujo de información que se sucede de una tarea a otra. Como mecanismo de comunicación entre tareas, se utilizan las colas. Este comportamiento del firmware es relevante desde el punto de vista en que el sistema puede estar recibiendo, procesando y transmitiendo datos de posicionamiento de manera casi concurrente.
 
-\begin{figure}
+En el diagrama de la figura \ref{fig:flujo_firmware_1}, se muestra que el programa empieza con la inicialización de todos los periféricos del hardware que son requeridos para operar con los módulos externos. Tal es el caso de los periféricos de comunicaciones UART e I2C. El periférico UART es utilizado para la comunicación entre los módulos SIM A7670SA (de comunicación celular) y el módulo Quectel L76 (recepción GNSS). 
+
+Luego se realiza la inicialización de los periféricos GPIO e instala el servicio de interrupciones en este, para preparar la captura de los estados de ocupación que se da a través de botones. 
+
+Por otro lado, la inicialización del bus I2C es requerida para la comunicación con la pantalla LCD. Luego de esto, ocurre la inicialización de la pantalla LCD, para mostrar al usuario toda la información del inicio del sistema. 
+
+Para finalizar, se inicializan las colas, las cuales son los canales de comunicación entre las distintas tareas del programa y se crea la tarea \textit{init\_mqtt\_server\_task()}, que se explica a continuación. 
+
+En el mismo diagrama de la figura \ref{fig:flujo_firmware_1} (bifurcación A), se muestra el flujo de la tarea \textit{init\_mqtt\_server\_task()}. Esta empieza por inicializar los serivicios MQTT en el módulo SIM A7670SA, para luego iniciar la conexión con el \textbf{Broker} MQTT en la nube. Si lo anterior ocurre sin problemas, esta tarea procede a crear las demás tareas del sistema, a saber: \textit{gnss\_task()}, \textit{collect\_data\_task()}, \textit{transmit\_server\_task()} y \textit{lcd\_task()}. Luego, el \textit{scheduler} de \textit{FreeRtos}, desencadena la multitarea. Este punto se representa con la bifurcación B. Para finalizar, la tarea \textit{init\_mqtt\_server\_task()} es eliminada. 
+
+
+\begin{figure}[H]
 	\centering
-	\includegraphics[width=.8\textwidth]{./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_1.png}
+	\includegraphics[width=.7\textwidth]{./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_1.png}
 	\caption{Diagrama de flujo del firmware (parte 1).}
 	\label{fig:flujo_firmware_1}
 \end{figure}
 
-\begin{figure}
+En la figura \ref{fig:flujo_firmware_2} se representan dos tareas:
+
+\begin{enumerate}
+
+\item Tarea \textit{gnss\_task()}, procesa datos GNSS capturados por UART\_0, envía las posiciones procesadas a \textit{collect\_data\_task()} a través de la cola \textit{position\_queue} y verifica si la posición ha cambiado en un intervalo de 5 minutos para entrar en modo de ahorro de energía si no hay cambios.
+
+\item Tarea \textit{collect\_data\_task()}, monitorea eventos de ocupación y posición, guarda los datos de ocupación y posición cuando ocurren eventos y envía los datos de ocupación a \textit{transmit\_server\_task()} a través de la cola \textit{cava\_data\_queue} para su transmisión al servidor.
+
+\end{enumerate}
+
+
+\begin{figure}[H]
 	\centering
-	\includegraphics[width=.8\textwidth]{./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_2.png}
+	\includegraphics[width=.7\textwidth]{./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_2.png}
 	\caption{Diagrama de flujo del firmware (parte 2).}
 	\label{fig:flujo_firmware_2}
 \end{figure}
 
-\begin{figure}
+En la figura \ref{fig:flujo_firmware_3} se representan dos tareas:
+
+\begin{enumerate}
+
+\item Tarea \textit{transmit\_to\_server\_task()} verifica continuamente si hay eventos de datos de la cava, transmite los datos de la cava al servidor MQTT cuando hay un evento y envía los datos a la cola \textit{lcd\_queue} para ser procesados por \textit{lcd\_task()}.
+
+\item Tarea \textit{lcd\_task()} verifica continuamente si hay eventos en la cola \textit{lcd\_queue} y muestra la información de posición, ocupación y estado del servidor en la pantalla LCD cuando hay un evento.
+
+\end{enumerate}
+
+
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=.8\textwidth]{./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_3.png}
 	\caption{Diagrama de flujo del firmware (parte 3).}
@@ -211,10 +269,14 @@ Gracias a la implementación en FreeRTOS, el firmware tiene la capacidad de ejec
 
 \subsubsection{Implementación de las tareas del sistema}
 
-En los códigos, \ref{cod:init_mqtt_server_task}, \ref{cod:gnss_task}, \ref{cod:occupancy_isr_handler}, \ref{cod:collect_data_task}, \ref{cod:transmit_to_server_task} y \ref{cod:lcd_task} se presenta la implementación en pseudocódigo de cada una de las tareas principales del firmware. 
+
+A continuación, se explica en forma de pseudocódigo la implementación de cada una de las tareas del sistema. 
+
+En el código \ref{cod:init_mqtt_server_task}, se muestra el pseudocódigo que refleja la implementación de la tarea \textit{init\_mqtt\_server\_task()}. La tarea inicializa los servicios necesarios para operar con MQTT. Esto incluye la configuración de parámetros y la preparación de las conexiones. Después, se realiza la conexión al servidor MQTT; esto asegura que el sistema pueda enviar y recibir mensajes a través de este protocolo. Continúa con la creación de las tareas del sistema. Después de crear y poner en marcha las tareas del sistema, se elimina la tarea \textit{init\_mqtt\_server\_task()}, lo que implica la liberación de recursos. Si hay una falla en la conexión con el servidor, se realizarán un total de 3 intentos de conexión, además del intento inicial. Si falla la conexión, se reporta el problema por la LCD y se procede a la eliminación de la tarea.
 
 
-\begin{lstlisting}[label=cod:init_mqtt_server_task, caption=Pseudocódigo de la función init\_mqtt\_server\_task().] 
+\begin{figure}[H]
+\begin{lstlisting}[label=cod:init_mqtt_server_task, caption=Pseudocódigo de la tarea init\_mqtt\_server\_task().] 
 
 init_mqtt_server_task()
 {
@@ -237,11 +299,21 @@ init_mqtt_server_task()
 }
 
 \end{lstlisting}
-
+\end{figure}
  
 
+En el código \ref{cod:gnss_task}, se presenta el pseudocódigo de la tarea \textit{gnss\_task()}. La tarea se encarga de procesar las tramas NMEA que son datos provenientes del receptor GNSS, envía por la cola \textit{position\_queue}, que es gestionada por la tarea \textit{collect\_data\_task()}. El sistema verifica si ha pasado un intervalo de tiempo de 5 minutos, para comprar: 
 
-\begin{lstlisting}[label=cod:gnss_task, caption=Pseudocódigo de la función gnss\_task().] 
+\begin{itemize}
+\item Sí: Si las posiciones son iguales, el sistema entra en modo de ahorro de energía.
+\item No: Si las posiciones son diferentes, el sistema vuelve al inicio del bucle.
+\item No: Si no han pasado 5 minutos, el sistema vuelve al inicio del bucle.
+\end{itemize}
+
+
+
+\begin{figure}[H]
+\begin{lstlisting}[label=cod:gnss_task, caption=Pseudocódigo de la tarea gnss\_task().] 
 
 gnss_task()
 {
@@ -260,10 +332,14 @@ gnss_task()
 }
 
 \end{lstlisting}
-
+\end{figure}
  
 
 
+En el código \ref{cod:occupancy_isr_handler}, se presenta el pseudocódigo del manejador de interrupciones \textit{occupancy\_isr\_handler()}, que aunque no es una tarea mapeada en el \textit{scheduler} de \textit{FreeRtos}, cumple un papel primordial, puesto que permite capturar los eventos de los botones de ocupación del sistema. El manejador de interrupciones se activa cuando se presiona un botón, se captura cuál botón ha sido presionado. Si el botón presionado es el de "libre" se actualiza el estado para indicar que el recurso está libre y se envía un estado "Libre" a través de \textit{occupancy\_queue}. Si el botón presionado es el de "ocupado", se actualiza el estado para indicar que la cava está ocupada y se envía un estado "Ocupado" a través de \textit{occupancy\_queue}.
+
+
+\begin{figure}[H]
 \begin{lstlisting}[label=cod:occupancy_isr_handler, caption=Pseudocódigo de la función occupancy\_isr\_handler().] 
 
 occupancy_isr_handler()
@@ -280,10 +356,15 @@ occupancy_isr_handler()
 }
 
 \end{lstlisting}
+\end{figure}
+
+
+En el código \ref{cod:collect_data_task}, se presenta el pseudocódigo de la tarea \textit{collect\_data\_task()}. La tarea verifica si hay un evento de ocupación, si este ocurre, se guarda la información correspondiente. También verifica si hay un evento de posición, si ocurre, se guarda la información correspondiente. Finalmente, la información de ocupación se envía por la cola \textit{cava\_data\_queue} que es gestionada por la tarea \textit{transmit\_to\_server\_task()}.
+
 
  
-
-\begin{lstlisting}[label=cod:collect_data_task, caption=Pseudocódigo de la función collect\_data\_task().] 
+\begin{figure}[H]
+\begin{lstlisting}[label=cod:collect_data_task, caption=Pseudocódigo de la tarea collect\_data\_task().] 
 
 collect_data_task()
 {
@@ -298,10 +379,15 @@ collect_data_task()
 }
 
 \end{lstlisting}
+\end{figure}
+
+
+
+En el código \ref{cod:transmit_to_server_task}, se presenta el pseudocódigo de la tarea \textit{transmit\_to\_server\_task()}. La tarea verifica si hay un evento relacionado con los datos de la cava, si no hay evento, el sistema vuelve al inicio del bucle; Si hay un evento, los datos de la cava se transmiten al servidor MQTT y luego a la tarea \textit{lcd\_task()} + el resultado de la transmisión.
 
  
-
-\begin{lstlisting}[label=cod:transmit_to_server_task, caption=Pseudocódigo de la función transmit\_to\_server\_task().] 
+\begin{figure}[H]
+\begin{lstlisting}[label=cod:transmit_to_server_task, caption=Pseudocódigo de la tarea transmit\_to\_server\_task().] 
 
 transmit_to_server_task()
 {
@@ -314,10 +400,20 @@ transmit_to_server_task()
 }
 
 \end{lstlisting}
+\end{figure}
+
+
+
+En el código \ref{cod:lcd_task}, se presenta el pseudocódigo de la tarea \textit{lcd\_task()}. Esta tarea verifica si hay un evento en la cola, si no hay evento, el sistema vuelve al inicio del bucle; si hay un evento, se muestra la siguiente información en la pantalla LCD: 
+	\begin{itemize}
+	\item La posición geográfica.
+	\item El estado de ocupación. 
+	\item el estado de la conexión servidor (conexión MQTT). 
+	\end{itemize}
 
  
-
-\begin{lstlisting}[label=cod:lcd_task, caption=Pseudocódigo de la función lcd\_task().] 
+\begin{figure}[H]
+\begin{lstlisting}[label=cod:lcd_task, caption=Pseudocódigo de la tarea lcd\_task().] 
 
 lcd_task()
 {
@@ -332,7 +428,7 @@ lcd_task()
 }
 
 \end{lstlisting}
-
+\end{figure}
 
 
 \subsubsection{Otros componentes del firmware}
@@ -349,7 +445,7 @@ Además de las tareas y funciones descritas en la sección \ref{fig:arq_firmware
 	\item Una función que permite extraer la información de las cadenas tipo GNRMC recibidas por el módulo Quectel L76. Esta es una función de tipo \textit{thread-safe} para facilitar la multitarea, que se nombró como \textit{nmea\_rmc\_parser\_r()}. En el código \ref{cod:nmea_rmc_parser_r} se muestra el pseudocódigo que describe su funcionamiento.
 \end{enumerate}
 
-
+\begin{figure}[H]
 \begin{lstlisting}[label={lst:driver_lcd}, caption={Funciones principales del driver LCD.}] 
 
 /**
@@ -381,10 +477,10 @@ void lcd_clear();
 void lcd_set_RGB(unsigned char r, unsigned char g, unsigned char b);
 
 \end{lstlisting}
-
+\end{figure}
  
 
-
+\begin{figure}[H]
 \begin{lstlisting}[label=cod:init_sequence_mqtt_server, caption=Pseudocódigo de la función init\_sequence\_mqtt\_server().] 
 
 init_sequence_mqtt_server(uart_event_t uart1_event, char * at_response)
@@ -405,11 +501,11 @@ init_sequence_mqtt_server(uart_event_t uart1_event, char * at_response)
 }
 
 \end{lstlisting}
- 
+ \end{figure}
 
 
 
-
+\begin{figure}[H]
 \begin{lstlisting}[label=cod:transmit_msg_mqtt, caption=Pseudocódigo de la función init\_sequence\_mqtt\_server().] 
 
 transmit_msg_mqtt(char * mqtt_payload, char * topic, uart_event_t uart1_event, char * at_response)
@@ -430,10 +526,10 @@ transmit_msg_mqtt(char * mqtt_payload, char * topic, uart_event_t uart1_event, c
 }
 
 \end{lstlisting}
-
+\end{figure}
  
 
-
+\begin{figure}[H]
 \begin{lstlisting}[label=cod:nmea_rmc_parser_r, caption=Pseudocódigo de la función nmea\_rmc\_parser\_r().] 
 
 nmea_rmc_parser_r(char *nmeaString, GNSSData_t *gnssData)
@@ -457,7 +553,7 @@ nmea_rmc_parser_r(char *nmeaString, GNSSData_t *gnssData)
 }
 
 \end{lstlisting}
-
+\end{figure}
 
 
 
@@ -534,7 +630,7 @@ A continuación, se presenta el proceso llevado a cabo para la implementación d
 	
 	\item \textbf{Gestión de Mensajes:}
 		\begin{itemize}
-		\item Se define la función \textit{get\_cava\_data()} para procesar los mensajes recibidos del broker. Se convierten los mensajes a formato JSON y se extraen los datos de la cava. Se actualiza el mapa con la nueva posición de la cava, los demás datos actualizados y se muestra la ruta seguida.
+		\item Se define la función \textit{get\_cava\_data()} para procesar los mensajes recibidos del \textit{Broker}. Se convierten los mensajes a formato JSON y se extraen los datos de la cava. Se actualiza el mapa con la nueva posición de la cava, los demás datos actualizados y se muestra la ruta seguida.
 		\end{itemize}
 		
 	\item \textbf{Actualización del Mapa:}
@@ -547,7 +643,8 @@ A continuación, se presenta el proceso llevado a cabo para la implementación d
 
 En el código \ref{cod:aplicacion_web} se muestra la implementación HTML de la interfaz web desarrollada por el autor, la cual sirvió de maqueta para que el equipo de desarrollo web de la empresa Cloud Technologys SAS lo implementara en sus servidores. Sin embargo, por petición del cliente, no es posible compartir el código implementado en sus servidores. 
 
-Además, en el código \ref{cod:aplicacion_web_js}, se presenta la implementación de la dinámica de conexión del dispositivo y las funcionalidades necesarias para la inicialización del mapa y las conexiones 
+Además, en el código \ref{cod:aplicacion_web_js}, se presenta la implementación de la dinámica de conexión del dispositivo y las funcionalidades necesarias para la inicialización del mapa y las conexiones.
+
 
 \begin{lstlisting}[label=cod:aplicacion_web, caption=Pseudocódigo para la implementación HTML de la página web.] 
 
@@ -614,9 +711,9 @@ Además, en el código \ref{cod:aplicacion_web_js}, se presenta la implementaci�
 
 </html>
 
-
-
 \end{lstlisting}
+
+
 
 
 \begin{lstlisting}[label=cod:aplicacion_web_js, caption=Implementación en javascript de la parte dinámica de la página web.] 
@@ -723,7 +820,7 @@ client.on('message', (topic, message) => {
 \end{lstlisting}
 
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=1\textwidth]{./Figures/Mockup_web.png}
 	\caption{Maqueta de la interfaz web.}
@@ -731,7 +828,7 @@ client.on('message', (topic, message) => {
 \end{figure}
 
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=1\textwidth]{./Figures/web_final.jpeg}
 	\caption{Maqueta de la interfaz web.}

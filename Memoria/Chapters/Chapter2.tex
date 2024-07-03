@@ -68,7 +68,7 @@ En este trabajo se desarrolló un prototipo para realizar el posicionamiento geo
 \begin{itemize}
     \item Microcontrolador, que realiza las labores de unidad central de procesamiento.
     \item Receptor GNSS, para la recepción de datos de posicionamiento.
-    \item Módulo de comunicación 4G, para la conexión a Internet.
+    \item Módulo de comunicación 4G, para la conexión a internet.
     \item Plataforma de software para la presentación de la información. 
     \item Fuente de alimentación.
 \end{itemize}
@@ -82,7 +82,7 @@ Luego de realizar un estudio comparativo entre tres plataformas de microcontrola
 
 \begin{table}[h]
     \centering
-    \caption{Tabla comparativa de Microcontroladores.}
+    \caption{Tabla comparativa de microcontroladores.}
     \begin{tabular}{p{3cm} p{3cm} p{2.5cm} p{2.5cm} }
     \toprule
 
@@ -144,7 +144,7 @@ A continuación, se presentan los beneficios de haber aplicado el microcontrolad
 
 \begin{itemize}
     \item Es de resaltar la significativa capacidad de cómputo inherente a su diseño, ya que cuenta con un procesador de doble núcleo. Esto fue especialmente útil para implementar multitarea a través de FreeRTOS.
-    \item Incorpora dos módulos de comunicación inalámbrica: Wi-Fi y Bluetooth. Esto permite la conexión con Internet y la conexión en redes de área personal. 
+    \item Incorpora dos módulos de comunicación inalámbrica: Wi-Fi y Bluetooth. Esto permite la conexión con internet y la conexión en redes de área personal. 
     \item Otro punto a favor importante para los requerimientos del trabajo, es que presenta modos de bajo de consumo energético configurables. 
     \item El fabricante proporciona una documentación extensa de su producto. Además, provee el \textit{framework} ESP-IDF que es bastante potente y está disponible gratuitamente.  
     \item Debido a que es un producto \textit{Open Source} y \textit{Open Hardware}, goza de una comunidad de desarrolladores bastante activa y una gran disponibilidad de documentación. Estas dos características posibilitan que cualquier inconveniente que se consulte tenga una alta probabilidad de ser resuelto.  
@@ -235,8 +235,8 @@ La antena está diseñada, según su fabricante, está diseñada con las caracte
 \begin{itemize}
 	\item Antena tipo activa.
 	\item Rango de frecuencias de 1561 MHz a 1575 MHz.
-	\item Impedancia de entrada de 50 ohm
-	\item Ganancia entre 0.5 dBi y 1.4 dBi
+	\item Impedancia de entrada de 50 Ohm
+	\item Ganancia entre 0,5 dBi y 1,4 dBi
 	\item Polarización tipo RHCP. 
 \end{itemize}
 
@@ -253,7 +253,7 @@ La antena está diseñada, según su fabricante, está diseñada con las caracte
 \subsection{Sistema operativo de tiempo real}
 \label{sec:RTOS}
 
-Un sistema operativo de tiempo real (RTOS, del inglés: Real-Time Operating System), es un tipo de sistema operativo diseñado específicamente para controlar y gestionar tareas de tiempo real en sistemas embebidos, como microcontroladores y sistemas integrados. La característica principal de un RTOS es que puede responder a eventos y ejecutar tareas de manera predecible y en un intervalo de tiempo garantizado.
+Un sistema operativo de tiempo real (RTOS, del inglés: \textit{Real-Time Operating System}), es un tipo de sistema operativo diseñado específicamente para controlar y gestionar tareas de tiempo real en sistemas embebidos, como microcontroladores y sistemas integrados. La característica principal de un RTOS es que puede responder a eventos y ejecutar tareas de manera predecible y en un intervalo de tiempo garantizado.
 
 El firmware que se implementó en este trabajo está basado en FreeRTOS™. En el apartado siguiente, se explica qué es y cuáles son las ventajas que se obtuvieron con su utilización. 
 
@@ -272,7 +272,7 @@ FreeRTOS™ es un sistema operativo de tiempo real de código abierto diseñado 
 
 
 
-\subsection{Servicio web para mapas}
+\subsection{Servicios web para mapas}
 \label{sec:mapas_web}
 
 Un servicio de mapas es un conjunto de herramientas y servicios de software que permiten que los mapas estén disponibles en la web. A menudo este es ofrecido por un proveedor especializado. 
@@ -283,7 +283,7 @@ En la tabla \ref{tabla:comparativa_api_mapas} se presenta una comparación entre
 
 \begin{table}[h]
     \centering
-    \caption{Tabla comparativa de APIs de mapas.}
+    \caption{Tabla comparativa de API's de mapas.}
     \begin{tabular}{p{3cm} p{3cm} p{2.5cm} p{2.5cm} }
     \toprule
         \textbf{Característica}           & \textbf{Google Maps API}           & \textbf{Leaflet.js}               & \textbf{Carto.js} \\
