@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.6.26)  3 JUL 2024 11:54
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.6.26)  6 JUL 2024 00:47
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -970,7 +970,7 @@ Package hyperref Info: Link coloring ON on input line 93.
 \@outlinefile=\write5
 \openout5 = `memoria.out'.
 
-<./Figures/logoFIUBA.pdf, id=187, 460.9062pt x 153.61644pt>
+<./Figures/logoFIUBA.pdf, id=239, 460.9062pt x 153.61644pt>
 File: ./Figures/logoFIUBA.pdf Graphic file (type pdf)
 <use ./Figures/logoFIUBA.pdf>
 Package pdftex.def Info: ./Figures/logoFIUBA.pdf  used on input line 93.
@@ -1152,7 +1152,7 @@ LaTeX Info: Redefining \% on input line 1.
 
 (Chapters/Chapter1.tex
 Cap\'{\i }tulo 1.
-<./Figures/cava.png, id=371, 613.29124pt x 521.95pt>
+<./Figures/cava.png, id=470, 613.29124pt x 521.95pt>
 File: ./Figures/cava.png Graphic file (type png)
 <use ./Figures/cava.png>
 Package pdftex.def Info: ./Figures/cava.png  used on input line 39.
@@ -1177,21 +1177,6 @@ l.46
 
  <./Figures/cava.png>]
 
-LaTeX Warning: Citation 'GNSS-Junta-Adalucia' on page 2 undefined on input line
- 57.
-
-
-LaTeX Warning: Citation 'GNSS-ONU' on page 2 undefined on input line 59.
-
-
-LaTeX Warning: Citation 'GNSS-ONU' on page 2 undefined on input line 59.
-
-
-LaTeX Warning: Citation 'GNSS-Junta-Adalucia' on page 2 undefined on input line
- 61.
-
-
-
 LaTeX Info: Redefining \. on input line 75.
 LaTeX Info: Redefining \% on input line 75.
 
@@ -1202,16 +1187,6 @@ been already used, duplicate ignored
 l.75     \item G
                 eodesia y GeofÃ­sica, para mejorar la precisiÃ³n en el estud...
 [2]
-
-LaTeX Warning: Citation 'DiGrazia' on page 3 undefined on input line 83.
-
-
-LaTeX Warning: Citation 'Shu' on page 3 undefined on input line 85.
-
-
-LaTeX Warning: Citation 'Villien' on page 3 undefined on input line 93.
-
-
 
 LaTeX Info: Redefining \. on input line 108.
 LaTeX Info: Redefining \% on input line 108.
@@ -1233,7 +1208,7 @@ Cap\'{\i }tulo 2.
 
 
 ]
-<./Figures/diagrama_general.png, id=415, 868.24374pt x 457.71pt>
+<./Figures/diagrama_general.png, id=526, 868.24374pt x 457.71pt>
 File: ./Figures/diagrama_general.png Graphic file (type png)
 <use ./Figures/diagrama_general.png>
 Package pdftex.def Info: ./Figures/diagrama_general.png  used on input line 55.
@@ -1303,13 +1278,7 @@ Underfull \hbox (badness 4832) in paragraph at lines 107--107
 []|\T1/ppl/m/n/10.95 No 16 (Ana-
  []
 
-
-LaTeX Warning: Citation 'ESPRESSIF' on page 7 undefined on input line 115.
-
-
-LaTeX Warning: Citation 'ESPRESSIF' on page 7 undefined on input line 117.
-
-<./Figures/ESP32.jpg, id=425, 963.6pt x 542.025pt>
+<./Figures/ESP32.jpg, id=538, 963.6pt x 542.025pt>
 File: ./Figures/ESP32.jpg Graphic file (type jpg)
 <use ./Figures/ESP32.jpg>
 Package pdftex.def Info: ./Figures/ESP32.jpg  used on input line 136.
@@ -1329,32 +1298,17 @@ Underfull \hbox (badness 10000) in paragraph at lines 141--141
 LaTeX Info: Redefining \. on input line 159.
 LaTeX Info: Redefining \% on input line 159.
 [8 <./Figures/ESP32.jpg>]
-
-LaTeX Warning: Citation 'QL76' on page 9 undefined on input line 160.
-
-<./Figures/QL76.png, id=439, 602.25pt x 452.69125pt>
+<./Figures/QL76.png, id=554, 602.25pt x 452.69125pt>
 File: ./Figures/QL76.png Graphic file (type png)
 <use ./Figures/QL76.png>
 Package pdftex.def Info: ./Figures/QL76.png  used on input line 166.
 (pdftex.def)             Requested size: 194.90134pt x 146.50124pt.
 
-LaTeX Warning: Citation 'QL76' on page 9 undefined on input line 172.
-
-
-Overfull \hbox (12.46284pt too wide) in paragraph at lines 172--173
-[]\T1/ppl/m/n/10.95 A con-ti-nua-ción, se des-cri-ben las ca-rac-te-rís-ti-cas 
-prin-ci-pa-les del mó-du-lo QL76 [[]]: 
- []
-
-
 
 LaTeX Info: Redefining \. on input line 190.
 LaTeX Info: Redefining \% on input line 190.
 [9 <./Figures/QL76.png>]
-
-LaTeX Warning: Citation 'A7670SA' on page 10 undefined on input line 196.
-
-<./Figures/A7670SA.jpg, id=448, 173.89969pt x 170.88844pt>
+<./Figures/A7670SA.jpg, id=566, 173.89969pt x 170.88844pt>
 File: ./Figures/A7670SA.jpg Graphic file (type jpg)
 <use ./Figures/A7670SA.jpg>
 Package pdftex.def Info: ./Figures/A7670SA.jpg  used on input line 202.
@@ -1365,7 +1319,7 @@ Overfull \hbox (4.70375pt too wide) in paragraph at lines 211--212
 B66), GSM
  []
 
-<./Figures/A7670SA_Mod.jpg, id=452, 602.25pt x 602.25pt>
+<./Figures/A7670SA_Mod.jpg, id=570, 602.25pt x 602.25pt>
 File: ./Figures/A7670SA_Mod.jpg Graphic file (type jpg)
 <use ./Figures/A7670SA_Mod.jpg>
 Package pdftex.def Info: ./Figures/A7670SA_Mod.jpg  used on input line 223.
@@ -1375,7 +1329,7 @@ Package pdftex.def Info: ./Figures/A7670SA_Mod.jpg  used on input line 223.
 LaTeX Info: Redefining \. on input line 232.
 LaTeX Info: Redefining \% on input line 232.
 [10 <./Figures/A7670SA.jpg>]
-<./Figures/Antena_Quectel_YG0035AA.png, id=462, 318.43968pt x 220.57407pt>
+<./Figures/Antena_Quectel_YG0035AA.png, id=581, 318.43968pt x 220.57407pt>
 File: ./Figures/Antena_Quectel_YG0035AA.png Graphic file (type png)
 <use ./Figures/Antena_Quectel_YG0035AA.png>
 Package pdftex.def Info: ./Figures/Antena_Quectel_YG0035AA.png  used on input l
@@ -1392,10 +1346,6 @@ product / yg0035aa-[]gnss-[]active-[]magnetic-[]mount-[]antenna/$[][]|
 LaTeX Info: Redefining \. on input line 257.
 LaTeX Info: Redefining \% on input line 257.
 [11 <./Figures/A7670SA_Mod.jpg> <./Figures/Antena_Quectel_YG0035AA.png>]
-
-LaTeX Warning: Citation 'FreeRTOS' on page 12 undefined on input line 263.
-
-
 Underfull \hbox (badness 10000) in paragraph at lines 289--289
 []|\T1/ppl/b/n/10.95 Google Maps
  []
@@ -1742,7 +1692,7 @@ Cap\'{\i }tulo 3.
 
 1: section
 [15]
-<./Figures/arquitectura_hardware_sistema.png, id=492, 904.37875pt x 475.7775pt>
+<./Figures/arquitectura_hardware_sistema.png, id=613, 904.37875pt x 475.7775pt>
 
 File: ./Figures/arquitectura_hardware_sistema.png Graphic file (type png)
 <use ./Figures/arquitectura_hardware_sistema.png>
@@ -1751,26 +1701,22 @@ nput line 53.
 (pdftex.def)             Requested size: 389.80269pt x 205.06673pt.
 
 
-LaTeX Warning: Citation 'MIC29302WU' on page 16 undefined on input line 73.
-
-
-
 LaTeX Info: Redefining \. on input line 76.
 LaTeX Info: Redefining \% on input line 76.
 [16 <./Figures/arquitectura_hardware_sistema.png>]
-<./Figures/PCB_TFE_Modelo_2D.png, id=507, 398.08725pt x 280.52805pt>
+<./Figures/PCB_TFE_Modelo_2D.png, id=630, 398.08725pt x 280.52805pt>
 File: ./Figures/PCB_TFE_Modelo_2D.png Graphic file (type png)
 <use ./Figures/PCB_TFE_Modelo_2D.png>
 Package pdftex.def Info: ./Figures/PCB_TFE_Modelo_2D.png  used on input line 81
 .
 (pdftex.def)             Requested size: 311.84334pt x 219.76553pt.
-<./Figures/PCB_TFE_Modelo_3D.png, id=508, 484.81125pt x 349.305pt>
+<./Figures/PCB_TFE_Modelo_3D.png, id=631, 484.81125pt x 349.305pt>
 File: ./Figures/PCB_TFE_Modelo_3D.png Graphic file (type png)
 <use ./Figures/PCB_TFE_Modelo_3D.png>
 Package pdftex.def Info: ./Figures/PCB_TFE_Modelo_3D.png  used on input line 88
 .
 (pdftex.def)             Requested size: 311.84334pt x 224.69504pt.
-<./Figures/PCB_TFE__real_front.jpeg, id=509, 492.33937pt x 361.35pt>
+<./Figures/PCB_TFE__real_front.jpeg, id=632, 492.33937pt x 361.35pt>
 File: ./Figures/PCB_TFE__real_front.jpeg Graphic file (type jpg)
 <use ./Figures/PCB_TFE__real_front.jpeg>
 Package pdftex.def Info: ./Figures/PCB_TFE__real_front.jpeg  used on input line
@@ -1781,13 +1727,13 @@ Package pdftex.def Info: ./Figures/PCB_TFE__real_front.jpeg  used on input line
 LaTeX Info: Redefining \. on input line 99.
 LaTeX Info: Redefining \% on input line 99.
 [17 <./Figures/PCB_TFE_Modelo_2D.png> <./Figures/PCB_TFE_Modelo_3D.png>]
-<./Figures/PCB_TFE__real_reverse.jpeg, id=517, 660.21657pt x 478.03593pt>
+<./Figures/PCB_TFE__real_reverse.jpeg, id=640, 660.21657pt x 478.03593pt>
 File: ./Figures/PCB_TFE__real_reverse.jpeg Graphic file (type jpg)
 <use ./Figures/PCB_TFE__real_reverse.jpeg>
 Package pdftex.def Info: ./Figures/PCB_TFE__real_reverse.jpeg  used on input li
 ne 102.
 (pdftex.def)             Requested size: 311.84334pt x 225.80023pt.
-<./Figures/QL76_Esquematico.png, id=522, 260.47313pt x 318.43968pt>
+<./Figures/QL76_Esquematico.png, id=645, 260.47313pt x 318.43968pt>
 File: ./Figures/QL76_Esquematico.png Graphic file (type png)
 <use ./Figures/QL76_Esquematico.png>
 Package pdftex.def Info: ./Figures/QL76_Esquematico.png  used on input line 118
@@ -1799,19 +1745,19 @@ LaTeX Info: Redefining \. on input line 122.
 LaTeX Info: Redefining \% on input line 122.
 [18 <./Figures/PCB_TFE__real_front.jpeg> <./Figures/PCB_TFE__real_reverse.jpeg>
 ]
-<./Figures/QL76_modelo_2d_sup.png, id=527, 414.04688pt x 360.59718pt>
+<./Figures/QL76_modelo_2d_sup.png, id=650, 414.04688pt x 360.59718pt>
 File: ./Figures/QL76_modelo_2d_sup.png Graphic file (type png)
 <use ./Figures/QL76_modelo_2d_sup.png>
 Package pdftex.def Info: ./Figures/QL76_modelo_2d_sup.png  used on input line 1
 25.
 (pdftex.def)             Requested size: 155.91869pt x 135.79034pt.
-<./Figures/QL76_modelo_3d_sup.png, id=528, 429.85594pt x 365.86688pt>
+<./Figures/QL76_modelo_3d_sup.png, id=651, 429.85594pt x 365.86688pt>
 File: ./Figures/QL76_modelo_3d_sup.png Graphic file (type png)
 <use ./Figures/QL76_modelo_3d_sup.png>
 Package pdftex.def Info: ./Figures/QL76_modelo_3d_sup.png  used on input line 1
 32.
 (pdftex.def)             Requested size: 155.91869pt x 132.71127pt.
-<./Figures/QL76_real.jpeg, id=529, 431.36156pt x 478.03593pt>
+<./Figures/QL76_real.jpeg, id=652, 431.36156pt x 478.03593pt>
 File: ./Figures/QL76_real.jpeg Graphic file (type jpg)
 <use ./Figures/QL76_real.jpeg>
 Package pdftex.def Info: ./Figures/QL76_real.jpeg  used on input line 139.
@@ -1826,7 +1772,7 @@ res/QL76_modelo_3d_sup.png>]
 LaTeX Info: Redefining \. on input line 171.
 LaTeX Info: Redefining \% on input line 171.
 [20 <./Figures/QL76_real.jpeg>]
-<./Figures/Arquitectura_firmware_TFE_GNSS.png, id=548, 1343.77031pt x 1071.2521
+<./Figures/Arquitectura_firmware_TFE_GNSS.png, id=671, 1343.77031pt x 1071.2521
 8pt>
 File: ./Figures/Arquitectura_firmware_TFE_GNSS.png Graphic file (type png)
 <use ./Figures/Arquitectura_firmware_TFE_GNSS.png>
@@ -1846,7 +1792,7 @@ LaTeX Info: Redefining \% on input line 204.
 LaTeX Info: Redefining \. on input line 224.
 LaTeX Info: Redefining \% on input line 224.
 [23]
-<./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_1.png, id=575, 1153.30875pt x 
+<./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_1.png, id=698, 1153.30875pt x 
 1288.815pt>
 File: ./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_1.png Graphic file (type 
 png)
@@ -1854,7 +1800,7 @@ png)
 Package pdftex.def Info: ./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_1.png 
  used on input line 228.
 (pdftex.def)             Requested size: 311.84334pt x 348.47635pt.
-<./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_2.png, id=577, 1437.37pt x 123
+<./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_2.png, id=700, 1437.37pt x 123
 8.6275pt>
 File: ./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_2.png Graphic file (type 
 png)
@@ -1867,7 +1813,7 @@ Package pdftex.def Info: ./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_2.png
 LaTeX Info: Redefining \. on input line 250.
 LaTeX Info: Redefining \% on input line 250.
 [24 <./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_1.png>]
-<./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_3.png, id=586, 1236.62pt x 123
+<./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_3.png, id=709, 1236.62pt x 123
 8.6275pt>
 File: ./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_3.png Graphic file (type 
 png)
@@ -1932,7 +1878,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 504--504
 LaTeX Info: Redefining \. on input line 553.
 LaTeX Info: Redefining \% on input line 553.
 [32]
-<./Figures/arquitectura_MQTT.png, id=806, 1025.8325pt x 362.35374pt>
+<./Figures/arquitectura_MQTT.png, id=931, 1025.8325pt x 362.35374pt>
 File: ./Figures/arquitectura_MQTT.png Graphic file (type png)
 <use ./Figures/arquitectura_MQTT.png>
 Package pdftex.def Info: ./Figures/arquitectura_MQTT.png  used on input line 57
@@ -1945,39 +1891,23 @@ n / blog / mqtt-[]5-[]introduction-[]to-[]publish-[]subscribe-[]model$[][]|
  []
 
 
-LaTeX Warning: Citation 'MasteringMQTT' on page 33 undefined on input line 581.
-
-
-
 
 LaTeX Info: Redefining \. on input line 582.
 LaTeX Info: Redefining \% on input line 582.
 [33]
 
-LaTeX Warning: Citation 'MasteringMQTT' on page 34 undefined on input line 583.
-
-
-
-
 LaTeX Info: Redefining \. on input line 603.
 LaTeX Info: Redefining \% on input line 603.
 [34 <./Figures/arquitectura_MQTT.png>]
-
-LaTeX Warning: Reference `' on page 35 undefined on input line 614.
-
-
-LaTeX Warning: Reference `' on page 35 undefined on input line 614.
-
-
 
 LaTeX Info: Redefining \. on input line 645.
 LaTeX Info: Redefining \% on input line 645.
 [35]
 
-LaTeX Info: Redefining \. on input line 681.
-LaTeX Info: Redefining \% on input line 681.
+LaTeX Info: Redefining \. on input line 680.
+LaTeX Info: Redefining \% on input line 680.
 [36]
-<./Figures/Mockup_web.png, id=880, 1028.34187pt x 516.42938pt>
+<./Figures/Mockup_web.png, id=1008, 1028.34187pt x 516.42938pt>
 File: ./Figures/Mockup_web.png Graphic file (type png)
 <use ./Figures/Mockup_web.png>
 Package pdftex.def Info: ./Figures/Mockup_web.png  used on input line 722.
@@ -1987,7 +1917,7 @@ Package pdftex.def Info: ./Figures/Mockup_web.png  used on input line 722.
 LaTeX Info: Redefining \. on input line 726.
 LaTeX Info: Redefining \% on input line 726.
 [37]
-<./Figures/web_final.jpeg, id=922, 963.6pt x 539.01375pt>
+<./Figures/web_final.jpeg, id=1052, 963.6pt x 539.01375pt>
 File: ./Figures/web_final.jpeg Graphic file (type jpg)
 <use ./Figures/web_final.jpeg>
 Package pdftex.def Info: ./Figures/web_final.jpeg  used on input line 729.
@@ -2009,7 +1939,21 @@ LaTeX Info: Redefining \% on input line 174.
 
  (Chapters/Chapter4.tex
 Cap\'{\i }tulo 4.
-)
+<./Figures/Prototipo_v_final_exterior.jpg, id=1133, 2787.41376pt x 2345.76375pt
+>
+File: ./Figures/Prototipo_v_final_exterior.jpg Graphic file (type jpg)
+<use ./Figures/Prototipo_v_final_exterior.jpg>
+Package pdftex.def Info: ./Figures/Prototipo_v_final_exterior.jpg  used on inpu
+t line 18.
+(pdftex.def)             Requested size: 194.90134pt x 164.00548pt.
+<./Figures/Prototipo_v_final_interior.jpg, id=1134, 3903.58376pt x 2072.74374pt
+>
+File: ./Figures/Prototipo_v_final_interior.jpg Graphic file (type jpg)
+<use ./Figures/Prototipo_v_final_interior.jpg>
+Package pdftex.def Info: ./Figures/Prototipo_v_final_interior.jpg  used on inpu
+t line 25.
+(pdftex.def)             Requested size: 311.84334pt x 165.56987pt.
+
 
 1: section
 [41
@@ -2017,34 +1961,261 @@ Cap\'{\i }tulo 4.
 
 
 
-]
+ <./Figures/Prototipo_v_final_exterior.jpg> <./Figures/Prototipo_v_final_interi
+or.jpg>]
+<./Figures/Prototipo_v_final_exterior_componentes.jpg, id=1141, 2851.65375pt x 
+2626.81375pt>
+File: ./Figures/Prototipo_v_final_exterior_componentes.jpg Graphic file (type j
+pg)
+<use ./Figures/Prototipo_v_final_exterior_componentes.jpg>
+Package pdftex.def Info: ./Figures/Prototipo_v_final_exterior_componentes.jpg  
+used on input line 43.
+(pdftex.def)             Requested size: 194.90134pt x 179.52682pt.
+<./Figures/Prototipo_v_final_interior_componentes.jpg, id=1143, 3919.64375pt x 
+2096.83376pt>
+File: ./Figures/Prototipo_v_final_interior_componentes.jpg Graphic file (type j
+pg)
+<use ./Figures/Prototipo_v_final_interior_componentes.jpg>
+Package pdftex.def Info: ./Figures/Prototipo_v_final_interior_componentes.jpg  
+used on input line 61.
+(pdftex.def)             Requested size: 311.84334pt x 166.82227pt.
+
+
+LaTeX Info: Redefining \. on input line 78.
+LaTeX Info: Redefining \% on input line 78.
+[42 <./Figures/Prototipo_v_final_exterior_componentes.jpg> <./Figures/Prototipo
+_v_final_interior_componentes.jpg>]
+<./Figures/Prueba_regulador.jpeg, id=1158, 1208.515pt x 1606.0pt>
+File: ./Figures/Prueba_regulador.jpeg Graphic file (type jpg)
+<use ./Figures/Prueba_regulador.jpeg>
+Package pdftex.def Info: ./Figures/Prueba_regulador.jpeg  used on input line 11
+3.
+(pdftex.def)             Requested size: 194.90134pt x 258.9992pt.
+
+
+LaTeX Info: Redefining \. on input line 116.
+LaTeX Info: Redefining \% on input line 116.
+[43]
+<./Figures/grafico_corriente.png, id=1174, 728.613pt x 350.181pt>
+File: ./Figures/grafico_corriente.png Graphic file (type png)
+<use ./Figures/grafico_corriente.png>
+Package pdftex.def Info: ./Figures/grafico_corriente.png  used on input line 12
+4.
+(pdftex.def)             Requested size: 389.80269pt x 187.34764pt.
+
+
+LaTeX Info: Redefining \. on input line 128.
+LaTeX Info: Redefining \% on input line 128.
+[44 <./Figures/Prueba_regulador.jpeg>]
+<./Figures/Prueba_corriente_datos_repre.png, id=1179, 434.37282pt x 541.27219pt
+>
+File: ./Figures/Prueba_corriente_datos_repre.png Graphic file (type png)
+<use ./Figures/Prueba_corriente_datos_repre.png>
+Package pdftex.def Info: ./Figures/Prueba_corriente_datos_repre.png  used on in
+put line 131.
+(pdftex.def)             Requested size: 233.88399pt x 291.44846pt.
+
+
+LaTeX Info: Redefining \. on input line 145.
+LaTeX Info: Redefining \% on input line 145.
+[45 <./Figures/grafico_corriente.png> <./Figures/Prueba_corriente_datos_repre.p
+ng>]
+<./Figures/prueba_QL76_diagrama.png, id=1188, 550.055pt x 134.5025pt>
+File: ./Figures/prueba_QL76_diagrama.png Graphic file (type png)
+<use ./Figures/prueba_QL76_diagrama.png>
+Package pdftex.def Info: ./Figures/prueba_QL76_diagrama.png  used on input line
+ 151.
+(pdftex.def)             Requested size: 272.86069pt x 66.72362pt.
+<./Figures/prueba_QL76_Setup.jpeg, id=1189, 1203.7472pt x 676.77844pt>
+File: ./Figures/prueba_QL76_Setup.jpeg Graphic file (type jpg)
+<use ./Figures/prueba_QL76_Setup.jpeg>
+Package pdftex.def Info: ./Figures/prueba_QL76_Setup.jpeg  used on input line 1
+58.
+(pdftex.def)             Requested size: 311.84334pt x 175.32831pt.
+
+
+LaTeX Info: Redefining \. on input line 214.
+LaTeX Info: Redefining \% on input line 214.
+[46 <./Figures/prueba_QL76_diagrama.png> <./Figures/prueba_QL76_Setup.jpeg>]
+
+LaTeX Info: Redefining \. on input line 216.
+LaTeX Info: Redefining \% on input line 216.
+[47]
+<./Figures/prueba_QL76_recepcion_ana.png, id=1249, 663.22781pt x 405.76593pt>
+File: ./Figures/prueba_QL76_recepcion_ana.png Graphic file (type png)
+<use ./Figures/prueba_QL76_recepcion_ana.png>
+Package pdftex.def Info: ./Figures/prueba_QL76_recepcion_ana.png  used on input
+ line 219.
+(pdftex.def)             Requested size: 389.80269pt x 238.48347pt.
+<./Figures/prueba_A7670SA_diagrama.png, id=1252, 557.08125pt x 134.5025pt>
+File: ./Figures/prueba_A7670SA_diagrama.png Graphic file (type png)
+<use ./Figures/prueba_A7670SA_diagrama.png>
+Package pdftex.def Info: ./Figures/prueba_A7670SA_diagrama.png  used on input l
+ine 239.
+(pdftex.def)             Requested size: 272.86069pt x 65.88011pt.
+<./Figures/Prueba_A7670SA_Setup.jpeg, id=1253, 1203.7472pt x 676.77844pt>
+File: ./Figures/Prueba_A7670SA_Setup.jpeg Graphic file (type jpg)
+<use ./Figures/Prueba_A7670SA_Setup.jpeg>
+Package pdftex.def Info: ./Figures/Prueba_A7670SA_Setup.jpeg  used on input lin
+e 246.
+(pdftex.def)             Requested size: 311.84334pt x 175.32831pt.
+
+
+LaTeX Info: Redefining \. on input line 250.
+LaTeX Info: Redefining \% on input line 250.
+[48 <./Figures/prueba_QL76_recepcion_ana.png> <./Figures/prueba_A7670SA_diagram
+a.png>]
+Overfull \hbox (20.0662pt too wide) in paragraph at lines 252--253
+\T1/ppl/m/n/10.95 an-te-rior (ver có-di-go [][]4.1[][]). Igual que en la prue-b
+a an-te-rior, la ta-rea \T1/ppl/m/it/10.95 uart1_interrupt_task()\T1/ppl/m/n/10
+.95 ,
+ []
+
+<./Figures/Prueba_A7670SA_recep_AT.png, id=1264, 479.54156pt x 417.05812pt>
+File: ./Figures/Prueba_A7670SA_recep_AT.png Graphic file (type png)
+<use ./Figures/Prueba_A7670SA_recep_AT.png>
+Package pdftex.def Info: ./Figures/Prueba_A7670SA_recep_AT.png  used on input l
+ine 260.
+(pdftex.def)             Requested size: 389.80269pt x 339.01797pt.
+
+
+LaTeX Info: Redefining \. on input line 264.
+LaTeX Info: Redefining \% on input line 264.
+[49 <./Figures/Prueba_A7670SA_Setup.jpeg>]
+<./Figures/Prueba_A7670SA_transmision_AT.png, id=1271, 468.24937pt x 409.53pt>
+File: ./Figures/Prueba_A7670SA_transmision_AT.png Graphic file (type png)
+<use ./Figures/Prueba_A7670SA_transmision_AT.png>
+Package pdftex.def Info: ./Figures/Prueba_A7670SA_transmision_AT.png  used on i
+nput line 278.
+(pdftex.def)             Requested size: 389.80269pt x 340.94087pt.
+
+
+LaTeX Info: Redefining \. on input line 282.
+LaTeX Info: Redefining \% on input line 282.
+[50 <./Figures/Prueba_A7670SA_recep_AT.png>]
+
+LaTeX Info: Redefining \. on input line 337.
+LaTeX Info: Redefining \% on input line 337.
+[51 <./Figures/Prueba_A7670SA_transmision_AT.png>]
+<./Figures/prueba_LCD_collage.png, id=1289, 676.77844pt x 488.57532pt>
+File: ./Figures/prueba_LCD_collage.png Graphic file (type png)
+<use ./Figures/prueba_LCD_collage.png>
+Package pdftex.def Info: ./Figures/prueba_LCD_collage.png  used on input line 3
+41.
+(pdftex.def)             Requested size: 389.80269pt x 281.41321pt.
+
+
+LaTeX Info: Redefining \. on input line 345.
+LaTeX Info: Redefining \% on input line 345.
+[52]
+
+LaTeX Info: Redefining \. on input line 384.
+LaTeX Info: Redefining \% on input line 384.
+[53 <./Figures/prueba_LCD_collage.png>]
+<./Figures/prueba_web_1_mapa.png, id=1347, 1028.34187pt x 518.6878pt>
+File: ./Figures/prueba_web_1_mapa.png Graphic file (type png)
+<use ./Figures/prueba_web_1_mapa.png>
+Package pdftex.def Info: ./Figures/prueba_web_1_mapa.png  used on input line 38
+7.
+(pdftex.def)             Requested size: 389.80269pt x 196.6127pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 422--423
+[]|\T1/ppl/b/n/10.95 Distancia
+ []
+
+
+Overfull \hbox (0.5819pt too wide) in paragraph at lines 424--424
+[]|\T1/ppl/m/n/10.95 10.96046963| 
+ []
+
+
+Overfull \hbox (0.5819pt too wide) in paragraph at lines 425--425
+[]|\T1/ppl/m/n/10.95 10.96096967| 
+ []
+
+
+Overfull \hbox (0.5819pt too wide) in paragraph at lines 426--426
+[]|\T1/ppl/m/n/10.95 10.96052396| 
+ []
+
+
+Overfull \hbox (0.5819pt too wide) in paragraph at lines 427--427
+[]|\T1/ppl/m/n/10.95 10.96056399| 
+ []
+
+
+Overfull \hbox (0.5819pt too wide) in paragraph at lines 428--428
+[]|\T1/ppl/m/n/10.95 10.96013613| 
+ []
+
+
+Overfull \hbox (0.5819pt too wide) in paragraph at lines 429--429
+[]|\T1/ppl/m/n/10.95 10.95987377| 
+ []
+
+
+Overfull \hbox (0.5819pt too wide) in paragraph at lines 430--430
+[]|\T1/ppl/m/n/10.95 10.95935576| 
+ []
+
+
+Overfull \hbox (0.5819pt too wide) in paragraph at lines 431--431
+[]|\T1/ppl/m/n/10.95 10.95941637| 
+ []
+
+
+Overfull \hbox (0.5819pt too wide) in paragraph at lines 432--432
+[]|\T1/ppl/m/n/10.95 10.96084288| 
+ []
+
+
+Overfull \hbox (0.5819pt too wide) in paragraph at lines 433--433
+[]|\T1/ppl/m/n/10.95 10.96033852| 
+ []
+
+
+Overfull \hbox (0.5819pt too wide) in paragraph at lines 434--434
+[]|\T1/ppl/m/n/10.95 10.95995456| 
+ []
+
+
+Overfull \hbox (6.5585pt too wide) in paragraph at lines 419--438
+ [][] 
+ []
+
+
+
+LaTeX Info: Redefining \. on input line 438.
+LaTeX Info: Redefining \% on input line 438.
+[54 <./Figures/prueba_web_1_mapa.png>])
+
+LaTeX Info: Redefining \. on input line 175.
+LaTeX Info: Redefining \% on input line 175.
+[55]
 \openout2 = `Chapters/Chapter5.aux'.
 
  (Chapters/Chapter5.tex
 
-[42
+[56
 
 
 
 
 ]
 Cap\'{\i }tulo 5.
-)
+
 
 1: section
-[43]
+[57])
+
+LaTeX Info: Redefining \. on input line 176.
+LaTeX Info: Redefining \% on input line 176.
+[58]
 \openout2 = `Appendices/AppendixA.aux'.
 
  (Appendices/AppendixA.tex
-
-[44
-
-
-
-
-]
 Ap\'{e}ndice A.
-<./Appendices/Esquematico_placa_base.pdf, id=1018, 1178.2018pt x 833.91548pt>
+<./Appendices/Esquematico_placa_base.pdf, id=1375, 1178.2018pt x 833.91548pt>
 File: ./Appendices/Esquematico_placa_base.pdf Graphic file (type pdf)
 <use ./Appendices/Esquematico_placa_base.pdf>
 Package pdftex.def Info: ./Appendices/Esquematico_placa_base.pdf  used on input
@@ -2055,7 +2226,7 @@ File: ./Appendices/Esquematico_placa_base.pdf Graphic file (type pdf)
 Package pdftex.def Info: ./Appendices/Esquematico_placa_base.pdf  used on input
  line 20.
 (pdftex.def)             Requested size: 1178.19893pt x 833.91344pt.
-<./Appendices/Esquematico_placa_base.pdf, id=1021, page=1, 1178.2018pt x 833.91
+<./Appendices/Esquematico_placa_base.pdf, id=1378, page=1, 1178.2018pt x 833.91
 548pt>
 File: ./Appendices/Esquematico_placa_base.pdf Graphic file (type pdf)
 <use ./Appendices/Esquematico_placa_base.pdf, page 1>
@@ -2070,7 +2241,12 @@ n input line 20.
 
 
 1: section
-[45]
+[59
+
+
+
+
+]
 File: ./Appendices/Esquematico_placa_base.pdf Graphic file (type pdf)
 <use ./Appendices/Esquematico_placa_base.pdf, page 1>
 Package pdftex.def Info: ./Appendices/Esquematico_placa_base.pdf , page1 used o
@@ -2088,13 +2264,16 @@ File: ./Appendices/Esquematico_placa_base.pdf Graphic file (type pdf)
 Package pdftex.def Info: ./Appendices/Esquematico_placa_base.pdf , page1 used o
 n input line 20.
 (pdftex.def)             Requested size: 597.603pt x 422.9754pt.
-[46
+[60
 
  <./Appendices/Esquematico_placa_base.pdf>])
 
-LaTeX Warning: Empty bibliography on input line 197.
+1: section
+[61
 
-(memoria.aux
+
+
+] (memoria.aux
 LaTeX Info: Redefining \sptext on input line 15.
 LaTeX Info: Redefining \. on input line 15.
 LaTeX Info: Redefining \% on input line 15.
@@ -2110,7 +2289,7 @@ L3 programming layer <2020/03/25>
 LaTeX Warning: There were undefined references.
 
 Package rerunfilecheck Info: File `memoria.out' has not changed.
-(rerunfilecheck)             Checksum: F6844C1BC72F81824CD83EFA56BBB40A;3373.
+(rerunfilecheck)             Checksum: B7F969D46209D7BE6BA63AC80F6EAD63;4411.
 
 Package biblatex Warning: Please (re)run BibTeX on the file(s):
 (biblatex)                memoria
@@ -2121,11 +2300,11 @@ Package logreq Info: Writing requests to 'memoria.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 33418 strings out of 473919
- 712948 string characters out of 5727897
+ 33845 strings out of 473919
+ 723327 string characters out of 5727897
  2222908 words of memory out of 5000000
- 55346 multiletter control sequences out of 15000+600000
- 609424 words of font info for 109 fonts, out of 8000000 for 9000
+ 55593 multiletter control sequences out of 15000+600000
+ 611570 words of font info for 113 fonts, out of 8000000 for 9000
  1142 hyphenation exceptions out of 8191
  96i,20n,94p,1966b,2672s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
@@ -2165,9 +2344,9 @@ tino/uplb8a.pfb><C:/Users/CUC/AppData/Local/Programs/MiKTeX/fonts/type1/urw/pal
 atino/uplr8a.pfb><C:/Users/CUC/AppData/Local/Programs/MiKTeX/fonts/type1/urw/pa
 latino/uplr8a.pfb><C:/Users/CUC/AppData/Local/Programs/MiKTeX/fonts/type1/urw/p
 alatino/uplri8a.pfb>
-Output written on memoria.pdf (60 pages, 6623324 bytes).
+Output written on memoria.pdf (75 pages, 15982119 bytes).
 PDF statistics:
- 1182 PDF objects out of 1200 (max. 8388607)
- 502 named destinations out of 1000 (max. 500000)
- 509 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1592 PDF objects out of 1728 (max. 8388607)
+ 679 named destinations out of 1000 (max. 500000)
+ 693 words of extra memory for PDF output out of 10000 (max. 10000000)
 

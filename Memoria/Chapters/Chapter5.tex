@@ -13,16 +13,26 @@
 
 \section{Conclusiones generales }
 
-La idea de esta sección es resaltar cuáles son los principales aportes del trabajo realizado y cómo se podría continuar. Debe ser especialmente breve y concisa. Es buena idea usar un listado para enumerar los logros obtenidos.
+En esta sección se resaltan los principales aportes del trabajo realizado y cuáles podrían ser los trabajos futuros inspirados en este. 
 
-Algunas preguntas que pueden servir para completar este capítulo:
+A continuación, se presentan las conclusiones más relevantes:
 
 \begin{itemize}
-\item ¿Cuál es el grado de cumplimiento de los requerimientos?
-\item ¿Cuán fielmente se puedo seguir la planificación original (cronograma incluido)?
-\item ¿Se manifestó algunos de los riesgos identificados en la planificación? ¿Fue efectivo el plan de mitigación? ¿Se debió aplicar alguna otra acción no contemplada previamente?
-\item Si se debieron hacer modificaciones a lo planificado ¿Cuáles fueron las causas y los efectos?
-\item ¿Qué técnicas resultaron útiles para el desarrollo del proyecto y cuáles no tanto?
+\item El presente trabajo dio como resultado un prototipo funcional de geolocalización basado en tecnología GNSS, que es capaz de transmitir la posición de una cava móvil hacia un \textit{Broker} MQTT, que a su vez cuenta con una página web donde se puede visualizar en un mapa la posición actual. 
+
+\item Los requerimientos del trabajo se cumplieron en un 90\% debido a que no se pudo cumplir con la exactitud de 10 m. Esta exactitud se cumple mientras el dispositivo se encuentra en la calle o lugares despejados; sin embargo, cuando el dispositivo se encuentra al interior de un edificio la exactitud baja considerablemente al rededor de 50 m. 
+
+\item Según la planificación del trabajo, se esperaba haberlo terminado en el mes de mayo de 2024. Sin embargo, por situaciones relacionadas con obligaciones laborales del autor y retrasos debido a implementaciones fallidas del hardware no se pudo cumplir con los tiempos planificados. 
+
+\item Se manifestó el riesgo 1 \textit{'daño o deterioro inesperado de los módulos de hardware'}. Las medidas de mitigación fueron efectivas. Específicamente se tuvo que cambiar el módulo de comunicación GPRS/GSM Quectel M95, que estaba previsto en la planificación, por el módulo 4G SIM A7670SA. Esto debido a los cambios en la infraestructura de comunicaciones en Colombia, donde se descontinuó el uso de comunicaciones 2G. Lo anterior causó que se desechara el trabajo adelantado con el módulo M95 e impacto con retrasos en el trabajo. 
+
+\item debido a lo anterior, también se manifestó el riesgo riesgo 4 \textit{'trabajos no planificados por fallas en el análisis'}, debido a que no se consideró correctamente la tecnología de telecomunicaciones a utilizar.
+
+\item Se manifestó el riesgo 5 \textit{'extensión del proyecto más allá del plazo establecido'}. El plan de mitigación no fue efectivo, debido a variables incontrolables como: nueva carga laboral y sucesos otros imprevistos. Habría sido prudente analizar mejor la situación con respecto a los requerimientos para ajustar el alcance del trabajo.
+
+\item Se debió cambiar el módulo Quectel M95 por el SIM A7670. Esto produjo retrasos en el proyecto, pero trajo el beneficio de una actualización tecnológica importante que se ve reflejada en la estabilidad de la comunicación celular. 
+
+
 \end{itemize}
 
 
@@ -31,4 +41,16 @@ Algunas preguntas que pueden servir para completar este capítulo:
 %----------------------------------------------------------------------------------------
 \section{Próximos pasos}
 
-Acá se indica cómo se podría continuar el trabajo más adelante.
+Como trabajo futuro quedan los siguientes:
+
+\begin{itemize}
+\item Cambiar el módulo 4G por otro que permita funciones de triangulación. 
+
+\item Implementar un protocolo de seguridad de acceso a personal autorizado con tecnología RFID o huella digital. 
+
+\item Realizar un diseño de hardware con miras a disminuir el consumo de potencia, optimizar conexiones y reducir el tamaño del dispositivo.
+
+\item Implementar una base de datos en la nube para registrar los históricos de posiciones a largo plazo.  
+
+\item Desarrollar más funcionalidades a la página web como: selección de dispositivos, mostrar históricos de posiciones y estados, entre otros. 
+\end{itemize}

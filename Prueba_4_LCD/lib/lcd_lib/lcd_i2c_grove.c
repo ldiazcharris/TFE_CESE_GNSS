@@ -124,6 +124,13 @@ void lcd_write_string(char *str)
 		lcd_write_char(*str++);
 }
 
+void lcd_write(uint8_t row, uint8_t column, char *str)
+{
+    lcd_cursor(row, column);
+	while(*str) 
+		lcd_write_char(*str++);
+}
+
 void lcd_clear()
 {
 	lcd_command(0x01);

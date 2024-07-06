@@ -40,8 +40,21 @@
 \contentsline {subsection}{\numberline {3.4.2}Implementación de la interfaz web}{34}{subsection.3.4.2}%
 \contentsline {subsection}{\numberline {3.4.3}Metodología de la implementación}{35}{subsection.3.4.3}%
 \contentsline {chapter}{\numberline {4}Ensayos y resultados}{41}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Pruebas funcionales del hardware}{41}{section.4.1}%
-\contentsline {chapter}{\numberline {5}Conclusiones}{43}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Conclusiones generales }{43}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Próximos pasos}{43}{section.5.2}%
-\contentsline {chapter}{\numberline {A}Esquemáctico de la placa base del sistema}{45}{appendix.Alph1}%
+\contentsline {section}{\numberline {4.1}Resultado final de la integración del hardware}{41}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Pruebas funcionales del hardware}{43}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Metodología para las pruebas del hardware}{43}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Resultados y análisis}{43}{subsection.4.2.2}%
+\contentsline {subsubsection}{De las pruebas sobre la PCB}{43}{section*.54}%
+\contentsline {subsubsection}{De las pruebas entre módulos}{45}{section*.58}%
+\contentsline {section}{\numberline {4.3}Pruebas funcionales de la aplicación web}{53}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Prueba de integración con el hardware}{53}{subsection.4.3.1}%
+\contentsline {subsubsection}{Metodología}{53}{section*.69}%
+\contentsline {subsubsection}{Resultados y análisis}{54}{section*.70}%
+\contentsline {subsection}{\numberline {4.3.2}Prueba de exactitud de la ubicación}{54}{subsection.4.3.2}%
+\contentsline {subsubsection}{Metodología}{54}{section*.72}%
+\contentsline {subsubsection}{Resultados y análisis}{55}{section*.73}%
+\contentsline {chapter}{\numberline {5}Conclusiones}{57}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Conclusiones generales }{57}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Próximos pasos}{58}{section.5.2}%
+\contentsline {chapter}{\numberline {A}Esquemáctico de la placa base del sistema}{59}{appendix.Alph1}%
+\contentsline {chapter}{Bibliograf\'{\i }a}{61}{appendix*.75}%

@@ -31,6 +31,7 @@ static QueueHandle_t occupancy_queue;
 static QueueHandle_t occupancy_queue_isr;
 static QueueHandle_t cava_data_queue;
 static QueueHandle_t lcd_queue;
+static QueueHandle_t gpio_evt_queue;
 static SemaphoreHandle_t uart1_sem;
 static SemaphoreHandle_t lcd_sem;
 static GNSSData_t quectel_l76;
@@ -92,6 +93,8 @@ void app_main()
     lcd_sem = xSemaphoreCreateBinary();
 
     // Creación de colas que servirán para la comunicación entre tareas. 
+
+    gpio_evt_queue = xQueueCreate(10, sizeof(uint32_t));
     position_queue = xQueueCreate(10, sizeof(GNSSData_t));
     occupancy_queue = xQueueCreate(10, sizeof(occupancy_t));
     occupancy_queue_isr = xQueueCreate(10, sizeof(occupancy_t));
@@ -267,7 +270,6 @@ static void collect_data_task(void *params)
 // Esta tarea debería tener la más baja prioridad
 static void transmit_to_server_task(void *params)
 {
-
     CAVA_DATA_t cava_data;
     uart_event_t uart1_event;
     mqtt_msg_state_t mqtt_msg_state = MQTT_MSG_ERROR;
@@ -294,19 +296,16 @@ static void transmit_to_server_task(void *params)
                     cava_data.position.time,
                     cava_data.position.date
                     );
-            
-            // mqtt_msg_state es el mecanismo para saber si hay un fallo en la comunicación MQTT
-            xSemaphoreTake(uart1_sem, portMAX_DELAY);
-            mqtt_msg_state = transmit_msg_mqtt(mqtt_payload, topic, uart1_event, at_response);
-            xSemaphoreGive(uart1_sem);
+            if(NMEA_PARSER_OK == cava_data.position.NMEA_state)
+            {
+                // mqtt_msg_state es el mecanismo para saber si hay un fallo en la comunicación MQTT
+                xSemaphoreTake(uart1_sem, portMAX_DELAY);
+                mqtt_msg_state = transmit_msg_mqtt(mqtt_payload, topic, uart1_event, at_response);
+                xSemaphoreGive(uart1_sem);
+            }
 
-            //memcpy(&lcd_data.cava_data, &cava_data, sizeof(cava_data));
             lcd_data.cava_data = cava_data;
             lcd_data.msg_state = mqtt_msg_state;
-            // lcd_data.cava_data.occupancy = cava_data.occupancy;
-            // lcd_data.cava_data.position.lat = cava_data.position.lat;
-            // lcd_data.cava_data.position.lon = cava_data.position.lon;
-            
 
             xQueueSend(lcd_queue, &lcd_data, pdMS_TO_TICKS(100));
             bzero(mqtt_payload, payload_size);
@@ -381,7 +380,7 @@ static void create_tasks()
                 "button_bridge",
                 BUF_SIZE * 4,
                 NULL,
-                12,
+                15,
                 NULL);
 
     xTaskCreate(collect_data_task,
@@ -411,41 +410,46 @@ static void create_tasks()
 void occupancy_isr_handler(void* arg)
 {
     uint32_t gpio_num = (uint32_t)arg;
-    occupancy_t occupancy;
-    switch (gpio_num)
-    {
-    case BUSSY_BUTTON:
-        occupancy = BUSSY_CAVA;
-        gpio_set_level(BUSSY_PILOT, 0);
-        gpio_set_level(FREE_PILOT, 1);
-
-        break;
-    case FREE_BUTTON:
-        occupancy = FREE_CAVA;
-        gpio_set_level(BUSSY_PILOT, 1);
-        gpio_set_level(FREE_PILOT, 0);
-        break;
     
-    default:
-        break;
-    }
-    xQueueSendFromISR(occupancy_queue_isr, &occupancy, NULL);
+    BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+    if (BUTTON_DOWN == debounce_up(gpio_get_level(gpio_num)))
+        xQueueSendFromISR(gpio_evt_queue, &gpio_num, NULL);
 
+    if( xHigherPriorityTaskWoken )
+    {
+        portYIELD_FROM_ISR();   
+    }
 }
 
 static void button_bridge(void *params)
 {
     occupancy_t occupancy;
-    while(1){
-
-        if(xQueueReceive(occupancy_queue_isr, &occupancy, portMAX_DELAY))
+    uint32_t gpio_num;
+    while (1)
+    {
+        if (xQueueReceive(gpio_evt_queue, &gpio_num, portMAX_DELAY))
         {
-            xQueueSend(occupancy_queue, &occupancy, portMAX_DELAY); 
+            switch (gpio_num)
+            {
+            case BUSSY_BUTTON:
+                occupancy = BUSSY_CAVA;
+                gpio_set_level(BUSSY_PILOT, 1);
+                gpio_set_level(FREE_PILOT, 0);
+
+                break;
+            case FREE_BUTTON:
+                occupancy = FREE_CAVA;
+                gpio_set_level(BUSSY_PILOT, 0);
+                gpio_set_level(FREE_PILOT, 1);
+                break;
+
+            default:
+                break;
+            }
+            xQueueSend(occupancy_queue, &occupancy, portMAX_DELAY);
         }
     }
 }
-
-
 
 static mqtt_server_state_t init_sequence_mqtt_server(uart_event_t uart1_event, char * at_response)
 {

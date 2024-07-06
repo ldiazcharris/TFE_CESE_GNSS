@@ -16,7 +16,7 @@
   {}
 \endgroup
 
-\datalist[entry]{nty/global//global/global/global}
+\datalist[entry]{none/global//global/global/global}
   \entry{GNSS-Junta-Adalucia}{misc}{}{}
     \field{labeltitlesource}{title}
   \field{howpublished}{\url{https://www.juntadeandalucia.es/institutodeestadisticaycartografia/rap/aplicaciones-gnss}}
@@ -78,7 +78,7 @@
          giveni={G\bibinitperiod},
       }}%
     }
-    \strng{namehash}{DGDPFGGASAG1}
+    \strng{namehash}{DGD+1}
     \strng{fullhash}{DGDPFGGASAG1}
     \field{labelnamesource}{author}
     \field{labeltitlesource}{title}
@@ -132,7 +132,7 @@
          giveni={J\bibinitperiod},
       }}%
     }
-    \strng{namehash}{SYXPNXCQQLLJ1}
+    \strng{namehash}{SY+1}
     \strng{fullhash}{SYXPNXCQQLLJ1}
     \field{labelnamesource}{author}
     \field{labeltitlesource}{title}
@@ -193,7 +193,7 @@
 
   \entry{A7670SA}{misc}{}{}
     \field{labeltitlesource}{title}
-    \field{howpublished}{\url{https://www.simcom.com/product/A7670X.html}}
+  \field{howpublished}{\url{https://www.microchip.com/en-us/product/mic29302}}
     \field{note}{Accessed: 2023-11-6}
     \field{title}{Módulo 4G SIMA7670SA}
   \endentry
@@ -205,11 +205,29 @@
     \field{title}{The FreeRTOS™ Kernel}
   \endentry
 
-  \entry{GoogleMaps}{misc}{}{}
+  \entry{MIC29302WU}{misc}{}{}
     \field{labeltitlesource}{title}
-  \field{howpublished}{\url{https://developers.google.com/maps/faq?hl=es-419}}
-    \field{note}{Accessed: 2023-11-14}
-    \field{title}{¿Qué es Google Maps Platform?}
+    \field{howpublished}{\url{https://www.simcom.com/product/A7670X.html}}
+    \field{note}{Accessed: 2024-07-2}
+    \field{title}{Regulador MIC29302WU}
+  \endentry
+
+  \entry{MasteringMQTT}{book}{}{}
+    \name{author}{1}{}{%
+      {{hash=IET}{%
+         family={Inc.},
+         familyi={I\bibinitperiod},
+         given={EMQ\bibnamedelima Technologies},
+         giveni={E\bibinitperiod\bibinitdelim T\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{IET1}
+    \strng{fullhash}{IET1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{edition}{R24-3}
+    \field{title}{Mastering MQTT. Your Ultimate Tutorial for MQTT}
+    \field{year}{2024}
   \endentry
 \enddatalist
 \endinput

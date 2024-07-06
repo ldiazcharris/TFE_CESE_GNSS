@@ -12,8 +12,8 @@
 
 #define BUSSY_PILOT           27
 #define FREE_PILOT            13
-#define FREE_BUTTON           36 
-#define BUSSY_BUTTON          39
+#define FREE_BUTTON           39 
+#define BUSSY_BUTTON          36
 //#define EN_GNSS_PIN           17
 #define EN_4G_PIN             33
 #define BOARD_LED              2
@@ -32,7 +32,7 @@
 #define CMQTT_CONNECT        "AT+CMQTTCONNECT=0,\"tcp://18.212.130.131:1883\",300,0,\"test\",\"CloudTech*\"\r\n"
 #define CMQTT_TOPIC          "AT+CMQTTTOPIC=0,23\r\n"
 #define CMQTT_PAYLOAD        "AT+CMQTTPAYLOAD=0,%d\r\n"
-#define MQTT_PAYLOAD_FORMAT  "{\"lat\":\"%.6f\", \"long\":\"%.6f\", \"occup\":\"%d\", \"NMEA_st\":\"%d\", \"Cref\":\"%s\", \"time\":\"%s\", \"date\":\"%s\"}\r\n"
+#define MQTT_PAYLOAD_FORMAT  "{\"lat\":\"%f\", \"long\":\"%f\", \"occup\":\"%d\", \"NMEA_st\":\"%d\", \"Cref\":\"%s\", \"time\":\"%s\", \"date\":\"%s\"}\r\n"
 #define MQTT_PUBLISH         "AT+CMQTTPUB=0,0,60,0,0\r\n"
 
 #define RADIO_TIERRA_EQUIVOLUMEN_KM    6371.0
@@ -71,8 +71,8 @@ Def_CAVA
 
 typedef struct
 {
-    float lat;
-    float lon;
+    double lat;
+    double lon;
     char time[10];
     char date[7];
     NMEA_state_t NMEA_state;

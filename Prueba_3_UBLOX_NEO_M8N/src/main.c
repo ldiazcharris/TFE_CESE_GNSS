@@ -68,7 +68,7 @@ static void uart_interrupt_task(void *params)
     while (1)
     {
         //uart_transmit(UART1, (const void *)RMC, strlen(RMC));
-        if (xQueueReceive(uart1_queue, (void *)&uart_event, pdMS_TO_TICKS(1000)))
+        if (xQueueReceive(uart1_queue, (void *)&uart_event, portMAX_DELAY))
         {
             bzero(uart_recv_data, BUF_SIZE);
             bzero(nmea_string, BUF_SIZE + 100);
@@ -78,9 +78,10 @@ static void uart_interrupt_task(void *params)
             {
             case UART_DATA:
                 uart_receive(UART1, (void *)uart_recv_data, (uint32_t)uart_event.size);
-                sprintf((char *)nmea_string, "%s", uart_recv_data);
-                uart_transmit(UART0, nmea_string, strlen((const char*)nmea_string));
-
+                //sprintf((char *)nmea_string, "%s", uart_recv_data);
+                uart_transmit(UART0, uart_recv_data, strlen((const char*)uart_recv_data));
+                bzero(uart_recv_data, BUF_SIZE);
+/*
                 switch(nmea_rmc_parser_r_2((const char *)nmea_string, &quectel_l76))
                     {
                     case NMEA_PARSER_OK:
@@ -116,7 +117,7 @@ static void uart_interrupt_task(void *params)
 
                     }
 
-                /*
+                
                 sprintf((char *)nmea_string, "%s", uart_recv_data);
 
                 uart_transmit(UART0, nmea_string, strlen((const char*)nmea_string));
@@ -141,7 +142,7 @@ static void uart_interrupt_task(void *params)
             }
         }
         uart_transmit(UART0, "Esperando datos GNSS...\n", strlen("Esperando datos GNSS...\n"));
-        delay(1000);
+        delay(2000);
     }
 
     free(uart_recv_data);

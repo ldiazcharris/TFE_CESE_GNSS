@@ -435,7 +435,7 @@ lcd_task()
 
 Además de las tareas y funciones descritas en la sección \ref{fig:arq_firmware}, fue necesario implementar varios componentes de firmware. Sin embargo, por ser los más relevantes, se mencionan los siguientes:
 
-Un driver para el manejo de la pantalla \textit{LCD RGB Backlight} de 16x2 que se llamó \textit{lcd\_i2c\_grove.h}. Esta pantalla presenta interfaz de comunicación I2C, para reducir la cantidad de pines utilizados por el microcontrolador. Este driver presenta las funciones descritas en el código \ref{lst:driver_lcd}.
+Un driver para el manejo de la pantalla \textit{LCD RGB Backlight} de 16x2 que se llamó \textit{lcd\_i2c\_grove.h}. Esta pantalla presenta interfaz de comunicación I2C, para reducir la cantidad de pines utilizados por el microcontrolador. Este driver presenta las funciones descritas en el código \ref{lst:driver_lcd}. Este driver fue adaptado del driver proporcionado por el fabricante en: \url{https://github.com/Seeed-Studio/Grove_LCD_RGB_Backlight}.
 
 \begin{figure}[H]
 \begin{lstlisting}[label={lst:driver_lcd}, caption={Funciones principales del driver LCD.}] 
@@ -582,7 +582,7 @@ En esta arquitectura, el centro de la comunicación es el \textit{Broker} MQTT, 
 
 Para este trabajo, se utilizó el \textit{Broker} EMQX\footnote{Documentación en: \url{https://www.emqx.io/}}, que es utilizado para aplicaciones de IoT \citep{MasteringMQTT}.
 
-La aplicación web al igual que el hardware desarrollado, son clientes del \textit{Broker} EMQX. El hardware es el encargado de publicar mensajes con los datos de posicionamiento, estado ocupación, validez de la posición, la hora y la referencia de la cava. Por otro lado, la aplicación web recibe dichos datos y los hace visibles al usuario a través un mapa y otros elementos de visualización web. El usuario final puede visualizar   
+La aplicación web al igual que el hardware desarrollado, son clientes del \textit{Broker} EMQX. El hardware es el encargado de publicar mensajes con los datos de posicionamiento, estado de ocupación, validez de la posición, la hora y la referencia de la cava. Por otro lado, la aplicación web recibe dichos datos y los hace visibles al usuario a través un mapa y otros elementos de visualización web. El usuario final puede visualizar   
 
 \subsection{Implementación de la interfaz web}
 
@@ -590,8 +590,8 @@ Para la implementación de la interfaz web, se utilizaron las siguientes tecnolo
 
 \begin{itemize}
 	\item HTML: Se utiliza para estructurar la página web.
-	\item CSS (Bootstrap): Se usa para dar estilo a la página, para crear un diseño \textit{responsiv} y facilitar la implementación ya que cuenta con componentes predefinidos.
-	\item lenguaje de programación JavaScript, características y bibliotecas de éste. A continuación, se detallan las más relevantes para este trabajo: 
+	\item CSS (Bootstrap): Para dar estilo a la página, para crear un diseño \textit{responsiv} y facilitar la implementación, ya que cuenta con componentes predefinidos.
+	\item lenguaje de programación JavaScript, características y bibliotecas de este. A continuación, se detallan las más relevantes para este trabajo: 
 		\begin{itemize}
 			\item jQuery: Biblioteca de JavaScript utilizada para facilitar la manipulación del DOM, eventos y AJAX.
 			\item Leaflet.js: Biblioteca de JavaScript para mapas interactivos.
@@ -611,7 +611,7 @@ A continuación, se presenta el proceso llevado a cabo para la implementación d
 \begin{enumerate}
 	\item \textbf{Configuración Inicial:}
 		\begin{itemize}
-		\item Se diseñó la estructura de la página web usando HTML y Bootstrap. En este punto se utilizaron las bibliotecas necesarias para la funcionalidad del mapa y la conexión MQTT. En la figura \ref{} se observa la versión desarrollada por el autor. Además, en la figura \ref{} se muestra la versión implementada en el servidor de la empresa Cloud Technologys SAS, la cual fue migrada y ajustada por su equipo de desarrolladores web.
+		\item Se diseñó la estructura de la página web usando HTML y Bootstrap. En este punto se utilizaron las bibliotecas necesarias para la funcionalidad del mapa y la conexión MQTT. En la figura \ref{fig:mockup} se observa la versión desarrollada por el autor. Además, en la figura \ref{fig:web_final} se muestra la versión implementada en el servidor de la empresa Cloud Technologys SAS, la cual fue migrada y ajustada por su equipo de desarrolladores web.
 		\end{itemize}
 
 	\item \textbf{Configuración del Mapa:}
@@ -639,9 +639,9 @@ A continuación, se presenta el proceso llevado a cabo para la implementación d
 
 En el código \ref{cod:aplicacion_web} se muestra la implementación HTML de la interfaz web desarrollada por el autor, la cual sirvió de maqueta para que el equipo de desarrollo web de la empresa Cloud Technologys SAS lo implementara en sus servidores. Sin embargo, por petición del cliente, no es posible compartir el código implementado en sus servidores. 
 
-El código HTML inicia con la declaración del tipo de documento (<!DOCTYPE html>), ya que se trata de un archivo HTML5. Luego, se abre la etiqueta <html> que contiene todo la página web.
+El código HTML inicia con la declaración del tipo de documento (<!DOCTYPE html>), ya que se trata de un archivo HTML5. Luego, se abre la etiqueta <html> que contiene toda la página web.
 
-En la sección <head>, se define el título de la página como "Cava mapa". También se incluyen enlaces a hojas de estilo y \textit{scripts} externos. Específicamente, se carga \textit{Bootstrap} desde un CDN (del inglés \textit{content delivery network}), para estilos y componentes de interfaz de usuario, y \textit{jQuery}, \textit{Popper.js} y el propio \textit{JavaScript} de \textit{Bootstrap} para funcionalidad adicional. Además, se incluye una hoja de estilo para \textit{Leaflet}.
+En la sección <head>, se define el título de la página como "Cava mapa". También se incluyen enlaces a hojas de estilo y \textit{scripts} externos. Específicamente, se carga \textit{Bootstrap} desde un CDN (del inglés: \textit{Content Delivery Network}), para estilos y componentes de interfaz de usuario, y \textit{jQuery}, \textit{Popper.js} y el propio \textit{JavaScript} de \textit{Bootstrap} para funcionalidad adicional. Además, se incluye una hoja de estilo para \textit{Leaflet}.
 
 En la sección <body>, se muestra un encabezado principal (<h1>) <<GNSS Cava:>>, seguido de un encabezado secundario (<h2>) que especifica <<Cava001>>.
 
@@ -727,7 +727,7 @@ Al final del cuerpo, se incluyen tres \textit{scripts}: la biblioteca de \textit
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\textwidth]{./Figures/web_final.jpeg}
-	\caption{Maqueta de la interfaz web.}
+	\caption{Versión final de la interfaz web.}
 	\label{fig:web_final}
 \end{figure}
 
@@ -745,7 +745,7 @@ Se definen las siguientes funciones:
 
 \item La función \textit{get\_cava\_data} recibe datos de la cava, convierte las coordenadas de latitud y longitud de estos datos a números flotantes, y devuelve un objeto con estas coordenadas.
 
-\item La función \textit{set\_cava\_position\_map} se encarga de actualizar el mapa con la nueva posición de la cava. Primero, actualiza elementos HTML con los nuevos valores de latitud y longitud. Si ya existe un marcador, lo elimina del mapa. Luego, crea un nuevo marcador en la nueva posición y añade un \textit{popup} con la información de esta posición. Además, añade la nueva posición a la lista path y dibuja un rastro en el mapa utilizando esta lista. Finalmente, ajusta la vista del mapa para centrarlo en la nueva posición.
+\item La función \textit{set\_cava\_position\_map} se encarga de actualizar el mapa con la nueva posición de la cava. Primero, actualiza elementos HTML con los nuevos valores de latitud y longitud. Si ya existe un marcador, lo elimina del mapa. Luego, crea un nuevo marcador en la nueva posición y añade un \textit{popup} con la información de esta posición. Además, añade la nueva posición a la lista path y dibuja un rastro en el mapa con esta lista. Finalmente, ajusta la vista del mapa para centrarlo en la nueva posición.
 
 \end{itemize}
 

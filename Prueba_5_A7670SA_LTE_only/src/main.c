@@ -59,7 +59,7 @@ void app_main()
     // UART_1 conectar con modulo 4g A7670SA
     uart_init(UART1, 115200, BUF_SIZE * 2, 0, 50, &uart1_queue_4g, ESP_INTR_FLAG_LEVEL1); //   ESP_INTR_FLAG_IRAM
     //          (UART_NUM, TX, RX, RTS, CTS)
-    uart_set_pin(UART1,    33, 26,  14,  12);
+    uart_set_pin(UART1,    26, 25,  14,  12);
 
     uart_set_rx_full_threshold(UART1, 100);
 
@@ -214,20 +214,11 @@ static void transmit_to_server_task(void *params)
             {
             case UART_DATA:
 
-                if (cont == 0)
-                {
-                    gpio_set_level(2, 1);
-                    cont++;
-                }
-                else
-                {
-                    gpio_set_level(2, 0);
-                    cont = 0;
-                }
+          
                 uart_receive(UART0, (void *)uart_recv_data, (uint32_t)uart0_event.size);
 
                 sprintf((char *)at_command, "%s", uart_recv_data);
-                uart_transmit(UART0, at_command, strlen(at_command));
+                //uart_transmit(UART0, at_command, strlen(at_command));
 
                 uart_transmit(UART1, at_command, strlen((const char *)at_command));
 
@@ -271,7 +262,7 @@ static void transmit_to_server_task(void *params)
 
 static void transmit_to_server_task_1(void *params)
 {
-    //xSemaphoreGive(uart_sem);
+    xSemaphoreGive(uart_sem);
     uart_event_t uart1_event;
     char *at_response = (char *)malloc(BUF_SIZE);
     bzero(at_response, BUF_SIZE);
@@ -286,37 +277,41 @@ static void transmit_to_server_task_1(void *params)
     ///delay(10000);
     
     // Esperar que el módulo A7670SA esté listo para recibir comandos AT "PB DONE" es la clave
+
+    uart_transmit(UART0, "PB DONE", strlen("PB DONE"));
     while(1)
     {
         
         if (xQueueReceive(uart1_queue_4g, (void *)&uart1_event, portMAX_DELAY / portTICK_PERIOD_MS))
         {
             uart_receive(UART1, at_response, uart1_event.size);
+            uart_transmit(UART0, at_response, strlen(at_response));
             if (NULL != strstr(at_response,"PB DONE"))
             {
                 bzero(at_response, BUF_SIZE);
+                uart_transmit(UART0, "PB DONE OK", strlen("PB DONE OK"));
                 break;
             }
         }
     }
-
-    //xSemaphoreTake(uart_sem, portMAX_DELAY);
+/*
+    xSemaphoreTake(uart_sem, portMAX_DELAY);
     mqtt_server_state = init_sequence_mqtt_server(uart1_event, at_response, mqtt_server_state);
-    //xSemaphoreGive(uart_sem);
+    xSemaphoreGive(uart_sem);
 
     sprintf(comparacion, "State conection to MQTT Server: %s\n", mqtt_server_state);
     uart_transmit(UART0, comparacion, strlen(comparacion));
-
+*/
     delay(2000);
 
     bzero(at_response, BUF_SIZE);
-    msg_state = transmit_msg_mqtt(10.960548, -74.854128, true, uart1_event, at_response);
-
+    //msg_state = transmit_msg_mqtt(10.960548, -74.854128, true, uart1_event, at_response);
+/*
     if(MQTT_MSG_OK == msg_state)
     {
         mqtt_server_state = "MSG MQTT SEND OK";
     }
-
+*/
     while (1)
     {
         sprintf(comparacion, "State conection to MQTT Server: %s\n", mqtt_server_state);

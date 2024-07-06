@@ -19,6 +19,7 @@
 #define JUMP " \n"
 #define UART0 UART_NUM_0
 #define UART1 UART_NUM_1
+#define DELAY_LCD 3000
 
 /**************DECLARACIÓN DE VARIABLES GLOBALES*******************/
 
@@ -27,80 +28,67 @@ static GNSSData_t quectel_l76;
 
 /****************DECLARACIÓN DE FUNCIONES*************************/
 
-static void uart_interrupt_task(void *params);
+
 
 /**********************FUNCIÓN PRINCIPAL**************************/
 
 void app_main()
 {
-    uart_init(UART0, 115200, BUF_SIZE * 2, 0, 0, NULL, ESP_INTR_FLAG_LEVEL1);
-    //          (UART_NUM, TX, RX, RTS, CTS)
-    uart_set_pin(UART0,     1,  3,  23,  19);
-
-    uart_init(UART1, 9600, BUF_SIZE * 2, BUF_SIZE * 2, 50, &uart1_queue, ESP_INTR_FLAG_LEVEL1); //   ESP_INTR_FLAG_IRAM
-    //          (UART_NUM, TX, RX, RTS, CTS)
-    uart_set_pin(UART1,    33, 26,  14,  12);
 
     lcd_init(); 
     lcd_clear(); 
-    lcd_set_RGB(255, 255, 255);
+    lcd_set_RGB(255, 255, 255); //pantalla blanca
+    lcd_write(0, 0, "Linea 0");
+    lcd_write(1, 0, "Linea 1");
+    delay(DELAY_LCD);
 
-    xTaskCreate(uart_interrupt_task,
-                "uart_interrupt_task",
-                BUF_SIZE * 4,
-                NULL,
-                12,
-                NULL);
+    while(1)
+    {
+        lcd_clear(); 
+        lcd_write(0, 0, "Color: ");
+        lcd_write(1, 0, "Rojo");
+        lcd_set_RGB(255, 0, 0); //pantalla roja
+
+        delay(DELAY_LCD);
+
+        lcd_clear(); 
+        lcd_write(0, 0, "Color: ");
+        lcd_write(1, 0, "Verde");
+        lcd_set_RGB(0, 255, 0); //pantalla verde
+
+        delay(DELAY_LCD);
+
+        lcd_clear(); 
+        lcd_write(0, 0, "Color: ");
+        lcd_write(1, 0, "Azul");
+        lcd_set_RGB(0, 0, 255); //pantalla azul
+
+        delay(DELAY_LCD);
+
+        lcd_clear(); 
+        lcd_write(0, 0, "Color: ");
+        lcd_write(1, 0, "amarillo");
+        lcd_set_RGB(255, 255, 0); //pantalla amarilla
+
+        delay(DELAY_LCD);
+
+        lcd_clear(); 
+        lcd_write(0, 0, "Color: ");
+        lcd_write(1, 0, "magenta");
+        lcd_set_RGB(255, 0, 255); //pantalla magenta
+
+        delay(DELAY_LCD);
+
+        lcd_clear(); 
+        lcd_write(0, 0, "Color: ");
+        lcd_write(1, 0, "Cyan");
+        lcd_set_RGB(0, 255, 255); //pantalla cyan
+
+        delay(DELAY_LCD);
+    }
 }
 
 /****************DEFINICIÓN DE FUNCIONES**************************/
 
-static void uart_interrupt_task(void *params)
-{
-    uart_event_t uart_event;
-    uint8_t *uart_recv_data = (uint8_t *)malloc(BUF_SIZE);
-    uint8_t *nmea_string = (uint8_t *)malloc(BUF_SIZE + 100);
-    uint8_t *proof_print = (uint8_t *)malloc(BUF_SIZE + 100);
-    while (1)
-    {
-        uart_transmit(UART1, (const void *)RMC, strlen(RMC));
-        if (xQueueReceive(uart1_queue, (void *)&uart_event, (TickType_t)portMAX_DELAY))
-        {
-            bzero(uart_recv_data, BUF_SIZE);
-            bzero(nmea_string, BUF_SIZE + 100);
-            bzero(proof_print, BUF_SIZE + 100);
 
-            switch (uart_event.type)
-            {
-            case UART_DATA:
-                uart_receive(UART1, (void *)uart_recv_data, (uint32_t)uart_event.size);
-                sprintf((char *)nmea_string, "%s", uart_recv_data);
-
-                uart_transmit(UART0, nmea_string, strlen((const char*)nmea_string));
-                
-                /*
-                nmea_parser((const char *)nmea_string, &quectel_l76);
-                sprintf((char *)proof_print, "Lat: %.6f, Long: %.6f \n", 
-                        quectel_l76.latitude, quectel_l76.longitude);
-                uart_transmit(UART0, proof_print, strlen((const char*)proof_print));
-                */
-                nmea_rmc_parser_r((const char *)nmea_string, &quectel_l76);
-                sprintf((char *)proof_print, "Lat: %.6f, Long: %.6f \n", 
-                        quectel_l76.latitude, quectel_l76.longitude);
-                uart_transmit(UART0, proof_print, strlen((const char*)proof_print));
-                
-                lcd_cursor(1,0);
-                lcd_write_string((char *)proof_print);
-
-                break; 
-
-            default:
-                break;
-            }
-        }
-    }
-
-    free(uart_recv_data);
-    free(nmea_string);
-}
 
