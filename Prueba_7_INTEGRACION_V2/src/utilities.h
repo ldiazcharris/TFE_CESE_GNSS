@@ -18,8 +18,8 @@
 #define EN_4G_PIN             33
 #define BOARD_LED              2
 
-#define UART0 UART_NUM_0
-#define UART1 UART_NUM_1
+#define UART0               UART_NUM_0
+#define UART1               UART_NUM_1
 
 // A funturo cambiar a "proyectoLuis/cava001/datos" Para tener un control numérico de las cavas
 #define CAVA_REF            "C001"
@@ -32,7 +32,7 @@
 #define CMQTT_CONNECT        "AT+CMQTTCONNECT=0,\"tcp://18.212.130.131:1883\",300,0,\"test\",\"CloudTech*\"\r\n"
 #define CMQTT_TOPIC          "AT+CMQTTTOPIC=0,23\r\n"
 #define CMQTT_PAYLOAD        "AT+CMQTTPAYLOAD=0,%d\r\n"
-#define MQTT_PAYLOAD_FORMAT  "{\"lat\":\"%f\", \"long\":\"%f\", \"occup\":\"%d\", \"NMEA_st\":\"%d\", \"Cref\":\"%s\", \"time\":\"%s\", \"date\":\"%s\"}\r\n"
+#define MQTT_PAYLOAD_FORMAT  "{\"lat\":\"%lf\", \"long\":\"%lf\", \"occup\":\"%d\", \"NMEA_st\":\"%d\", \"Cref\":\"%s\", \"time\":\"%s\", \"date\":\"%s\"}\r\n"
 #define MQTT_PUBLISH         "AT+CMQTTPUB=0,0,60,0,0\r\n"
 
 #define RADIO_TIERRA_EQUIVOLUMEN_KM    6371.0
@@ -76,7 +76,6 @@ typedef struct
     char time[10];
     char date[7];
     NMEA_state_t NMEA_state;
-    
 } GNSSData_t;
 
 
@@ -85,7 +84,6 @@ typedef struct
 {
     occupancy_t occupancy;
     GNSSData_t position;
-
 } CAVA_DATA_t;
 
 typedef struct 
@@ -93,10 +91,7 @@ typedef struct
     CAVA_DATA_t cava_data;
     mqtt_msg_state_t msg_state;
     mqtt_server_state_t server_state;
-
 } LCD_data_t;
-
-
 
 
 /**
@@ -107,7 +102,6 @@ typedef struct
  * 
  * @return 
 */
-
 void uart_init(  uart_port_t     uart_num, 
                         int             baud_rate, 
                         int             rx_buffer_size, 
@@ -183,7 +177,6 @@ void occupancy_to_string(occupancy_t occupancy, char * str);
 /**
  * Debounce functions
 */
-
 typedef enum{
 	BUTTON_UP = 0,
 	BUTTON_RISING,
@@ -198,7 +191,6 @@ debounce_t debounce_up(int pinState);
 /**
  * Delay_t functions
 */
-
 typedef struct{
 	uint32_t startTime;
 	uint32_t duration;

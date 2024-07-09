@@ -179,14 +179,14 @@ void nmea_rmc_parser_r(const char *nmeaString, GNSSData_t *gnssData)
     }
 }
 
-NMEA_state_t nmea_rmc_parser_r_2(const char *nmeaString, GNSSData_t *gnssData)
+NMEA_state_t nmea_rmc_parser_r_2(char *nmeaString, GNSSData_t *gnssData)
 {
-    NMEA_state_t result_parser = NMEA_PARSER_ERROR;
+    NMEA_state_t result_parser = NMEA_PARSER_ERR;
     // Verificar que la cadena comience con '$'
     if (nmeaString[0] != '$')
     {
         //"Cadena NMEA no válida, no comienza con $
-        result_parser = NMEA_FRAME_NO_VALID;
+        result_parser = NMEA_NO_VALID;
     }
     else
     {
@@ -200,19 +200,25 @@ NMEA_state_t nmea_rmc_parser_r_2(const char *nmeaString, GNSSData_t *gnssData)
         if (NULL == strstr(token, "RMC"))
         {
             // Cadena NMEA no válida, no es un mensaje RMC
-            result_parser = NMEA_FRAME_NO_RMC;
+            result_parser = NMEA_NO_RMC;
         }
         else
         {    // Si todo sale bien se itera a través de los tokens
-            for (int i = 1; i < 12; i++)
+            for (int i = 1; i < 9; i++)
             {
+                char proof_print[50];
+                sprintf(proof_print, "Iteracion %d\n", i);
+                uart_transmit(UART_NUM_0, proof_print, strlen((const char*)proof_print));
                 token = strtok_r(NULL, ",", &rest);
+                
+                /*
                 if (token == NULL)
                 {
                     // Cadena NMEA no válida, falta un campo
-                    result_parser = NMEA_FRAME_VOID_FIELD;
+                    result_parser = NMEA_VOID_FIELD;
                     break;
                 }
+                */
 
             
                 if (i == 1)
@@ -224,16 +230,20 @@ NMEA_state_t nmea_rmc_parser_r_2(const char *nmeaString, GNSSData_t *gnssData)
                 else if (i == 2)
                 {
                     // Obtener la hora en formato HHMMSS
-                    result_parser = NMEA_FRAME_NO_VALID;
+                    if(NULL == strstr(token, "A"))
+                        return NMEA_NO_VALID;
+                    
                     break;
                 }
                 else if (i == 3)
                 {
                     // Obtener la latitud en formato DDMM.MMMM
-                    float lat_degrees = atof(token) / 100;
-                    int lat_minutes = (int)lat_degrees;
-                    float lat_seconds = (lat_degrees - lat_minutes) * 60;
-                    gnssData->lat = lat_minutes + lat_seconds;
+                    double lat_float_1 = atof(token) / 100;
+                    int lat_deg = (int)lat_float_1;
+                    double lat_float_2 = (lat_float_1 - lat_deg)*100;
+                    int lat_min = (int)(lat_float_2);
+                    double lat_sec = (lat_float_2 - lat_min)*10;
+                    gnssData->lat = (double)lat_deg + ((double)lat_min/60) + (lat_sec/3600);
                     
                 }
                 else if (i == 4)
@@ -245,10 +255,12 @@ NMEA_state_t nmea_rmc_parser_r_2(const char *nmeaString, GNSSData_t *gnssData)
                 else if (i == 5)
                 {
                     // Obtener la longitud en formato DDDMM.MMMM
-                    float lon_degrees = atof(token) / 100;
-                    int lon_minutes = (int)lon_degrees;
-                    float lon_seconds = (lon_degrees - lon_minutes) * 60;
-                    gnssData->lon = lon_minutes + lon_seconds;
+                    double lon_float_1 = atof(token) / 100;
+                    int lon_deg = (int)lon_float_1;
+                    double lon_float_2 = (lon_float_1 - lon_deg)*100;
+                    int lon_min = (int)(lon_float_2);
+                    double lon_sec = (lon_float_2 - lon_min)*10;
+                    gnssData->lon = (double)lon_deg + ((double)lon_min/60) + (lon_sec/3600);
                     
 
                     result_parser = NMEA_PARSER_OK;
@@ -263,5 +275,98 @@ NMEA_state_t nmea_rmc_parser_r_2(const char *nmeaString, GNSSData_t *gnssData)
             }
         }
     }
+    return result_parser;
+}
+
+
+NMEA_state_t nmea_rmc_parser_r_3(char *nmeaString, GNSSData_t *gnssData)
+{
+    NMEA_state_t result_parser = NMEA_PARSER_ERR;
+    // Verificar que la cadena comience con '$'
+    if (NULL == strstr(nmeaString, "$"))
+    {
+        // Cadena NMEA no válida, no comienza con $
+        result_parser = NMEA_NO_VALID;
+    }
+    else
+    {
+        // Se utiliza strtok para dividir la cadena en tokens usando "," como divisor
+        char *token;
+        char* rest = (char *)nmeaString;
+        token = strtok_r(nmeaString, ",", &rest);
+       
+
+        // Comprobar si el primer token contiene "RMC"
+        if (NULL == strstr(token, "GNRMC"))
+        {
+            // Cadena NMEA no válida, no es un mensaje GNRMC
+            result_parser = NMEA_NO_RMC;
+        }
+        else
+        {    // Si todo sale bien se itera a través de los tokens
+            for (int i = 1; i < 12; i++)
+            {
+                token = strtok_r(NULL, ",", &rest);
+
+                switch (i)
+                {
+                case 1:
+                    // Obtener la hora en formato HHMMSS
+                    strncpy(gnssData->time, token, 10);
+                    break;
+                case 2:
+                    // 
+                    if(NULL == strstr(token, "A"))
+                        return NMEA_NO_VALID;
+
+					break;
+
+                case 3:
+                    // Obtener la latitud en formato DMS (DDMM.MMMM) y convertir a formato DD
+                    
+                    double lat_float_1 = atof(token) / 100;
+                    int lat_deg = (int)lat_float_1;
+                    double lat_min = (lat_float_1 - lat_deg)*100;
+                    
+                    gnssData->lat = (double)lat_deg + ((double)lat_min/60);
+                    
+                    break;
+                
+                case 4:
+                    // Obtener la dirección de latitud Norte o Sur
+                    if (0 == strcmp("S", token))
+                        gnssData->lat *=-1;
+					break;
+					
+                case 5:
+                    // Obtener la longitud en formato DMS (DDDMM.MMMM) y convertir a formato DD
+                    
+                    double lon_float_1 = atof(token) / 100;
+                    int lon_deg = (int)lon_float_1;
+                    double lon_min = (lon_float_1 - lon_deg)*100;
+                    
+                    gnssData->lon = (double)lon_deg + ((double)lon_min/60);
+                    
+                    
+                    result_parser = NMEA_PARSER_OK;
+                    break;
+					
+                case 6:
+                    // Obtener la dirección de longitud Este u Oeste
+                    if (0 == strcmp("W", token))
+                        gnssData->lon *=-1;
+                    break;
+				case 9:
+                    // Obtener la fecha
+                    strncpy(gnssData->date, token, 7);
+                    break;
+
+                default:
+                    break;
+                }
+            }
+        }
+    }
+    gnssData->NMEA_state = result_parser;
     return result_parser;
 }

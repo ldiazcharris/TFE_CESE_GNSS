@@ -18,10 +18,10 @@
 
 typedef enum {
     NMEA_PARSER_OK = 0,
-    NMEA_FRAME_NO_VALID,
-    NMEA_FRAME_NO_RMC,
-    NMEA_FRAME_VOID_FIELD,
-    NMEA_PARSER_ERROR
+    NMEA_NO_VALID,
+    NMEA_NO_RMC,
+    NMEA_VOID_FIELD,
+    NMEA_PARSER_ERR
 } NMEA_state_t;
 
 void uart_init(  uart_port_t     uart_num, 
@@ -40,16 +40,21 @@ void delay(const TickType_t delay_ms);
 
 typedef struct
 {
-    float lat;
-    float lon;
+    double lat;
+    double lon;
     char time[10];
+    char date[7];
+    NMEA_state_t NMEA_state;
+    
 } GNSSData_t;
 
 void nmea_parser(const char *nmeaString, GNSSData_t *gnssData);
 
 void nmea_rmc_parser_r(const char *nmeaString, GNSSData_t *gnssData);
 
-NMEA_state_t nmea_rmc_parser_r_2(const char *nmeaString, GNSSData_t *gnssData);
+NMEA_state_t nmea_rmc_parser_r_2(char *nmeaString, GNSSData_t *gnssData);
+
+NMEA_state_t nmea_rmc_parser_r_3(char *nmeaString, GNSSData_t *gnssData);
 
 /*
 UART EVENTS TYPES

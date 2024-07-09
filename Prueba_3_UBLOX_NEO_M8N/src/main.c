@@ -34,7 +34,7 @@ static void uart0_interrupt_task(void *params);
 
 void app_main()
 {
-    uart_init(UART0, 115200, BUF_SIZE * 2, BUF_SIZE * 2, 50, &uart0_queue, ESP_INTR_FLAG_LEVEL1);
+    uart_init(UART0, 9600, BUF_SIZE * 2, BUF_SIZE * 2, 50, &uart0_queue, ESP_INTR_FLAG_LEVEL1);
     //          (UART_NUM, TX, RX, RTS, CTS)
     uart_set_pin(UART0,     1,  3,  22,  19);
 
@@ -48,13 +48,15 @@ void app_main()
                 NULL,
                 12,
                 NULL);
-
+/*
     xTaskCreate(uart0_interrupt_task,
                 "uart0_interrupt_task",
                 BUF_SIZE * 4,
                 NULL,
                 12,
                 NULL);
+*/
+
 }
 
 /****************DEFINICIÓN DE FUNCIONES**************************/
@@ -68,7 +70,7 @@ static void uart_interrupt_task(void *params)
     while (1)
     {
         //uart_transmit(UART1, (const void *)RMC, strlen(RMC));
-        if (xQueueReceive(uart1_queue, (void *)&uart_event, portMAX_DELAY))
+        if (xQueueReceive(uart0_queue, (void *)&uart_event, portMAX_DELAY))
         {
             bzero(uart_recv_data, BUF_SIZE);
             bzero(nmea_string, BUF_SIZE + 100);
@@ -77,35 +79,37 @@ static void uart_interrupt_task(void *params)
             switch (uart_event.type)
             {
             case UART_DATA:
-                uart_receive(UART1, (void *)uart_recv_data, (uint32_t)uart_event.size);
+                uart_receive(UART0, (void *)uart_recv_data, (uint32_t)uart_event.size);
                 //sprintf((char *)nmea_string, "%s", uart_recv_data);
-                uart_transmit(UART0, uart_recv_data, strlen((const char*)uart_recv_data));
-                bzero(uart_recv_data, BUF_SIZE);
-/*
-                switch(nmea_rmc_parser_r_2((const char *)nmea_string, &quectel_l76))
+                
+
+                //bzero(uart_recv_data, BUF_SIZE);
+                //uart_transmit(UART0, uart_recv_data, strlen((const char*)uart_recv_data));
+
+                switch(nmea_rmc_parser_r_3((char *)uart_recv_data, &quectel_l76))
                     {
                     case NMEA_PARSER_OK:
-                        sprintf((char *)proof_print, "PARSER_R_2: \n Lat: %.6f, Long: %.6f \n", 
+                        sprintf((char *)proof_print, "\n PARSER_R_2: \n%lf, %lf\n", 
                         quectel_l76.lat, quectel_l76.lon);
                         uart_transmit(UART0, proof_print, strlen((const char*)proof_print));
                         break;
-                    case NMEA_FRAME_NO_VALID:
+                    case NMEA_NO_VALID:
 
                         uart_transmit(UART0, "NMEA_NO_VALID\n", strlen("NMEA_NO_VALID\n"));
 
                         break;
-                    case NMEA_FRAME_NO_RMC:
+                    case NMEA_NO_RMC:
                         uart_transmit(UART0, "NMEA_NO_RMC\n", strlen("NMEA_NO_RMC\n"));
                        
 
                         break;
-                    case NMEA_FRAME_VOID_FIELD:
+                    case NMEA_VOID_FIELD:
 
                         
                         uart_transmit(UART0, "NMEA_VOID_FIELD\n", strlen("NMEA_VOID_FIELD\n"));
 
                         break;
-                    case NMEA_PARSER_ERROR:
+                    case NMEA_PARSER_ERR:
 
                        
                         uart_transmit(UART0, "NMEA_PARSER_ERR\n", strlen("NMEA_PARSER_ERR\n"));
@@ -113,27 +117,8 @@ static void uart_interrupt_task(void *params)
                         break;
                     default:
                         uart_transmit(UART0, "GNSS TASK ERR\n", strlen("GNSS TASK ERR\n"));
-                       
 
                     }
-
-                
-                sprintf((char *)nmea_string, "%s", uart_recv_data);
-
-                uart_transmit(UART0, nmea_string, strlen((const char*)nmea_string));
-                
-
-                nmea_parser((const char *)nmea_string, &quectel_l76);
-                sprintf((char *)proof_print, "PARSER: \n Lat: %.6f, Long: %.6f \n", 
-                        quectel_l76.lat, quectel_l76.lon);
-                uart_transmit(UART0, proof_print, strlen((const char*)proof_print));
-
-                nmea_rmc_parser_r((const char *)nmea_string, &quectel_l76);
-                sprintf((char *)proof_print, "PARSER_R: \n Lat: %.6f, Long: %.6f \n", 
-                        quectel_l76.lat, quectel_l76.lon);
-                uart_transmit(UART0, proof_print, strlen((const char*)proof_print));
-
-                */
 
                 break; 
 
@@ -142,7 +127,7 @@ static void uart_interrupt_task(void *params)
             }
         }
         uart_transmit(UART0, "Esperando datos GNSS...\n", strlen("Esperando datos GNSS...\n"));
-        delay(2000);
+        //delay(2000);
     }
 
     free(uart_recv_data);

@@ -103,12 +103,13 @@ NMEA_state_t nmea_rmc_parser_r(char *nmeaString, GNSSData_t *gnssData)
 
                 case 3:
                     // Obtener la latitud en formato DMS (DDMM.MMMM) y convertir a formato DD
-                    float lat_float_1 = atof(token) / 100;
+                    
+                    double lat_float_1 = atof(token) / 100;
                     int lat_deg = (int)lat_float_1;
-                    float lat_float_2 = (lat_float_1 - lat_deg)*100;
-                    int lat_min = (int)(lat_float_2);
-                    float lat_sec = (lat_float_2 - lat_min)*10;
-                    gnssData->lat = (float)lat_deg + ((float)lat_min/60) + (lat_sec/3600);
+                    double lat_min = (lat_float_1 - lat_deg)*100;
+                    
+                    gnssData->lat = (double)lat_deg + ((double)lat_min/60);
+                    
                     break;
                 
                 case 4:
@@ -119,12 +120,13 @@ NMEA_state_t nmea_rmc_parser_r(char *nmeaString, GNSSData_t *gnssData)
 					
                 case 5:
                     // Obtener la longitud en formato DMS (DDDMM.MMMM) y convertir a formato DD
-                    float lon_float_1 = atof(token) / 100;
+                    
+                    double lon_float_1 = atof(token) / 100;
                     int lon_deg = (int)lon_float_1;
-                    float lon_float_2 = (lon_float_1 - lon_deg)*100;
-                    int lon_min = (int)(lon_float_2);
-                    float lon_sec = (lon_float_2 - lon_min)*10;
-                    gnssData->lon = (float)lon_deg + ((float)lon_min/60) + (lon_sec/3600);
+                    double lon_min = (lon_float_1 - lon_deg)*100;
+                    
+                    gnssData->lon = (double)lon_deg + ((double)lon_min/60);
+                    
                     
                     result_parser = NMEA_PARSER_OK;
                     break;

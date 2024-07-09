@@ -16,9 +16,15 @@
 
 /************************MACROS***********************************/
 
-#define BUF_SIZE 1024
-#define RMC "$GNRMC"
-#define JUMP " \n"
+#define BUF_SIZE    1024
+#define TX_0        1
+#define RX_0        3
+#define RTS_0       23
+#define CTS_0       19
+#define TX_1        26
+#define RX_1        25
+#define RTS_1       14
+#define CTS_1       12
 
 
 
@@ -60,12 +66,12 @@ void app_main()
     // UART Para recibir trama NMEA del Modulo L76
     uart_init(UART0, 9600, BUF_SIZE * 2, BUF_SIZE * 2, 50, &uart0_queue_gnss, ESP_INTR_FLAG_LEVEL1);
     //          (UART_NUM, TX, RX, RTS, CTS)
-    uart_set_pin(UART0,     1,  3,  23,  19);
+    uart_set_pin(UART0,     TX_0,  RX_0,  RTS_0,  CTS_0);
 
     // UART_1 conectar con modulo 4g A7670SA
     uart_init(UART1, 115200, BUF_SIZE * 2, 0, 50, &uart1_queue_4g, ESP_INTR_FLAG_LEVEL1); //   ESP_INTR_FLAG_IRAM
     //          (UART_NUM, TX, RX, RTS, CTS)
-    uart_set_pin(UART1,    26, 25,  14,  12);
+    uart_set_pin(UART1,    TX_1, RX_1,  RTS_1,  CTS_1);
     //ESP_ERROR_CHECK(uart_driver_install(UART_NUM_1, BUF_SIZE * 2, 0, 0, NULL, ESP_INTR_FLAG_IRAM));
 
     // Se configruran los pines donde se conectarán los pilotos de ocupado o desocupado. 
@@ -208,7 +214,7 @@ static void gnss_task(void *params)
                     
                     nmea_rmc_parser_r((char *)nmea_string, &quectel_l76);
 
-                    xQueueSend(position_queue, &quectel_l76, pdMS_TO_TICKS(100));
+                    xQueueSend(position_queue, &quectel_l76, pdMS_TO_TICKS(500));
                     
                 break;
 
@@ -226,7 +232,6 @@ static void gnss_task(void *params)
 }
 
 
-
 static void collect_data_task(void *params)
 {
     GNSSData_t receive_pos;
@@ -236,12 +241,12 @@ static void collect_data_task(void *params)
 
     while(1){
 
-        if(xQueueReceive(occupancy_queue, &occupancy_state, pdMS_TO_TICKS(500)))
+        if(xQueueReceive(occupancy_queue, &occupancy_state, pdMS_TO_TICKS(200)))
         {
             cava_data.occupancy = occupancy_state;
         }
 
-        if(xQueueReceive(position_queue, &receive_pos, pdMS_TO_TICKS(500)))
+        if(xQueueReceive(position_queue, &receive_pos, pdMS_TO_TICKS(200)))
         {
             cava_data.position.NMEA_state = receive_pos.NMEA_state;
 
@@ -261,7 +266,7 @@ static void collect_data_task(void *params)
 
         }
 
-        xQueueSend(cava_data_queue, &cava_data, pdMS_TO_TICKS(1000));
+        xQueueSend(cava_data_queue, &cava_data, pdMS_TO_TICKS(500));
        
     }
 }
@@ -307,10 +312,10 @@ static void transmit_to_server_task(void *params)
             lcd_data.cava_data = cava_data;
             lcd_data.msg_state = mqtt_msg_state;
 
-            xQueueSend(lcd_queue, &lcd_data, pdMS_TO_TICKS(100));
+            xQueueSend(lcd_queue, &lcd_data, pdMS_TO_TICKS(200));
             bzero(mqtt_payload, payload_size);
         }
-        delay(2000);
+        delay(2000); // Aquí es donde debe ir el comando de ahorro de energía. 
     }
     free(mqtt_payload);
     free(at_response);
@@ -319,7 +324,6 @@ static void transmit_to_server_task(void *params)
 
 static void lcd_task(void *params)
 {
-   
     LCD_data_t lcd_data;
     char print_to_lcd[16];
     char occupancy_str[8];
@@ -329,14 +333,12 @@ static void lcd_task(void *params)
 
     while (1)
     {
-
         if (xQueueReceive(lcd_queue, &lcd_data, portMAX_DELAY))
         {
-            
             xSemaphoreTake(lcd_sem, portMAX_DELAY);
             
             lcd_clear();
-            sprintf(print_to_lcd, "%.3f, %.3f", lcd_data.cava_data.position.lat, lcd_data.cava_data.position.lon);
+            sprintf(print_to_lcd, "%.4lf,%.4lf", lcd_data.cava_data.position.lat, lcd_data.cava_data.position.lon);
             lcd_write(0, 0, print_to_lcd);
 
             delay(1000);
@@ -364,7 +366,6 @@ static void lcd_task(void *params)
         }
     }
 }
-
 
 
 static void create_tasks()
@@ -406,7 +407,6 @@ static void create_tasks()
 }
 
 
-
 void occupancy_isr_handler(void* arg)
 {
     uint32_t gpio_num = (uint32_t)arg;
@@ -420,6 +420,7 @@ void occupancy_isr_handler(void* arg)
         portYIELD_FROM_ISR();   
     }
 }
+
 
 static void button_bridge(void *params)
 {
