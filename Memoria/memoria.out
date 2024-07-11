@@ -15,7 +15,7 @@
 \BOOKMARK [1][-]{section.2.3}{Componentes del sistema}{chapter.2}% 15
 \BOOKMARK [2][-]{subsection.2.3.1}{Microcontrolador ESP32}{section.2.3}% 16
 \BOOKMARK [2][-]{subsection.2.3.2}{Receptor GNSS}{section.2.3}% 17
-\BOOKMARK [2][-]{subsection.2.3.3}{Módulo 4G}{section.2.3}% 18
+\BOOKMARK [2][-]{subsection.2.3.3}{Módulo 4G SIM A7670SA}{section.2.3}% 18
 \BOOKMARK [3][-]{section*.14}{Antena Quectel YG0035AA}{subsection.2.3.3}% 19
 \BOOKMARK [2][-]{subsection.2.3.4}{Sistema operativo de tiempo real}{section.2.3}% 20
 \BOOKMARK [3][-]{section*.16}{FreeRTOS™}{subsection.2.3.4}% 21

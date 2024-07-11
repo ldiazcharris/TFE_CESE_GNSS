@@ -4,6 +4,21 @@
 
 \label{Chapter4} % Change X to a consecutive number; for referencing this chapter elsewhere, use \ref{ChapterX}
 
+Este capítulo presenta los ensayos realizados para evaluar el desempeño del prototipo y los resultados obtenidos. Los ensayos se desarrollaron para validar la funcionalidad y exactitud del sistema en condiciones operativas de laboratorio. Los objetivos principales de los ensayos fueron:
+
+
+\begin{enumerate}
+
+\item Validar la funcionalidad del hardware. Asegurar que todos los componentes del sistema funcionan correctamente y se comunican entre sí de manera eficiente.
+
+\item Probar la integración del firmware. Verificar que el firmware gestiona adecuadamente la adquisición de datos, el procesamiento y la transmisión al \textit{broker} MQTT.
+
+\item Evaluar la exactitud de la geolocalización GNSS. Medir la precisión de las coordenadas proporcionadas por el módulo GNSS y compararlas con un patrón de referencia.
+
+\item Comprobar la visualización de la aplicación de mapas. Asegurar que la aplicación proporciona una representación útil de los datos GNSS recibidos.
+
+\end{enumerate}
+
 %----------------------------------------------------------------------------------------
 %	SECTION 1
 %----------------------------------------------------------------------------------------
@@ -15,14 +30,14 @@ En esta sección se presentan los resultados finales de la construcción del har
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=.5\textwidth]{./Figures/Prototipo_v_final_exterior.jpg}
+	\includegraphics[width=.5\textwidth]{./Figures/Prototipo_v_final_exterior.png}
 	\caption{Resultado final del hardware desarrollado (exterior).}
 	\label{fig:proto_exterior}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=.8\textwidth]{./Figures/Prototipo_v_final_interior.jpg}
+	\includegraphics[width=.8\textwidth]{./Figures/Prototipo_v_final_interior.png}
 	\caption{Resultado final del hardware desarrollado (interior).}
 	\label{fig:proto_interior}
 \end{figure}
@@ -33,8 +48,6 @@ En la figura \ref{fig:proto_componentes_ext} se señalan los siguientes componen
 \begin{enumerate}
 \item Pantalla LCD.
 \item Botones y pilotos.
-\item Conector para la antena celular.
-\item Conector para antena GNSS.
 \end{enumerate}
 
 
@@ -50,8 +63,9 @@ En la figura \ref{fig:proto_componentes_int} se señalan los siguientes componen
 
 \begin{enumerate}
 \item Batería.
-\item ESP32.
 \item Módulo SIM A7670SA.
+\item ESP32.
+\item Conectores SMA hembra para antena celular (izq.) y para antena GNSS (dcha.).
 \item Módulo Quectel L76.
 \end{enumerate}
 
@@ -91,11 +105,11 @@ Se ejecutaron pruebas sobre los módulos de hardware para verificar que funciona
 
 	\begin{enumerate}
 	
-	\item  Se probó la recepción de tramas NMEA con el módulo Quectel L76, a través del puerto UART. Se construyó un código de prueba que capturó las tramas NMEA recibidas por puerto UART\_1 y su eco en el puerto UART\_0 para visualizar los datos recibidos en la computadora, a través de la terminal \textit{Hercules}\footnote{Mas información en: https://www.hw-group.com/software/hercules-setup-utility}. 
+	\item  Se probó la recepción de tramas NMEA con el módulo Quectel L76, a través del puerto UART. Se construyó un código de prueba que capturó las tramas NMEA recibidas por puerto UART\_1 y su eco en el puerto UART\_0 para visualizar los datos recibidos en la computadora, a través de la terminal \textit{Hercules} \citep{hercules}. 
 	
 	\item Se probó la comunicación bidireccional con el módulo SIM A7670SA, a través del puerto UART y por comandos AT. Se construyó un código de prueba que captura las tramas AT, recibidas por puerto UART\_1 y su eco en el puerto UART\_0 para visualizar los datos recibidos en la computadora, a través de la terminal \textit{Hercules}; este mismo programa transmite las tramas AT enviadas desde el puerto UART\_0 hasta el módulo SIM A7670SA en el UART\_1. De esta manera, se pueden enviar comandos AT de forma manual hacia el módulo y recibir las respuestas respectivas. 
 	
-	\item Se realizó un código de prueba para utilizar todas las funciones proporcionadas por el driver \textit{lcd\_i2c\_grove.h} y verificar la visualización correcta de textos predefinidos en la pantalla. 
+	\item Se realizó un código de prueba para utilizar todas las funciones proporcionadas por el driver \verb|lcd_i2c_grove.h| y verificar la visualización correcta de textos predefinidos en la pantalla. 
 	
 	\end{enumerate}
 	
@@ -161,10 +175,10 @@ En la figura \ref{fig:pru_QL76_Diag} se muestra un diagrama de la conexión nece
 \end{figure}
 
 
-El código de prueba implementado es el que se muestra en el código \ref{cod:cod_proof_gnss}. Por simplicidad y reducir el espacio en este documento, se han obviado las declaraciones de variables, macros y la función \textit{main}. Este sencillo programa utiliza \textit{FreeRTOS} para crear dos tareas, la primera \textit{uart1\_interrupt\_task()}, que se encarga de recibir las tramas del puerto UART\_1 (donde está conectado el módulo L76) y retransmitirlas al computador por el puerto UART\_0; y la segunda \textit{uart0\_interrupt\_task()} permite enviar comandos PMTK desde le computador hacia el módulo L76. De esta manera se comprueba que hay una comunicación adecuada entre los módulos. La función \textit{main} se encarga de incializar los puertos UART en modo de interrupciones y crear las tareas correspondientes. 
+El código de prueba implementado es el que se muestra en el código \ref{cod:cod_proof_gnss}. Por simplicidad y reducir el espacio en este documento, se han obviado las declaraciones de variables, macros y la función \verb|main()|. Este sencillo programa utiliza \textit{FreeRTOS} para crear dos tareas, la primera \verb|uart1_interrupt_task()|, que se encarga de recibir las tramas del puerto UART\_1 (donde está conectado el módulo L76) y retransmitirlas al computador por el puerto UART\_0; y la segunda \verb|uart0_interrupt_task()| permite enviar comandos PMTK desde le computador hacia el módulo L76. De esta manera se comprueba que hay una comunicación adecuada entre los módulos. La función \verb|main()| se encarga de incializar los puertos UART en modo de interrupciones y crear las tareas correspondientes. 
 
 \begin{figure}[H]
-\begin{lstlisting}[label=cod:cod_proof_gnss, caption=Código para probar comunicación con el módulo Quectel L76.] 
+\begin{lstlisting} 
 static void uart1_interrupt_task(void *params)
 {
     uart_event_t uart_event;
@@ -210,7 +224,10 @@ static void uart0_interrupt_task(void *params)
 }
 
 \end{lstlisting}
+\captionof{lstlisting}{Código para probar comunicación con el módulo Quectel L76.}
+\label{cod:cod_proof_gnss}
 \end{figure}
+
 
 Luego de implementar las configuraciones anteriores, se obtuvieron las tramas NMEA proporcionadas por el módulo Quectel L76. La prueba resultó exitosa, ya que es posible capturar dichas tramas y procesarlas. En la figura \ref{fig:pru_QL76_recep} se muestra una captura de las tramas visualizadas en la terminal \textit{Hercules}. En esta captura se puede observar las tramas que incian con \$GNRMC, las cuales contienen la información de geolocalización del módulo.  
 
@@ -249,7 +266,7 @@ En la figura \ref{fig:pru_A7670_Diag} se muestra un diagrama de la conexión nec
 \end{figure}
 
 
-El código de prueba implementado es el mismo que se implementó en la prueba anterior (ver código \ref{cod:cod_proof_gnss}). Igual que en la prueba anterior, la tarea \textit{uart1\_interrupt\_task()}, se encarga de recibir las tramas del puerto UART\_1 (donde está conectado el módulo SIM A7670SA) y retransmitirlas al computador por el puerto UART\_0; y la tarea \textit{uart0\_interrupt\_task()} permite enviar comandos AT desde le computador hacia el módulo SIM A7670SA, de forma manual desde la terminal \textit{Hercules}. 
+El código de prueba implementado es el mismo que se implementó en la prueba anterior (ver código \ref{cod:cod_proof_gnss}). Igual que en la prueba anterior, la tarea \verb|uart1_interrupt_task()|, se encarga de recibir las tramas del puerto UART\_1 (donde está conectado el módulo SIM A7670SA) y retransmitirlas al computador por el puerto UART\_0; y la tarea \verb|uart0_interrupt_task()| permite enviar comandos AT desde le computador hacia el módulo SIM A7670SA, de forma manual desde la terminal \textit{Hercules}. 
 
 Luego de implementar las configuraciones anteriores, se obtuvieron las tramas AT que responde el módulo SIM A7670SA y se pudieron transmitir comandos AT hacia este módulo. La prueba resultó exitosa, ya que es posible capturar dichas tramas y procesarlas. 
 
@@ -287,10 +304,10 @@ En la figura \ref{fig:pru_A7670_transm} también se observa en la figura la resp
 
 Para esta prueba no es necesaria ninguna configuración especial, más allá de las conexiones de diseño del hardware. 
 
-Se implementó un código de prueba (ver código \ref{cod:cod_proof_lcd}) que permitió usar las funciones proporcionadas por el driver \textit{lcd\_i2c\_grove.h}. Este sencillo programa escribe textos y cambia los colores de la pantalla LCD cada 3 segundos, además que borra la pantalla cada vez que escribe un texto nuevo. De esta manera se puede corroborar el funcionamiento de la LCD. en la figura \ref{fig:prueba_lcd} se muestran fotografías de los resultados de la prueba. 
+Se implementó un código de prueba (ver código \ref{cod:cod_proof_lcd}) que permitió usar las funciones proporcionadas por el driver \verb|lcd_i2c_grove.h|. Este sencillo programa escribe textos y cambia los colores de la pantalla LCD cada 3 segundos, además que borra la pantalla cada vez que escribe un texto nuevo. De esta manera se puede corroborar el funcionamiento de la LCD. en la figura \ref{fig:prueba_lcd} se muestran fotografías de los resultados de la prueba. 
 
 \begin{figure}[H]
-\begin{lstlisting}[label=cod:cod_proof_lcd, caption=Código para probar comunicación con la pantalla LCD.] 
+\begin{lstlisting}
 void app_main()
 {
     lcd_init(); 
@@ -333,7 +350,10 @@ void app_main()
 }
 
 \end{lstlisting}
+\captionof{lstlisting}{Código para probar comunicación con la pantalla LCD.}
+\label{cod:cod_proof_lcd}
 \end{figure}
+
 
 
 \begin{figure}[H]
@@ -368,7 +388,7 @@ Las pruebas llevadas a cabo fueron las siguientes:
 
 \subsection{Prueba de integración con el hardware}
 
-En este escenario se probó la capacidad de la aplicación web para conectarse con el \textit{Broker} EMQX y procesar la información que transmite el hardware. Para esto, se ejecutaron los siguientes pasos: 
+En este escenario se probó la capacidad de la aplicación web para conectarse con el \textit{broker} EMQX y procesar la información que transmite el hardware. Para esto, se ejecutaron los siguientes pasos: 
 
 \subsubsection{Metodología}
 
@@ -380,7 +400,7 @@ En este escenario se probó la capacidad de la aplicación web para conectarse c
 
 \subsubsection{Resultados y análisis}
 
-En la figura \ref{fig:prueba_web_1_mapa} se muestra la aplicación de web con el mapa y la trayectoria descrita por el movimiento del hardware. En esta prueba el recorrido se hizo a pie debido a la corta distancia a recorrer. Se obtuvo una respuesta adecuada de la interacción del sistema completo, desde la recepción de la geolocalización, la transmisión de la información al \textit{Broker} a través de internet en la red celular, hasta la visualización en la web. 
+En la figura \ref{fig:prueba_web_1_mapa} se muestra la aplicación de web con el mapa y la trayectoria descrita por el movimiento del hardware. En esta prueba el recorrido se hizo a pie debido a la corta distancia a recorrer. Se obtuvo una respuesta adecuada de la interacción del sistema completo, desde la recepción de la geolocalización, la transmisión de la información al \textit{broker} a través de internet en la red celular, hasta la visualización en la web. 
 
 \begin{figure}[H]
 	\centering
@@ -421,17 +441,17 @@ Luego de realizadas las pruebas se obtuvieron se tabularon los datos obtenidos (
         & \multicolumn{2}{p{4.2cm}}{\textbf{Prototipo}} & \multicolumn{2}{p{4.3cm}}{\textbf{Google Maps}} &    \\
         \textbf{\#} & \textbf{Latitud 1} & \textbf{Longitud 1} & \textbf{Latitud 2} & \textbf{Longitud 2} & \textbf{Distancia (m)} \\
     \midrule
-        1 & 10.9605154 & -74.8544642 & 10.96046963 & -74.85447104 & 5.14 \\
-        2 & 10.9609898 & -74.8545152 & 10.96096967 & -74.85449264 & 3.33 \\
-        3 & 10.9605312 & -74.8547626 & 10.96052396 & -74.85474651 & 1.93 \\
-        4 & 10.9605819 & -74.8551536 & 10.96056399 & -74.85516585 & 2.40 \\
-        5 & 10.9601415 & -74.8546094 & 10.96013613 & -74.8545933 & 1.86 \\
-        6 & 10.9598841 & -74.8546406 & 10.95987377 & -74.85462887 & 1.72 \\
-        7 & 10.9593663 & -74.8547036 & 10.95935576 & -74.85469958 & 1.25 \\
-        8 & 10.9594072 & -74.8550654 & 10.95941637 & -74.85509867 & 3.77 \\
-        9 & 10.9605637 & -74.8546886 & 10.96084288 & -74.85487636 & 37.2 \\
-		10 & 10.9602758 &  -74.854543 & 10.96033852 & -74.85468831 & 17.3 \\        
-        11 & 10.9598994 & -74.8546695 & 10.95995456 & -74.85446811 & 22.8 \\
+        1 & 10,9605154 & -74,8544642 & 10.96046963 & -74,85447104 & 5,14 \\
+        2 & 10,9609898 & -74,8545152 & 10.96096967 & -74,85449264 & 3,33 \\
+        3 & 10,9605312 & -74,8547626 & 10.96052396 & -74,85474651 & 1,93 \\
+        4 & 10,9605819 & -74,8551536 & 10.96056399 & -74,85516585 & 2,40 \\
+        5 & 10,9601415 & -74,8546094 & 10.96013613 & -74,8545933 & 1,86 \\
+        6 & 10,9598841 & -74,8546406 & 10.95987377 & -74,85462887 & 1,72 \\
+        7 & 10,9593663 & -74,8547036 & 10.95935576 & -74,85469958 & 1,25 \\
+        8 & 10,9594072 & -74,8550654 & 10.95941637 & -74,85509867 & 3,77 \\
+        9 & 10,9605637 & -74,8546886 & 10.96084288 & -74,85487636 & 37,2 \\
+		10 & 10,9602758 &  -74,854543 & 10.96033852 & -74,85468831 & 17,3 \\        
+        11 & 10,9598994 & -74,8546695 & 10.95995456 & -74,85446811 & 22,8 \\
     \bottomrule
     \end{tabular}
     \label{tabla:distancias_calculadas}

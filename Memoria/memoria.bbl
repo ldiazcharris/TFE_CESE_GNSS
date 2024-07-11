@@ -212,6 +212,13 @@
     \field{title}{Regulador MIC29302WU}
   \endentry
 
+  \entry{leafletjs}{misc}{}{}
+    \field{labeltitlesource}{title}
+    \field{howpublished}{\url{https://leafletjs.com/}}
+    \field{note}{Accessed: 2024-07-11}
+    \field{title}{Leaflet.js: Overview}
+  \endentry
+
   \entry{MasteringMQTT}{book}{}{}
     \name{author}{1}{}{%
       {{hash=IET}{%
@@ -228,6 +235,20 @@
     \field{edition}{R24-3}
     \field{title}{Mastering MQTT. Your Ultimate Tutorial for MQTT}
     \field{year}{2024}
+  \endentry
+
+  \entry{EMQX}{misc}{}{}
+    \field{labeltitlesource}{title}
+    \field{howpublished}{\url{https://www.emqx.io/}}
+    \field{note}{Accessed: 2024-07-11}
+    \field{title}{EMQX}
+  \endentry
+
+  \entry{hercules}{misc}{}{}
+    \field{labeltitlesource}{title}
+  \field{howpublished}{\url{https://www.hw-group.com/software/hercules-setup-utility}}
+    \field{note}{Accessed: 2024-07-11}
+    \field{title}{Hercules SETUP utility}
   \endentry
 \enddatalist
 \endinput
