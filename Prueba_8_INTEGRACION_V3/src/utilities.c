@@ -154,6 +154,7 @@ NMEA_state_t nmea_rmc_parser_r(char *nmeaString, GNSSData_t *gnssData)
 
 void ocupancy_buttons_init()
 {
+    
     gpio_reset_pin(BUSSY_BUTTON);
     gpio_reset_pin(FREE_BUTTON);
     gpio_config_t occupancy_pin_config;

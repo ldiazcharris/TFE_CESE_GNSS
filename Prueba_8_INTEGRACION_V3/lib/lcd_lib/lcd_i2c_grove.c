@@ -161,4 +161,5 @@ void lcd_on()
 void lcd_off()
 {
     lcd_command(0x08 | 0x00); //Display Off
+    lcd_set_RGB(0, 0, 0);
 }

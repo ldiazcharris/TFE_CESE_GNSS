@@ -68,3 +68,6 @@ void lcd_clear();
  */
 void lcd_set_RGB(unsigned char r, unsigned char g, unsigned char b);
 
+void lcd_on();
+
+void lcd_off();

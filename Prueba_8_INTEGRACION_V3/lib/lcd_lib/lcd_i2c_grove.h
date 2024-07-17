@@ -18,13 +18,13 @@
 #include <string.h>
 #include "driver/gpio.h"
 #include "driver/i2c.h"
-#include "esp_log.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 
 #define I2C_LCD_PORT    I2C_NUM_0
 
-// para la pantalla Grove 0x3E - Para la LCD Generica es 0x27
+// Dirección para la LCD Grove 0x3E
+// Dirección Para la LCD Generica con el driver I2C PCF8574 es 0x27
 #define I2C_LCD_SLAVE_ADDRESS         0x3E 
 #define I2C_LCD_SLAVE_RGB_ADDRESS     0x62
 #define REG_MODE1       0x00
@@ -37,30 +37,55 @@
 
 
 /**
- * @brief Esta función incializa las funcionalidades I2C y la configuración de escritura de la pantalla
+ * @brief lcd_init() incializa las funcionalidades I2C y la configuración de escritura de la pantalla.
+ * Utiliza por defecto:
+ * El puerto I2C_NUM_0
+ * Mode = Master
+ * SDA = GPIO_NUM_21
+ * SCL = GPIO_NUM_22
+ * CLK Speed = 100000
  */
 void lcd_init();
 
+/**
+ * @brief lcd_write_char() escribe en la pantalla un caracter.
+ * 
+ * @param character: caracter que se desea escribir
+ */
 void lcd_write_char(char character);
+
+
+/**
+ * @brief lcd_cursor() Posiciona el cursosr en la fila y columna especificada.
+ * 
+ * @param row: fila sobre la cual se desea escribir
+ * @param col: columna sobre la cual se desea escribir
+ */
 void lcd_cursor(uint8_t row, uint8_t col);
+
+/**
+ * @brief lcd_write_string() escribe en la pantalla un string.
+ * 
+ * @param str: string que se desea escribir. 
+ */
 void lcd_write_string(char *str);
 
 /**
- * @brief Esta función escribe enla pantalla LCD el texto deseado.
+ * @brief cd_write() escribe en la pantalla LCD el texto deseado.
  * 
- * @param row: Columna desde la cual se inica la escritura
+ * @param row: Columna sobre la cual se desea escribir
  * @param column: Fila sobre la cual se desea escribir
  * @param str: Texto que se desea escribir
  */
 void lcd_write(uint8_t row, uint8_t column, char *str);
 
 /**
- * @brief Esta función limpia o borra todos los caracteres de la pantalla LCD.
+ * @brief lcd_clear() limpia o borra todos los caracteres de la pantalla LCD.
  */
 void lcd_clear();
 
 /**
- * @brief Esta función cambia el color de fondo de la pantalla LCD según el modelo de color RGB.
+ * @brief lcd_set_RGB() cambia el color de fondo de la pantalla LCD según el modelo de color RGB.
  * 
  * @param r: valor para cantidad de color rojo.
  * @param g: valor para cantidad de color verde.
@@ -68,7 +93,13 @@ void lcd_clear();
  */
 void lcd_set_RGB(unsigned char r, unsigned char g, unsigned char b);
 
+/**
+ * @brief lcd_on() enciende el LCD.
+ */
 void lcd_on();
 
+/**
+ * @brief lcd_off() apaga el LCD.
+ */
 void lcd_off();
 

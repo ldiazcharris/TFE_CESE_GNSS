@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.6.26)  11 JUL 2024 03:36
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.6.26)  16 JUL 2024 22:27
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1192,8 +1192,8 @@ LaTeX Info: Redefining \. on input line 108.
 LaTeX Info: Redefining \% on input line 108.
 [3])
 
-LaTeX Info: Redefining \. on input line 172.
-LaTeX Info: Redefining \% on input line 172.
+LaTeX Info: Redefining \. on input line 174.
+LaTeX Info: Redefining \% on input line 174.
 [4]
 \openout2 = `Chapters/Chapter2.aux'.
 
@@ -1319,17 +1319,21 @@ Overfull \hbox (4.70375pt too wide) in paragraph at lines 211--212
 B66), GSM
  []
 
-<./Figures/A7670SA_Mod.jpg, id=570, 602.25pt x 602.25pt>
+<./Figures/A7670SA_Mod.jpg, id=570, 249.18094pt x 453.94594pt>
 File: ./Figures/A7670SA_Mod.jpg Graphic file (type jpg)
 <use ./Figures/A7670SA_Mod.jpg>
 Package pdftex.def Info: ./Figures/A7670SA_Mod.jpg  used on input line 223.
-(pdftex.def)             Requested size: 194.90134pt x 194.90186pt.
+(pdftex.def)             Requested size: 194.90134pt x 355.07384pt.
 
 
 LaTeX Info: Redefining \. on input line 232.
 LaTeX Info: Redefining \% on input line 232.
 [10 <./Figures/A7670SA.jpg>]
-<./Figures/Antena_Quectel_YG0035AA.png, id=581, 318.43968pt x 220.57407pt>
+
+LaTeX Info: Redefining \. on input line 232.
+LaTeX Info: Redefining \% on input line 232.
+[11 <./Figures/A7670SA_Mod.jpg>]
+<./Figures/Antena_Quectel_YG0035AA.png, id=586, 318.43968pt x 220.57407pt>
 File: ./Figures/Antena_Quectel_YG0035AA.png Graphic file (type png)
 <use ./Figures/Antena_Quectel_YG0035AA.png>
 Package pdftex.def Info: ./Figures/Antena_Quectel_YG0035AA.png  used on input l
@@ -1343,9 +1347,9 @@ product / yg0035aa-[]gnss-[]active-[]magnetic-[]mount-[]antenna/$[][]|
 
 
 
-LaTeX Info: Redefining \. on input line 257.
-LaTeX Info: Redefining \% on input line 257.
-[11 <./Figures/A7670SA_Mod.jpg> <./Figures/Antena_Quectel_YG0035AA.png>]
+LaTeX Info: Redefining \. on input line 267.
+LaTeX Info: Redefining \% on input line 267.
+[12 <./Figures/Antena_Quectel_YG0035AA.png>]
 Underfull \hbox (badness 10000) in paragraph at lines 289--289
 []|\T1/ppl/b/n/10.95 Google Maps
  []
@@ -1670,410 +1674,377 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 )
 
-LaTeX Info: Redefining \. on input line 173.
-LaTeX Info: Redefining \% on input line 173.
-[12]
-
-LaTeX Info: Redefining \. on input line 173.
-LaTeX Info: Redefining \% on input line 173.
+LaTeX Info: Redefining \. on input line 175.
+LaTeX Info: Redefining \% on input line 175.
 [13]
+
+LaTeX Info: Redefining \. on input line 175.
+LaTeX Info: Redefining \% on input line 175.
+[14]
 \openout2 = `Chapters/Chapter3.aux'.
 
  (Chapters/Chapter3.tex
+Cap\'{\i }tulo 3.
 
-[14
+
+1: section
+[15
 
 
 
 
 ]
-Cap\'{\i }tulo 3.
-
-
-1: section
-[15]
 <./Figures/arquitectura_hardware_sistema.png, id=613, 904.37875pt x 475.7775pt>
 
 File: ./Figures/arquitectura_hardware_sistema.png Graphic file (type png)
 <use ./Figures/arquitectura_hardware_sistema.png>
 Package pdftex.def Info: ./Figures/arquitectura_hardware_sistema.png  used on i
-nput line 53.
+nput line 55.
 (pdftex.def)             Requested size: 389.80269pt x 205.06673pt.
 
 
-LaTeX Info: Redefining \. on input line 76.
-LaTeX Info: Redefining \% on input line 76.
+LaTeX Info: Redefining \. on input line 78.
+LaTeX Info: Redefining \% on input line 78.
 [16 <./Figures/arquitectura_hardware_sistema.png>]
 <./Figures/PCB_TFE_Modelo_2D.jpg, id=630, 2488.04532pt x 1753.30031pt>
 File: ./Figures/PCB_TFE_Modelo_2D.jpg Graphic file (type jpg)
 <use ./Figures/PCB_TFE_Modelo_2D.jpg>
-Package pdftex.def Info: ./Figures/PCB_TFE_Modelo_2D.jpg  used on input line 81
+Package pdftex.def Info: ./Figures/PCB_TFE_Modelo_2D.jpg  used on input line 83
 .
 (pdftex.def)             Requested size: 311.84334pt x 219.75056pt.
 <./Figures/PCB_TFE_Modelo_3D.png, id=631, 484.81125pt x 349.305pt>
 File: ./Figures/PCB_TFE_Modelo_3D.png Graphic file (type png)
 <use ./Figures/PCB_TFE_Modelo_3D.png>
-Package pdftex.def Info: ./Figures/PCB_TFE_Modelo_3D.png  used on input line 88
+Package pdftex.def Info: ./Figures/PCB_TFE_Modelo_3D.png  used on input line 90
 .
 (pdftex.def)             Requested size: 311.84334pt x 224.69504pt.
 <./Figures/PCB_TFE__real_front.jpeg, id=632, 492.33937pt x 361.35pt>
 File: ./Figures/PCB_TFE__real_front.jpeg Graphic file (type jpg)
 <use ./Figures/PCB_TFE__real_front.jpeg>
 Package pdftex.def Info: ./Figures/PCB_TFE__real_front.jpeg  used on input line
- 95.
+ 97.
 (pdftex.def)             Requested size: 311.84334pt x 228.88678pt.
 
 
-LaTeX Info: Redefining \. on input line 99.
-LaTeX Info: Redefining \% on input line 99.
+LaTeX Info: Redefining \. on input line 101.
+LaTeX Info: Redefining \% on input line 101.
 [17 <./Figures/PCB_TFE_Modelo_2D.jpg> <./Figures/PCB_TFE_Modelo_3D.png>]
 <./Figures/PCB_TFE__real_reverse.jpeg, id=639, 660.21657pt x 478.03593pt>
 File: ./Figures/PCB_TFE__real_reverse.jpeg Graphic file (type jpg)
 <use ./Figures/PCB_TFE__real_reverse.jpeg>
 Package pdftex.def Info: ./Figures/PCB_TFE__real_reverse.jpeg  used on input li
-ne 102.
+ne 104.
 (pdftex.def)             Requested size: 311.84334pt x 225.80023pt.
 <./Figures/QL76_Esquematico.png, id=644, 260.47313pt x 318.43968pt>
 File: ./Figures/QL76_Esquematico.png Graphic file (type png)
 <use ./Figures/QL76_Esquematico.png>
-Package pdftex.def Info: ./Figures/QL76_Esquematico.png  used on input line 118
+Package pdftex.def Info: ./Figures/QL76_Esquematico.png  used on input line 120
 .
 (pdftex.def)             Requested size: 233.88399pt x 285.9371pt.
 
 
-LaTeX Info: Redefining \. on input line 122.
-LaTeX Info: Redefining \% on input line 122.
+LaTeX Info: Redefining \. on input line 124.
+LaTeX Info: Redefining \% on input line 124.
 [18 <./Figures/PCB_TFE__real_front.jpeg> <./Figures/PCB_TFE__real_reverse.jpeg>
 ]
 <./Figures/QL76_modelo_2d_sup.png, id=649, 414.04688pt x 360.59718pt>
 File: ./Figures/QL76_modelo_2d_sup.png Graphic file (type png)
 <use ./Figures/QL76_modelo_2d_sup.png>
 Package pdftex.def Info: ./Figures/QL76_modelo_2d_sup.png  used on input line 1
-25.
+27.
 (pdftex.def)             Requested size: 155.91869pt x 135.79034pt.
 <./Figures/QL76_modelo_3d_sup.png, id=650, 429.85594pt x 365.86688pt>
 File: ./Figures/QL76_modelo_3d_sup.png Graphic file (type png)
 <use ./Figures/QL76_modelo_3d_sup.png>
 Package pdftex.def Info: ./Figures/QL76_modelo_3d_sup.png  used on input line 1
-32.
+34.
 (pdftex.def)             Requested size: 155.91869pt x 132.71127pt.
 <./Figures/QL76_real.jpeg, id=651, 443.40656pt x 389.20406pt>
 File: ./Figures/QL76_real.jpeg Graphic file (type jpg)
 <use ./Figures/QL76_real.jpeg>
-Package pdftex.def Info: ./Figures/QL76_real.jpeg  used on input line 139.
+Package pdftex.def Info: ./Figures/QL76_real.jpeg  used on input line 141.
 (pdftex.def)             Requested size: 155.91869pt x 136.8589pt.
 
 
-LaTeX Info: Redefining \. on input line 143.
-LaTeX Info: Redefining \% on input line 143.
+LaTeX Info: Redefining \. on input line 145.
+LaTeX Info: Redefining \% on input line 145.
 [19 <./Figures/QL76_Esquematico.png> <./Figures/QL76_modelo_2d_sup.png> <./Figu
 res/QL76_modelo_3d_sup.png>]
 
-LaTeX Info: Redefining \. on input line 172.
-LaTeX Info: Redefining \% on input line 172.
+LaTeX Info: Redefining \. on input line 179.
+LaTeX Info: Redefining \% on input line 179.
 [20 <./Figures/QL76_real.jpeg>]
 <./Figures/Arquitectura_firmware_TFE_GNSS.png, id=670, 1343.77031pt x 1071.2521
 8pt>
 File: ./Figures/Arquitectura_firmware_TFE_GNSS.png Graphic file (type png)
 <use ./Figures/Arquitectura_firmware_TFE_GNSS.png>
 Package pdftex.def Info: ./Figures/Arquitectura_firmware_TFE_GNSS.png  used on 
-input line 177.
+input line 184.
 (pdftex.def)             Requested size: 389.80269pt x 310.75325pt.
-LaTeX Font Info:    Trying to load font information for T1+pcr on input line 18
-5.
+LaTeX Font Info:    Trying to load font information for T1+pcr on input line 19
+2.
 
 (C:\Users\CUC\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\t1pcr.fd
 File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
 )
-Overfull \hbox (24.19977pt too wide) in paragraph at lines 185--186
+Overfull \hbox (3.54826pt too wide) in paragraph at lines 192--193
 \T1/ppl/m/n/10.95 cia-li-za-ción de los ser-vi-cios MQTT que pro-por-cio-na el 
-mó-du-lo 4G (SIM A7670SA),
- []
-
-
-Overfull \hbox (112.07664pt too wide) in paragraph at lines 187--188
-\T1/ppl/m/n/10.95 ta-rea ob-tie-ne la in-for-ma-ción men-cio-na-da, las trans-m
-i-te a la ta-rea [][]\T1/pcr/m/n/10.95 transmit_to_server_task()[]\T1/ppl/m/n/1
-0.95 ,
+mó-du-lo 4G (SIM A7670
  []
 
 
 
-LaTeX Info: Redefining \. on input line 190.
-LaTeX Info: Redefining \% on input line 190.
+LaTeX Info: Redefining \. on input line 197.
+LaTeX Info: Redefining \% on input line 197.
 [21 <./Figures/Arquitectura_firmware_TFE_GNSS.png>]
-Overfull \hbox (27.94945pt too wide) in paragraph at lines 193--194
-[][]\T1/pcr/m/n/10.95 collect_data_task()[]\T1/ppl/m/n/10.95 , los trans-mi-te 
-con la fun-ción [][]\T1/pcr/m/n/10.95 transmit_msg_mqtt()[]\T1/ppl/m/n/10.95 .
- []
 
-
-
-LaTeX Info: Redefining \. on input line 208.
-LaTeX Info: Redefining \% on input line 208.
+LaTeX Info: Redefining \. on input line 215.
+LaTeX Info: Redefining \% on input line 215.
 [22]
-Overfull \hbox (25.74689pt too wide) in paragraph at lines 221--222
-\T1/ppl/m/n/10.95 en-tre las dis-tin-tas ta-reas del pro-gra-ma y se crea la ta
--rea [][]\T1/pcr/m/n/10.95 init_mqtt_server_task()[]\T1/ppl/m/n/10.95 ,
- []
 
-
-Overfull \hbox (2.8998pt too wide) in paragraph at lines 223--224
-[][]\T1/pcr/m/n/10.95 transmit_server_task() []\T1/ppl/m/n/10.95 y [][]\T1/pcr/
-m/n/10.95 lcd_task()[]\T1/ppl/m/n/10.95 . Lue-go, el \T1/ppl/m/it/10.95 sche-du
--ler \T1/ppl/m/n/10.95 de \T1/ppl/m/it/10.95 FreeR-tos\T1/ppl/m/n/10.95 , des-
- []
-
-<./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_1.png, id=694, 1153.30875pt x 
+LaTeX Info: Redefining \. on input line 246.
+LaTeX Info: Redefining \% on input line 246.
+[23]
+<./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_1.png, id=708, 1153.30875pt x 
 1288.815pt>
 File: ./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_1.png Graphic file (type 
 png)
 <use ./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_1.png>
 Package pdftex.def Info: ./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_1.png 
- used on input line 228.
+ used on input line 252.
 (pdftex.def)             Requested size: 311.84334pt x 348.47635pt.
-
-
-LaTeX Info: Redefining \. on input line 232.
-LaTeX Info: Redefining \% on input line 232.
-[23]
-<./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_2.png, id=701, 1437.37pt x 123
+<./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_2.png, id=710, 1437.37pt x 123
 8.6275pt>
 File: ./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_2.png Graphic file (type 
 png)
 <use ./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_2.png>
 Package pdftex.def Info: ./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_2.png 
- used on input line 246.
+ used on input line 270.
 (pdftex.def)             Requested size: 350.82004pt x 302.30405pt.
 
 
-LaTeX Info: Redefining \. on input line 250.
-LaTeX Info: Redefining \% on input line 250.
+LaTeX Info: Redefining \. on input line 274.
+LaTeX Info: Redefining \% on input line 274.
 [24 <./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_1.png>]
-Overfull \hbox (1.21922pt too wide) in paragraph at lines 255--256
+Overfull \hbox (1.21922pt too wide) in paragraph at lines 279--280
 []\T1/ppl/m/n/10.95 Tarea [][]\T1/pcr/m/n/10.95 transmit_to_server_task() []\T1
 /ppl/m/n/10.95 ve-ri-fi-ca con-ti-nua-men-te si hay even-
  []
 
 
-Overfull \hbox (20.4468pt too wide) in paragraph at lines 257--258
+Overfull \hbox (20.4468pt too wide) in paragraph at lines 281--282
 []\T1/ppl/m/n/10.95 Tarea [][]\T1/pcr/m/n/10.95 lcd_task() []\T1/ppl/m/n/10.95 
 ve-ri-fi-ca con-ti-nua-men-te si hay even-tos en la co-la [][]\T1/pcr/m/n/10.95
  lcd_queue
  []
 
-<./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_3.png, id=710, 1236.62pt x 123
+<./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_3.png, id=720, 1236.62pt x 123
 8.6275pt>
 File: ./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_3.png Graphic file (type 
 png)
 <use ./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_3.png>
 Package pdftex.def Info: ./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_3.png 
- used on input line 264.
+ used on input line 288.
 (pdftex.def)             Requested size: 311.84334pt x 312.3399pt.
 
 
-LaTeX Info: Redefining \. on input line 268.
-LaTeX Info: Redefining \% on input line 268.
+LaTeX Info: Redefining \. on input line 292.
+LaTeX Info: Redefining \% on input line 292.
 [25 <./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_2.png>]
 
 Package caption Warning: The type was already set to `figure'
-(caption)                 on input line 301.
+(caption)                 on input line 325.
 See the caption package documentation for explanation.
 
 
 
-LaTeX Info: Redefining \. on input line 304.
-LaTeX Info: Redefining \% on input line 304.
+LaTeX Info: Redefining \. on input line 328.
+LaTeX Info: Redefining \% on input line 328.
 [26 <./Figures/Diagrama_flujo_firmware_TFE_CESE_Part_3.png>]
 
 Package caption Warning: The type was already set to `figure'
-(caption)                 on input line 335.
+(caption)                 on input line 359.
 See the caption package documentation for explanation.
 
 
 
-LaTeX Info: Redefining \. on input line 338.
-LaTeX Info: Redefining \% on input line 338.
+LaTeX Info: Redefining \. on input line 362.
+LaTeX Info: Redefining \% on input line 362.
 [27]
 
 Package caption Warning: The type was already set to `figure'
-(caption)                 on input line 360.
+(caption)                 on input line 384.
 See the caption package documentation for explanation.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 360--360
+Underfull \hbox (badness 10000) in paragraph at lines 384--384
  []\T1/ppl/m/sc/10 Código 3.3. |\T1/ppl/m/n/10 Pseu-do-có-di-go de la fun-ción 
 oc-cu- 
  []
 
 
-Overfull \hbox (3.94604pt too wide) in paragraph at lines 365--366
+Overfull \hbox (3.94604pt too wide) in paragraph at lines 389--390
 []\T1/ppl/m/n/10.95 En el có-di-go [][]3.4[][], se pre-sen-ta el pseu-do-có-di-
 go de la ta-rea [][]\T1/pcr/m/n/10.95 collect_data_task()[]\T1/ppl/m/n/10.95 .
  []
 
 
 
-LaTeX Info: Redefining \. on input line 366.
-LaTeX Info: Redefining \% on input line 366.
+LaTeX Info: Redefining \. on input line 390.
+LaTeX Info: Redefining \% on input line 390.
 [28]
 
 Package caption Warning: The type was already set to `figure'
-(caption)                 on input line 383.
-See the caption package documentation for explanation.
-
-
-Overfull \hbox (43.366pt too wide) in paragraph at lines 389--390
-[]\T1/ppl/m/n/10.95 En el có-di-go [][]3.5[][], se pre-sen-ta el pseu-do-có-di-
-go de la ta-rea [][]\T1/pcr/m/n/10.95 transmit_to_server_task()[]\T1/ppl/m/n/10
-.95 .
- []
-
-
-Package caption Warning: The type was already set to `figure'
-(caption)                 on input line 405.
+(caption)                 on input line 407.
 See the caption package documentation for explanation.
 
 
 Package caption Warning: The type was already set to `figure'
-(caption)                 on input line 435.
+(caption)                 on input line 429.
+See the caption package documentation for explanation.
+
+
+Package caption Warning: The type was already set to `figure'
+(caption)                 on input line 459.
 See the caption package documentation for explanation.
 
 
 
-LaTeX Info: Redefining \. on input line 438.
-LaTeX Info: Redefining \% on input line 438.
+LaTeX Info: Redefining \. on input line 462.
+LaTeX Info: Redefining \% on input line 462.
 [29]
 
 Package caption Warning: The type was already set to `figure'
-(caption)                 on input line 477.
+(caption)                 on input line 495.
 See the caption package documentation for explanation.
 
 
 
-LaTeX Info: Redefining \. on input line 480.
-LaTeX Info: Redefining \% on input line 480.
+LaTeX Info: Redefining \. on input line 501.
+LaTeX Info: Redefining \% on input line 501.
 [30]
 
 Package caption Warning: The type was already set to `figure'
-(caption)                 on input line 504.
+(caption)                 on input line 522.
 See the caption package documentation for explanation.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 504--504
+Underfull \hbox (badness 10000) in paragraph at lines 522--522
  []\T1/ppl/m/sc/10 Código 3.8. |\T1/ppl/m/n/10 Pseu-do-có-di-go de la fun-ción 
 
  []
 
 
-
-LaTeX Info: Redefining \. on input line 507.
-LaTeX Info: Redefining \% on input line 507.
-[31]
-
 Package caption Warning: The type was already set to `figure'
-(caption)                 on input line 531.
+(caption)                 on input line 549.
 See the caption package documentation for explanation.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 531--531
+Underfull \hbox (badness 10000) in paragraph at lines 549--549
  []\T1/ppl/m/sc/10 Código 3.9. |\T1/ppl/m/n/10 Pseu-do-có-di-go de la fun-ción 
 
  []
 
 
+
+LaTeX Info: Redefining \. on input line 554.
+LaTeX Info: Redefining \% on input line 554.
+[31]
+
 Package caption Warning: The type was already set to `figure'
-(caption)                 on input line 560.
+(caption)                 on input line 578.
 See the caption package documentation for explanation.
 
-
-
-LaTeX Info: Redefining \. on input line 563.
-LaTeX Info: Redefining \% on input line 563.
-[32]
-<./Figures/arquitectura_MQTT.png, id=921, 769.37437pt x 271.76532pt>
+<./Figures/arquitectura_MQTT.png, id=920, 769.37437pt x 271.76532pt>
 File: ./Figures/arquitectura_MQTT.png Graphic file (type png)
 <use ./Figures/arquitectura_MQTT.png>
-Package pdftex.def Info: ./Figures/arquitectura_MQTT.png  used on input line 58
-5.
+Package pdftex.def Info: ./Figures/arquitectura_MQTT.png  used on input line 60
+3.
 (pdftex.def)             Requested size: 350.82004pt x 123.92294pt.
 
-Overfull \hbox (47.6601pt too wide) in paragraph at lines 589--589
+Overfull \hbox (47.6601pt too wide) in paragraph at lines 607--607
 [][][]\T1/ppl/m/n/9 Imagen adap-ta-da de: [][]$https : / / www . emqx . com / e
 n / blog / mqtt-[]5-[]introduction-[]to-[]publish-[]subscribe-[]model$[][]| 
  []
 
 
 
-LaTeX Info: Redefining \. on input line 592.
-LaTeX Info: Redefining \% on input line 592.
-[33]
+LaTeX Info: Redefining \. on input line 609.
+LaTeX Info: Redefining \% on input line 609.
+[32]
 
-LaTeX Info: Redefining \. on input line 625.
-LaTeX Info: Redefining \% on input line 625.
-[34 <./Figures/arquitectura_MQTT.png>]
+LaTeX Info: Redefining \. on input line 638.
+LaTeX Info: Redefining \% on input line 638.
+[33 <./Figures/arquitectura_MQTT.png>]
 
-LaTeX Info: Redefining \. on input line 659.
-LaTeX Info: Redefining \% on input line 659.
+LaTeX Info: Redefining \. on input line 672.
+LaTeX Info: Redefining \% on input line 672.
+[34]
+
+LaTeX Info: Redefining \. on input line 710.
+LaTeX Info: Redefining \% on input line 710.
 [35]
 
-LaTeX Info: Redefining \. on input line 698.
-LaTeX Info: Redefining \% on input line 698.
-[36]
-
 Package caption Warning: \setcaptiontype
-(caption)                outside box or environment on input line 728.
+(caption)                outside box or environment on input line 744.
 See the caption package documentation for explanation.
 
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 728.
+(caption)                particular \caption on input line 744.
 See the caption package documentation for explanation.
 
-<./Figures/Mockup_web.png, id=1006, 939.51pt x 435.12563pt>
+<./Figures/Mockup_web.png, id=1002, 939.51pt x 435.12563pt>
 File: ./Figures/Mockup_web.png Graphic file (type png)
 <use ./Figures/Mockup_web.png>
-Package pdftex.def Info: ./Figures/Mockup_web.png  used on input line 734.
+Package pdftex.def Info: ./Figures/Mockup_web.png  used on input line 750.
 (pdftex.def)             Requested size: 389.80269pt x 180.53392pt.
-<./Figures/web_final.jpeg, id=1007, 956.82469pt x 499.11469pt>
+<./Figures/web_final.jpeg, id=1003, 956.82469pt x 499.11469pt>
 File: ./Figures/web_final.jpeg Graphic file (type jpg)
 <use ./Figures/web_final.jpeg>
-Package pdftex.def Info: ./Figures/web_final.jpeg  used on input line 741.
+Package pdftex.def Info: ./Figures/web_final.jpeg  used on input line 757.
 (pdftex.def)             Requested size: 389.80269pt x 203.33601pt.
 
 
-LaTeX Info: Redefining \. on input line 745.
-LaTeX Info: Redefining \% on input line 745.
-[37 <./Figures/Mockup_web.png>]
+LaTeX Info: Redefining \. on input line 761.
+LaTeX Info: Redefining \% on input line 761.
+[36 <./Figures/Mockup_web.png>]
 
-LaTeX Info: Redefining \. on input line 765.
-LaTeX Info: Redefining \% on input line 765.
-[38 <./Figures/web_final.jpeg>]
+LaTeX Info: Redefining \. on input line 781.
+LaTeX Info: Redefining \% on input line 781.
+[37 <./Figures/web_final.jpeg>]
 
-LaTeX Info: Redefining \. on input line 819.
-LaTeX Info: Redefining \% on input line 819.
-[39]
+LaTeX Info: Redefining \. on input line 836.
+LaTeX Info: Redefining \% on input line 836.
+[38]
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 834.
+(caption)                particular \caption on input line 878.
 See the caption package documentation for explanation.
 
 )
 
-LaTeX Info: Redefining \. on input line 174.
-LaTeX Info: Redefining \% on input line 174.
-[40]
+LaTeX Info: Redefining \. on input line 176.
+LaTeX Info: Redefining \% on input line 176.
+[39]
 \openout2 = `Chapters/Chapter4.aux'.
 
  (Chapters/Chapter4.tex
+
+[40
+
+
+
+
+]
 Cap\'{\i }tulo 4.
-<./Figures/Prototipo_v_final_exterior.png, id=1122, 547.04375pt x 459.7175pt>
+<./Figures/Prototipo_v_final_exterior.png, id=1155, 547.04375pt x 459.7175pt>
 File: ./Figures/Prototipo_v_final_exterior.png Graphic file (type png)
 <use ./Figures/Prototipo_v_final_exterior.png>
 Package pdftex.def Info: ./Figures/Prototipo_v_final_exterior.png  used on inpu
 t line 33.
 (pdftex.def)             Requested size: 194.90134pt x 163.78658pt.
-<./Figures/Prototipo_v_final_interior.png, id=1123, 688.5725pt x 365.365pt>
+<./Figures/Prototipo_v_final_interior.png, id=1156, 688.5725pt x 365.365pt>
 File: ./Figures/Prototipo_v_final_interior.png Graphic file (type png)
 <use ./Figures/Prototipo_v_final_interior.png>
 Package pdftex.def Info: ./Figures/Prototipo_v_final_interior.png  used on inpu
@@ -2082,13 +2053,8 @@ t line 40.
 
 
 1: section
-[41
-
-
-
-
- <./Figures/Prototipo_v_final_exterior.png>]
-<./Figures/Prototipo_v_final_exterior_componentes.jpg, id=1135, 452.4403pt x 41
+[41 <./Figures/Prototipo_v_final_exterior.png>]
+<./Figures/Prototipo_v_final_exterior_componentes.jpg, id=1168, 452.4403pt x 41
 4.79968pt>
 File: ./Figures/Prototipo_v_final_exterior_componentes.jpg Graphic file (type j
 pg)
@@ -2096,7 +2062,7 @@ pg)
 Package pdftex.def Info: ./Figures/Prototipo_v_final_exterior_componentes.jpg  
 used on input line 56.
 (pdftex.def)             Requested size: 194.90134pt x 178.68318pt.
-<./Figures/Prototipo_v_final_interior_componentes.jpg, id=1137, 744.53156pt x 3
+<./Figures/Prototipo_v_final_interior_componentes.jpg, id=1170, 744.53156pt x 3
 71.13657pt>
 File: ./Figures/Prototipo_v_final_interior_componentes.jpg Graphic file (type j
 pg)
@@ -2114,13 +2080,13 @@ erior_componentes.jpg>]
 LaTeX Info: Redefining \. on input line 114.
 LaTeX Info: Redefining \% on input line 114.
 [43 <./Figures/Prototipo_v_final_interior_componentes.jpg>]
-<./Figures/Prueba_regulador.jpeg, id=1164, 1208.515pt x 1606.0pt>
+<./Figures/Prueba_regulador.jpeg, id=1197, 1208.515pt x 1606.0pt>
 File: ./Figures/Prueba_regulador.jpeg Graphic file (type jpg)
 <use ./Figures/Prueba_regulador.jpeg>
 Package pdftex.def Info: ./Figures/Prueba_regulador.jpeg  used on input line 12
 7.
 (pdftex.def)             Requested size: 194.90134pt x 258.9992pt.
-<./Figures/grafico_corriente.png, id=1167, 728.613pt x 350.181pt>
+<./Figures/grafico_corriente.png, id=1200, 728.613pt x 350.181pt>
 File: ./Figures/grafico_corriente.png Graphic file (type png)
 <use ./Figures/grafico_corriente.png>
 Package pdftex.def Info: ./Figures/grafico_corriente.png  used on input line 13
@@ -2131,7 +2097,7 @@ Package pdftex.def Info: ./Figures/grafico_corriente.png  used on input line 13
 LaTeX Info: Redefining \. on input line 142.
 LaTeX Info: Redefining \% on input line 142.
 [44 <./Figures/Prueba_regulador.jpeg>]
-<./Figures/Prueba_corriente_datos_repre.png, id=1173, 434.37282pt x 541.27219pt
+<./Figures/Prueba_corriente_datos_repre.png, id=1206, 434.37282pt x 541.27219pt
 >
 File: ./Figures/Prueba_corriente_datos_repre.png Graphic file (type png)
 <use ./Figures/Prueba_corriente_datos_repre.png>
@@ -2144,13 +2110,13 @@ LaTeX Info: Redefining \. on input line 159.
 LaTeX Info: Redefining \% on input line 159.
 [45 <./Figures/grafico_corriente.png> <./Figures/Prueba_corriente_datos_repre.p
 ng>]
-<./Figures/prueba_QL76_diagrama.png, id=1183, 550.055pt x 134.5025pt>
+<./Figures/prueba_QL76_diagrama.png, id=1216, 550.055pt x 134.5025pt>
 File: ./Figures/prueba_QL76_diagrama.png Graphic file (type png)
 <use ./Figures/prueba_QL76_diagrama.png>
 Package pdftex.def Info: ./Figures/prueba_QL76_diagrama.png  used on input line
  165.
 (pdftex.def)             Requested size: 272.86069pt x 66.72362pt.
-<./Figures/prueba_QL76_Setup.jpeg, id=1184, 1203.7472pt x 676.77844pt>
+<./Figures/prueba_QL76_Setup.jpeg, id=1217, 1203.7472pt x 676.77844pt>
 File: ./Figures/prueba_QL76_Setup.jpeg Graphic file (type jpg)
 <use ./Figures/prueba_QL76_Setup.jpeg>
 Package pdftex.def Info: ./Figures/prueba_QL76_Setup.jpeg  used on input line 1
@@ -2171,19 +2137,19 @@ LaTeX Info: Redefining \% on input line 230.
 LaTeX Info: Redefining \. on input line 233.
 LaTeX Info: Redefining \% on input line 233.
 [47]
-<./Figures/prueba_QL76_recepcion_ana.png, id=1243, 663.22781pt x 405.76593pt>
+<./Figures/prueba_QL76_recepcion_ana.png, id=1276, 663.22781pt x 405.76593pt>
 File: ./Figures/prueba_QL76_recepcion_ana.png Graphic file (type png)
 <use ./Figures/prueba_QL76_recepcion_ana.png>
 Package pdftex.def Info: ./Figures/prueba_QL76_recepcion_ana.png  used on input
  line 236.
 (pdftex.def)             Requested size: 389.80269pt x 238.48347pt.
-<./Figures/prueba_A7670SA_diagrama.png, id=1246, 557.08125pt x 134.5025pt>
+<./Figures/prueba_A7670SA_diagrama.png, id=1279, 557.08125pt x 134.5025pt>
 File: ./Figures/prueba_A7670SA_diagrama.png Graphic file (type png)
 <use ./Figures/prueba_A7670SA_diagrama.png>
 Package pdftex.def Info: ./Figures/prueba_A7670SA_diagrama.png  used on input l
 ine 256.
 (pdftex.def)             Requested size: 272.86069pt x 65.88011pt.
-<./Figures/Prueba_A7670SA_Setup.jpeg, id=1247, 1203.7472pt x 676.77844pt>
+<./Figures/Prueba_A7670SA_Setup.jpeg, id=1280, 1203.7472pt x 676.77844pt>
 File: ./Figures/Prueba_A7670SA_Setup.jpeg Graphic file (type jpg)
 <use ./Figures/Prueba_A7670SA_Setup.jpeg>
 Package pdftex.def Info: ./Figures/Prueba_A7670SA_Setup.jpeg  used on input lin
@@ -2200,7 +2166,7 @@ Underfull \hbox (badness 1910) in paragraph at lines 269--270
 a prue-ba an-te-rior, la ta-
  []
 
-<./Figures/Prueba_A7670SA_recep_AT.png, id=1258, 465.23813pt x 404.26031pt>
+<./Figures/Prueba_A7670SA_recep_AT.png, id=1291, 465.23813pt x 404.26031pt>
 File: ./Figures/Prueba_A7670SA_recep_AT.png Graphic file (type png)
 <use ./Figures/Prueba_A7670SA_recep_AT.png>
 Package pdftex.def Info: ./Figures/Prueba_A7670SA_recep_AT.png  used on input l
@@ -2211,7 +2177,7 @@ ine 277.
 LaTeX Info: Redefining \. on input line 281.
 LaTeX Info: Redefining \% on input line 281.
 [49 <./Figures/Prueba_A7670SA_Setup.jpeg>]
-<./Figures/Prueba_A7670SA_transmision_AT.png, id=1265, 468.24937pt x 409.53pt>
+<./Figures/Prueba_A7670SA_transmision_AT.png, id=1298, 468.24937pt x 409.53pt>
 File: ./Figures/Prueba_A7670SA_transmision_AT.png Graphic file (type png)
 <use ./Figures/Prueba_A7670SA_transmision_AT.png>
 Package pdftex.def Info: ./Figures/Prueba_A7670SA_transmision_AT.png  used on i
@@ -2232,7 +2198,7 @@ See the caption package documentation for explanation.
 LaTeX Info: Redefining \. on input line 356.
 LaTeX Info: Redefining \% on input line 356.
 [51 <./Figures/Prueba_A7670SA_transmision_AT.png>]
-<./Figures/prueba_LCD_collage.png, id=1283, 676.77844pt x 488.57532pt>
+<./Figures/prueba_LCD_collage.png, id=1316, 676.77844pt x 488.57532pt>
 File: ./Figures/prueba_LCD_collage.png Graphic file (type png)
 <use ./Figures/prueba_LCD_collage.png>
 Package pdftex.def Info: ./Figures/prueba_LCD_collage.png  used on input line 3
@@ -2247,88 +2213,85 @@ LaTeX Info: Redefining \% on input line 365.
 LaTeX Info: Redefining \. on input line 404.
 LaTeX Info: Redefining \% on input line 404.
 [53 <./Figures/prueba_LCD_collage.png>]
-<./Figures/prueba_web_1_mapa.png, id=1341, 1028.34187pt x 518.6878pt>
+<./Figures/prueba_web_1_mapa.png, id=1374, 1028.34187pt x 518.6878pt>
 File: ./Figures/prueba_web_1_mapa.png Graphic file (type png)
 <use ./Figures/prueba_web_1_mapa.png>
 Package pdftex.def Info: ./Figures/prueba_web_1_mapa.png  used on input line 40
 7.
 (pdftex.def)             Requested size: 389.80269pt x 196.6127pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 442--443
+
+LaTeX Info: Redefining \. on input line 437.
+LaTeX Info: Redefining \% on input line 437.
+[54 <./Figures/prueba_web_1_mapa.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 445--446
 []|\T1/ppl/b/n/10.95 Distancia
  []
 
 
-Overfull \hbox (0.5819pt too wide) in paragraph at lines 444--444
+Overfull \hbox (0.5819pt too wide) in paragraph at lines 447--447
 []|\T1/ppl/m/n/10.95 10.96046963| 
  []
 
 
-Overfull \hbox (0.5819pt too wide) in paragraph at lines 445--445
+Overfull \hbox (0.5819pt too wide) in paragraph at lines 448--448
 []|\T1/ppl/m/n/10.95 10.96096967| 
  []
 
 
-Overfull \hbox (0.5819pt too wide) in paragraph at lines 446--446
+Overfull \hbox (0.5819pt too wide) in paragraph at lines 449--449
 []|\T1/ppl/m/n/10.95 10.96052396| 
  []
 
 
-Overfull \hbox (0.5819pt too wide) in paragraph at lines 447--447
+Overfull \hbox (0.5819pt too wide) in paragraph at lines 450--450
 []|\T1/ppl/m/n/10.95 10.96056399| 
  []
 
 
-Overfull \hbox (0.5819pt too wide) in paragraph at lines 448--448
+Overfull \hbox (0.5819pt too wide) in paragraph at lines 451--451
 []|\T1/ppl/m/n/10.95 10.96013613| 
  []
 
 
-Overfull \hbox (0.5819pt too wide) in paragraph at lines 449--449
+Overfull \hbox (0.5819pt too wide) in paragraph at lines 452--452
 []|\T1/ppl/m/n/10.95 10.95987377| 
  []
 
 
-Overfull \hbox (0.5819pt too wide) in paragraph at lines 450--450
+Overfull \hbox (0.5819pt too wide) in paragraph at lines 453--453
 []|\T1/ppl/m/n/10.95 10.95935576| 
  []
 
 
-Overfull \hbox (0.5819pt too wide) in paragraph at lines 451--451
+Overfull \hbox (0.5819pt too wide) in paragraph at lines 454--454
 []|\T1/ppl/m/n/10.95 10.95941637| 
  []
 
 
-Overfull \hbox (0.5819pt too wide) in paragraph at lines 452--452
+Overfull \hbox (0.5819pt too wide) in paragraph at lines 455--455
 []|\T1/ppl/m/n/10.95 10.96084288| 
  []
 
 
-Overfull \hbox (0.5819pt too wide) in paragraph at lines 453--453
+Overfull \hbox (0.5819pt too wide) in paragraph at lines 456--456
 []|\T1/ppl/m/n/10.95 10.96033852| 
  []
 
 
-Overfull \hbox (0.5819pt too wide) in paragraph at lines 454--454
+Overfull \hbox (0.5819pt too wide) in paragraph at lines 457--457
 []|\T1/ppl/m/n/10.95 10.95995456| 
  []
 
 
-Overfull \hbox (6.5585pt too wide) in paragraph at lines 439--458
+Overfull \hbox (6.5585pt too wide) in paragraph at lines 442--461
  [][] 
  []
 
+)
 
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-
-
-LaTeX Info: Redefining \. on input line 461.
-LaTeX Info: Redefining \% on input line 461.
-[54 <./Figures/prueba_web_1_mapa.png>])
-
-LaTeX Info: Redefining \. on input line 175.
-LaTeX Info: Redefining \% on input line 175.
+LaTeX Info: Redefining \. on input line 177.
+LaTeX Info: Redefining \% on input line 177.
 [55]
 \openout2 = `Chapters/Chapter5.aux'.
 
@@ -2346,14 +2309,14 @@ Cap\'{\i }tulo 5.
 1: section
 [57])
 
-LaTeX Info: Redefining \. on input line 176.
-LaTeX Info: Redefining \% on input line 176.
+LaTeX Info: Redefining \. on input line 178.
+LaTeX Info: Redefining \% on input line 178.
 [58]
 \openout2 = `Appendices/AppendixA.aux'.
 
  (Appendices/AppendixA.tex
 Ap\'{e}ndice A.
-<./Appendices/Esquematico_placa_base.pdf, id=1369, 1178.2018pt x 833.91548pt>
+<./Appendices/Esquematico_placa_base.pdf, id=1402, 1178.2018pt x 833.91548pt>
 File: ./Appendices/Esquematico_placa_base.pdf Graphic file (type pdf)
 <use ./Appendices/Esquematico_placa_base.pdf>
 Package pdftex.def Info: ./Appendices/Esquematico_placa_base.pdf  used on input
@@ -2364,7 +2327,7 @@ File: ./Appendices/Esquematico_placa_base.pdf Graphic file (type pdf)
 Package pdftex.def Info: ./Appendices/Esquematico_placa_base.pdf  used on input
  line 20.
 (pdftex.def)             Requested size: 1178.19893pt x 833.91344pt.
-<./Appendices/Esquematico_placa_base.pdf, id=1372, page=1, 1178.2018pt x 833.91
+<./Appendices/Esquematico_placa_base.pdf, id=1405, page=1, 1178.2018pt x 833.91
 548pt>
 File: ./Appendices/Esquematico_placa_base.pdf Graphic file (type pdf)
 <use ./Appendices/Esquematico_placa_base.pdf, page 1>
@@ -2427,7 +2390,7 @@ L3 programming layer <2020/03/25>
 LaTeX Warning: There were undefined references.
 
 Package rerunfilecheck Info: File `memoria.out' has not changed.
-(rerunfilecheck)             Checksum: FF62D32AA842A436C358C6C9A258C79D;4423.
+(rerunfilecheck)             Checksum: 96674C6D7EEA94BE66FE43CCC6DDD276;4424.
 
 Package biblatex Warning: Please (re)run BibTeX on the file(s):
 (biblatex)                memoria
@@ -2438,10 +2401,10 @@ Package logreq Info: Writing requests to 'memoria.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 33840 strings out of 473919
- 723252 string characters out of 5727897
- 2186908 words of memory out of 5000000
- 55594 multiletter control sequences out of 15000+600000
+ 33843 strings out of 473919
+ 723351 string characters out of 5727897
+ 2195908 words of memory out of 5000000
+ 55566 multiletter control sequences out of 15000+600000
  611869 words of font info for 114 fonts, out of 8000000 for 9000
  1142 hyphenation exceptions out of 8191
  96i,20n,94p,1966b,2672s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -2482,9 +2445,9 @@ tino/uplb8a.pfb><C:/Users/CUC/AppData/Local/Programs/MiKTeX/fonts/type1/urw/pal
 atino/uplr8a.pfb><C:/Users/CUC/AppData/Local/Programs/MiKTeX/fonts/type1/urw/pa
 latino/uplr8a.pfb><C:/Users/CUC/AppData/Local/Programs/MiKTeX/fonts/type1/urw/p
 alatino/uplri8a.pfb>
-Output written on memoria.pdf (75 pages, 7831107 bytes).
+Output written on memoria.pdf (75 pages, 7840235 bytes).
 PDF statistics:
- 1587 PDF objects out of 1728 (max. 8388607)
- 672 named destinations out of 1000 (max. 500000)
+ 1627 PDF objects out of 1728 (max. 8388607)
+ 703 named destinations out of 1000 (max. 500000)
  693 words of extra memory for PDF output out of 10000 (max. 10000000)
 

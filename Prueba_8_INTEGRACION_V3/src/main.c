@@ -5,6 +5,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include "driver/gpio.h"
+#include "driver/rtc_io.h"
 #include "driver/uart.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
@@ -31,6 +32,7 @@
 #define CTS_1       12
 #define NVS_NAME    "DSleep"
 #define KEY_CAVA    "cava_save"
+#define WAKE_UP_PIN     FREE_BUTTON
 
 
 
@@ -68,9 +70,11 @@ static mqtt_server_state_t init_sequence_mqtt_server(uart_event_t uart1_event, c
 static mqtt_msg_state_t transmit_msg_mqtt(char * mqtt_payload, char * topic, uart_event_t uart1_event, char * at_response);
 static bool wait_PB_DONE(QueueHandle_t uart_queue, uart_event_t uart_event, char * at_response);
 
-static void save_cava_state(CAVA_DATA_t * cava_data);
-static void get_cava_state(CAVA_DATA_t * cava_data);
-static void enter_deep_sleep(CAVA_DATA_t * cava_data);
+
+static esp_err_t save_cava_state(CAVA_DATA_t * cava_data); // Función para guardar el estado de la tarea en la NVS
+static esp_err_t get_cava_state(CAVA_DATA_t * cava_data); // Función para recuperar el estado de la tarea de la NVS
+static esp_err_t enter_deep_sleep_short(CAVA_DATA_t * cava_data); // Función para entrar en deep sleep cada 60 segundos
+static esp_err_t enter_deep_sleep_long(CAVA_DATA_t * cava_data); // Función para entrar en deep sleep si la posición es estática
 
 
 
@@ -80,70 +84,80 @@ void app_main()
 {
     // Se inicializa el non-volatile storage
     esp_err_t ret = nvs_flash_init();
-    if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND)
+    if (ESP_ERR_NVS_NO_FREE_PAGES == ret || ESP_ERR_NVS_NEW_VERSION_FOUND == ret)
     {
         ESP_ERROR_CHECK(nvs_flash_erase());
         ret = nvs_flash_init();
     }
     ESP_ERROR_CHECK(ret);
 
+    rtc_gpio_deinit(WAKE_UP_PIN);
+
+    uart_init(UART0, 9600, BUF_SIZE * 2, BUF_SIZE * 2, 50, &uart0_queue_gnss, ESP_INTR_FLAG_LEVEL1);
+    //          (UART_NUM, TX, RX, RTS, CTS)
+    uart_set_pin(UART0, TX_0, RX_0, RTS_0, CTS_0);
+
+    // UART_1 conectar con modulo 4g A7670SA
+    uart_init(UART1, 115200, BUF_SIZE * 2, 0, 50, &uart1_queue_4g, ESP_INTR_FLAG_LEVEL1); //   ESP_INTR_FLAG_IRAM
+    //          (UART_NUM, TX, RX, RTS, CTS)
+    uart_set_pin(UART1, TX_1, RX_1, RTS_1, CTS_1);
+    // ESP_ERROR_CHECK(uart_driver_install(UART_NUM_1, BUF_SIZE * 2, 0, 0, NULL, ESP_INTR_FLAG_IRAM));
+
+    // Se configruran los pines donde se conectarán los pilotos de ocupado o desocupado.
+    occupancy_pilots_init();
+
+    // Se configura el pin de habilitación EN_4G_BUTTON, del módulo 4g para controlar reinicios.
+    enable_pin_4g_init();
+
+    // Se configruran los pines donde se conectarán los botones de ocupado o desocupado.
+
+    ocupancy_buttons_init();
+    gpio_install_isr_service(ESP_INTR_FLAG_IRAM);
+    gpio_isr_handler_add(BUSSY_BUTTON, occupancy_isr_handler, (void *)BUSSY_BUTTON);
+    gpio_isr_handler_add(FREE_BUTTON, occupancy_isr_handler, (void *)FREE_BUTTON);
+
+    debounce_init();
+
+    // Secuencia de inicialización del LCD
+    lcd_init();
+    lcd_clear();
+    lcd_set_RGB(0, 0, 255); // LCD color azul
+
+    // Semáforo para arbitrar el uso del puerto UART
+    uart1_sem = xSemaphoreCreateBinary();
+    lcd_sem = xSemaphoreCreateBinary();
+
+    // Creación de colas que servirán para la comunicación entre tareas.
+
+    gpio_evt_queue = xQueueCreate(10, sizeof(uint32_t));
+    position_queue = xQueueCreate(10, sizeof(GNSSData_t));
+    occupancy_queue = xQueueCreate(10, sizeof(occupancy_t));
+    occupancy_queue_isr = xQueueCreate(10, sizeof(occupancy_t));
+    cava_data_queue = xQueueCreate(10, sizeof(CAVA_DATA_t));
+    lcd_queue = xQueueCreate(10, sizeof(LCD_data_t));
+
+    lcd_write(0, 0, "Init Ok...");
+
     // Se verifica la causa del wakeup
     switch (esp_sleep_get_wakeup_cause())
     {
-
     case ESP_SLEEP_WAKEUP_TIMER:
+        wakeup_type = WAKEUP_FROM_SLEEP;
+        lcd_on();
+        get_cava_state(&cava_data_saved);
+        create_tasks(wakeup_type, &cava_data_saved);
+        break;
+
+    case ESP_SLEEP_WAKEUP_EXT0:
+        wakeup_type = WAKEUP_FROM_SLEEP;
         lcd_on();
         get_cava_state(&cava_data_saved);
         create_tasks(wakeup_type, &cava_data_saved);
         break;
 
     default:
-
+        wakeup_type = WAKEUP_FROM_SET;
         // UART Para recibir trama NMEA del Modulo L76
-        uart_init(UART0, 9600, BUF_SIZE * 2, BUF_SIZE * 2, 50, &uart0_queue_gnss, ESP_INTR_FLAG_LEVEL1);
-        //          (UART_NUM, TX, RX, RTS, CTS)
-        uart_set_pin(UART0, TX_0, RX_0, RTS_0, CTS_0);
-
-        // UART_1 conectar con modulo 4g A7670SA
-        uart_init(UART1, 115200, BUF_SIZE * 2, 0, 50, &uart1_queue_4g, ESP_INTR_FLAG_LEVEL1); //   ESP_INTR_FLAG_IRAM
-        //          (UART_NUM, TX, RX, RTS, CTS)
-        uart_set_pin(UART1, TX_1, RX_1, RTS_1, CTS_1);
-        // ESP_ERROR_CHECK(uart_driver_install(UART_NUM_1, BUF_SIZE * 2, 0, 0, NULL, ESP_INTR_FLAG_IRAM));
-
-        // Se configruran los pines donde se conectarán los pilotos de ocupado o desocupado.
-        occupancy_pilots_init();
-
-        // Se configura el pin de habilitación EN_4G_BUTTON, del módulo 4g para controlar reinicios.
-        enable_pin_4g_init();
-
-        // Se configruran los pines donde se conectarán los botones de ocupado o desocupado.
-
-        ocupancy_buttons_init();
-        gpio_install_isr_service(ESP_INTR_FLAG_IRAM);
-        gpio_isr_handler_add(BUSSY_BUTTON, occupancy_isr_handler, (void *)BUSSY_BUTTON);
-        gpio_isr_handler_add(FREE_BUTTON, occupancy_isr_handler, (void *)FREE_BUTTON);
-
-        debounce_init();
-
-        // Secuencia de inicialización del LCD
-        lcd_init();
-        lcd_clear();
-        lcd_set_RGB(0, 0, 255); // LCD color azul
-
-        // Semáforo para arbitrar el uso del puerto UART
-        uart1_sem = xSemaphoreCreateBinary();
-        lcd_sem = xSemaphoreCreateBinary();
-
-        // Creación de colas que servirán para la comunicación entre tareas.
-
-        gpio_evt_queue = xQueueCreate(10, sizeof(uint32_t));
-        position_queue = xQueueCreate(10, sizeof(GNSSData_t));
-        occupancy_queue = xQueueCreate(10, sizeof(occupancy_t));
-        occupancy_queue_isr = xQueueCreate(10, sizeof(occupancy_t));
-        cava_data_queue = xQueueCreate(10, sizeof(CAVA_DATA_t));
-        lcd_queue = xQueueCreate(10, sizeof(LCD_data_t));
-
-        lcd_write(0, 0, "Init Ok...");
 
         /// Crear una tarea que se dedique unicamente a escribir por el LCD. Leer Queues de estado y actualizar la data.
         // Estado comunicación GNSS y 4G y reportar el estado de Ocupación y posición.
@@ -219,7 +233,6 @@ static void init_mqtt_server_task(void *params)
         vTaskDelete(NULL);
     }
 }
-
 
 
 static void gnss_task(void *params)
@@ -343,6 +356,22 @@ static void transmit_to_server_task(void *params)
                 xSemaphoreTake(uart1_sem, portMAX_DELAY);
                 mqtt_msg_state = transmit_msg_mqtt(mqtt_payload, topic, uart1_event, at_response);
                 xSemaphoreGive(uart1_sem);
+
+                lcd_data.cava_data = cava_data;
+                lcd_data.msg_state = mqtt_msg_state;
+                xQueueSend(lcd_queue, &lcd_data, pdMS_TO_TICKS(200));
+
+                if (MQTT_MSG_OK == mqtt_msg_state)
+                {
+                    xSemaphoreTake(lcd_sem, portMAX_DELAY);
+                    lcd_clear();
+                    lcd_set_RGB(85, 85, 85);
+                    lcd_write(0, 0, "Durmiendo...");
+                    delay(3000);
+                    if(ESP_OK == enter_deep_sleep_short(&cava_data))
+                        xSemaphoreGive(lcd_sem);
+                }
+                    
             }
 
             lcd_data.cava_data = cava_data;
@@ -350,9 +379,11 @@ static void transmit_to_server_task(void *params)
 
             xQueueSend(lcd_queue, &lcd_data, pdMS_TO_TICKS(200));
             bzero(mqtt_payload, payload_size);
+
+                
         }
         //delay(2000); // Aquí es donde debe ir el comando de ahorro de energía. 
-        enter_deep_sleep(&cava_data);
+        
     }
     free(mqtt_payload);
     free(at_response);
@@ -361,6 +392,7 @@ static void transmit_to_server_task(void *params)
 
 static void lcd_task(void *params)
 {
+    xSemaphoreGive(lcd_sem);
     LCD_data_t lcd_data;
     char print_to_lcd[16];
     char occupancy_str[8];
@@ -723,8 +755,8 @@ static bool wait_PB_DONE(QueueHandle_t uart_queue, uart_event_t uart_event, char
     return true;
 }
 
-// Función para guardar el estado de la tarea en la NVS
-static void save_cava_state(CAVA_DATA_t * cava_data) 
+
+static esp_err_t save_cava_state(CAVA_DATA_t * cava_data) 
 {
     nvs_handle_t nvs_handle;
     esp_err_t err = nvs_open(NVS_NAME, NVS_READWRITE, &nvs_handle);
@@ -733,39 +765,57 @@ static void save_cava_state(CAVA_DATA_t * cava_data)
     {
         err = nvs_set_blob(nvs_handle, KEY_CAVA, (const void *) cava_data, sizeof(CAVA_DATA_t));
         if (ESP_OK == err)  
-        {   
             nvs_commit(nvs_handle);
-        }
+        else
+            return err; 
     }
     else 
-    {
-        return;
-    }
+        return err; 
+
     nvs_close(nvs_handle);
+    return err; 
 }
 
-// Función para recuperar el estado de la tarea de la NVS
-static void get_cava_state(CAVA_DATA_t * cava_data) 
+
+static esp_err_t get_cava_state(CAVA_DATA_t * cava_data) 
 {
     nvs_handle_t nvs_handle;
     esp_err_t err = nvs_open(NVS_NAME, NVS_READWRITE, &nvs_handle);
-    
+    size_t len = sizeof(CAVA_DATA_t);
     if (ESP_OK == err) 
-    {
-        nvs_set_blob(nvs_handle, KEY_CAVA, (const void *) cava_data, sizeof(CAVA_DATA_t));
-    }
+        err = nvs_get_blob(nvs_handle, KEY_CAVA, (void *) cava_data, &len);
     else 
-    {
-        return;
-    }
+        return err;
+
     nvs_close(nvs_handle);
+
+    return err; 
 }
 
-// Función para entrar en deep sleep
-static void enter_deep_sleep(CAVA_DATA_t * cava_data) {
-    save_cava_state(cava_data);
-    esp_sleep_enable_timer_wakeup(1000000 * 10);  // Tiempo de sleep: 10 segundos
-    wakeup_type = WAKEUP_FROM_SLEEP;
+
+static esp_err_t enter_deep_sleep_short(CAVA_DATA_t * cava_data) 
+{
+    esp_err_t err = save_cava_state(cava_data);
+    gpio_reset_pin(WAKE_UP_PIN);
+    esp_sleep_enable_ext0_wakeup(WAKE_UP_PIN, 1);
+    esp_sleep_enable_timer_wakeup(1000000UL * 60);  // * Tiempo de sleep en segundos
+    
     lcd_off();
-    esp_deep_sleep_start();
+    if (ESP_OK == err)
+        esp_deep_sleep_start();
+    
+    return err; 
+}
+
+static esp_err_t enter_deep_sleep_long(CAVA_DATA_t * cava_data) 
+{
+    esp_err_t err = save_cava_state(cava_data);
+    gpio_reset_pin(WAKE_UP_PIN);
+    esp_sleep_enable_ext0_wakeup(WAKE_UP_PIN, 1);
+    
+    lcd_off();
+    if (ESP_OK == err)
+        esp_deep_sleep_start();
+    
+    return err; 
 }

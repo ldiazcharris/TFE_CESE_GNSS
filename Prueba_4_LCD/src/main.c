@@ -50,6 +50,9 @@ void app_main()
         lcd_set_RGB(255, 0, 0); //pantalla roja
 
         delay(DELAY_LCD);
+        lcd_off();
+        delay(DELAY_LCD);
+        lcd_on();
 
         lcd_clear(); 
         lcd_write(0, 0, "Color: ");
@@ -57,6 +60,9 @@ void app_main()
         lcd_set_RGB(0, 255, 0); //pantalla verde
 
         delay(DELAY_LCD);
+        lcd_off();
+        delay(DELAY_LCD);
+        lcd_on();
 
         lcd_clear(); 
         lcd_write(0, 0, "Color: ");
@@ -64,6 +70,9 @@ void app_main()
         lcd_set_RGB(0, 0, 255); //pantalla azul
 
         delay(DELAY_LCD);
+        lcd_off();
+        delay(DELAY_LCD);
+        lcd_on();
 
         lcd_clear(); 
         lcd_write(0, 0, "Color: ");
@@ -71,6 +80,9 @@ void app_main()
         lcd_set_RGB(255, 255, 0); //pantalla amarilla
 
         delay(DELAY_LCD);
+        lcd_off();
+        delay(DELAY_LCD);
+        lcd_on();
 
         lcd_clear(); 
         lcd_write(0, 0, "Color: ");
@@ -78,6 +90,9 @@ void app_main()
         lcd_set_RGB(255, 0, 255); //pantalla magenta
 
         delay(DELAY_LCD);
+        lcd_off();
+        delay(DELAY_LCD);
+        lcd_on();
 
         lcd_clear(); 
         lcd_write(0, 0, "Color: ");
@@ -85,6 +100,9 @@ void app_main()
         lcd_set_RGB(0, 255, 255); //pantalla cyan
 
         delay(DELAY_LCD);
+        lcd_off();
+        delay(DELAY_LCD);
+        lcd_on();
     }
 }
 

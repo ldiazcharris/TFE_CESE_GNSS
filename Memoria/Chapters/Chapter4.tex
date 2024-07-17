@@ -13,7 +13,7 @@ Este capítulo presenta los ensayos realizados para evaluar el desempeño del pr
 
 \item Probar la integración del firmware. Verificar que el firmware gestiona adecuadamente la adquisición de datos, el procesamiento y la transmisión al \textit{broker} MQTT.
 
-\item Evaluar la exactitud de la geolocalización GNSS. Medir la precisión de las coordenadas proporcionadas por el módulo GNSS y compararlas con un patrón de referencia.
+\item Evaluar la exactitud de la geolocalización GNSS. Medir la exactitud de las coordenadas proporcionadas por el módulo GNSS y compararlas con un patrón de referencia.
 
 \item Comprobar la visualización de la aplicación de mapas. Asegurar que la aplicación proporciona una representación útil de los datos GNSS recibidos.
 
@@ -98,7 +98,7 @@ Se ejecutaron pruebas sobre los módulos de hardware para verificar que funciona
 	\begin{enumerate}
 	\item Se verificaron las conexiones de los componentes para observar que no existen contactos abiertos, en cortocircuito o fallas a tierra.
 	\item Se verificó que a la salida del circuito de regulación se da un nivel de tensión de 5 VDC, necesarios para la alimentación de cada módulo.
-	\item Se midió el consumo de corriente de todo el hardware a plena carga, es decir, realizando todas las tareas para las que fue diseñado. 
+	\item Se midió el consumo de corriente de todo el hardware a plena carga, es decir, en el momento en que todas las tareas para las que fue diseñado están en ejecución. 
 	\end{enumerate}
 
 \item Se realizaron pruebas unitarias de comunicación entre los diferentes módulos montados sobre la PCB. Para esto, se realizó lo siguiente: 
@@ -107,7 +107,7 @@ Se ejecutaron pruebas sobre los módulos de hardware para verificar que funciona
 	
 	\item  Se probó la recepción de tramas NMEA con el módulo Quectel L76, a través del puerto UART. Se construyó un código de prueba que capturó las tramas NMEA recibidas por puerto UART\_1 y su eco en el puerto UART\_0 para visualizar los datos recibidos en la computadora, a través de la terminal \textit{Hercules} \citep{hercules}. 
 	
-	\item Se probó la comunicación bidireccional con el módulo SIM A7670SA, a través del puerto UART y por comandos AT. Se construyó un código de prueba que captura las tramas AT, recibidas por puerto UART\_1 y su eco en el puerto UART\_0 para visualizar los datos recibidos en la computadora, a través de la terminal \textit{Hercules}; este mismo programa transmite las tramas AT enviadas desde el puerto UART\_0 hasta el módulo SIM A7670SA en el UART\_1. De esta manera, se pueden enviar comandos AT de forma manual hacia el módulo y recibir las respuestas respectivas. 
+	\item Se probó la comunicación bidireccional con el módulo SIM A7670SA, a través del puerto UART y por comandos AT. Se construyó un código de prueba que captura las tramas AT, recibidas por puerto UART\_1 y su eco en el puerto UART\_0 para visualizar los datos recibidos en la computadora, a través de la terminal \textit{Hercules}. Este mismo programa transmite las tramas AT enviadas desde el puerto UART\_0 hasta el módulo SIM A7670SA en el UART\_1. De esta manera, se pueden enviar comandos AT de forma manual hacia el módulo y recibir las respuestas respectivas. 
 	
 	\item Se realizó un código de prueba para utilizar todas las funciones proporcionadas por el driver \verb|lcd_i2c_grove.h| y verificar la visualización correcta de textos predefinidos en la pantalla. 
 	
@@ -129,7 +129,7 @@ Se verificó que no existen contactos abiertos, cortocircuitos o fallas a tierra
 	\label{fig:prueba_regulador}
 \end{figure}
 
-La medición de la corriente total consumida por el hardware se llevó a cabo por un período de 30 segundos contado a partir de que se enciende el dispositivo; este es el tiempo que le toma al sistema inicializarse y comenzar a enviar datos al servidor.  Resultó que existen variaciones desde los 130 mA hasta los 190 mA. La medición mostró valores con picos de 210 mA. 
+La medición de la corriente total consumida por el hardware se llevó a cabo por un período de 30 segundos contados a partir de que se enciende el dispositivo; este es el tiempo que le toma al sistema inicializarse y comenzar a enviar datos al servidor.  Resultó que existen variaciones desde los 130 mA hasta los 190 mA, además de valores con picos de 210 mA, de corta duración. 
 
 Se observó que los mayores picos de corriente se dan cuando el módulo SIM A7670SA recién se conecta a la red celular. También, se observa que el valor de corriente que más se repite en las mediciones es 150 mA. En la figura \ref{fig:graf_corr} se muestra el gráfico de las muestras tomadas; la secuencia de valores corresponde temporalmente, es decir, que describe el comportamiento de la corriente en el tiempo. Además, en la figura \ref{fig:pru_corr_datos_repre} se muestran fotografías de las mediciones más representativas. 
 
@@ -155,9 +155,9 @@ Se observó que los mayores picos de corriente se dan cuando el módulo SIM A767
 En la figura \ref{fig:pru_QL76_Diag} se muestra un diagrama de la conexión necesaria para esta prueba. En la figura \ref{fig:pru_QL76_Setup} se muestra la conexión real realizada. En esta configuración se realiza lo siguiente: 
 
 \begin{enumerate}
-\item Se intercambias los pines GND, Vin, Tx y Rx del módulo Quectel L76 en la ranura del módulo SIM A7670SA. Debido a que son conectores diferentes se deben emplear cables de prueba. Lo anterior, para poder usar el puerto UART\_1.
+\item Para esta prueba se requiere el uso del puerto UART\_1, por lo tanto, se intercambias los pines GND, Vin, Tx y Rx del módulo Quectel L76 en la ranura del módulo SIM A7670SA. Debido a que son conectores diferentes se deben emplear cables de prueba.
 
-\item Se deben desconectar los módulos SIM A7670SA y Quectel L76 de sus respectivas posiciones designadas, para interferir la comunicación serial. 
+\item Se deben desconectar los módulos SIM A7670SA y Quectel L76 de sus respectivas posiciones designadas, para no interferir la comunicación serial. 
 \end{enumerate}
 
 \begin{figure}[H]
@@ -229,7 +229,7 @@ static void uart0_interrupt_task(void *params)
 \end{figure}
 
 
-Luego de implementar las configuraciones anteriores, se obtuvieron las tramas NMEA proporcionadas por el módulo Quectel L76. La prueba resultó exitosa, ya que es posible capturar dichas tramas y procesarlas. En la figura \ref{fig:pru_QL76_recep} se muestra una captura de las tramas visualizadas en la terminal \textit{Hercules}. En esta captura se puede observar las tramas que incian con \$GNRMC, las cuales contienen la información de geolocalización del módulo.  
+Luego de implementar las configuraciones anteriores, se obtuvieron las tramas NMEA proporcionadas por el módulo Quectel L76. La prueba resultó exitosa, ya que es posible capturar dichas tramas y procesarlas. En la figura \ref{fig:pru_QL76_recep} se muestra una captura de las tramas visualizadas en la terminal \textit{Hercules}. En esta captura se puede observar las tramas que incian con \$GNRMC, las cuales contienen la información de geolocalización.  
 
 \begin{figure}[H]
 	\centering
@@ -279,16 +279,16 @@ En la figura \ref{fig:pru_A7670_recep} se muestra una captura de los mensajes vi
 	\label{fig:pru_A7670_recep}
 \end{figure}
 
-En la figura \ref{fig:pru_A7670_transm} se muestra otra captura de mensajes visualizados en la terminal \textit{Hercules}. En esta captura se muestra la transmisión del comando \textbf{AT+CMGD=1,4} hacia el módulo SIM A7670SA, este comando de be cumplir con las siguientes condiciones: 
+En la figura \ref{fig:pru_A7670_transm} se muestra otra captura de mensajes visualizados en la terminal \textit{Hercules}. En esta captura se muestra la transmisión del comando \textbf{AT+CMGD=1,4} hacia el módulo SIM A7670SA, este comando debe cumplir con las siguientes condiciones: 
 
 \begin{enumerate}
 \item Debe iniciar con los caracteres \textbf{AT+}.
-\item Seguido del comando a enviar. En el caso de la prueba realizada, se envió el comando CMGD que se usa para eliminar mensajes SMS. 
+\item Comando a enviar. En el caso de la prueba realizada, se envió el comando CMGD que se usa para eliminar mensajes SMS. 
 \item Los parámetros del comando. en este caso <index>(1), <delflag>(4), para borrar todos los mensajes en la tarjeta SIM.
 \item Por último, los símbolos de retorno de carro <CR> y salto de línea <LF>. Si estos dos símbolos no están presentes, el comando no será reconocido.
 \end{enumerate}
 
-En la figura \ref{fig:pru_A7670_transm} también se observa en la figura la respuesta del módulo al comando recibido. El módulo responde con un texto que contiene el comando recibido y 'OK' para indicar que el comando fue ejecutado con éxito. 
+En la figura \ref{fig:pru_A7670_transm} también se observa la respuesta del módulo al comando enviado. El módulo responde con un texto que contiene el comando y ``OK'' para indicar que fue ejecutado con éxito. 
 
 \begin{figure}[H]
 	\centering
@@ -304,7 +304,7 @@ En la figura \ref{fig:pru_A7670_transm} también se observa en la figura la resp
 
 Para esta prueba no es necesaria ninguna configuración especial, más allá de las conexiones de diseño del hardware. 
 
-Se implementó un código de prueba (ver código \ref{cod:cod_proof_lcd}) que permitió usar las funciones proporcionadas por el driver \verb|lcd_i2c_grove.h|. Este sencillo programa escribe textos y cambia los colores de la pantalla LCD cada 3 segundos, además que borra la pantalla cada vez que escribe un texto nuevo. De esta manera se puede corroborar el funcionamiento de la LCD. en la figura \ref{fig:prueba_lcd} se muestran fotografías de los resultados de la prueba. 
+Se implementó un código de prueba (ver código \ref{cod:cod_proof_lcd}) que permitió usar las funciones proporcionadas por el driver \verb|lcd_i2c_grove.h|. Este sencillo programa escribe textos y cambia los colores de la pantalla LCD cada tres segundos. Además, borra la pantalla cada vez que escribe un texto nuevo. De esta manera se puede corroborar el funcionamiento de la LCD. En la figura \ref{fig:prueba_lcd} se muestran fotografías de los resultados de la prueba. 
 
 \begin{figure}[H]
 \begin{lstlisting}
@@ -417,21 +417,24 @@ Para realizar esta prueba, se procedió a verificar la exactitud de la localizac
 \subsubsection{Metodología}
 
 \begin{enumerate}
-\item Se seleccionaron posiciones en puntos fijos en la ciudad de Barranquilla. En un conjunto de edificios residenciales con calles internas para recrear espacios urbanos con presencia de edificios y también cuenta con zonas abiertas. 
+\item Se seleccionaron posiciones en puntos fijos en la ciudad de Barranquilla. En un conjunto de edificios residenciales con calles internas para recrear espacios urbanos con presencia de edificios. 
 
 \item Se marcaron las coordenadas geográficas de los puntos seleccionados. para esto se utilizó la aplicación \textit{Google Map} y un teléfono inteligente como instrumento patrón. 
 
 \item En cada punto de prueba se registraron las coordenadas proporcionadas por el prototipo y por el teléfono inteligente. Se tomaron cinco muestras con una separación de un minuto. El valor de la medición que se seleccionó fue el que más se repite de las cinco muestras. 
 
-\item Se calculó la distancia entre las coordenadas registradas por el prototipo y las coordenadas tomadas de referencia de \textit{Google Map}. El cálculo de esta distancia se realizó con la ecuación de \textit{Haversine}. El cálculo se toma como el grado de exactitud en la geolocalización realizada por el prototipo.
+\item Se calculó la distancia entre las coordenadas registradas por el prototipo y las coordenadas tomadas de referencia de \textit{Google Map}. El cálculo de esta distancia se realizó con la ecuación de \textit{Haversine}. El cálculo se toma como el grado de exactitud en la geolocalización realizada por el prototipo, al considerar como valor verdadero el proporcionado por el teléfono inteligente.
 
 \end{enumerate}
 
 
 \subsubsection{Resultados y análisis}
 
-Luego de realizadas las pruebas se obtuvieron se tabularon los datos obtenidos (ver tabla \ref{tabla:distancias_calculadas}). 
+Luego de realizadas las pruebas se tabularon los datos obtenidos (ver tabla \ref{tabla:distancias_calculadas}). 
 
+Las muestras 1 a 8 de la tabla \ref{tabla:distancias_calculadas}, corresponden a posiciones en las calles, con edificios al rededor. En estos registros se observa que la exactitud está entre 0 y 5 m.
+
+Por otro lado, las muestras 9 a 11 de la tabla \ref{tabla:distancias_calculadas} corresponden a coordenadas medidas dentro de los edificios, en los pasillos. Como era de esperar, el hormigón armado ofrece interferencia a la señal satelital, por lo tanto la exactitud de la medición baja considerablemente a alrededor de 40 m.
 
 \begin{table}[h]
     \centering
@@ -457,7 +460,7 @@ Luego de realizadas las pruebas se obtuvieron se tabularon los datos obtenidos (
     \label{tabla:distancias_calculadas}
 \end{table}
 
-Las muestras 1 a 8 de la tabla \ref{tabla:distancias_calculadas}, corresponden a posiciones fuera de edificios; en estos registros se observa que la exactitud está entre 0 y 5 m. Por otro lado, las muestras 9 a 11 de la tabla \ref{tabla:distancias_calculadas} corresponden a coordenadas medidas dentro de los edificios, en los pasillos y, como era de esperar, el hormigón armado ofrece interferencia a la señal satelital, por lo tanto la exactitud de la medición baja considerablemente. 
+ 
 
 %%Condiciones de Rendimiento: Analiza bajo qué condiciones el módulo GPS ofrece la mayor y menor precisión.
 

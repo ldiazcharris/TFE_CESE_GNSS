@@ -7,7 +7,7 @@
 \contentsline {figure}{\numberline {2.3}{\ignorespaces Módulo Quectel L76\footnotemark .}}{9}{figure.caption.11}%
 \contentsline {figure}{\numberline {2.4}{\ignorespaces Módulo SIM A7670SA\footnotemark .}}{10}{figure.caption.12}%
 \contentsline {figure}{\numberline {2.5}{\ignorespaces Módulo A7670SA\footnotemark .}}{11}{figure.caption.13}%
-\contentsline {figure}{\numberline {2.6}{\ignorespaces Antena Quectel YG0035AA\footnotemark .}}{11}{figure.caption.15}%
+\contentsline {figure}{\numberline {2.6}{\ignorespaces Antena Quectel YG0035AA\footnotemark .}}{12}{figure.caption.15}%
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {3.1}{\ignorespaces Arquitectura del hardware desarrollado.}}{16}{figure.caption.18}%
 \contentsline {figure}{\numberline {3.2}{\ignorespaces Modelo 2D de la placa base del sistema.}}{17}{figure.caption.20}%
@@ -22,9 +22,9 @@
 \contentsline {figure}{\numberline {3.11}{\ignorespaces Diagrama de flujo del firmware (parte 1).}}{24}{figure.caption.32}%
 \contentsline {figure}{\numberline {3.12}{\ignorespaces Diagrama de flujo del firmware (parte 2).}}{25}{figure.caption.33}%
 \contentsline {figure}{\numberline {3.13}{\ignorespaces Diagrama de flujo del firmware (parte 3).}}{26}{figure.caption.34}%
-\contentsline {figure}{\numberline {3.14}{\ignorespaces Arquitectura MQTT \footnotemark .}}{34}{figure.caption.47}%
-\contentsline {figure}{\numberline {3.15}{\ignorespaces Maqueta de la interfaz web.}}{37}{figure.caption.48}%
-\contentsline {figure}{\numberline {3.16}{\ignorespaces Versión final de la interfaz web.}}{38}{figure.caption.49}%
+\contentsline {figure}{\numberline {3.14}{\ignorespaces Arquitectura MQTT \footnotemark .}}{33}{figure.caption.47}%
+\contentsline {figure}{\numberline {3.15}{\ignorespaces Maqueta de la interfaz web.}}{36}{figure.caption.48}%
+\contentsline {figure}{\numberline {3.16}{\ignorespaces Versión final de la interfaz web.}}{37}{figure.caption.49}%
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {4.1}{\ignorespaces Resultado final del hardware desarrollado (exterior).}}{41}{figure.caption.50}%
 \contentsline {figure}{\numberline {4.2}{\ignorespaces Resultado final del hardware desarrollado (interior).}}{42}{figure.caption.51}%

@@ -21,7 +21,7 @@ A continuación,  se presentan los requerimientos planteados en la planificació
             \item El sistema a desarrollar debe ser un prototipo funcional para pruebas en ambiente de laboratorio. 
 			\item El sistema debe reportar en una plataforma de software la posición geográfica de las cavas en tiempo real.
             \item La plataforma de software deberá permitir la visualización en un mapa de la posición geográfica de las cavas.
-			\item La precisión del reporte de la posición geográfica debe ser de diez metros (10 m). 
+			\item La exactitud del reporte de la posición geográfica debe ser de diez metros (10 m). 
             \item Como requisito mínimo, el sistema debe ser capaz de conectarse con dos constelaciones de satélites para obtener la posición geográfica.  
             \item El hardware debe tener botones para que los operarios puedan reportar la ocupación o desocupación de las cavas. 
             \item El hardware debe poseer un display LCD que permita a los operarios visualizar las coordenadas geográficas reportadas por el sistema y el estado de ocupación de la cava. 
@@ -147,7 +147,7 @@ A continuación, se presentan los beneficios de haber aplicado el microcontrolad
     \item Incorpora dos módulos de comunicación inalámbrica: Wi-Fi y Bluetooth. Esto permite la conexión con internet y la conexión en redes de área personal. 
     \item Otro punto a favor importante para los requerimientos del trabajo, es que presenta modos de bajo de consumo energético configurables. 
     \item El fabricante proporciona una documentación extensa de su producto. Además, provee el \textit{framework} ESP-IDF que es bastante potente y está disponible gratuitamente.  
-    \item Debido a que es un producto \textit{Open Source} y \textit{Open Hardware}, goza de una comunidad de desarrolladores bastante activa y una gran disponibilidad de documentación. Estas dos características posibilitan que cualquier inconveniente que se consulte tenga una alta probabilidad de ser resuelto.  
+    \item Debido a que es un producto \textit{Open Source} y \textit{Open Hardware}, goza de una comunidad de desarrolladores bastante activa y una gran disponibilidad de documentación. Estas dos características posibilitan que cualquier inconveniente que se presente tenga una alta probabilidad de ser resuelto.  
     \item Por último, es un dispositivo de bajo costo, con un precio asequible y una relación calidad/prestaciones muy buena. Esto hizo posible abaratar los costos del trabajo. 
 \end{itemize}
 
@@ -212,11 +212,11 @@ Las características principales de este SoC son:
     \item Soporta interfaces UART, USB, I2C y GPIO.
     \item Velocidad de descarga/carga en modo LTE de 10/5 Mbps.
     \item Velocidad de descarga/carga en modo GPRS/EDGE de 236.8/236.8 Kbps.
-    \item consumo de corriente en modo LTE 3.8 mA.
-    \item consumo de corriente en modo GSM 3.5 mA.
+    \item Consumo de corriente en modo LTE 3.8 mA.
+    \item Consumo de corriente en modo GSM 3.5 mA.
 \end{itemize}
 
-Para el presente trabajo, se utilizó el módulo A7670SA 4G LTE CAT1 MULTIBANDA GSM GPRS IOT (\textit{shield}) comercial basado en el SoC SIM A7670SA, debido a la facilidad para integrarlo al sistema general y que dispone de las interfaces de hardware necesarias para su interconexión con la ESP32, demás de su propio circuito de alimentación y un diseño fiable para evitar las interferencias electromagnéticas. Ver figura~\ref{fig:A7670SA_2}.
+Para el presente trabajo se utilizó el módulo A7670SA 4G LTE CAT1 MULTIBANDA GSM GPRS IOT (ver figura~\ref{fig:A7670SA_2}) comercial basado en el SoC SIM A7670SA, debido a la facilidad para integrarlo al sistema general. Además, dispone de las interfaces de hardware necesarias para su interconexión con la ESP32, incluye su propio circuito de alimentación y un diseño fiable para evitar las interferencias electromagnéticas.
 
 \begin{figure}[htbp]
 	\centering
@@ -230,7 +230,7 @@ Para el presente trabajo, se utilizó el módulo A7670SA 4G LTE CAT1 MULTIBANDA 
 
 Debido al requerimiento de conectarse, como mínimo, con dos constelaciones de satélites para obtener la posición geográfica, se debe utilizar una antena capaz de captar las frecuencias de transmisión de al menos dos constelaciones satelitales. Para este proyecto, se considera la antena Quectel YG0035AA. En la figura~\ref{fig:Antena} se observa la antena.
 
-La antena está diseñada, según su fabricante, está diseñada con las características de alta eficiencia y excelente rendimiento. Soporta la recepción de señales de la constelación GPS y BeiDou (BD). Presenta las siguientes características eléctricas: 
+La antena está diseñada para la recepción de señales de la constelación GPS y BeiDou (BD) y presenta las siguientes características eléctricas: 
 
 \begin{itemize}
 	\item Antena tipo activa.
@@ -260,7 +260,7 @@ El firmware que se implementó en este trabajo está basado en FreeRTOS™. En e
 \subsubsection{FreeRTOS™}
 \label{sec:FreeRTOS}
 
-FreeRTOS™ es un sistema operativo de tiempo real de código abierto diseñado para sistemas embebidos y microcontroladores. Es apto para microcontroladores y microprocesadores pequeños \citep{FreeRTOS}. A continuación, se presentan las ventajas de haber implementado este sistema operativo en el trabajo.
+FreeRTOS™ es un sistema operativo de tiempo real de código abierto diseñado para sistemas embebidos y microcontroladores. Es apto para microcontroladores y microprocesadores pequeños \citep{FreeRTOS}. Las ventajas de haber implementado este sistema operativo en el trabajo son las siguientes:
 
 \begin{itemize}
     \item Debido a que proporciona un kernel multitarea, permitió generar concurrencia entre tareas, como lo fueron la recepción y parseo de tramas GNSS, la transmisión de datos en tiempo real.  
@@ -275,7 +275,7 @@ FreeRTOS™ es un sistema operativo de tiempo real de código abierto diseñado 
 \subsection{Servicios web para mapas}
 \label{sec:mapas_web}
 
-Un servicio de mapas es un conjunto de herramientas y servicios de software que permiten que los mapas estén disponibles en la web. A menudo este es ofrecido por un proveedor especializado. 
+Un servicio de mapas es un conjunto de herramientas y servicios de software que permiten que los mapas estén disponibles en la web. 
 
 Para este trabajo se creó una aplicación web basada en los servicios de la biblioteca para JavaScript Leaflet. Esta es de código abierto y ofrece todas las funciones cartográficas necesarias para la creación de aplicaciones que requieren el uso de mapas, como es el caso de la geolocalización.
 
