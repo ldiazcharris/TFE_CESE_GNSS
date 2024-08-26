@@ -88,23 +88,23 @@ Luego de realizar un estudio comparativo entre tres plataformas de microcontrola
 
         \textbf{Característica}           & \textbf{ESP-WRoom-32}               & \textbf{Arduino MEGA}               & \textbf{STM32 F401} \\
         \midrule
-        \textbf{CPU}                    & Dual-core Tensilica Xtensa LX6     & ATmega2560 (8-bit)                  & ARM Cortex-M4 @ 84 MHz               \\
+        CPU                   & Dual-core Tensilica Xtensa LX6     & ATmega2560 (8-bit)                  & ARM Cortex-M4 @ 84 MHz               \\
         
-        \textbf{Número de núcleos}       & 2                                  & 1                                  & 1                                   \\
+        Número de núcleos       & 2                                  & 1                                  & 1                                   \\
         
-        \textbf{Frecuencia del procesador (MHz)}  & 160                       & 16                                 & 84                                  \\
+        Frecuencia del procesador (MHz)  & 160                       & 16                                 & 84                                  \\
 
-        \textbf{ROM}             & 448 kB                             & 256 kB (Flash)                     & 512 kB (Flash)                      \\
+        ROM             & 448 kB                             & 256 kB (Flash)                     & 512 kB (Flash)                      \\
 
-        \textbf{RAM}             & 520 kB                             & 8 kB (SRAM)                        & 96 kB (SRAM)                        \\
+        RAM             & 520 kB                             & 8 kB (SRAM)                        & 96 kB (SRAM)                        \\
 
-        \textbf{Comunicación} & Wi-Fi, Bluetooth, 2x UART, 1x SPI, 1x I2C y 1x USB.    & 1x USB, 2x UART, 1x SPI e 1x I2C                 & 3x USART, 4x SPI, 3x I2C, 1x CAN y 1x USB  \\
+        Comunicación & Wi-Fi, Bluetooth, 2x UART, 1x SPI, 1x I2C y 1x USB.    & 1x USB, 2x UART, 1x SPI e 1x I2C                 & 3x USART, 4x SPI, 3x I2C, 1x CAN y 1x USB  \\
 
-        \textbf{Lenguajes de programación} & Arduino, C/C++ y Micropython  & Arduino y C/C++               & Arduino y C/C++                  \\
+        Lenguajes de programación & Arduino, C/C++ y Micropython  & Arduino y C/C++               & Arduino y C/C++                  \\
 
-        \textbf{Cantidad de GPIO's }       & 36            & 54 (Digital), 16 (Analog)           & 82                                  \\
+        Cantidad de GPIO's        & 36            & 54 (Digital), 16 (Analog)           & 82                                  \\
 
-        \textbf{Soporte de hardware para RTOS} & Sí        & No 16 (Analog)           & Sí                                 \\
+        Soporte de hardware para RTOS & Sí        & No 16 (Analog)           & Sí                                 \\
     \bottomrule
     \hline
     \end{tabular}
@@ -212,15 +212,15 @@ Las características principales de este SoC son:
     \item Soporta interfaces UART, USB, I2C y GPIO.
     \item Velocidad de descarga/carga en modo LTE de 10/5 Mbps.
     \item Velocidad de descarga/carga en modo GPRS/EDGE de 236.8/236.8 Kbps.
-    \item Consumo de corriente en modo LTE 3.8 mA.
-    \item Consumo de corriente en modo GSM 3.5 mA.
+    \item Consumo de corriente en modo LTE 3,8 mA.
+    \item Consumo de corriente en modo GSM 3,5 mA.
 \end{itemize}
 
 Para el presente trabajo se utilizó el módulo A7670SA 4G LTE CAT1 MULTIBANDA GSM GPRS IOT (ver figura~\ref{fig:A7670SA_2}) comercial basado en el SoC SIM A7670SA, debido a la facilidad para integrarlo al sistema general. Además, dispone de las interfaces de hardware necesarias para su interconexión con la ESP32, incluye su propio circuito de alimentación y un diseño fiable para evitar las interferencias electromagnéticas.
 
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[width=.5\textwidth]{./Figures/A7670SA_Mod.jpg}
+	\includegraphics[width=.25\textwidth]{./Figures/A7670SA_Mod.jpg}
 	\caption{Módulo A7670SA\protect\footnotemark.}
 	\label{fig:A7670SA_2}
 \end{figure}
@@ -288,27 +288,27 @@ En la tabla \ref{tabla:comparativa_api_mapas} se presenta una comparación entre
     \toprule
         \textbf{Característica}           & \textbf{Google Maps API}           & \textbf{Leaflet.js}               & \textbf{Carto.js} \\
         \midrule
-        \textbf{Licencia}                & De pago, con un nivel gratuito limitado. & Open-source (BSD 2-clause License). & De pago, con un nivel gratuito limitado. \\
+        Licencia                & De pago, con un nivel gratuito limitado. & Open-source (BSD 2-clause License). & De pago, con un nivel gratuito limitado. \\
         
-        \textbf{Facilidad de uso}        & Alta                               & Alta                              & Media \\
+        Facilidad de uso        & Alta                               & Alta                              & Media \\
         
-        \textbf{Documentación}           & Extensa y detallada.                & Buena, pero poco extensa. Complementa con muchos ejemplos. & Buena, orientada a usuarios con conocimientos en GIS \\
+        Documentación           & Extensa y detallada.                & Buena, pero poco extensa. Complementa con muchos ejemplos. & Buena, orientada a usuarios con conocimientos en GIS \\
         
-        \textbf{Soporte y Comunidad}     & Amplio soporte y gran comunidad.    & Gran comunidad open-source.         & Comunidad activa, pero reducida. \\
+        Soporte y comunidad     & Amplio soporte y gran comunidad.    & Gran comunidad open-source.         & Comunidad activa, pero reducida. \\
         
-        \textbf{Capacidades de Mapa}     & Incluye vistas de satélite, terreno, y Street View. & Básico, pero extensible con plugins. & Enfocado en visualización de datos geoespaciales. \\
+        Capacidades de mapa     & Incluye vistas de satélite, terreno, y Street View. & Básico, pero extensible con plugins. & Enfocado en visualización de datos geoespaciales. \\
         
-        \textbf{Personalización}           & Alta, mediante opciones y controles avanzados. & Muy alta, altamente personalizable con plugins. & Alta, especialmente en visualización de datos. \\
+        Personalización           & Alta, mediante opciones y controles avanzados. & Muy alta, altamente personalizable con plugins. & Alta, especialmente en visualización de datos. \\
         
-        \textbf{Rendimiento}             & Muy bueno, optimizado por Google.   & Muy bueno, especialmente en navegadores modernos. & Bueno, puede ser pesado con grandes conjuntos de datos. \\
+        Rendimiento             & Muy bueno, optimizado por Google.   & Muy bueno, especialmente en navegadores modernos. & Bueno, puede ser pesado con grandes conjuntos de datos. \\
         
-        \textbf{Integración de Datos}    & Fácil integración con servicios de Google como Places, Routes, etc. & Necesita plugins adicionales para integración avanzada de datos. & Muy bueno para integración de datos geoespaciales y análisis. \\
+        Integración de datos    & Fácil integración con servicios de Google como Places, Routes, etc. & Necesita plugins adicionales para integración avanzada de datos. & Muy bueno para integración de datos geoespaciales y análisis. \\
         
-        \textbf{Soporte para Móviles}    & Excelente, completamente responsive. & Muy bueno, compatible con dispositivos móviles. & Bueno, pero depende del tamaño de los datos. \\
+        Soporte para móviles    & Excelente, completamente responsive. & Muy bueno, compatible con dispositivos móviles. & Bueno, pero depende del tamaño de los datos. \\
         
-        \textbf{Características Avanzadas} & Geocoding, Directions, Distance Matrix, Places API, etc. & Depende de plugins externos. & Análisis espacial avanzado, mapas temáticos, SQL API. \\
+        Características avanzadas & Geocoding, Directions, Distance Matrix, Places API, etc. & Depende de plugins externos. & Análisis espacial avanzado, mapas temáticos, SQL API. \\
         
-        \textbf{Facilidad de Integración} & Muy fácil con otros servicios de Google. & Fácil con bibliotecas JavaScript estándar. & Requiere conocimiento de GIS y SQL para máxima utilidad. \\
+        Facilidad de integración & Muy fácil con otros servicios de Google. & Fácil con bibliotecas JavaScript estándar. & Requiere conocimiento de GIS y SQL para máxima utilidad. \\
     \bottomrule
     \end{tabular}
     \label{tabla:comparativa_api_mapas}

@@ -7,40 +7,40 @@
 \contentsline {figure}{\numberline {2.3}{\ignorespaces Módulo Quectel L76\footnotemark .}}{9}{figure.caption.11}%
 \contentsline {figure}{\numberline {2.4}{\ignorespaces Módulo SIM A7670SA\footnotemark .}}{10}{figure.caption.12}%
 \contentsline {figure}{\numberline {2.5}{\ignorespaces Módulo A7670SA\footnotemark .}}{11}{figure.caption.13}%
-\contentsline {figure}{\numberline {2.6}{\ignorespaces Antena Quectel YG0035AA\footnotemark .}}{12}{figure.caption.15}%
+\contentsline {figure}{\numberline {2.6}{\ignorespaces Antena Quectel YG0035AA\footnotemark .}}{11}{figure.caption.15}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Arquitectura del hardware desarrollado.}}{16}{figure.caption.18}%
-\contentsline {figure}{\numberline {3.2}{\ignorespaces Modelo 2D de la placa base del sistema.}}{17}{figure.caption.20}%
-\contentsline {figure}{\numberline {3.3}{\ignorespaces Modelo 3D de la placa base del sistema.}}{17}{figure.caption.21}%
-\contentsline {figure}{\numberline {3.4}{\ignorespaces Placa base del sistema versión de una capa (frente).}}{18}{figure.caption.22}%
-\contentsline {figure}{\numberline {3.5}{\ignorespaces Placa base del sistema versión de una capa (reverso).}}{18}{figure.caption.23}%
-\contentsline {figure}{\numberline {3.6}{\ignorespaces Esquemático del adaptador L76.}}{19}{figure.caption.25}%
-\contentsline {figure}{\numberline {3.7}{\ignorespaces Modelo 2D del adaptador L76.}}{19}{figure.caption.26}%
-\contentsline {figure}{\numberline {3.8}{\ignorespaces Modelo 3D del adaptador L76.}}{19}{figure.caption.27}%
-\contentsline {figure}{\numberline {3.9}{\ignorespaces Adaptador L76 real.}}{20}{figure.caption.28}%
-\contentsline {figure}{\numberline {3.10}{\ignorespaces Arquitectura del firmware.}}{21}{figure.caption.30}%
-\contentsline {figure}{\numberline {3.11}{\ignorespaces Diagrama de flujo del firmware (parte 1).}}{24}{figure.caption.32}%
-\contentsline {figure}{\numberline {3.12}{\ignorespaces Diagrama de flujo del firmware (parte 2).}}{25}{figure.caption.33}%
-\contentsline {figure}{\numberline {3.13}{\ignorespaces Diagrama de flujo del firmware (parte 3).}}{26}{figure.caption.34}%
-\contentsline {figure}{\numberline {3.14}{\ignorespaces Arquitectura MQTT \footnotemark .}}{33}{figure.caption.47}%
-\contentsline {figure}{\numberline {3.15}{\ignorespaces Maqueta de la interfaz web.}}{36}{figure.caption.48}%
-\contentsline {figure}{\numberline {3.16}{\ignorespaces Versión final de la interfaz web.}}{37}{figure.caption.49}%
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Arquitectura del hardware desarrollado.}}{16}{figure.caption.19}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Modelo 2D de la placa base del sistema.}}{17}{figure.caption.22}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Modelo 3D de la placa base del sistema.}}{17}{figure.caption.23}%
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Placa base del sistema versión de una capa (frente).}}{18}{figure.caption.24}%
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Placa base del sistema versión de una capa (reverso).}}{18}{figure.caption.25}%
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Esquemático del adaptador L76.}}{19}{figure.caption.27}%
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Modelo 2D del adaptador L76.}}{19}{figure.caption.28}%
+\contentsline {figure}{\numberline {3.8}{\ignorespaces Modelo 3D del adaptador L76.}}{19}{figure.caption.29}%
+\contentsline {figure}{\numberline {3.9}{\ignorespaces Adaptador L76 real.}}{20}{figure.caption.30}%
+\contentsline {figure}{\numberline {3.10}{\ignorespaces Arquitectura del firmware.}}{21}{figure.caption.33}%
+\contentsline {figure}{\numberline {3.11}{\ignorespaces Diagrama de flujo del firmware (parte 1).}}{24}{figure.caption.36}%
+\contentsline {figure}{\numberline {3.12}{\ignorespaces Diagrama de flujo del firmware (parte 2).}}{25}{figure.caption.37}%
+\contentsline {figure}{\numberline {3.13}{\ignorespaces Diagrama de flujo del firmware (parte 3).}}{26}{figure.caption.38}%
+\contentsline {figure}{\numberline {3.14}{\ignorespaces Arquitectura MQTT \footnotemark .}}{33}{figure.caption.51}%
+\contentsline {figure}{\numberline {3.15}{\ignorespaces Maqueta de la interfaz web.}}{36}{figure.caption.52}%
+\contentsline {figure}{\numberline {3.16}{\ignorespaces Versión final de la interfaz web.}}{37}{figure.caption.53}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Resultado final del hardware desarrollado (exterior).}}{41}{figure.caption.50}%
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Resultado final del hardware desarrollado (interior).}}{42}{figure.caption.51}%
-\contentsline {figure}{\numberline {4.3}{\ignorespaces Vista real de los componentes del hardware (exterior).}}{42}{figure.caption.52}%
-\contentsline {figure}{\numberline {4.4}{\ignorespaces Vista real de los componentes del hardware (interior).}}{43}{figure.caption.53}%
-\contentsline {figure}{\numberline {4.5}{\ignorespaces Medición de la salida en el circuito de regulación.}}{44}{figure.caption.55}%
-\contentsline {figure}{\numberline {4.6}{\ignorespaces Gráfico de la muestras tomadas en la medición de corriente.}}{45}{figure.caption.56}%
-\contentsline {figure}{\numberline {4.7}{\ignorespaces Datos más representativos en la medición de corriente.}}{45}{figure.caption.57}%
-\contentsline {figure}{\numberline {4.8}{\ignorespaces Diagrama de conexiones para la prueba del módulo Quectel L76.}}{46}{figure.caption.59}%
-\contentsline {figure}{\numberline {4.9}{\ignorespaces Conexiones reales para la prueba del módulo Quectel L76.}}{46}{figure.caption.60}%
-\contentsline {figure}{\numberline {4.10}{\ignorespaces Vista de las tramas NMEA en la terminal \textit {Hercules}.}}{48}{figure.caption.62}%
-\contentsline {figure}{\numberline {4.11}{\ignorespaces Diagrama de conexiones para la prueba del módulo Quectel L76.}}{48}{figure.caption.63}%
-\contentsline {figure}{\numberline {4.12}{\ignorespaces Conexiones reales para la prueba del módulo Quectel L76.}}{49}{figure.caption.64}%
-\contentsline {figure}{\numberline {4.13}{\ignorespaces Vista de las tramas AT en la terminal \textit {Hercules}.}}{50}{figure.caption.65}%
-\contentsline {figure}{\numberline {4.14}{\ignorespaces Vista de las tramas AT en la terminal \textit {Hercules}.}}{51}{figure.caption.66}%
-\contentsline {figure}{\numberline {4.15}{\ignorespaces Fotos de la prueba de la pantalla LCD.}}{53}{figure.caption.68}%
-\contentsline {figure}{\numberline {4.16}{\ignorespaces Captura del mapa para la prueba de integración con el hardware.}}{54}{figure.caption.71}%
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Resultado final del hardware desarrollado (exterior).}}{41}{figure.caption.54}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Resultado final del hardware desarrollado (interior).}}{42}{figure.caption.55}%
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Vista real de los componentes del hardware (exterior).}}{42}{figure.caption.56}%
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Vista real de los componentes del hardware (interior).}}{43}{figure.caption.57}%
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Medición de la salida en el circuito de regulación.}}{44}{figure.caption.59}%
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Gráfico de la muestras tomadas en la medición de corriente.}}{45}{figure.caption.60}%
+\contentsline {figure}{\numberline {4.7}{\ignorespaces Datos más representativos en la medición de corriente.}}{45}{figure.caption.61}%
+\contentsline {figure}{\numberline {4.8}{\ignorespaces Diagrama de conexiones para la prueba del módulo Quectel L76.}}{46}{figure.caption.63}%
+\contentsline {figure}{\numberline {4.9}{\ignorespaces Conexiones reales para la prueba del módulo Quectel L76.}}{46}{figure.caption.64}%
+\contentsline {figure}{\numberline {4.10}{\ignorespaces Vista de las tramas NMEA en la terminal \textit {Hercules}.}}{48}{figure.caption.66}%
+\contentsline {figure}{\numberline {4.11}{\ignorespaces Diagrama de conexiones para la prueba del módulo Quectel L76.}}{48}{figure.caption.67}%
+\contentsline {figure}{\numberline {4.12}{\ignorespaces Conexiones reales para la prueba del módulo Quectel L76.}}{49}{figure.caption.68}%
+\contentsline {figure}{\numberline {4.13}{\ignorespaces Vista de las tramas AT en la terminal \textit {Hercules}.}}{50}{figure.caption.69}%
+\contentsline {figure}{\numberline {4.14}{\ignorespaces Vista de las tramas AT en la terminal \textit {Hercules}.}}{51}{figure.caption.70}%
+\contentsline {figure}{\numberline {4.15}{\ignorespaces Fotos de la prueba de la pantalla LCD.}}{53}{figure.caption.72}%
+\contentsline {figure}{\numberline {4.16}{\ignorespaces Captura del mapa para la prueba de integración con el hardware.}}{54}{figure.caption.75}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }

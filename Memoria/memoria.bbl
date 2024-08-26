@@ -212,6 +212,13 @@
     \field{title}{Regulador MIC29302WU}
   \endentry
 
+  \entry{LCD_GROVE}{misc}{}{}
+    \field{labeltitlesource}{title}
+  \field{howpublished}{\url{https://github.com/Seeed-Studio/Grove_LCD_RGB_Backlight}}
+    \field{note}{Accessed: 2023-11-6}
+    \field{title}{Pantalla LCD Grove}
+  \endentry
+
   \entry{leafletjs}{misc}{}{}
     \field{labeltitlesource}{title}
     \field{howpublished}{\url{https://leafletjs.com/}}
@@ -249,6 +256,40 @@
   \field{howpublished}{\url{https://www.hw-group.com/software/hercules-setup-utility}}
     \field{note}{Accessed: 2024-07-11}
     \field{title}{Hercules SETUP utility}
+  \endentry
+
+  \entry{Alkan-Celebi}{inproceedings}{}{}
+    \name{author}{2}{}{%
+      {{hash=AH}{%
+         family={Alkan},
+         familyi={A\bibinitperiod},
+         given={Huseyin},
+         giveni={H\bibinitperiod},
+      }}%
+      {{hash=CH}{%
+         family={Celebi},
+         familyi={C\bibinitperiod},
+         given={Hasari},
+         giveni={H\bibinitperiod},
+      }}%
+    }
+    \keyw{Mathematical model;Receivers;Transmission line measurements;Radio
+  transmitters;Telemetry;Global navigation satellite system;Hardware design
+  languages;Positioning;RSSI;Spherical Law of Cosines;Haversine
+  Distance;Trilateration;Measurements}
+    \strng{namehash}{AHCH1}
+    \strng{fullhash}{AHCH1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{booktitle}{2019 IEEE 30th Annual International Symposium on
+  Personal, Indoor and Mobile Radio Communications (PIMRC)}
+    \verb{doi}
+    \verb 10.1109/PIMRC.2019.8904289
+    \endverb
+    \field{pages}{1\bibrangedash 6}
+    \field{title}{The Implementation of Positioning System with Trilateration
+  of Haversine Distance}
+    \field{year}{2019}
   \endentry
 \enddatalist
 \endinput

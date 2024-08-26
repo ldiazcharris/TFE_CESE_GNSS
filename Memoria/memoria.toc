@@ -17,44 +17,44 @@
 \contentsline {subsection}{\numberline {2.3.1}Microcontrolador ESP32}{7}{subsection.2.3.1}%
 \contentsline {subsection}{\numberline {2.3.2}Receptor GNSS}{9}{subsection.2.3.2}%
 \contentsline {subsection}{\numberline {2.3.3}Módulo 4G SIM A7670SA}{9}{subsection.2.3.3}%
-\contentsline {subsubsection}{Antena Quectel YG0035AA}{12}{section*.14}%
+\contentsline {subsubsection}{Antena Quectel YG0035AA}{11}{section*.14}%
 \contentsline {subsection}{\numberline {2.3.4}Sistema operativo de tiempo real}{12}{subsection.2.3.4}%
 \contentsline {subsubsection}{FreeRTOS™}{12}{section*.16}%
-\contentsline {subsection}{\numberline {2.3.5}Servicios web para mapas}{13}{subsection.2.3.5}%
+\contentsline {subsection}{\numberline {2.3.5}Servicios web para mapas}{12}{subsection.2.3.5}%
 \contentsline {chapter}{\numberline {3}Diseño e implementación}{15}{chapter.3}%
 \contentsline {section}{\numberline {3.1}Diseño e implementación general del sistema}{15}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Diseño e implementación del hardware}{15}{section.3.2}%
-\contentsline {subsection}{\numberline {3.2.1}Diseño del hardware}{15}{subsection.3.2.1}%
-\contentsline {subsection}{\numberline {3.2.2}Implementación del hardware}{16}{subsection.3.2.2}%
-\contentsline {subsubsection}{Placa base del sistema}{16}{section*.19}%
-\contentsline {subsubsection}{Adaptador para el módulo Quectel L76}{18}{section*.24}%
-\contentsline {section}{\numberline {3.3}Diseño e implementación del firmware}{20}{section.3.3}%
-\contentsline {subsection}{\numberline {3.3.1}Diseño del firmware}{20}{subsection.3.3.1}%
-\contentsline {subsubsection}{Arquitectura del firmware}{20}{section*.29}%
-\contentsline {subsection}{\numberline {3.3.2}Implementación del firmware}{22}{subsection.3.3.2}%
-\contentsline {subsubsection}{Flujo general del firmware}{23}{section*.31}%
-\contentsline {subsubsection}{Implementación de las tareas del sistema}{26}{section*.35}%
-\contentsline {subsubsection}{Otros componentes del firmware}{30}{section*.42}%
-\contentsline {section}{\numberline {3.4}Diseño e implementación de la interfaz web}{32}{section.3.4}%
-\contentsline {subsection}{\numberline {3.4.1}Diseño de la interfaz web}{32}{subsection.3.4.1}%
-\contentsline {subsection}{\numberline {3.4.2}Implementación de la interfaz web}{33}{subsection.3.4.2}%
-\contentsline {subsection}{\numberline {3.4.3}Metodología de la implementación}{34}{subsection.3.4.3}%
+\contentsline {subsection}{\numberline {3.1.1}Diseño e implementación del hardware}{15}{subsection.3.1.1}%
+\contentsline {subsubsection}{Diseño del hardware}{15}{section*.18}%
+\contentsline {subsubsection}{Implementación del hardware}{16}{section*.20}%
+\contentsline {subsubsection}{Placa base del sistema}{16}{section*.21}%
+\contentsline {subsubsection}{Adaptador para el módulo Quectel L76}{18}{section*.26}%
+\contentsline {subsection}{\numberline {3.1.2}Diseño e implementación del firmware}{20}{subsection.3.1.2}%
+\contentsline {subsubsection}{Diseño del firmware}{20}{section*.31}%
+\contentsline {subsubsection}{Arquitectura del firmware}{20}{section*.32}%
+\contentsline {subsubsection}{Implementación del firmware}{22}{section*.34}%
+\contentsline {subsubsection}{Flujo general del firmware}{23}{section*.35}%
+\contentsline {subsubsection}{Implementación de las tareas del sistema}{26}{section*.39}%
+\contentsline {subsubsection}{Otros componentes del firmware}{30}{section*.46}%
+\contentsline {section}{\numberline {3.2}Diseño e implementación de la interfaz web}{32}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Diseño de la interfaz web}{32}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Implementación de la interfaz web}{33}{subsection.3.2.2}%
+\contentsline {subsection}{\numberline {3.2.3}Metodología de la implementación}{33}{subsection.3.2.3}%
 \contentsline {chapter}{\numberline {4}Ensayos y resultados}{41}{chapter.4}%
 \contentsline {section}{\numberline {4.1}Resultado final de la integración del hardware}{41}{section.4.1}%
 \contentsline {section}{\numberline {4.2}Pruebas funcionales del hardware}{43}{section.4.2}%
 \contentsline {subsection}{\numberline {4.2.1}Metodología para las pruebas del hardware}{43}{subsection.4.2.1}%
 \contentsline {subsection}{\numberline {4.2.2}Resultados y análisis}{44}{subsection.4.2.2}%
-\contentsline {subsubsection}{De las pruebas sobre la PCB}{44}{section*.54}%
-\contentsline {subsubsection}{De las pruebas entre módulos}{45}{section*.58}%
+\contentsline {subsubsection}{De las pruebas sobre la PCB}{44}{section*.58}%
+\contentsline {subsubsection}{De las pruebas entre módulos}{45}{section*.62}%
 \contentsline {section}{\numberline {4.3}Pruebas funcionales de la aplicación web}{53}{section.4.3}%
 \contentsline {subsection}{\numberline {4.3.1}Prueba de integración con el hardware}{53}{subsection.4.3.1}%
-\contentsline {subsubsection}{Metodología}{53}{section*.69}%
-\contentsline {subsubsection}{Resultados y análisis}{53}{section*.70}%
+\contentsline {subsubsection}{Metodología}{53}{section*.73}%
+\contentsline {subsubsection}{Resultados y análisis}{53}{section*.74}%
 \contentsline {subsection}{\numberline {4.3.2}Prueba de exactitud de la ubicación}{54}{subsection.4.3.2}%
-\contentsline {subsubsection}{Metodología}{54}{section*.72}%
-\contentsline {subsubsection}{Resultados y análisis}{54}{section*.73}%
+\contentsline {subsubsection}{Metodología}{54}{section*.76}%
+\contentsline {subsubsection}{Resultados y análisis}{54}{section*.77}%
 \contentsline {chapter}{\numberline {5}Conclusiones}{57}{chapter.5}%
 \contentsline {section}{\numberline {5.1}Conclusiones generales }{57}{section.5.1}%
 \contentsline {section}{\numberline {5.2}Próximos pasos}{58}{section.5.2}%
 \contentsline {chapter}{\numberline {A}Esquemáctico de la placa base del sistema}{59}{appendix.Alph1}%
-\contentsline {chapter}{Bibliograf\'{\i }a}{61}{appendix*.75}%
+\contentsline {chapter}{Bibliograf\'{\i }a}{61}{appendix*.79}%

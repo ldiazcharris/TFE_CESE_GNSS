@@ -22,38 +22,38 @@
 \BOOKMARK [2][-]{subsection.2.3.5}{Servicios web para mapas}{section.2.3}% 22
 \BOOKMARK [0][-]{chapter.3}{Diseño e implementación}{}% 23
 \BOOKMARK [1][-]{section.3.1}{Diseño e implementación general del sistema}{chapter.3}% 24
-\BOOKMARK [1][-]{section.3.2}{Diseño e implementación del hardware}{chapter.3}% 25
-\BOOKMARK [2][-]{subsection.3.2.1}{Diseño del hardware}{section.3.2}% 26
-\BOOKMARK [2][-]{subsection.3.2.2}{Implementación del hardware}{section.3.2}% 27
-\BOOKMARK [3][-]{section*.19}{Placa base del sistema}{subsection.3.2.2}% 28
-\BOOKMARK [3][-]{section*.24}{Adaptador para el módulo Quectel L76}{subsection.3.2.2}% 29
-\BOOKMARK [1][-]{section.3.3}{Diseño e implementación del firmware}{chapter.3}% 30
-\BOOKMARK [2][-]{subsection.3.3.1}{Diseño del firmware}{section.3.3}% 31
-\BOOKMARK [3][-]{section*.29}{Arquitectura del firmware}{subsection.3.3.1}% 32
-\BOOKMARK [2][-]{subsection.3.3.2}{Implementación del firmware}{section.3.3}% 33
-\BOOKMARK [3][-]{section*.31}{Flujo general del firmware}{subsection.3.3.2}% 34
-\BOOKMARK [3][-]{section*.35}{Implementación de las tareas del sistema}{subsection.3.3.2}% 35
-\BOOKMARK [3][-]{section*.42}{Otros componentes del firmware}{subsection.3.3.2}% 36
-\BOOKMARK [1][-]{section.3.4}{Diseño e implementación de la interfaz web}{chapter.3}% 37
-\BOOKMARK [2][-]{subsection.3.4.1}{Diseño de la interfaz web}{section.3.4}% 38
-\BOOKMARK [2][-]{subsection.3.4.2}{Implementación de la interfaz web}{section.3.4}% 39
-\BOOKMARK [2][-]{subsection.3.4.3}{Metodología de la implementación}{section.3.4}% 40
+\BOOKMARK [2][-]{subsection.3.1.1}{Diseño e implementación del hardware}{section.3.1}% 25
+\BOOKMARK [3][-]{section*.18}{Diseño del hardware}{subsection.3.1.1}% 26
+\BOOKMARK [3][-]{section*.20}{Implementación del hardware}{subsection.3.1.1}% 27
+\BOOKMARK [3][-]{section*.21}{Placa base del sistema}{subsection.3.1.1}% 28
+\BOOKMARK [3][-]{section*.26}{Adaptador para el módulo Quectel L76}{subsection.3.1.1}% 29
+\BOOKMARK [2][-]{subsection.3.1.2}{Diseño e implementación del firmware}{section.3.1}% 30
+\BOOKMARK [3][-]{section*.31}{Diseño del firmware}{subsection.3.1.2}% 31
+\BOOKMARK [3][-]{section*.32}{Arquitectura del firmware}{subsection.3.1.2}% 32
+\BOOKMARK [3][-]{section*.34}{Implementación del firmware}{subsection.3.1.2}% 33
+\BOOKMARK [3][-]{section*.35}{Flujo general del firmware}{subsection.3.1.2}% 34
+\BOOKMARK [3][-]{section*.39}{Implementación de las tareas del sistema}{subsection.3.1.2}% 35
+\BOOKMARK [3][-]{section*.46}{Otros componentes del firmware}{subsection.3.1.2}% 36
+\BOOKMARK [1][-]{section.3.2}{Diseño e implementación de la interfaz web}{chapter.3}% 37
+\BOOKMARK [2][-]{subsection.3.2.1}{Diseño de la interfaz web}{section.3.2}% 38
+\BOOKMARK [2][-]{subsection.3.2.2}{Implementación de la interfaz web}{section.3.2}% 39
+\BOOKMARK [2][-]{subsection.3.2.3}{Metodología de la implementación}{section.3.2}% 40
 \BOOKMARK [0][-]{chapter.4}{Ensayos y resultados}{}% 41
 \BOOKMARK [1][-]{section.4.1}{Resultado final de la integración del hardware}{chapter.4}% 42
 \BOOKMARK [1][-]{section.4.2}{Pruebas funcionales del hardware}{chapter.4}% 43
 \BOOKMARK [2][-]{subsection.4.2.1}{Metodología para las pruebas del hardware}{section.4.2}% 44
 \BOOKMARK [2][-]{subsection.4.2.2}{Resultados y análisis}{section.4.2}% 45
-\BOOKMARK [3][-]{section*.54}{De las pruebas sobre la PCB}{subsection.4.2.2}% 46
-\BOOKMARK [3][-]{section*.58}{De las pruebas entre módulos}{subsection.4.2.2}% 47
+\BOOKMARK [3][-]{section*.58}{De las pruebas sobre la PCB}{subsection.4.2.2}% 46
+\BOOKMARK [3][-]{section*.62}{De las pruebas entre módulos}{subsection.4.2.2}% 47
 \BOOKMARK [1][-]{section.4.3}{Pruebas funcionales de la aplicación web}{chapter.4}% 48
 \BOOKMARK [2][-]{subsection.4.3.1}{Prueba de integración con el hardware}{section.4.3}% 49
-\BOOKMARK [3][-]{section*.69}{Metodología}{subsection.4.3.1}% 50
-\BOOKMARK [3][-]{section*.70}{Resultados y análisis}{subsection.4.3.1}% 51
+\BOOKMARK [3][-]{section*.73}{Metodología}{subsection.4.3.1}% 50
+\BOOKMARK [3][-]{section*.74}{Resultados y análisis}{subsection.4.3.1}% 51
 \BOOKMARK [2][-]{subsection.4.3.2}{Prueba de exactitud de la ubicación}{section.4.3}% 52
-\BOOKMARK [3][-]{section*.72}{Metodología}{subsection.4.3.2}% 53
-\BOOKMARK [3][-]{section*.73}{Resultados y análisis}{subsection.4.3.2}% 54
+\BOOKMARK [3][-]{section*.76}{Metodología}{subsection.4.3.2}% 53
+\BOOKMARK [3][-]{section*.77}{Resultados y análisis}{subsection.4.3.2}% 54
 \BOOKMARK [0][-]{chapter.5}{Conclusiones}{}% 55
 \BOOKMARK [1][-]{section.5.1}{Conclusiones generales }{chapter.5}% 56
 \BOOKMARK [1][-]{section.5.2}{Próximos pasos}{chapter.5}% 57
 \BOOKMARK [0][-]{appendix.Alph1}{Esquemáctico de la placa base del sistema}{}% 58
-\BOOKMARK [0][-]{appendix*.75}{Bibliograf\355a}{}% 59
+\BOOKMARK [0][-]{appendix*.79}{Bibliograf\355a}{}% 59

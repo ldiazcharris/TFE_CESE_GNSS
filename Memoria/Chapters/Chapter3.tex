@@ -3,7 +3,7 @@
 \label{Chapter3} % Change X to a consecutive number; for referencing this chapter elsewhere, use \ref{ChapterX}
 
 
-Este capítulo explica los componentes del sistema seleccionados y la descripción detallada de cada módulo de hardware y software desarrollados en el trabajo. Se aplican las definiciones y criterios descritos en capítulos anteriores y se comprende el diseño final del prototipo.
+Este capítulo se realiza la descripción detallada de cada módulo de hardware y software desarrollados en el trabajo. Se aplican las definiciones y criterios descritos en capítulos anteriores y se comprende el diseño final del prototipo.
 
 %----------------------------------------------------------------------------------------
 %	SECTION 1
@@ -13,7 +13,7 @@ Este capítulo explica los componentes del sistema seleccionados y la descripci�
 El diseño e implementación general del sistema se subdividió en 3 partes: 
 
 \begin{enumerate}
-    \item Del ardware.
+    \item Del hardware.
     \item Del firmware.
     \item De la interfaz web.
 \end{enumerate}
@@ -23,12 +23,12 @@ A continuación, se describen cada una de estas partes.
 %----------------------------------------------------------------------------------------
 %	SECTION 2
 %----------------------------------------------------------------------------------------
-\section{Diseño e implementación del hardware}
+\subsection{Diseño e implementación del hardware}
 \label{sec:dis_impl_hardware}
 
 En esta sección, se describen las consideraciones de diseño y la implementación del hardware del sistema. 
 
-\subsection{Diseño del hardware}
+\subsubsection{Diseño del hardware}
 
 En la figura~\ref{fig:Arq_harware} se presenta la arquitectura del hardware desarrollado. Se incluyen todos los componentes descritos en las secciones anteriores. 
 
@@ -43,7 +43,7 @@ En el diagrama se señalan los protocolos UART e I2C, para la comunicación inte
     \item I2C: para la comunicación con la pantalla LCD. 
 \end{itemize}
 
-Se presenta una fuente de alimentación correspondiente a una batería de 12 VDC. Debido a que los componentes del sistema operan con tensiones diferentes, se hizo necesaria la implementación de circuitos adicionales. En el diagrama, estos circuitos se denominan <<Fuente>>. Estos suplen 2 niveles de tensión distintos: 
+Se presenta una fuente de alimentación correspondiente a una batería de 12 VDC. Debido a que los componentes del sistema operan con tensiones diferentes, se hizo necesaria la implementación de circuitos adicionales. En el diagrama, estos circuitos se denominan <<Fuente>>. Estos suplen dos niveles de tensión distintos: 
 
 \begin{itemize}
     \item 3,3 VDC para el Quectel L76.
@@ -59,7 +59,7 @@ Se presenta una fuente de alimentación correspondiente a una batería de 12 VDC
 
 
 
-\subsection{Implementación del hardware}
+\subsubsection{Implementación del hardware}
 
 En la etapa de implementación del hardware, se trabajó en dos placas de circuito impreso. 
 
@@ -148,11 +148,11 @@ En las figuras~\ref{fig:adap_L76_2d} y~\ref{fig:adap_L76_3d}, se muestran los mo
 %----------------------------------------------------------------------------------------
 %	SECTION 3
 %----------------------------------------------------------------------------------------
-\section{Diseño e implementación del firmware}
+\subsection{Diseño e implementación del firmware}
 
 En esta sección se presentan las consideraciones de diseño y el proceso de implementación del firmware. 
 
-\subsection{Diseño del firmware}
+\subsubsection{Diseño del firmware}
 
 El propósito del firmware desarrollado es satisfacer los requerimientos de conectividad, administración del hardware e interfaz con el usuario. A continuación se describen las principales funcionalidades del firmware: 
 
@@ -186,12 +186,12 @@ De acuerdo con esto, los componentes del firmware se establecen en la ESP32, que
 	\label{fig:arq_firmware}
 \end{figure}
 
-En el diagrama de la figura~\ref{fig:arq_firmware} se presentan los componentes de firmware más relevantes del sistema y la forma en que interactúan entre ellos. A continuación, se describe la funcionalidad d ecada componente del firmware:
+En el diagrama de la figura~\ref{fig:arq_firmware} se presentan los componentes de firmware más relevantes del sistema y la forma en que interactúan entre ellos. A continuación, se describe la funcionalidad de cada componente del firmware:
 
 \begin{enumerate}
-	\item El firmware inicia con la tarea \verb|init_mqtt_server_task()|, resaltada con color rojo, la cual se encarga de tres funciones primordiales: realizar la inicialización de los servicios MQTT que proporciona el módulo 4G (SIM A7670 SA), realizar la conexión con el \textit{broker} MQTT remoto y, si todo sale bien, desencadena la creación de las demás tareas del sistema. Esta tarea utiliza líneas de comandos AT para comunicarse con el módulo 4G.
+	\item El firmware inicia con la tarea \verb|init_mqtt_server_task()|, resaltada con color rojo, que se encarga de tres funciones primordiales: realizar la inicialización de los servicios MQTT que proporciona el módulo 4G (SIM A7670 SA), realizar la conexión con el \textit{broker} MQTT remoto y, si todo sale bien, desencadena la creación de las demás tareas del sistema. Esta tarea utiliza líneas de comandos AT para comunicarse con el módulo 4G.
 	
-	\item Tarea \verb|collect_data_task()| se encarga de recibir, a través de colas, la información relacionada con la ocupación y la posición de la cava. Dicha información proveniente de la tarea \verb|gnss_task()| y del manejador de interrupciones \verb|occupancy_isr_handler()|, respectivamente. Luegi transmite a la tarea \verb|transmit_to_server_task()| la información recibida, a través de la cola \verb|cava_data_queue|.
+	\item Tarea \verb|collect_data_task()| se encarga de recibir, a través de colas, la información relacionada con la ocupación y la posición de la cava. Dicha información proveniente de la tarea \verb|gnss_task()| y del manejador de interrupciones \verb|occupancy_isr_handler()|, respectivamente. Luego transmite a la tarea \verb|transmit_to_server_task()| la información recibida, a través de la cola \verb|cava_data_queue|.
 	
 	\item Manejador de interrupción \verb|occupancy_isr_handler()|, resaltada con color amarillo, es la función que se ejecuta siempre que ocurra una interrupción debida a los botones de ocupación de la cava, a saber, ocupado-desocupado. Este manejador de interrupción detecta qué botón se presionó y comunica a la tarea \verb|collect_data_task()| el estado de ocupación, a través de la cola \verb|occupancy_queue|. Además, esta tarea genera una acción de \textit{wakeup} del sistema cuando se encuentra en modo ahorro de energía. 	
 	
@@ -204,12 +204,12 @@ En el diagrama de la figura~\ref{fig:arq_firmware} se presentan los componentes 
 
 
 
-\subsection{Implementación del firmware}
+\subsubsection{Implementación del firmware}
 \label{sec:implementacion_firmware}
 
 El firmware se implementó en el \textit{framework} ESP-IDF desarrollado por la empresa ESPRESSIF, para las series de SoCs ESP32, ESP32-S y ESP32-C. Este \textit{framework} proporciona un SDK apto para el desarrollo de cualquier aplicación genérica en estas plataformas, a partir de lenguajes de programación C y C++. Además, está optimizado para aplicaciones de Internet de las Cosas (IoT, del inglés \textit{Internet of Things}). 
 
-También se utilizó el entorno de desarrollo (IDE) \textit{PlatformIO}, que se ejecuta como una extensión nativa en el IDE de \textit{Visual Studio Code}. \textit{PlatformIO} permite usar todas las funcionalidades de ESP-IDF de una manera fiable y ágil, sin enmascarar funcionalidades o configuraciones avanzadas del \textit{framework}. Además, permite ejecutar las versiones mas estables de ESP-IDF, proporciona soporte por la comunidad de desarrolladores, es multiplataforma y de software libre. 
+También se utilizó el entorno de desarrollo (IDE) \textit{PlatformIO}, que se ejecuta como una extensión nativa en el IDE de \textit{Visual Studio Code}. \textit{PlatformIO} permite usar todas las funcionalidades de ESP-IDF de una manera fiable y ágil, sin enmascarar funcionalidades o configuraciones avanzadas del \textit{framework}. Además, permite ejecutar las versiones más estables de ESP-IDF, proporciona soporte por la comunidad de desarrolladores, es multiplataforma y de software libre. 
 
 Para la implementación del firmware se utilizó el lenguaje de programación C y se implementó el sistema operativo en tiempo real FreeRTOS. Una ventaja importante que ofrece ESP-IDF es que está desarrollado sobre FreeRTOS, por tanto, el firmware se ejecuta nativamente en este.
 
@@ -217,7 +217,7 @@ Por petición del cliente, la codificación correspondiente al firmware no podr�
 
 \subsubsection{Flujo general del firmware}
 
-Gracias a la implementación en FreeRTOS, el firmware tiene la capacidad de ejecutar multitarea. El flujo general del programa se muestra en las figuras \ref{fig:flujo_firmware_1}, \ref{fig:flujo_firmware_2} y \ref{fig:flujo_firmware_3}. El programa se dividió en tareas, que son funciones puntuales que ejecutan una acción concreta y colaboran entre sí para operar el sistema en su conjunto. Las diferentes tareas se ejecutan de forma independiente y existe un flujo de información que se sucede de una tarea a otra. Como mecanismo de comunicación entre tareas, se utilizan las colas. Este comportamiento del firmware es relevante desde el punto de vista en que el sistema puede estar recibiendo, procesando y transmitiendo datos de posicionamiento de manera casi concurrente.
+El firmware tiene la capacidad de ejecutar multitarea, gracias a que se realizó una implementación con FreeRTOS. El flujo general del programa se muestra en las figuras \ref{fig:flujo_firmware_1}, \ref{fig:flujo_firmware_2} y \ref{fig:flujo_firmware_3}. El programa se dividió en tareas, que son funciones puntuales que ejecutan una acción concreta y colaboran entre sí para operar el sistema en su conjunto. Las diferentes tareas se ejecutan de forma independiente y existe un flujo de información que se sucede de una tarea a otra. Como mecanismo de comunicación entre tareas, se utilizan las colas. Este comportamiento del firmware es relevante desde el punto de vista en que el sistema puede estar recibiendo, procesando y transmitiendo datos de posicionamiento de manera casi concurrente.
 
 En el diagrama de la figura \ref{fig:flujo_firmware_1}, se muestra la siguiente secuencia de acciones: 
 
@@ -235,11 +235,11 @@ En el diagrama de la figura \ref{fig:flujo_firmware_1}, se muestra la siguiente 
 En el mismo diagrama de la figura \ref{fig:flujo_firmware_1} (bifurcación A), se muestra el flujo de la tarea \verb|init_mqtt_server_task()|, que realiza lo siguiente:
 
 \begin{enumerate}
-\item Inicializar los serivicios MQTT en el módulo SIM A7670SA, para luego iniciar la conexión con el \textbf{broker} MQTT en la nube.
+\item Inicializar los serivicios MQTT en el módulo SIM A7670SA, para luego iniciar la conexión con el \textit{broker} MQTT en la nube.
 
 \item Si lo anterior ocurre sin problemas, se crean las demás tareas del sistema: \verb|gnss_task()|, \verb|collect_data_task()|, \verb|transmit_server_task()| y \verb|lcd_task()|.
 
-\item El \textit{scheduler} de \textit{FreeRtos}, desencadena la multitarea. Este punto se representa con la bifurcación B. 
+\item El \textit{scheduler} de FreeRTOS empieza a gestionar la ejecución de las tareas creadas previamente y cambia entre ellas según su prioridad y el tiempo asignado. El código principal (la función \verb|main()|) ya no continúa su ejecución. Este punto se representa con la bifurcación B. 
 
 \item Para finalizar, la tarea \verb|init_mqtt_server_task()| se elimina a sí misma con la función de FreeRTOS \verb|vTaskDelete()|. Esto, con el objetivo de liberar recursos del microcontrolador. 
 
@@ -327,7 +327,7 @@ init_mqtt_server_task()
 \end{figure}
  
 
-En el código \ref{cod:gnss_task}, se presenta el pseudocódigo de la tarea \verb|gnss_task()|. La tarea se encarga de procesar las tramas NMEA que son datos provenientes del receptor GNSS, envía por la cola \verb|position_queue|, que es gestionada por la tarea \verb|collect_data_task()|. El sistema verifica si ha pasado un intervalo de tiempo de 5 minutos, para comprar: 
+En el código \ref{cod:gnss_task}, se presenta el pseudocódigo de la tarea \verb|gnss_task()|. La tarea se encarga de procesar las tramas NMEA que son datos provenientes del receptor GNSS, envía por la cola \verb|position_queue|, que es gestionada por la tarea \verb|collect_data_task()|. El sistema verifica si ha pasado un intervalo de tiempo de 5 minutos, para comparar: 
 
 \begin{itemize}
 \item Sí: si las posiciones son iguales, el sistema entra en modo de ahorro de energía.
@@ -362,7 +362,7 @@ gnss_task()
  
 
 
-En el código \ref{cod:occupancy_isr_handler}, se presenta el pseudocódigo del manejador de interrupciones \verb|occupancy_isr_handler()|, que aunque no es una tarea mapeada en el \textit{scheduler} de \textit{FreeRtos}, cumple un papel primordial, puesto que permite capturar los eventos de los botones de ocupación del sistema. El manejador de interrupciones se activa cuando se presiona un botón, se captura cuál botón ha sido presionado. Si el botón presionado es el de ``libre'' se actualiza el estado para indicar que el recurso está libre y se envía un estado ``libre'' a través de \verb|occupancy_queue|. Si el botón presionado es el de ``ocupado'', se actualiza el estado para indicar que la cava está ocupada y se envía un estado ``ocupado'' a través de \verb|occupancy_queue|.
+En el código \ref{cod:occupancy_isr_handler}, se presenta el pseudocódigo del manejador de interrupciones \verb|occupancy_isr_handler()|, que aunque no es una tarea mapeada en el \textit{scheduler} de FreeRTOS, cumple un papel primordial, puesto que permite capturar los eventos de los botones de ocupación del sistema. El manejador de interrupciones se activa cuando se presiona un botón, se captura cuál botón ha sido presionado. Si el botón presionado es el de ``libre'' se actualiza el estado para indicar que el recurso está libre y se envía un estado ``libre'' a través de \verb|occupancy_queue|. Si el botón presionado es el de ``ocupado'', se actualiza el estado para indicar que la cava está ocupada y se envía un estado ``ocupado'' a través de \verb|occupancy_queue|.
 
 
 \begin{figure}[H]
@@ -465,7 +465,7 @@ lcd_task()
 
 Además de las tareas y funciones descritas en la sección \ref{fig:arq_firmware}, fue necesario implementar varios componentes de firmware. Sin embargo, por ser los más relevantes, se mencionan los siguientes:
 
-Un driver para el manejo de la pantalla \textit{LCD RGB Backlight} de 16x2 que se llamó \verb|lcd_i2c_grove.h|. Esta pantalla presenta interfaz de comunicación I2C, para reducir la cantidad de pines utilizados por el microcontrolador. Este driver presenta las funciones descritas en el código \ref{cod:driver_lcd}. Este driver fue adaptado del driver proporcionado por el fabricante en: \url{https://github.com/Seeed-Studio/Grove_LCD_RGB_Backlight}.
+Un driver para el manejo de la pantalla \textit{LCD RGB Backlight} de 16x2 que se llamó \verb|lcd_i2c_grove.h|. Esta pantalla presenta la interfaz de comunicación I2C, para reducir la cantidad de pines utilizados por el microcontrolador. Este driver presenta las funciones descritas en el código \ref{cod:driver_lcd}. Este driver fue adaptado del driver proporcionado por el fabricante en: \citep{LCD_GROVE}.
 
 \begin{figure}[H]
 \begin{lstlisting}
@@ -615,7 +615,7 @@ Para este trabajo, se utilizó el \textit{broker} EMQX \citep{EMQX}, que es util
 Para la implementación de la interfaz web, se utilizaron las siguientes tecnologías: 
 
 \begin{itemize}
-	\item html: se utiliza para estructurar la página web.
+	\item HTML: se utiliza para estructurar la página web.
 	\item CSS (Bootstrap): para dar estilo a la página y facilitar la implementación, ya que cuenta con componentes predefinidos.
 	\item Lenguaje de programación JavaScript, sus características y bibliotecas. A continuación, se detallan las más relevantes para este trabajo: 
 		\begin{itemize}
@@ -637,7 +637,7 @@ A continuación, se presenta el proceso llevado a cabo para la implementación d
 \begin{enumerate}
 	\item Configuración inicial:
 		\begin{itemize}
-		\item Se diseñó la estructura de la página web usando html y Bootstrap. En este punto se utilizaron las bibliotecas necesarias para la funcionalidad del mapa y la conexión MQTT. En la figura \ref{fig:mockup} se observa la versión desarrollada por el autor. Además, en la figura \ref{fig:web_final} se muestra la versión implementada en el servidor de la empresa Cloud Technologys SAS, la cual fue migrada y ajustada por su equipo de desarrolladores web.
+		\item Se diseñó la estructura de la página web usando HTML y Bootstrap. En este punto se utilizaron las bibliotecas necesarias para la funcionalidad del mapa y la conexión MQTT. En la figura \ref{fig:mockup} se observa la versión desarrollada por el autor. Además, en la figura \ref{fig:web_final} se muestra la versión implementada en el servidor de la empresa Cloud Technologys SAS, la cual fue migrada y ajustada por su equipo de desarrolladores web.
 		\end{itemize}
 
 	\item Configuración del mapa:
@@ -663,9 +663,9 @@ A continuación, se presenta el proceso llevado a cabo para la implementación d
 \end{enumerate}
 
 
-En el código \ref{cod:aplicacion_web} se muestra la implementación html de la interfaz web desarrollada por el autor, la cual sirvió de maqueta para que el equipo de desarrollo web de la empresa Cloud Technologys SAS lo implementara en sus servidores. Sin embargo, por petición del cliente, no es posible compartir el código implementado en sus servidores. 
+En el código \ref{cod:aplicacion_web} se muestra la implementación HTML de la interfaz web desarrollada por el autor, la cual sirvió de maqueta para que el equipo de desarrollo web de la empresa Cloud Technologys SAS lo implementara en sus servidores. Sin embargo, por petición del cliente, no es posible compartir el código implementado en sus servidores. 
 
-El código html inicia con la declaración del tipo de documento (<!DOCTYPE html>), ya que se trata de un archivo html5. Luego, se abre la etiqueta <html> que contiene toda la página web.
+El código HTML inicia con la declaración del tipo de documento (<!DOCTYPE html>), ya que se trata de un archivo html5. Luego, se abre la etiqueta <html> que contiene toda la página web.
 
 En la sección <head>, se define el título de la página como ``Cava mapa''. También se incluyen enlaces a hojas de estilo y \textit{scripts} externos. Específicamente, se carga \textit{Bootstrap} desde un CDN (del inglés: \textit{Content Delivery Network}), para estilos y componentes de interfaz de usuario, y \textit{jQuery}, \textit{Popper.js} y el propio \textit{JavaScript} de \textit{Bootstrap} para funcionalidad adicional. Además, se incluye una hoja de estilo para \textit{Leaflet}.
 
@@ -681,7 +681,7 @@ La tercera tarjeta muestra el título <<Estado:>> y un párrafo con el ID estado
 
 La segunda columna (que ocupa dos tercios del ancho) contiene un div (<div id="map">) que servirá como contenedor para el mapa que se mostrará en la página.
 
-Al final del cuerpo, se incluyen tres \textit{scripts}: la biblioteca de \textit{Leaflet}, la biblioteca MQTT y el archivo \textit{JavaScript} específico de la aplicación \verb|mapa.js|, que contiene la lógica para interactuar con el mapa y los datos de MQTT. En la figura \ref{fig:mockup}, se muestra la maqueta de la página desarrollada, y en la figura \ref{fig:web_final}
+Al final del cuerpo, se incluyen tres \textit{scripts}: la biblioteca de \textit{Leaflet}, la biblioteca MQTT y el archivo \textit{JavaScript} específico de la aplicación \verb|mapa.js|, que contiene la lógica para interactuar con el mapa y los datos de MQTT. 
 
 
 \begin{lstlisting} 
@@ -741,7 +741,7 @@ Al final del cuerpo, se incluyen tres \textit{scripts}: la biblioteca de \textit
 </html>
 
 \end{lstlisting}
-\captionof{lstlisting}{Código html de la página web.}
+\captionof{lstlisting}{Código HTML de la página web.}
 \label{cod:aplicacion_web}
 
 
@@ -773,7 +773,7 @@ Se definen las siguientes funciones:
 
 \item La función \verb|get_cava_data| recibe datos de la cava, convierte las coordenadas de latitud y longitud de estos datos a números flotantes, y devuelve un objeto con estas coordenadas.
 
-\item La función \verb|set_cava_position_map| se encarga de actualizar el mapa con la nueva posición de la cava. Primero, actualiza elementos html con los nuevos valores de latitud y longitud. Si ya existe un marcador, lo elimina del mapa. Luego, crea un nuevo marcador en la nueva posición y añade un \verb|popup| con la información de esta posición. Además, añade la nueva posición a la lista path y dibuja un rastro en el mapa con esta lista. Finalmente, ajusta la vista del mapa para centrarlo en la nueva posición.
+\item La función \verb|set_cava_position_map| se encarga de actualizar el mapa con la nueva posición de la cava. Primero, actualiza elementos HTML con los nuevos valores de latitud y longitud. Si ya existe un marcador, lo elimina del mapa. Luego, crea un nuevo marcador en la nueva posición y añade un \verb|popup| con la información de esta posición. Además, añade la nueva posición a la lista path y dibuja un rastro en el mapa con esta lista. Finalmente, ajusta la vista del mapa para centrarlo en la nueva posición.
 
 \end{itemize}
 

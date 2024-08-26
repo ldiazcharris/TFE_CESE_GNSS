@@ -4,20 +4,7 @@
 
 \label{Chapter4} % Change X to a consecutive number; for referencing this chapter elsewhere, use \ref{ChapterX}
 
-Este capítulo presenta los ensayos realizados para evaluar el desempeño del prototipo y los resultados obtenidos. Los ensayos se desarrollaron para validar la funcionalidad y exactitud del sistema en condiciones operativas de laboratorio. Los objetivos principales de los ensayos fueron:
-
-
-\begin{enumerate}
-
-\item Validar la funcionalidad del hardware. Asegurar que todos los componentes del sistema funcionan correctamente y se comunican entre sí de manera eficiente.
-
-\item Probar la integración del firmware. Verificar que el firmware gestiona adecuadamente la adquisición de datos, el procesamiento y la transmisión al \textit{broker} MQTT.
-
-\item Evaluar la exactitud de la geolocalización GNSS. Medir la exactitud de las coordenadas proporcionadas por el módulo GNSS y compararlas con un patrón de referencia.
-
-\item Comprobar la visualización de la aplicación de mapas. Asegurar que la aplicación proporciona una representación útil de los datos GNSS recibidos.
-
-\end{enumerate}
+Este capítulo presenta los ensayos realizados para evaluar el desempeño del prototipo y los resultados obtenidos. Los ensayos se desarrollaron para validar la funcionalidad y exactitud del sistema en condiciones operativas de laboratorio. 
 
 %----------------------------------------------------------------------------------------
 %	SECTION 1
@@ -26,7 +13,7 @@ Este capítulo presenta los ensayos realizados para evaluar el desempeño del pr
 \section{Resultado final de la integración del hardware}
 \label{sec:proto_v_final}
 
-En esta sección se presentan los resultados finales de la construcción del hardware. En la figura \ref{fig:proto_exterior} se muestra una vista externa de la versión final del prototipo construido. En la figura \ref{fig:proto_interior} se revela una vista interna del prototipo, donde se puede ver el cableado y los módulos de hardware conectadas a la placa base del sistema.
+En esta sección se presentan los resultados finales de la construcción del hardware. En la figura \ref{fig:proto_exterior} se muestra una vista externa de la versión final del prototipo construido. En la figura \ref{fig:proto_interior} se revela una vista interna del prototipo, donde se puede ver el cableado y los módulos de hardware conectados a la placa base del sistema.
 
 \begin{figure}[H]
 	\centering
@@ -105,7 +92,7 @@ Se ejecutaron pruebas sobre los módulos de hardware para verificar que funciona
 
 	\begin{enumerate}
 	
-	\item  Se probó la recepción de tramas NMEA con el módulo Quectel L76, a través del puerto UART. Se construyó un código de prueba que capturó las tramas NMEA recibidas por puerto UART\_1 y su eco en el puerto UART\_0 para visualizar los datos recibidos en la computadora, a través de la terminal \textit{Hercules} \citep{hercules}. 
+	\item  Se probó la recepción de tramas NMEA con el módulo Quectel L76, a través del puerto UART. Se construyó un código de prueba que capturó las tramas NMEA recibidas por el puerto UART\_1 y su eco en el puerto UART\_0 para visualizar los datos recibidos en la computadora, a través de la terminal \textit{Hercules} \citep{hercules}. 
 	
 	\item Se probó la comunicación bidireccional con el módulo SIM A7670SA, a través del puerto UART y por comandos AT. Se construyó un código de prueba que captura las tramas AT, recibidas por puerto UART\_1 y su eco en el puerto UART\_0 para visualizar los datos recibidos en la computadora, a través de la terminal \textit{Hercules}. Este mismo programa transmite las tramas AT enviadas desde el puerto UART\_0 hasta el módulo SIM A7670SA en el UART\_1. De esta manera, se pueden enviar comandos AT de forma manual hacia el módulo y recibir las respuestas respectivas. 
 	
@@ -155,7 +142,7 @@ Se observó que los mayores picos de corriente se dan cuando el módulo SIM A767
 En la figura \ref{fig:pru_QL76_Diag} se muestra un diagrama de la conexión necesaria para esta prueba. En la figura \ref{fig:pru_QL76_Setup} se muestra la conexión real realizada. En esta configuración se realiza lo siguiente: 
 
 \begin{enumerate}
-\item Para esta prueba se requiere el uso del puerto UART\_1, por lo tanto, se intercambias los pines GND, Vin, Tx y Rx del módulo Quectel L76 en la ranura del módulo SIM A7670SA. Debido a que son conectores diferentes se deben emplear cables de prueba.
+\item Para esta prueba se requiere el uso del puerto UART\_1, por lo tanto, se intercambian los pines GND, Vin, Tx y Rx del módulo Quectel L76 en la ranura del módulo SIM A7670SA. Debido a que son conectores diferentes se deben emplear cables de prueba.
 
 \item Se deben desconectar los módulos SIM A7670SA y Quectel L76 de sus respectivas posiciones designadas, para no interferir la comunicación serial. 
 \end{enumerate}
@@ -175,7 +162,7 @@ En la figura \ref{fig:pru_QL76_Diag} se muestra un diagrama de la conexión nece
 \end{figure}
 
 
-El código de prueba implementado es el que se muestra en el código \ref{cod:cod_proof_gnss}. Por simplicidad y reducir el espacio en este documento, se han obviado las declaraciones de variables, macros y la función \verb|main()|. Este sencillo programa utiliza \textit{FreeRTOS} para crear dos tareas, la primera \verb|uart1_interrupt_task()|, que se encarga de recibir las tramas del puerto UART\_1 (donde está conectado el módulo L76) y retransmitirlas al computador por el puerto UART\_0; y la segunda \verb|uart0_interrupt_task()| permite enviar comandos PMTK desde le computador hacia el módulo L76. De esta manera se comprueba que hay una comunicación adecuada entre los módulos. La función \verb|main()| se encarga de incializar los puertos UART en modo de interrupciones y crear las tareas correspondientes. 
+El código de prueba implementado es el que se muestra en el código \ref{cod:cod_proof_gnss}. Por simplicidad y reducir el espacio en este documento, se han obviado las declaraciones de variables, macros y la función \verb|main()|. Este programa utiliza \textit{FreeRTOS} para crear dos tareas, la primera \verb|uart1_interrupt_task()|, que se encarga de recibir las tramas del puerto UART\_1 (donde está conectado el módulo L76) y retransmitirlas al computador por el puerto UART\_0; y la segunda \verb|uart0_interrupt_task()| permite enviar comandos PMTK desde le computador hacia el módulo L76. De esta manera se comprueba que hay una comunicación adecuada entre los módulos. La función \verb|main()| se encarga de incializar los puertos UART en modo de interrupciones y crear las tareas correspondientes. 
 
 \begin{figure}[H]
 \begin{lstlisting} 
@@ -224,7 +211,7 @@ static void uart0_interrupt_task(void *params)
 }
 
 \end{lstlisting}
-\captionof{lstlisting}{Código para probar comunicación con el módulo Quectel L76.}
+\captionof{lstlisting}{Código para probar la comunicación con el módulo Quectel L76.}
 \label{cod:cod_proof_gnss}
 \end{figure}
 
@@ -279,13 +266,13 @@ En la figura \ref{fig:pru_A7670_recep} se muestra una captura de los mensajes vi
 	\label{fig:pru_A7670_recep}
 \end{figure}
 
-En la figura \ref{fig:pru_A7670_transm} se muestra otra captura de mensajes visualizados en la terminal \textit{Hercules}. En esta captura se muestra la transmisión del comando \textbf{AT+CMGD=1,4} hacia el módulo SIM A7670SA, este comando debe cumplir con las siguientes condiciones: 
+En la figura \ref{fig:pru_A7670_transm} se muestra otra captura de mensajes visualizados en la terminal \textit{Hercules}. En esta captura se muestra la transmisión del comando \verb|AT+CMGD=1,4| hacia el módulo SIM A7670SA, este comando debe cumplir con las siguientes condiciones: 
 
 \begin{enumerate}
-\item Debe iniciar con los caracteres \textbf{AT+}.
+\item Debe iniciar con los caracteres \verb|AT+|.
 \item Comando a enviar. En el caso de la prueba realizada, se envió el comando CMGD que se usa para eliminar mensajes SMS. 
-\item Los parámetros del comando. en este caso <index>(1), <delflag>(4), para borrar todos los mensajes en la tarjeta SIM.
-\item Por último, los símbolos de retorno de carro <CR> y salto de línea <LF>. Si estos dos símbolos no están presentes, el comando no será reconocido.
+\item Los dos parámetros del comando: en este caso \verb|<index>(1)| y \verb|<delflag>(4)|, se utilizan para borrar todos los mensajes en la tarjeta SIM.
+\item Por último, los símbolos de retorno de carro \verb|<CR>| y salto de línea \verb|<LF>|. Si estos dos símbolos no están presentes, el comando no será reconocido.
 \end{enumerate}
 
 En la figura \ref{fig:pru_A7670_transm} también se observa la respuesta del módulo al comando enviado. El módulo responde con un texto que contiene el comando y ``OK'' para indicar que fue ejecutado con éxito. 
@@ -419,11 +406,11 @@ Para realizar esta prueba, se procedió a verificar la exactitud de la localizac
 \begin{enumerate}
 \item Se seleccionaron posiciones en puntos fijos en la ciudad de Barranquilla. En un conjunto de edificios residenciales con calles internas para recrear espacios urbanos con presencia de edificios. 
 
-\item Se marcaron las coordenadas geográficas de los puntos seleccionados. para esto se utilizó la aplicación \textit{Google Map} y un teléfono inteligente como instrumento patrón. 
+\item Se marcaron las coordenadas geográficas de los puntos seleccionados. Para esto se utilizó la aplicación \textit{Google Map} y un teléfono inteligente como instrumento patrón. 
 
 \item En cada punto de prueba se registraron las coordenadas proporcionadas por el prototipo y por el teléfono inteligente. Se tomaron cinco muestras con una separación de un minuto. El valor de la medición que se seleccionó fue el que más se repite de las cinco muestras. 
 
-\item Se calculó la distancia entre las coordenadas registradas por el prototipo y las coordenadas tomadas de referencia de \textit{Google Map}. El cálculo de esta distancia se realizó con la ecuación de \textit{Haversine}. El cálculo se toma como el grado de exactitud en la geolocalización realizada por el prototipo, al considerar como valor verdadero el proporcionado por el teléfono inteligente.
+\item Se calculó la distancia entre las coordenadas registradas por el prototipo y las coordenadas tomadas de referencia de \textit{Google Map}. El cálculo de esta distancia se realizó con la ecuación de \textit{Haversine} \citep{Alkan-Celebi}. El cálculo se toma como el grado de exactitud en la geolocalización realizada por el prototipo, al considerar como valor verdadero el proporcionado por el teléfono inteligente.
 
 \end{enumerate}
 
