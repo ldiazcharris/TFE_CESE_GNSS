@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.6.26)  26 AUG 2024 10:51
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.6.26)  26 AUG 2024 20:09
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1918,115 +1918,113 @@ Underfull \hbox (badness 10000) in paragraph at lines 522--522
 
 
 Package caption Warning: The type was already set to `figure'
-(caption)                 on input line 549.
+(caption)                 on input line 557.
 See the caption package documentation for explanation.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 549--549
+Underfull \hbox (badness 10000) in paragraph at lines 557--557
  []\T1/ppl/m/sc/10 Código 3.9. |\T1/ppl/m/n/10 Pseu-do-có-di-go de la fun-ción 
 
  []
 
 
+
+LaTeX Info: Redefining \. on input line 559.
+LaTeX Info: Redefining \% on input line 559.
+[31]
+
 Package caption Warning: The type was already set to `figure'
-(caption)                 on input line 578.
+(caption)                 on input line 593.
 See the caption package documentation for explanation.
 
 
 
-LaTeX Info: Redefining \. on input line 580.
-LaTeX Info: Redefining \% on input line 580.
-[31]
-<./Figures/arquitectura_MQTT.png, id=920, 769.37437pt x 271.76532pt>
+LaTeX Info: Redefining \. on input line 596.
+LaTeX Info: Redefining \% on input line 596.
+[32]
+<./Figures/arquitectura_MQTT.png, id=931, 769.37437pt x 271.76532pt>
 File: ./Figures/arquitectura_MQTT.png Graphic file (type png)
 <use ./Figures/arquitectura_MQTT.png>
-Package pdftex.def Info: ./Figures/arquitectura_MQTT.png  used on input line 60
-3.
+Package pdftex.def Info: ./Figures/arquitectura_MQTT.png  used on input line 61
+8.
 (pdftex.def)             Requested size: 350.82004pt x 123.92294pt.
 
-Overfull \hbox (47.6601pt too wide) in paragraph at lines 607--607
+Overfull \hbox (47.6601pt too wide) in paragraph at lines 622--622
 [][][]\T1/ppl/m/n/9 Imagen adap-ta-da de: [][]$https : / / www . emqx . com / e
 n / blog / mqtt-[]5-[]introduction-[]to-[]publish-[]subscribe-[]model$[][]| 
  []
 
 
 
-LaTeX Info: Redefining \. on input line 610.
-LaTeX Info: Redefining \% on input line 610.
-[32]
+LaTeX Info: Redefining \. on input line 625.
+LaTeX Info: Redefining \% on input line 625.
+[33]
 
-LaTeX Info: Redefining \. on input line 640.
-LaTeX Info: Redefining \% on input line 640.
-[33 <./Figures/arquitectura_MQTT.png>]
+LaTeX Info: Redefining \. on input line 656.
+LaTeX Info: Redefining \% on input line 656.
+[34 <./Figures/arquitectura_MQTT.png>]
 
-LaTeX Info: Redefining \. on input line 675.
-LaTeX Info: Redefining \% on input line 675.
-[34]
-
-LaTeX Info: Redefining \. on input line 715.
-LaTeX Info: Redefining \% on input line 715.
+LaTeX Info: Redefining \. on input line 690.
+LaTeX Info: Redefining \% on input line 690.
 [35]
 
+LaTeX Info: Redefining \. on input line 730.
+LaTeX Info: Redefining \% on input line 730.
+[36]
+
 Package caption Warning: \setcaptiontype
-(caption)                outside box or environment on input line 744.
+(caption)                outside box or environment on input line 759.
 See the caption package documentation for explanation.
 
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 744.
+(caption)                particular \caption on input line 759.
 See the caption package documentation for explanation.
 
-<./Figures/Mockup_web.png, id=1005, 939.51pt x 435.12563pt>
+<./Figures/Mockup_web.png, id=1015, 939.51pt x 435.12563pt>
 File: ./Figures/Mockup_web.png Graphic file (type png)
 <use ./Figures/Mockup_web.png>
-Package pdftex.def Info: ./Figures/Mockup_web.png  used on input line 750.
+Package pdftex.def Info: ./Figures/Mockup_web.png  used on input line 765.
 (pdftex.def)             Requested size: 389.80269pt x 180.53392pt.
-<./Figures/web_final.jpeg, id=1006, 956.82469pt x 499.11469pt>
+<./Figures/web_final.jpeg, id=1016, 956.82469pt x 499.11469pt>
 File: ./Figures/web_final.jpeg Graphic file (type jpg)
 <use ./Figures/web_final.jpeg>
-Package pdftex.def Info: ./Figures/web_final.jpeg  used on input line 757.
+Package pdftex.def Info: ./Figures/web_final.jpeg  used on input line 772.
 (pdftex.def)             Requested size: 389.80269pt x 203.33601pt.
 
 
-LaTeX Info: Redefining \. on input line 761.
-LaTeX Info: Redefining \% on input line 761.
-[36 <./Figures/Mockup_web.png>]
+LaTeX Info: Redefining \. on input line 776.
+LaTeX Info: Redefining \% on input line 776.
+[37 <./Figures/Mockup_web.png>]
 
-LaTeX Info: Redefining \. on input line 781.
-LaTeX Info: Redefining \% on input line 781.
-[37 <./Figures/web_final.jpeg>]
+LaTeX Info: Redefining \. on input line 796.
+LaTeX Info: Redefining \% on input line 796.
+[38 <./Figures/web_final.jpeg>]
 
-LaTeX Info: Redefining \. on input line 836.
-LaTeX Info: Redefining \% on input line 836.
-[38]
+LaTeX Info: Redefining \. on input line 851.
+LaTeX Info: Redefining \% on input line 851.
+[39]
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 878.
+(caption)                particular \caption on input line 893.
 See the caption package documentation for explanation.
 
 )
 
 LaTeX Info: Redefining \. on input line 176.
 LaTeX Info: Redefining \% on input line 176.
-[39]
+[40]
 \openout2 = `Chapters/Chapter4.aux'.
 
  (Chapters/Chapter4.tex
-
-[40
-
-
-
-
-]
 Cap\'{\i }tulo 4.
-<./Figures/Prototipo_v_final_exterior.png, id=1153, 547.04375pt x 459.7175pt>
+<./Figures/Prototipo_v_final_exterior.png, id=1159, 547.04375pt x 459.7175pt>
 File: ./Figures/Prototipo_v_final_exterior.png Graphic file (type png)
 <use ./Figures/Prototipo_v_final_exterior.png>
 Package pdftex.def Info: ./Figures/Prototipo_v_final_exterior.png  used on inpu
 t line 20.
 (pdftex.def)             Requested size: 194.90134pt x 163.78658pt.
-<./Figures/Prototipo_v_final_interior.png, id=1154, 688.5725pt x 365.365pt>
+<./Figures/Prototipo_v_final_interior.png, id=1160, 688.5725pt x 365.365pt>
 File: ./Figures/Prototipo_v_final_interior.png Graphic file (type png)
 <use ./Figures/Prototipo_v_final_interior.png>
 Package pdftex.def Info: ./Figures/Prototipo_v_final_interior.png  used on inpu
@@ -2035,8 +2033,13 @@ t line 27.
 
 
 1: section
-[41 <./Figures/Prototipo_v_final_exterior.png>]
-<./Figures/Prototipo_v_final_exterior_componentes.jpg, id=1162, 452.4403pt x 41
+[41
+
+
+
+
+ <./Figures/Prototipo_v_final_exterior.png>]
+<./Figures/Prototipo_v_final_exterior_componentes.jpg, id=1168, 452.4403pt x 41
 4.79968pt>
 File: ./Figures/Prototipo_v_final_exterior_componentes.jpg Graphic file (type j
 pg)
@@ -2044,7 +2047,7 @@ pg)
 Package pdftex.def Info: ./Figures/Prototipo_v_final_exterior_componentes.jpg  
 used on input line 43.
 (pdftex.def)             Requested size: 194.90134pt x 178.68318pt.
-<./Figures/Prototipo_v_final_interior_componentes.jpg, id=1164, 744.53156pt x 3
+<./Figures/Prototipo_v_final_interior_componentes.jpg, id=1170, 744.53156pt x 3
 71.13657pt>
 File: ./Figures/Prototipo_v_final_interior_componentes.jpg Graphic file (type j
 pg)
@@ -2062,13 +2065,13 @@ erior_componentes.jpg>]
 LaTeX Info: Redefining \. on input line 101.
 LaTeX Info: Redefining \% on input line 101.
 [43 <./Figures/Prototipo_v_final_interior_componentes.jpg>]
-<./Figures/Prueba_regulador.jpeg, id=1191, 1208.515pt x 1606.0pt>
+<./Figures/Prueba_regulador.jpeg, id=1197, 1208.515pt x 1606.0pt>
 File: ./Figures/Prueba_regulador.jpeg Graphic file (type jpg)
 <use ./Figures/Prueba_regulador.jpeg>
 Package pdftex.def Info: ./Figures/Prueba_regulador.jpeg  used on input line 11
 4.
 (pdftex.def)             Requested size: 194.90134pt x 258.9992pt.
-<./Figures/grafico_corriente.png, id=1194, 728.613pt x 350.181pt>
+<./Figures/grafico_corriente.png, id=1200, 728.613pt x 350.181pt>
 File: ./Figures/grafico_corriente.png Graphic file (type png)
 <use ./Figures/grafico_corriente.png>
 Package pdftex.def Info: ./Figures/grafico_corriente.png  used on input line 12
@@ -2079,7 +2082,7 @@ Package pdftex.def Info: ./Figures/grafico_corriente.png  used on input line 12
 LaTeX Info: Redefining \. on input line 129.
 LaTeX Info: Redefining \% on input line 129.
 [44 <./Figures/Prueba_regulador.jpeg>]
-<./Figures/Prueba_corriente_datos_repre.png, id=1200, 434.37282pt x 541.27219pt
+<./Figures/Prueba_corriente_datos_repre.png, id=1206, 434.37282pt x 541.27219pt
 >
 File: ./Figures/Prueba_corriente_datos_repre.png Graphic file (type png)
 <use ./Figures/Prueba_corriente_datos_repre.png>
@@ -2092,13 +2095,13 @@ LaTeX Info: Redefining \. on input line 146.
 LaTeX Info: Redefining \% on input line 146.
 [45 <./Figures/grafico_corriente.png> <./Figures/Prueba_corriente_datos_repre.p
 ng>]
-<./Figures/prueba_QL76_diagrama.png, id=1210, 550.055pt x 134.5025pt>
+<./Figures/prueba_QL76_diagrama.png, id=1216, 550.055pt x 134.5025pt>
 File: ./Figures/prueba_QL76_diagrama.png Graphic file (type png)
 <use ./Figures/prueba_QL76_diagrama.png>
 Package pdftex.def Info: ./Figures/prueba_QL76_diagrama.png  used on input line
  152.
 (pdftex.def)             Requested size: 272.86069pt x 66.72362pt.
-<./Figures/prueba_QL76_Setup.jpeg, id=1211, 1203.7472pt x 676.77844pt>
+<./Figures/prueba_QL76_Setup.jpeg, id=1217, 1203.7472pt x 676.77844pt>
 File: ./Figures/prueba_QL76_Setup.jpeg Graphic file (type jpg)
 <use ./Figures/prueba_QL76_Setup.jpeg>
 Package pdftex.def Info: ./Figures/prueba_QL76_Setup.jpeg  used on input line 1
@@ -2119,19 +2122,19 @@ LaTeX Info: Redefining \% on input line 217.
 LaTeX Info: Redefining \. on input line 220.
 LaTeX Info: Redefining \% on input line 220.
 [47]
-<./Figures/prueba_QL76_recepcion_ana.png, id=1270, 663.22781pt x 405.76593pt>
+<./Figures/prueba_QL76_recepcion_ana.png, id=1276, 663.22781pt x 405.76593pt>
 File: ./Figures/prueba_QL76_recepcion_ana.png Graphic file (type png)
 <use ./Figures/prueba_QL76_recepcion_ana.png>
 Package pdftex.def Info: ./Figures/prueba_QL76_recepcion_ana.png  used on input
  line 223.
 (pdftex.def)             Requested size: 389.80269pt x 238.48347pt.
-<./Figures/prueba_A7670SA_diagrama.png, id=1273, 557.08125pt x 134.5025pt>
+<./Figures/prueba_A7670SA_diagrama.png, id=1279, 557.08125pt x 134.5025pt>
 File: ./Figures/prueba_A7670SA_diagrama.png Graphic file (type png)
 <use ./Figures/prueba_A7670SA_diagrama.png>
 Package pdftex.def Info: ./Figures/prueba_A7670SA_diagrama.png  used on input l
 ine 243.
 (pdftex.def)             Requested size: 272.86069pt x 65.88011pt.
-<./Figures/Prueba_A7670SA_Setup.jpeg, id=1274, 1203.7472pt x 676.77844pt>
+<./Figures/Prueba_A7670SA_Setup.jpeg, id=1280, 1203.7472pt x 676.77844pt>
 File: ./Figures/Prueba_A7670SA_Setup.jpeg Graphic file (type jpg)
 <use ./Figures/Prueba_A7670SA_Setup.jpeg>
 Package pdftex.def Info: ./Figures/Prueba_A7670SA_Setup.jpeg  used on input lin
@@ -2148,7 +2151,7 @@ Underfull \hbox (badness 1910) in paragraph at lines 256--257
 a prue-ba an-te-rior, la ta-
  []
 
-<./Figures/Prueba_A7670SA_recep_AT.png, id=1285, 465.23813pt x 404.26031pt>
+<./Figures/Prueba_A7670SA_recep_AT.png, id=1291, 465.23813pt x 404.26031pt>
 File: ./Figures/Prueba_A7670SA_recep_AT.png Graphic file (type png)
 <use ./Figures/Prueba_A7670SA_recep_AT.png>
 Package pdftex.def Info: ./Figures/Prueba_A7670SA_recep_AT.png  used on input l
@@ -2164,7 +2167,7 @@ Underfull \hbox (badness 7397) in paragraph at lines 274--275
 /pcr/m/n/10.95 <index>(1) []\T1/ppl/m/n/10.95 y
  []
 
-<./Figures/Prueba_A7670SA_transmision_AT.png, id=1292, 468.24937pt x 409.53pt>
+<./Figures/Prueba_A7670SA_transmision_AT.png, id=1298, 468.24937pt x 409.53pt>
 File: ./Figures/Prueba_A7670SA_transmision_AT.png Graphic file (type png)
 <use ./Figures/Prueba_A7670SA_transmision_AT.png>
 Package pdftex.def Info: ./Figures/Prueba_A7670SA_transmision_AT.png  used on i
@@ -2185,7 +2188,7 @@ See the caption package documentation for explanation.
 LaTeX Info: Redefining \. on input line 343.
 LaTeX Info: Redefining \% on input line 343.
 [51 <./Figures/Prueba_A7670SA_transmision_AT.png>]
-<./Figures/prueba_LCD_collage.png, id=1310, 676.77844pt x 488.57532pt>
+<./Figures/prueba_LCD_collage.png, id=1316, 676.77844pt x 488.57532pt>
 File: ./Figures/prueba_LCD_collage.png Graphic file (type png)
 <use ./Figures/prueba_LCD_collage.png>
 Package pdftex.def Info: ./Figures/prueba_LCD_collage.png  used on input line 3
@@ -2200,7 +2203,7 @@ LaTeX Info: Redefining \% on input line 352.
 LaTeX Info: Redefining \. on input line 391.
 LaTeX Info: Redefining \% on input line 391.
 [53 <./Figures/prueba_LCD_collage.png>]
-<./Figures/prueba_web_1_mapa.png, id=1368, 1028.34187pt x 518.6878pt>
+<./Figures/prueba_web_1_mapa.png, id=1374, 1028.34187pt x 518.6878pt>
 File: ./Figures/prueba_web_1_mapa.png Graphic file (type png)
 <use ./Figures/prueba_web_1_mapa.png>
 Package pdftex.def Info: ./Figures/prueba_web_1_mapa.png  used on input line 39
@@ -2307,7 +2310,7 @@ Ap\'{e}ndice A.
 
 pdfTeX warning: pdflatex (file ./Appendices/Esquematico_placa_base.pdf): PDF in
 clusion: found PDF version <1.7>, but at most version <1.5> allowed
-<./Appendices/Esquematico_placa_base.pdf, id=1398, 614.295pt x 794.97pt>
+<./Appendices/Esquematico_placa_base.pdf, id=1404, 614.295pt x 794.97pt>
 File: ./Appendices/Esquematico_placa_base.pdf Graphic file (type pdf)
 <use ./Appendices/Esquematico_placa_base.pdf>
 Package pdftex.def Info: ./Appendices/Esquematico_placa_base.pdf  used on input
@@ -2330,7 +2333,7 @@ clusion: found PDF version <1.7>, but at most version <1.5> allowed
 
 pdfTeX warning: pdflatex (file ./Appendices/Esquematico_placa_base.pdf): PDF in
 clusion: found PDF version <1.7>, but at most version <1.5> allowed
-<./Appendices/Esquematico_placa_base.pdf, id=1401, page=1, 614.295pt x 794.97pt
+<./Appendices/Esquematico_placa_base.pdf, id=1407, page=1, 614.295pt x 794.97pt
 >
 File: ./Appendices/Esquematico_placa_base.pdf Graphic file (type pdf)
 <use ./Appendices/Esquematico_placa_base.pdf, page 1>
@@ -2404,8 +2407,8 @@ Package logreq Info: Writing requests to 'memoria.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 33845 strings out of 473919
- 723866 string characters out of 5727897
+ 33851 strings out of 473919
+ 723908 string characters out of 5727897
  2195908 words of memory out of 5000000
  55570 multiletter control sequences out of 15000+600000
  611869 words of font info for 114 fonts, out of 8000000 for 9000
@@ -2448,9 +2451,9 @@ tino/uplb8a.pfb><C:/Users/CUC/AppData/Local/Programs/MiKTeX/fonts/type1/urw/pal
 atino/uplr8a.pfb><C:/Users/CUC/AppData/Local/Programs/MiKTeX/fonts/type1/urw/pa
 latino/uplr8a.pfb><C:/Users/CUC/AppData/Local/Programs/MiKTeX/fonts/type1/urw/p
 alatino/uplri8a.pfb>
-Output written on memoria.pdf (75 pages, 8122359 bytes).
+Output written on memoria.pdf (75 pages, 8126758 bytes).
 PDF statistics:
- 1622 PDF objects out of 1728 (max. 8388607)
- 701 named destinations out of 1000 (max. 500000)
+ 1629 PDF objects out of 1728 (max. 8388607)
+ 707 named destinations out of 1000 (max. 500000)
  693 words of extra memory for PDF output out of 10000 (max. 10000000)
 

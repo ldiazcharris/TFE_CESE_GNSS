@@ -296,7 +296,7 @@ En la figura \ref{fig:flujo_firmware_3} se representan dos tareas:
 
 A continuación, se explica en forma de pseudocódigo la implementación de cada una de las tareas del sistema. 
 
-En el código \ref{cod:init_mqtt_server_task}, se muestra el pseudocódigo que refleja la implementación de la tarea \verb|init_mqtt_server_task()|. La tarea inicializa los servicios necesarios para operar con MQTT. Esto incluye la configuración de parámetros y la preparación de las conexiones. Después, se realiza la conexión al servidor MQTT; esto asegura que el sistema pueda enviar y recibir mensajes a través de este protocolo. Continúa con la creación de las tareas del sistema. Después de crear y poner en marcha las tareas del sistema, se elimina la tarea \verb|init_mqtt_server_task()|, lo que implica la liberación de recursos. Si hay una falla en la conexión con el servidor, se realizarán un total de 3 intentos de conexión, además del intento inicial. Si falla la conexión, se reporta el problema por la LCD y se procede a la eliminación de la tarea.
+En el código \ref{cod:init_mqtt_server_task}, se muestra el pseudocódigo que refleja la implementación de la tarea \verb|init_mqtt_server_task()|. La tarea espera a que el módulo SIMA7670 se encuentre listo para la comunicación por comandos AT, para esto, en la línea 3 se implementa un bucle que bloquea la tarea mientras espera el estado ``READY'' del módulo. Luego, en la línea 5,  se inicializan los servicios necesarios para operar con MQTT. Esto incluye la configuración de parámetros y la preparación de las conexiones. Después, en la línea 6 se realiza la conexión al servidor MQTT; esto asegura que el sistema pueda enviar y recibir mensajes a través de este protocolo. Si la conexión es exitosa, se continúa con la creación de las tareas del sistema (ver línea 9). Después de crear y poner en marcha las tareas del sistema, en la línea 14, se elimina la tarea \verb|init_mqtt_server_task()|, lo que implica la liberación de recursos. Si hay una falla en la conexión con el servidor, se realizarán un total de 3 intentos de conexión, además del intento inicial (ver línea 6). Si falla la conexión se reporta el problema por la LCD con la instrucción de la línea 17 y se procede a la eliminación de la tarea en la línea 18.
 
 
 \begin{figure}[H]
@@ -327,12 +327,12 @@ init_mqtt_server_task()
 \end{figure}
  
 
-En el código \ref{cod:gnss_task}, se presenta el pseudocódigo de la tarea \verb|gnss_task()|. La tarea se encarga de procesar las tramas NMEA que son datos provenientes del receptor GNSS, envía por la cola \verb|position_queue|, que es gestionada por la tarea \verb|collect_data_task()|. El sistema verifica si ha pasado un intervalo de tiempo de 5 minutos, para comparar: 
+En el código \ref{cod:gnss_task}, se presenta el pseudocódigo de la tarea \verb|gnss_task()|. La tarea espera cada evento del puerto \verb|UART_0| (ver línea 4) para procesar las tramas NMEA con datos provenientes del receptor GNSS, lo que se puede ver en la línea 5. Luego del procesamiento, envía la información extraída por la cola \verb|position_queue|, que es gestionada por la tarea \verb|collect_data_task()| (ver línea 7). En la línea 8, el sistema verifica si ha pasado un intervalo de tiempo de cinco minutos para comprobar tres cosas: 
 
 \begin{itemize}
-\item Sí: si las posiciones son iguales, el sistema entra en modo de ahorro de energía.
-\item No: si las posiciones son diferentes, el sistema vuelve al inicio del bucle.
-\item No: si no han pasado 5 minutos, el sistema vuelve al inicio del bucle.
+\item Sí: si se alcanzaron los cinco minutos y las posiciones son iguales, el sistema entra en modo de ahorro de energía.
+\item No: si no se han alcanzado los cinco minutos y las posiciones son diferentes, el sistema vuelve al inicio del bucle.
+\item No: si no han pasado cinco minutos, el sistema vuelve al inicio del bucle.
 \end{itemize}
 
 
@@ -362,7 +362,7 @@ gnss_task()
  
 
 
-En el código \ref{cod:occupancy_isr_handler}, se presenta el pseudocódigo del manejador de interrupciones \verb|occupancy_isr_handler()|, que aunque no es una tarea mapeada en el \textit{scheduler} de FreeRTOS, cumple un papel primordial, puesto que permite capturar los eventos de los botones de ocupación del sistema. El manejador de interrupciones se activa cuando se presiona un botón, se captura cuál botón ha sido presionado. Si el botón presionado es el de ``libre'' se actualiza el estado para indicar que el recurso está libre y se envía un estado ``libre'' a través de \verb|occupancy_queue|. Si el botón presionado es el de ``ocupado'', se actualiza el estado para indicar que la cava está ocupada y se envía un estado ``ocupado'' a través de \verb|occupancy_queue|.
+En el código \ref{cod:occupancy_isr_handler}, se presenta el pseudocódigo del manejador de interrupciones \verb|occupancy_isr_handler()|, que aunque no es una tarea mapeada en el \textit{scheduler} de FreeRTOS, cumple un papel primordial, puesto que permite capturar los eventos de los botones de ocupación del sistema. El manejador está asociado con la subrutina de interrupciones que se debe ejecutar cuando ocurre un evento de GPIO. Esta se activa cuando se presiona un botón y se captura cuál botón ha sido presionado (ver línea 4). Si el botón presionado es el de ``libre'' se actualiza el estado para indicar que el recurso está libre y se envía un estado ``libre'' a través de \verb|occupancy_queue|, como se muestra en las líneas 5 a 7. Si el botón presionado es el de ``ocupado'', se actualiza el estado para indicar que la cava está ocupada y se envía un estado ``ocupado'' a través de \verb|occupancy_queue|, según las instrucciones de las líneas 9 a 11.
 
 
 \begin{figure}[H]
@@ -386,7 +386,7 @@ occupancy_isr_handler()
 \end{figure}
 
 
-En el código \ref{cod:collect_data_task}, se presenta el pseudocódigo de la tarea \verb|collect_data_task()|. La tarea verifica si hay un evento de ocupación, si este ocurre, se guarda la información correspondiente. También verifica si hay un evento de posición, si ocurre, se guarda la información correspondiente. Finalmente, la información de ocupación se envía por la cola \verb|cava_data_queue| que es gestionada por la tarea \verb|transmit_to_server_task()|.
+En el código \ref{cod:collect_data_task}, se presenta el pseudocódigo de la tarea \verb|collect_data_task()|. A través de la línea 4, la tarea verifica si hay un evento de ocupación, si este ocurre, se guarda la información correspondiente en una estructura local. También verifica si hay un evento de posición (ver línea 7), si ocurre, se guarda la información correspondiente en la estructura local. Finalmente, en la línea 10, la información de ocupación se envía por la cola \verb|cava_data_queue| que es gestionada por la tarea \verb|transmit_to_server_task()|.
 
 
 \begin{figure}[H]
@@ -410,7 +410,7 @@ collect_data_task()
 
 
 
-En el código \ref{cod:transmit_to_server_task}, se muestra la tarea \verb|transmit_to_server_task()|. La tarea verifica si hay un evento relacionado con los datos de la cava, si no hay evento, el sistema vuelve al inicio del bucle; si hay un evento, los datos de la cava se transmiten al servidor MQTT y luego a la tarea \verb|lcd_task()| + el resultado de la transmisión.
+En el código \ref{cod:transmit_to_server_task}, se muestra la tarea \verb|transmit_to_server_task()|. La tarea verifica si hay un evento relacionado con los datos de la cava (ver línea 5). Si no hay evento, el sistema vuelve al inicio del bucle; si hay un evento, los datos de la cava se transmiten al servidor MQTT y luego a la tarea \verb|lcd_task()| + el resultado de la transmisión, como se muestra en las líneas 6 a 8.
 
  
 \begin{figure}[H]
@@ -432,12 +432,12 @@ transmit_to_server_task()
 
 
 
-En el código \ref{cod:lcd_task}, se presenta el pseudocódigo de la tarea \verb|lcd_task()|. Esta tarea verifica si hay un evento en la cola, si no hay evento, el sistema vuelve al inicio del bucle; si hay un evento, se muestra la siguiente información en la pantalla LCD: 
+En el código \ref{cod:lcd_task}, se presenta el pseudocódigo de la tarea \verb|lcd_task()|. Esta tarea verifica si hay un evento en la cola (ver línea 4), si no hay evento, el sistema vuelve al inicio del bucle; si hay un evento, se muestra la siguiente información en la pantalla LCD: 
 
 	\begin{itemize}
-	\item La posición geográfica.
-	\item El estado de ocupación. 
-	\item El estado de la conexión servidor (MQTT). 
+	\item La posición geográfica (líneas 5 a 8).
+	\item El estado de ocupación (línea 9). 
+	\item El estado de la conexión servidor MQTT (línea 10). 
 	\end{itemize}
 
  
@@ -497,7 +497,7 @@ void lcd_set_RGB(unsigned char r, unsigned char g, unsigned char b);
 \end{figure}
  
 
-Una función para inicializar los servicios MQTT en el módulo SIM A7670SA y conectarse al \textit{broker} MQTT, que se llamó \verb|init_sequence_mqtt_server()|. Esta función implementa comandos AT específicos para el módulo en mención. Retorna el estado de conexión con el \textit{broker} MQTT o en su defecto los errores encontrados en el proceso. En el código \ref{cod:init_sequence_mqtt_server} se muestra el pseudocódigo que describe su funcionamiento.
+Una función para inicializar los servicios MQTT en el módulo SIM A7670SA y conectarse al \textit{broker} MQTT, que se llamó \verb|init_sequence_mqtt_server()|. Esta función implementa comandos AT específicos para el módulo en mención. Retorna el estado de conexión con el \textit{broker} MQTT o en su defecto los errores encontrados en el proceso. En el código \ref{cod:init_sequence_mqtt_server} se muestra el pseudocódigo que describe su funcionamiento. En la línea 3 del código, se envía un comando AT para iniciar el servicio MQTT en el dispositivo. La línea 4 espera la confirmación exitosa de la inicialización para proceder, en la línea 5, con la adquisición de un cliente MQTT en el dispositivo y se espera una respuesta exitosa (ver línea 6). Si se recibe ``OK'', se envía el comando para conectarse con el \textit{broker} MQTT remoto (ver línea 7), si la conexión se establece, se retorna el estado de la conexión. De la misma manera, si alguno de los pasos anteriores falla, se retornan los errores correspondientes. 
 
 \begin{figure}[H]
 \begin{lstlisting}
@@ -523,7 +523,15 @@ init_sequence_mqtt_server(uart1_event, at_response)
 \label{cod:init_sequence_mqtt_server}
  \end{figure}
 
-La función \verb|transmit_msg_mqtt()| para encapsular la funcionalidad de transmitir al \textit{broker} MQTT una vez se ha establecido la conexión. Esta función implementa comandos AT específicos del módulo SIM A7670SA y retorna el estado de transmisión del mensaje. En el código \ref{cod:transmit_msg_mqtt} se muestra el pseudocódigo que describe su funcionamiento.
+La función \verb|transmit_msg_mqtt()| para encapsular la funcionalidad de transmitir al \textit{broker} MQTT una vez se ha establecido la conexión. Esta función implementa comandos AT específicos del módulo SIM A7670SA y retorna el estado de transmisión del mensaje. En el código \ref{cod:transmit_msg_mqtt} se muestra el pseudocódigo que describe su funcionamiento. Esta función recibe cuatro parámetros: 
+\begin{enumerate}
+\item \verb|mqtt_payload|: es el mensaje que se desea enviar a través de MQTT.
+\item \verb|topic|: es el tema o canal a través del cual el mensaje será publicado en el broker MQTT.
+\item \verb|uart1_event|: es un puntero para el evento relacionado con el UART.
+\item \verb|at_response|: es un puntero para almacenar la respuesta esperada del comando AT.
+\end{enumerate}
+
+En la línea 3 Se envía el comando AT al dispositivo para configurar el tema (\verb|topic|) en el cual se publicará el mensaje MQTT. Este comando le indica al dispositivo que debe prepararse para enviar un mensaje en un tema específico. Si se recibe una respuesta con ``OK'', entonces en la línea 5 se procede a cargar el \verb|payload| en la memoria del módulo. Si el proceso es exitoso, entonces se procede a publicar el mensaje (ver línea 7). Nuevamente, si la publicación es correcta se retorna el estado del proceso. Si alguno de los pasos anteriores falla, se retornan los respectivos errores encontrados. 
 
 
 \begin{figure}[H]
@@ -550,7 +558,14 @@ transmit_msg_mqtt(mqtt_payload, topic, uart1_event, at_response)
 \label{cod:transmit_msg_mqtt}
 \end{figure}
  
-La función \verb|nmea_rmc_parser_r()|, que permite extraer la información de las cadenas tipo GNRMC recibidas por el módulo Quectel L76. Esta es una función de tipo \textit{thread-safe} para facilitar la multitarea. En el código \ref{cod:nmea_rmc_parser_r} se muestra el pseudocódigo que describe su funcionamiento.
+La función \verb|nmea_rmc_parser_r()|, que permite extraer la información de las cadenas tipo GNRMC recibidas por el módulo Quectel L76. Esta es una función de tipo \textit{thread-safe} para facilitar la multitarea. En el código \ref{cod:nmea_rmc_parser_r} se muestra el pseudocódigo que describe su funcionamiento. Esta función recibe dos parámetros:
+\begin{enumerate}
+\item \verb|nmeaString|: es la cadena de datos NMEA que contiene la información GNSS.
+\item \verb|gnssData|: es el puntero a una estructura que se llenará con los datos GNSS extraídos de la cadena NMEA.
+\end{enumerate}
+
+La función valida en la línea 4 que la trama recibida comience con \verb|$|, el cual es el caracter de inicio de las tramas NMEA. Luego se divide la cadena NMEA en segmentos o \textit{tokens} separados por comas, cada uno de los cuales contiene un fragmento específico de información. Luego, se recorre esta cadena y se identifican los \textit{tokens} relevantes (ver líneas 6 a 11). Tal es el caso de ``GNRMC'', que permite validar que la trama NMEA contiene información de posicionamiento proveniente de señales dos constelaciones distintas. Los demás \textit{tokens} permiten extraer la latitud y la longitud para la conformación de las coordenadas geográficas. En las líneas 10 y 11 se utiliza una función para convertir las coordenadas en formato Grados, Minutos y Segundos (DMS: del inglés \textit{Degrees, Minutes, Seconds}) a coordenadas en Grados Decimales (DD: del inglés \textit{Degrees Decimal}).
+
 
 \begin{figure}[H]
 \begin{lstlisting}

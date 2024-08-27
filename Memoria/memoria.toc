@@ -35,10 +35,10 @@
 \contentsline {subsubsection}{Flujo general del firmware}{23}{section*.35}%
 \contentsline {subsubsection}{Implementación de las tareas del sistema}{26}{section*.39}%
 \contentsline {subsubsection}{Otros componentes del firmware}{30}{section*.46}%
-\contentsline {section}{\numberline {3.2}Diseño e implementación de la interfaz web}{32}{section.3.2}%
-\contentsline {subsection}{\numberline {3.2.1}Diseño de la interfaz web}{32}{subsection.3.2.1}%
-\contentsline {subsection}{\numberline {3.2.2}Implementación de la interfaz web}{33}{subsection.3.2.2}%
-\contentsline {subsection}{\numberline {3.2.3}Metodología de la implementación}{33}{subsection.3.2.3}%
+\contentsline {section}{\numberline {3.2}Diseño e implementación de la interfaz web}{33}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Diseño de la interfaz web}{33}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Implementación de la interfaz web}{34}{subsection.3.2.2}%
+\contentsline {subsection}{\numberline {3.2.3}Metodología de la implementación}{34}{subsection.3.2.3}%
 \contentsline {chapter}{\numberline {4}Ensayos y resultados}{41}{chapter.4}%
 \contentsline {section}{\numberline {4.1}Resultado final de la integración del hardware}{41}{section.4.1}%
 \contentsline {section}{\numberline {4.2}Pruebas funcionales del hardware}{43}{section.4.2}%
