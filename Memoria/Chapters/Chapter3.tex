@@ -3,7 +3,7 @@
 \label{Chapter3} % Change X to a consecutive number; for referencing this chapter elsewhere, use \ref{ChapterX}
 
 
-Este capítulo se realiza la descripción detallada de cada módulo de hardware y software desarrollados en el trabajo. Se aplican las definiciones y criterios descritos en capítulos anteriores y se comprende el diseño final del prototipo.
+En este capítulo se realiza la descripción detallada de cada módulo de hardware y software desarrollados en el trabajo. Se aplican las definiciones y criterios descritos en capítulos anteriores y se comprende el diseño final del prototipo.
 
 %----------------------------------------------------------------------------------------
 %	SECTION 1
@@ -217,7 +217,7 @@ Por petición del cliente, la codificación correspondiente al firmware no podr�
 
 \subsubsection{Flujo general del firmware}
 
-El firmware tiene la capacidad de ejecutar multitarea, gracias a que se realizó una implementación con FreeRTOS. El flujo general del programa se muestra en las figuras \ref{fig:flujo_firmware_1}, \ref{fig:flujo_firmware_2} y \ref{fig:flujo_firmware_3}. El programa se dividió en tareas, que son funciones puntuales que ejecutan una acción concreta y colaboran entre sí para operar el sistema en su conjunto. Las diferentes tareas se ejecutan de forma independiente y existe un flujo de información que se sucede de una tarea a otra. Como mecanismo de comunicación entre tareas, se utilizan las colas. Este comportamiento del firmware es relevante desde el punto de vista en que el sistema puede estar recibiendo, procesando y transmitiendo datos de posicionamiento de manera casi concurrente.
+El firmware tiene la capacidad de ejecutar procesos múltiples o multitareas, gracias a que se realizó una implementación con FreeRTOS. El flujo general del programa se muestra en las figuras \ref{fig:flujo_firmware_1}, \ref{fig:flujo_firmware_2} y \ref{fig:flujo_firmware_3}. El programa se dividió en tareas, que son funciones puntuales que ejecutan una acción concreta y colaboran entre sí para operar el sistema en su conjunto. Las diferentes tareas se ejecutan de forma independiente y existe un flujo de información que se sucede de una tarea a otra. Como mecanismo de comunicación entre tareas, se utilizan las colas. Este comportamiento del firmware es relevante desde el punto de vista en que el sistema puede estar recibiendo, procesando y transmitiendo datos de posicionamiento de manera casi concurrente.
 
 En el diagrama de la figura \ref{fig:flujo_firmware_1}, se muestra la siguiente secuencia de acciones: 
 
@@ -278,7 +278,7 @@ En la figura \ref{fig:flujo_firmware_3} se representan dos tareas:
 
 \item Tarea \verb|transmit_to_server_task()| verifica continuamente si hay eventos de datos de la cava, transmite los datos de la cava al servidor MQTT cuando hay un evento y envía los datos a la cola \verb|lcd_queue| para ser procesados por \verb|lcd_task()|.
 
-\item Tarea \verb|lcd_task()| verifica continuamente si hay eventos en la cola \verb|lcd_queue| y muestra la información de posición, ocupación y estado del servidor en la pantalla LCD cuando hay un evento.
+\item Tarea \verb|lcd_task()| verifica si hay eventos en la cola \verb|lcd_queue| y muestra la información de posición, ocupación y estado del servidor en la pantalla LCD cuando hay un evento.
 
 \end{enumerate}
 

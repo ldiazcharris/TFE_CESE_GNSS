@@ -94,7 +94,7 @@ Se ejecutaron pruebas sobre los módulos de hardware para verificar que funciona
 	
 	\item  Se probó la recepción de tramas NMEA con el módulo Quectel L76, a través del puerto UART. Se construyó un código de prueba que capturó las tramas NMEA recibidas por el puerto UART\_1 y su eco en el puerto UART\_0 para visualizar los datos recibidos en la computadora, a través de la terminal \textit{Hercules} \citep{hercules}. 
 	
-	\item Se probó la comunicación bidireccional con el módulo SIM A7670SA, a través del puerto UART y por comandos AT. Se construyó un código de prueba que captura las tramas AT, recibidas por puerto UART\_1 y su eco en el puerto UART\_0 para visualizar los datos recibidos en la computadora, a través de la terminal \textit{Hercules}. Este mismo programa transmite las tramas AT enviadas desde el puerto UART\_0 hasta el módulo SIM A7670SA en el UART\_1. De esta manera, se pueden enviar comandos AT de forma manual hacia el módulo y recibir las respuestas respectivas. 
+	\item Se probó la comunicación bidireccional con el módulo SIM A7670SA, a través del puerto UART y por comandos AT. Se construyó un código de prueba que captura las tramas AT, recibidas por el puerto UART\_1 y su eco en el puerto UART\_0 para visualizar los datos recibidos en la computadora, a través de la terminal \textit{Hercules}. Este mismo programa transmite las tramas AT enviadas desde el puerto UART\_0 hasta el módulo SIM A7670SA en el UART\_1. De esta manera, se pueden enviar comandos AT de forma manual hacia el módulo y recibir las respuestas respectivas. 
 	
 	\item Se realizó un código de prueba para utilizar todas las funciones proporcionadas por el driver \verb|lcd_i2c_grove.h| y verificar la visualización correcta de textos predefinidos en la pantalla. 
 	
