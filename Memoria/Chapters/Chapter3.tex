@@ -34,7 +34,7 @@ En la figura~\ref{fig:Arq_harware} se presenta la arquitectura del hardware desa
 
 El sistema cuenta con dos antenas correspondientes a la comunicación GNSS y 4G. 
 
-Como parte de la interfaz humano-máquina, se cuenta con una pantalla LCD de 16x2, dos botones para la indicación manual de estado ocupado/desocupado y dos pilotos que permiten visualizar el estado de ocupación actual. 
+Como parte de la interfaz humano-máquina, se cuenta con una pantalla LCD de 16 x 2, dos botones para la indicación manual de estado ocupado/desocupado y dos pilotos que permiten visualizar el estado de ocupación actual. 
 
 En el diagrama se señalan los protocolos UART e I2C, para la comunicación intercircuito, que son:
 
@@ -531,7 +531,7 @@ La función \verb|transmit_msg_mqtt()| para encapsular la funcionalidad de trans
 \item \verb|at_response|: es un puntero para almacenar la respuesta esperada del comando AT.
 \end{enumerate}
 
-En la línea 3 Se envía el comando AT al dispositivo para configurar el tema (\verb|topic|) en el cual se publicará el mensaje MQTT. Este comando le indica al dispositivo que debe prepararse para enviar un mensaje en un tema específico. Si se recibe una respuesta con ``OK'', entonces en la línea 5 se procede a cargar el \verb|payload| en la memoria del módulo. Si el proceso es exitoso, entonces se procede a publicar el mensaje (ver línea 7). Nuevamente, si la publicación es correcta se retorna el estado del proceso. Si alguno de los pasos anteriores falla, se retornan los respectivos errores encontrados. 
+En la línea 3 se envía el comando AT al dispositivo para configurar el tema (\verb|topic|) en el cual se publicará el mensaje MQTT. Este comando le indica al dispositivo que debe prepararse para enviar un mensaje en un tema específico. Si se recibe una respuesta con ``OK'', entonces en la línea 5 se procede a cargar el \verb|payload| en la memoria del módulo. Si el proceso es exitoso, entonces se procede a publicar el mensaje (ver línea 7). Nuevamente, si la publicación es correcta se retorna el estado del proceso. Si alguno de los pasos anteriores falla, se retornan los respectivos errores encontrados. 
 
 
 \begin{figure}[H]
@@ -564,7 +564,7 @@ La función \verb|nmea_rmc_parser_r()|, que permite extraer la información de l
 \item \verb|gnssData|: es el puntero a una estructura que se llenará con los datos GNSS extraídos de la cadena NMEA.
 \end{enumerate}
 
-La función valida en la línea 4 que la trama recibida comience con \verb|$|, el cual es el caracter de inicio de las tramas NMEA. Luego se divide la cadena NMEA en segmentos o \textit{tokens} separados por comas, cada uno de los cuales contiene un fragmento específico de información. Luego, se recorre esta cadena y se identifican los \textit{tokens} relevantes (ver líneas 6 a 11). Tal es el caso de ``GNRMC'', que permite validar que la trama NMEA contiene información de posicionamiento proveniente de señales dos constelaciones distintas. Los demás \textit{tokens} permiten extraer la latitud y la longitud para la conformación de las coordenadas geográficas. En las líneas 10 y 11 se utiliza una función para convertir las coordenadas en formato Grados, Minutos y Segundos (DMS: del inglés \textit{Degrees, Minutes, Seconds}) a coordenadas en Grados Decimales (DD: del inglés \textit{Degrees Decimal}).
+La función valida en la línea 4 que la trama recibida comience con \verb|$|, que es el caracter de inicio de las tramas NMEA. Luego se divide la cadena NMEA en segmentos o \textit{tokens} separados por comas, cada uno de los cuales contiene un fragmento específico de información. Luego, se recorre esta cadena y se identifican los \textit{tokens} relevantes (ver líneas 6 a 11). Tal es el caso de ``GNRMC'', que permite validar que la trama NMEA contiene información de posicionamiento proveniente de señales dos constelaciones distintas. Los demás \textit{tokens} permiten extraer la latitud y la longitud para la conformación de las coordenadas geográficas. En las líneas 10 y 11 se utiliza una función para convertir las coordenadas en formato Grados, Minutos y Segundos (DMS: del inglés \textit{Degrees, Minutes, Seconds}) a coordenadas en Grados Decimales (DD: del inglés \textit{Degrees Decimal}).
 
 
 \begin{figure}[H]
@@ -652,7 +652,7 @@ A continuación, se presenta el proceso llevado a cabo para la implementación d
 \begin{enumerate}
 	\item Configuración inicial:
 		\begin{itemize}
-		\item Se diseñó la estructura de la página web usando HTML y Bootstrap. En este punto se utilizaron las bibliotecas necesarias para la funcionalidad del mapa y la conexión MQTT. En la figura \ref{fig:mockup} se observa la versión desarrollada por el autor. Además, en la figura \ref{fig:web_final} se muestra la versión implementada en el servidor de la empresa Cloud Technologys SAS, la cual fue migrada y ajustada por su equipo de desarrolladores web.
+		\item Se diseñó la estructura de la página web usando HTML y Bootstrap. En este punto se utilizaron las bibliotecas necesarias para la funcionalidad del mapa y la conexión MQTT. En la figura \ref{fig:mockup} se observa la versión desarrollada por el autor. Además, en la figura \ref{fig:web_final} se muestra la versión implementada en el servidor de la empresa Cloud Technologys SAS, que fue migrada y ajustada por su equipo de desarrolladores web.
 		\end{itemize}
 
 	\item Configuración del mapa:
@@ -682,11 +682,11 @@ En el código \ref{cod:aplicacion_web} se muestra la implementación HTML de la 
 
 El código HTML inicia con la declaración del tipo de documento (<!DOCTYPE html>), ya que se trata de un archivo html5. Luego, se abre la etiqueta <html> que contiene toda la página web.
 
-En la sección <head>, se define el título de la página como ``Cava mapa''. También se incluyen enlaces a hojas de estilo y \textit{scripts} externos. Específicamente, se carga \textit{Bootstrap} desde un CDN (del inglés: \textit{Content Delivery Network}), para estilos y componentes de interfaz de usuario, y \textit{jQuery}, \textit{Popper.js} y el propio \textit{JavaScript} de \textit{Bootstrap} para funcionalidad adicional. Además, se incluye una hoja de estilo para \textit{Leaflet}.
+En la sección <head>, se define el título de la página como ``Cava mapa''. También se incluyen enlaces a hojas de estilo y \textit{scripts} externos. Específicamente, se carga Bootstrap desde un CDN (del inglés: \textit{Content Delivery Network}), para estilos y componentes de interfaz de usuario, y jQuery, Popper.js y el propio JavaScript de Bootstrap para funcionalidad adicional. Además, se incluye una hoja de estilo para Leaflet.
 
 En la sección <body>, se muestra un encabezado principal (<h1>) <<GNSS Cava:>>, seguido de un encabezado secundario (<h2>) que especifica <<Cava001>>.
 
-Luego, hay una estructura de contenedor \textit{Bootstrap} (<div class="container mt-4">) que contiene una fila (<div class="row">) con dos columnas (<div class="col-md-4"> y <div class="col-md-8">). En la primera columna, se colocan varias tarjetas de información y un menú desplegable:
+Luego, hay una estructura de contenedor Bootstrap (<div class="container mt-4">) que contiene una fila (<div class="row">) con dos columnas (<div class="col-md-4"> y <div class="col-md-8">). En la primera columna, se colocan varias tarjetas de información y un menú desplegable:
 
 La primera tarjeta (<div class="card mb-3">) tiene un cuerpo (<div class="card-body">) que muestra el título <<Dispositivo:>> y un párrafo con el ID \verb|cava_name| para mostrar el nombre del dispositivo.
 
@@ -696,7 +696,7 @@ La tercera tarjeta muestra el título <<Estado:>> y un párrafo con el ID estado
 
 La segunda columna (que ocupa dos tercios del ancho) contiene un div (<div id="map">) que servirá como contenedor para el mapa que se mostrará en la página.
 
-Al final del cuerpo, se incluyen tres \textit{scripts}: la biblioteca de \textit{Leaflet}, la biblioteca MQTT y el archivo \textit{JavaScript} específico de la aplicación \verb|mapa.js|, que contiene la lógica para interactuar con el mapa y los datos de MQTT. 
+Al final del cuerpo, se incluyen tres \textit{scripts}: la biblioteca de Leaflet, la biblioteca MQTT y el archivo JavaScript específico de la aplicación \verb|mapa.js|, que contiene la lógica para interactuar con el mapa y los datos de MQTT. 
 
 
 \begin{lstlisting} 

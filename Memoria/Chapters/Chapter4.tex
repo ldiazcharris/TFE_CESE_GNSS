@@ -257,7 +257,7 @@ El código de prueba implementado es el mismo que se implementó en la prueba an
 
 Luego de implementar las configuraciones anteriores, se obtuvieron las tramas AT que responde el módulo SIM A7670SA y se pudieron transmitir comandos AT hacia este módulo. La prueba resultó exitosa, ya que es posible capturar dichas tramas y procesarlas. 
 
-En la figura \ref{fig:pru_A7670_recep} se muestra una captura de los mensajes visualizados en la terminal \textit{Hercules}. En esta captura se puede observar mensajes recibidos del módulo SIM A7670SA que inician los símbolos + y *, los cuales contienen información sobre los procesos del módulo.   
+En la figura \ref{fig:pru_A7670_recep} se muestra una captura de los mensajes visualizados en la terminal \textit{Hercules}. En esta captura se puede observar mensajes recibidos del módulo SIM A7670SA que inician los símbolos + y *, que contienen información sobre los procesos del módulo.   
 
 \begin{figure}[H]
 	\centering
@@ -291,7 +291,7 @@ En la figura \ref{fig:pru_A7670_transm} también se observa la respuesta del mó
 
 Para esta prueba no es necesaria ninguna configuración especial, más allá de las conexiones de diseño del hardware. 
 
-Se implementó un código de prueba (ver código \ref{cod:cod_proof_lcd}) que permitió usar las funciones proporcionadas por el driver \verb|lcd_i2c_grove.h|. Este sencillo programa escribe textos y cambia los colores de la pantalla LCD cada tres segundos. Además, borra la pantalla cada vez que escribe un texto nuevo. De esta manera se puede corroborar el funcionamiento de la LCD. En la figura \ref{fig:prueba_lcd} se muestran fotografías de los resultados de la prueba. 
+Se implementó un código de prueba (ver código \ref{cod:cod_proof_lcd}) que permitió usar las funciones proporcionadas por el driver \verb|lcd_i2c_grove.h|. Este programa escribe textos y cambia los colores de la pantalla LCD cada tres segundos. Además, borra la pantalla cada vez que escribe un texto nuevo. De esta manera se puede corroborar el funcionamiento de la LCD. En la figura \ref{fig:prueba_lcd} se muestran fotografías de los resultados de la prueba. 
 
 \begin{figure}[H]
 \begin{lstlisting}
