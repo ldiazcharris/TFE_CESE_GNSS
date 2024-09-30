@@ -9,7 +9,7 @@
 #include "freertos/task.h"
 #include "freertos/queue.h"
 #include "utilities.h"
-
+#include "lm35_lib.h"
 
 /************************MACROS***********************************/
 
@@ -24,6 +24,8 @@
 static QueueHandle_t uart1_queue;
 static QueueHandle_t uart0_queue;
 static GNSSData_t quectel_l76;
+lm35_object_t sensor_1;
+lm35_object_t sensor_2;
 
 /****************DECLARACIÓN DE FUNCIONES*************************/
 
@@ -41,6 +43,17 @@ void app_main()
     uart_init(UART1, 9600, BUF_SIZE * 2, BUF_SIZE * 2, 50, &uart1_queue, ESP_INTR_FLAG_LEVEL1); //   ESP_INTR_FLAG_IRAM
     //          (UART_NUM, TX, RX, RTS, CTS)
     uart_set_pin(UART1,    26, 25,  14,  12);
+
+    sensor_1.atten = ADC_ATTEN_DB_6;
+    sensor_1.channel = ADC_CHANNEL_0;
+
+    sensor_2.atten = ADC_ATTEN_DB_6;
+    sensor_2.channel = ADC_CHANNEL_1;
+
+    lm35_init_v2(sensor_1);
+    lm35_init_v2(sensor_2);
+
+    lm35_init(ADC_CHANNEL_0, ADC_ATTEN_DB_6);
 
     xTaskCreate(uart_interrupt_task,
                 "uart_interrupt_task",

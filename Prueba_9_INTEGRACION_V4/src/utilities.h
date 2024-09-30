@@ -76,6 +76,11 @@ FREE_CAVA,
 Def_CAVA
 }occupancy_t;
 
+typedef enum{
+NO_TRANSMIT = 0,
+TRANSMIT,
+}transmit_flag_t;
+
 typedef struct
 {
     double lat;
@@ -172,6 +177,12 @@ void nmea_state_to_str(NMEA_state_t nmea_state, char * str);
  * @param str: puntero a char de destino. 
  */
 void mqtt_msg_state_to_string(mqtt_msg_state_t mqtt_msg_st, char * str);
+
+/**
+ * @brief convierte un estado de la estructura mqtt_msg_state_t en un color de la pantalla LCD.
+ * @param mqtt_msg_st: estado del mensaje MQTT a convertir a color.
+ */
+void mqtt_msg_state_color(mqtt_msg_state_t mqtt_msg_st);
 
 /**
  * @brief convierte un estado de la estructura occupancy_t en un string.

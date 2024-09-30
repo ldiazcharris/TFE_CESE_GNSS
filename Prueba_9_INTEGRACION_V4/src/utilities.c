@@ -281,6 +281,32 @@ void mqtt_msg_state_to_string(mqtt_msg_state_t mqtt_msg_st, char *str)
     }
 }
 
+void mqtt_msg_state_color(mqtt_msg_state_t mqtt_msg_st)
+{
+    switch (mqtt_msg_st)
+    {
+    case MQTT_MSG_OK:
+        lcd_set_RGB(0, 255, 0); // LCD color verde
+        break;
+    case MQTT_MSG_FAIL:
+        lcd_set_RGB(125, 2, 0); // LCD color rojo
+        break;
+    case MQTT_TOPIC_OK:
+        lcd_set_RGB(255, 255, 0); // LCD color amarillo
+        break;
+    case MQTT_TOPIC_FAIL:
+        lcd_set_RGB(125, 2, 0); // LCD color rojo
+        break;
+    case MQTT_MSG_ERROR:
+        lcd_set_RGB(125, 2, 0); // LCD color rojo
+        break;
+
+    default:
+        lcd_set_RGB(0, 0, 255); // LCD color azul
+        break;
+    }
+}
+
 
 
 void occupancy_to_string(occupancy_t occupancy, char * str)

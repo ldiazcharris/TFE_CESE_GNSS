@@ -239,6 +239,10 @@ static void collect_data_task(void *params)
     xSemaphoreGive(uart1_sem);
     CAVA_DATA_t cava_data;
 
+    //cava_data.position.lat = 10.918982886682658;
+    //cava_data.position.lon = -74.87194240611939;
+    //strcpy(cava_data.position.time, "33:33");
+
     while(1){
 
         if(xQueueReceive(occupancy_queue, &occupancy_state, pdMS_TO_TICKS(200)))
@@ -252,10 +256,9 @@ static void collect_data_task(void *params)
 
             if (cava_data.position.NMEA_state != NMEA_PARSER_OK)
             {
-                // Por defecto la posición matriz del centro de distribución.
-                cava_data.position.lat = 10.918982886682658;
-                cava_data.position.lon = -74.87194240611939;
-                strcpy(cava_data.position.time, "33:33");
+                // Si hay un error en la trama NMEA entonces envia la última posición.
+                continue;
+
             }
             else 
             {

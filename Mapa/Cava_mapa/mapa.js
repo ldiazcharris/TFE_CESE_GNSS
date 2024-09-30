@@ -2,22 +2,24 @@ var map;
 var marker;
 let path = [];
 let polyline
-const home = { lat: 10.918982886682658, lng: -74.87194240611939 };
+const home = { lat: 10.960501722647622, lng: -74.85456500524475 }; //    lat: 10.918982886682658, lng: -74.87194240611939
 let current_cava_position;
 
 const options = {
     clean: true, // retain session
     connectTimeout: 4000, // Timeout period
     clientId: 'web_app_cava_position',
-    username: 'cava_pos_test',
-    password: 'test1234',
+    username: 'test', // 'cava_pos_test'
+    password:'CloudTech*',
+    //password: 'test1234',
     Keepalive: 60,
 };
 
-const connectUrl = 'ws://emqx@127.0.0.1:8083/mqtt';
+//const connectUrl = 'ws://emqx@127.0.0.1:8083/mqtt';
+const connectUrl = 'ws://18.212.130.131:8083/mqtt';
 const client = mqtt.connect(connectUrl, options);
 const topic_cava = 'proyectoLuis/cava/datos';
-let cava_data = { "lat": 0, "long": 0, "occup": 0, "NMEA_st": 1 };
+let cava_data;
 
 function init_map(){
     //map = L.map('cava_map').setView([home.lat, home.lng], 13);
@@ -39,16 +41,30 @@ function init_map(){
 
 function get_cava_data(cava_data) {
 
-    let latitude = parseFloat(cava_data.lat);
-    let longitude = parseFloat(cava_data.long);
+    let lat = parseFloat(cava_data.lat);
+    let lng = parseFloat(cava_data.long);
+    let occup = parseInt(cava_data.occup);
+    let cref = parseString(cava_data.Cref);
+    let time = parseFloat(cava_data.time);
+    let date = parseInt(cava_data.date);
+    let nmea_st = parseInt(cava_data.NMEA_st);
+    
 
-    return { lat: latitude, lng: longitude };
+    return { lat: lat, lng: lng, occup: occup, cref: cref, time: time, date: date, nmea_st: nmea_st };
 }
 
 function set_cava_position_map(position){
     
     document.getElementById('lat').textContent = "Lat: "+position.lat.toString();
     document.getElementById('lng').textContent = "Lng: "+position.lng.toString();
+    document.getElementById('cava_name').textContent = position.cref.toString();
+
+    if (position.occup == 0){
+        document.getElementById('estado').textContent = "Ocupada";
+    }else if(position.occup == 0){
+        document.getElementById('estado').textContent = "Libre";
+    }
+    
     
     if (marker) {
         map.removeLayer(marker);
