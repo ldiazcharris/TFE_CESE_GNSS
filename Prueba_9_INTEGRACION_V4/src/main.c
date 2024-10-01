@@ -48,6 +48,7 @@ static QueueHandle_t lcd_queue;
 static QueueHandle_t gpio_evt_queue;
 static SemaphoreHandle_t uart1_sem;
 static SemaphoreHandle_t lcd_sem;
+static SemaphoreHandle_t gpio_evt_sem;
 static GNSSData_t quectel_l76;
 
 static CAVA_DATA_t cava_data_saved;
@@ -126,6 +127,7 @@ void app_main()
     // Semáforo para arbitrar el uso del puerto UART
     uart1_sem = xSemaphoreCreateBinary();
     lcd_sem = xSemaphoreCreateBinary();
+    gpio_evt_sem = xSemaphoreCreateBinary();
 
     // Creación de colas que servirán para la comunicación entre tareas.
 
@@ -181,6 +183,7 @@ static void init_mqtt_server_task(void *params)
 {
     xSemaphoreGive(uart1_sem);
     xSemaphoreGive(lcd_sem);
+    xSemaphoreGive(gpio_evt_sem);
     lcd_write(0, 0, "Init serv task");
     uart_event_t uart1_event;
 
@@ -284,6 +287,9 @@ static void collect_data_task(void *params)
     uart_event_t uart1_event;
     mqtt_msg_state_t mqtt_msg_state = MQTT_MSG_ERROR;
     const uint8_t payload_size = 200;
+    transmit_flag_t position_flag = TRANSMIT;
+    transmit_flag_t occupancy_flag = TRANSMIT;
+
     // Punteros requerido por la función transmit_msg_mqtt() para procesar mensajes UART
     char *at_response = (char *)malloc(BUF_SIZE);
     char *mqtt_payload = (char *)malloc(payload_size);
@@ -299,12 +305,6 @@ static void collect_data_task(void *params)
 
     while (1)
     {
-
-        if (xQueueReceive(occupancy_queue, &occupancy_state, pdMS_TO_TICKS(100)))
-        {
-            cava_data.occupancy = occupancy_state;
-        }
-
         if (xQueueReceive(position_queue, &receive_pos, pdMS_TO_TICKS(100)))
         {
             cava_data.position.NMEA_state = receive_pos.NMEA_state;
@@ -316,41 +316,67 @@ static void collect_data_task(void *params)
             }
             else
             {
-                cava_data.position.lat = receive_pos.lat;
-                cava_data.position.lon = receive_pos.lon;
-                strcpy(cava_data.position.time, receive_pos.time);
-                strcpy(cava_data.position.date, receive_pos.date);
+                if(cava_data.position.lat != receive_pos.lat || cava_data.position.lon != receive_pos.lon)
+                {
+                    cava_data.position.lat = receive_pos.lat;
+                    cava_data.position.lon = receive_pos.lon;
+                    strcpy(cava_data.position.time, receive_pos.time);
+                    strcpy(cava_data.position.date, receive_pos.date);
+                    position_flag = TRANSMIT;
+                }
+                else
+                {
+                    position_flag = NO_TRANSMIT;
+                }
             }
         }
 
-        sprintf(mqtt_payload, MQTT_PAYLOAD_FORMAT,
-                cava_data.position.lat,
-                cava_data.position.lon,
-                cava_data.occupancy,
-                cava_data.position.NMEA_state,
-                CAVA_REF,
-                cava_data.position.time,
-                cava_data.position.date);
-
-        if (NMEA_PARSER_OK == cava_data.position.NMEA_state)
+        if (xQueueReceive(occupancy_queue, &occupancy_state, pdMS_TO_TICKS(100)))
         {
-            // mqtt_msg_state es el mecanismo para saber si hay un fallo en la comunicación MQTT
-            xSemaphoreTake(uart1_sem, portMAX_DELAY);
-            mqtt_msg_state = transmit_msg_mqtt(mqtt_payload, topic, uart1_event, at_response);
-            xSemaphoreGive(uart1_sem);
+            if(cava_data.occupancy != occupancy_state)
+            {
+                cava_data.occupancy = occupancy_state;
+                occupancy_flag = TRANSMIT;
+            }
+            else
+            {
+                occupancy_flag = NO_TRANSMIT;
+            }
         }
 
-        lcd_clear();
-        mqtt_msg_state_color(mqtt_msg_state);
-        sprintf(print_to_lcd, "%.4lf,%.4lf", cava_data.position.lat, cava_data.position.lon);
-        lcd_write(0, 0, print_to_lcd);
+        if(occupancy_flag || position_flag)
+        {
+            sprintf(mqtt_payload, MQTT_PAYLOAD_FORMAT,
+                    cava_data.position.lat,
+                    cava_data.position.lon,
+                    cava_data.occupancy,
+                    cava_data.position.NMEA_state,
+                    CAVA_REF,
+                    cava_data.position.time,
+                    cava_data.position.date);
 
-        bzero(print_to_lcd, 16);
-        bzero(occupancy_str, 8);
-        occupancy_to_string(cava_data.occupancy, occupancy_str);
-        sprintf(print_to_lcd, "Cava %s", occupancy_str);
-        lcd_write(1, 0, print_to_lcd);
+            if (NMEA_PARSER_OK == cava_data.position.NMEA_state) // Si la trama recibida es correcta se transmite. 
+            {
+                // mqtt_msg_state es el mecanismo para saber si hay un fallo en la comunicación MQTT
+                xSemaphoreTake(uart1_sem, portMAX_DELAY);
+                mqtt_msg_state = transmit_msg_mqtt(mqtt_payload, topic, uart1_event, at_response);
+                xSemaphoreGive(uart1_sem);
+            }
 
+            lcd_clear();
+            mqtt_msg_state_color(mqtt_msg_state);
+            sprintf(print_to_lcd, "%.4lf,%.4lf", cava_data.position.lat, cava_data.position.lon);
+            lcd_write(0, 0, print_to_lcd);
+
+            bzero(print_to_lcd, 16);
+            bzero(occupancy_str, 8);
+            occupancy_to_string(cava_data.occupancy, occupancy_str);
+            sprintf(print_to_lcd, "Cava %s", occupancy_str);
+            lcd_write(1, 0, print_to_lcd);
+
+            occupancy_flag = NO_TRANSMIT;
+            position_flag = NO_TRANSMIT;
+        }
         // xQueueSend(cava_data_queue, &cava_data, pdMS_TO_TICKS(500)); // Enviar a transmit_to_server_task()
         save_cava_state(&cava_data); // Guardar en la flash interna de la ESP32
     }
@@ -562,9 +588,8 @@ void occupancy_isr_handler(void* arg)
     uint32_t gpio_num = (uint32_t)arg;
     
     BaseType_t xHigherPriorityTaskWoken = pdFALSE;
-
-    if (BUTTON_DOWN == debounce_up(gpio_get_level(gpio_num)))
-        xQueueSendFromISR(gpio_evt_queue, &gpio_num, &xHigherPriorityTaskWoken);
+        
+    xQueueSendFromISR(gpio_evt_queue, &gpio_num, &xHigherPriorityTaskWoken);
 
     if(xHigherPriorityTaskWoken)
     {
@@ -579,6 +604,7 @@ static void button_bridge(void *params)
     uint32_t gpio_num;
     while (1)
     {
+        xSemaphoreTake(gpio_evt_sem, portMAX_DELAY);
         if (xQueueReceive(gpio_evt_queue, &gpio_num, portMAX_DELAY))
         {
             switch (gpio_num)
@@ -598,8 +624,10 @@ static void button_bridge(void *params)
             default:
                 break;
             }
+
             xQueueSend(occupancy_queue, &occupancy, portMAX_DELAY);
         }
+        xSemaphoreGive(gpio_evt_sem);
     }
 }
 
