@@ -211,9 +211,9 @@ static void init_mqtt_server_task(void *params)
         lcd_write(0, 0, "MQTT Serv OK");
         vTaskDelete(NULL);
     }
-    else // Si no, intentará 3 veces la conexión.
+    else // Si no, intentará 10 veces la conexión.
     {
-        while(try_conection_c < 3)
+        while(try_conection_c < 10)
         {
             mqtt_server_state = init_sequence_mqtt_server(uart1_event, at_response);
 
@@ -225,6 +225,8 @@ static void init_mqtt_server_task(void *params)
                 break;
             }
             try_conection_c++;
+            lcd_write(0, 0, "Conecting...");
+            delay(2000);
         }
         lcd_clear();
         lcd_write(0, 0, "MQTT Serv ERR");
@@ -289,6 +291,7 @@ static void collect_data_task(void *params)
     const uint8_t payload_size = 200;
     transmit_flag_t position_flag = TRANSMIT;
     transmit_flag_t occupancy_flag = TRANSMIT;
+    
 
     // Punteros requerido por la función transmit_msg_mqtt() para procesar mensajes UART
     char *at_response = (char *)malloc(BUF_SIZE);
@@ -298,10 +301,14 @@ static void collect_data_task(void *params)
     bzero(mqtt_payload, payload_size);
 
     char print_to_lcd[LCD_COLUMS];
-    char occupancy_str[8];
+    const uint8_t occu_str_len = 6;
+    const uint8_t msg_ste_str_len = 9;
+    char occupancy_str[occu_str_len];
+    char msg_state_str[msg_ste_str_len];
 
     bzero(print_to_lcd, LCD_COLUMS);
-    bzero(occupancy_str, 8);
+    bzero(occupancy_str, occu_str_len);
+    bzero(msg_state_str, msg_ste_str_len);
 
     while (1)
     {
@@ -344,8 +351,9 @@ static void collect_data_task(void *params)
             }
         }
 
-        if(occupancy_flag || position_flag)
-        {
+       // if(occupancy_flag || position_flag)
+        //{
+            
             sprintf(mqtt_payload, MQTT_PAYLOAD_FORMAT,
                     cava_data.position.lat,
                     cava_data.position.lon,
@@ -363,20 +371,27 @@ static void collect_data_task(void *params)
                 xSemaphoreGive(uart1_sem);
             }
 
+            bzero(print_to_lcd, LCD_COLUMS);
+            bzero(occupancy_str, occu_str_len);
+            bzero(msg_state_str, msg_ste_str_len);
+
             lcd_clear();
-            mqtt_msg_state_color(mqtt_msg_state);
+            //mqtt_msg_state_color(mqtt_msg_state);
             sprintf(print_to_lcd, "%.4lf,%.4lf", cava_data.position.lat, cava_data.position.lon);
             lcd_write(0, 0, print_to_lcd);
 
-            bzero(print_to_lcd, 16);
-            bzero(occupancy_str, 8);
+            bzero(print_to_lcd, LCD_COLUMS);
+
             occupancy_to_string(cava_data.occupancy, occupancy_str);
-            sprintf(print_to_lcd, "Cava %s", occupancy_str);
+            mqtt_msg_state_to_string(mqtt_msg_state, msg_state_str);
+            sprintf(print_to_lcd, "%s-%s", occupancy_str, msg_state_str);
             lcd_write(1, 0, print_to_lcd);
+            
+            
 
             occupancy_flag = NO_TRANSMIT;
             position_flag = NO_TRANSMIT;
-        }
+        // }
         // xQueueSend(cava_data_queue, &cava_data, pdMS_TO_TICKS(500)); // Enviar a transmit_to_server_task()
         save_cava_state(&cava_data); // Guardar en la flash interna de la ESP32
     }

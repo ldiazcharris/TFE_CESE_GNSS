@@ -248,34 +248,29 @@ void mqtt_msg_state_to_string(mqtt_msg_state_t mqtt_msg_st, char *str)
     switch (mqtt_msg_st)
     {
     case MQTT_MSG_OK:
-        bzero(str, 16);
-        sprintf(str, "MQTT Msg OK");
+        sprintf(str, "MSG_OK");
         lcd_set_RGB(0, 255, 0); // LCD color verde
         break;
     case MQTT_MSG_FAIL:
-        bzero(str, 16);
-        sprintf(str, "MQTT Msg FAIL");
+        sprintf(str, "MSG_ERR");
         lcd_set_RGB(125, 2, 0); // LCD color rojo
         break;
     case MQTT_TOPIC_OK:
-        bzero(str, 16);
-        sprintf(str, "MQTT Topic OK");
+        sprintf(str, "TOPIC_OK");
         lcd_set_RGB(255, 255, 0); // LCD color amarillo
         break;
     case MQTT_TOPIC_FAIL:
-        bzero(str, 16);
-        sprintf(str, "MQTT Topic FAIL");
+        sprintf(str, "TOPIC_ER");
         lcd_set_RGB(125, 2, 0); // LCD color rojo
         break;
     case MQTT_MSG_ERROR:
-        bzero(str, 16);
-        sprintf(str, "MQTT Msg ERROR");
+        sprintf(str, "MSG_ERR");
         lcd_set_RGB(125, 2, 0); // LCD color rojo
         break;
 
     default:
         bzero(str, 16);
-        sprintf(str, "Msg st not recv");
+        sprintf(str, "MQTTfail");
         lcd_set_RGB(0, 0, 255); // LCD color azul
         break;
     }
@@ -314,13 +309,13 @@ void occupancy_to_string(occupancy_t occupancy, char * str)
     switch (occupancy)
     {
     case BUSSY_CAVA:
-        strcpy(str, "OCUPADA");
+        strcpy(str, "OCUPA");
         break;
     case FREE_CAVA:
         strcpy(str, "LIBRE");
         break;
     case Def_CAVA:
-        strcpy(str, "Defect");
+        strcpy(str, "Def");
         break;
     default:
         strcpy(str, "NaN");
@@ -350,3 +345,42 @@ double haversine(double lat1, double lon1, double lat2, double lon2)
 
     return dist;
 }
+
+void mqtt_server_state_to_string(mqtt_server_state_t mqtt_serv_st, char *str)
+{
+    switch (mqtt_serv_st)
+    {
+    case MQTT_SERVER_OK:
+        bzero(str, 16);
+        sprintf(str, "SERV_OK");
+        lcd_set_RGB(0, 255, 0); // LCD color verde
+        break;
+    case MQTT_FAIL_INIT_SERVICE:
+        bzero(str, 16);
+        sprintf(str, "INIT_SERVICE_ERR");
+        lcd_set_RGB(125, 2, 0); // LCD color rojo
+        break;
+    case MQTT_FAIL_ADQ_CLIENT:
+        bzero(str, 16);
+        sprintf(str, "ADQ_CLIENT_ERR");
+        lcd_set_RGB(255, 255, 0); // LCD color amarillo
+        break;
+    case MQTT_FAIL_INIT_SERVER:
+        bzero(str, 16);
+        sprintf(str, "INIT_SERVER_ERR");
+        lcd_set_RGB(125, 2, 0); // LCD color rojo
+        break;
+    case MQTT_SERVER_ERR:
+        bzero(str, 16);
+        sprintf(str, "SERVER_ERR");
+        lcd_set_RGB(125, 2, 0); // LCD color rojo
+        break;
+
+    default:
+        bzero(str, 16);
+        sprintf(str, "MQTT SERVER fail");
+        lcd_set_RGB(0, 0, 255); // LCD color azul
+        break;
+    }
+}
+    

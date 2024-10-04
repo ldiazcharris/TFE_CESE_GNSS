@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.6.26)  2 SEP 2024 20:16
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.6.26)  3 OCT 2024 19:11
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2220,57 +2220,57 @@ Underfull \hbox (badness 10000) in paragraph at lines 432--433
 
 
 Overfull \hbox (0.5819pt too wide) in paragraph at lines 434--434
-[]|\T1/ppl/m/n/10.95 10.96046963| 
+[]|\T1/ppl/m/n/10.95 10,96046963| 
  []
 
 
 Overfull \hbox (0.5819pt too wide) in paragraph at lines 435--435
-[]|\T1/ppl/m/n/10.95 10.96096967| 
+[]|\T1/ppl/m/n/10.95 10,96096967| 
  []
 
 
 Overfull \hbox (0.5819pt too wide) in paragraph at lines 436--436
-[]|\T1/ppl/m/n/10.95 10.96052396| 
+[]|\T1/ppl/m/n/10.95 10,96052396| 
  []
 
 
 Overfull \hbox (0.5819pt too wide) in paragraph at lines 437--437
-[]|\T1/ppl/m/n/10.95 10.96056399| 
+[]|\T1/ppl/m/n/10.95 10,96056399| 
  []
 
 
 Overfull \hbox (0.5819pt too wide) in paragraph at lines 438--438
-[]|\T1/ppl/m/n/10.95 10.96013613| 
+[]|\T1/ppl/m/n/10.95 10,96013613| 
  []
 
 
 Overfull \hbox (0.5819pt too wide) in paragraph at lines 439--439
-[]|\T1/ppl/m/n/10.95 10.95987377| 
+[]|\T1/ppl/m/n/10.95 10,95987377| 
  []
 
 
 Overfull \hbox (0.5819pt too wide) in paragraph at lines 440--440
-[]|\T1/ppl/m/n/10.95 10.95935576| 
+[]|\T1/ppl/m/n/10.95 10,95935576| 
  []
 
 
 Overfull \hbox (0.5819pt too wide) in paragraph at lines 441--441
-[]|\T1/ppl/m/n/10.95 10.95941637| 
+[]|\T1/ppl/m/n/10.95 10,95941637| 
  []
 
 
 Overfull \hbox (0.5819pt too wide) in paragraph at lines 442--442
-[]|\T1/ppl/m/n/10.95 10.96084288| 
+[]|\T1/ppl/m/n/10.95 10,96084288| 
  []
 
 
 Overfull \hbox (0.5819pt too wide) in paragraph at lines 443--443
-[]|\T1/ppl/m/n/10.95 10.96033852| 
+[]|\T1/ppl/m/n/10.95 10,96033852| 
  []
 
 
 Overfull \hbox (0.5819pt too wide) in paragraph at lines 444--444
-[]|\T1/ppl/m/n/10.95 10.95995456| 
+[]|\T1/ppl/m/n/10.95 10,95995456| 
  []
 
 
@@ -2451,7 +2451,7 @@ tino/uplb8a.pfb><C:/Users/CUC/AppData/Local/Programs/MiKTeX/fonts/type1/urw/pal
 atino/uplr8a.pfb><C:/Users/CUC/AppData/Local/Programs/MiKTeX/fonts/type1/urw/pa
 latino/uplr8a.pfb><C:/Users/CUC/AppData/Local/Programs/MiKTeX/fonts/type1/urw/p
 alatino/uplri8a.pfb>
-Output written on memoria.pdf (75 pages, 8126580 bytes).
+Output written on memoria.pdf (75 pages, 8126578 bytes).
 PDF statistics:
  1629 PDF objects out of 1728 (max. 8388607)
  707 named destinations out of 1000 (max. 500000)
